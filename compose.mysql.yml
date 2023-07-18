@@ -1,0 +1,33 @@
+# use this file with
+#
+#    docker compose -f compose.mysql.yml up --build
+#
+
+version: "3.8"
+
+services:
+  educs-mysql:
+    image: mysql:5.7.24
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: application
+      MYSQL_USER: application
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+    volumes:
+      - "edu_cs_application_mysql_volume:/var/lib/mysql"
+#
+#  educs-backend:
+#    image: edu-cs-application
+#    build: "."
+#    restart: unless-stopped
+#    environment:
+#      SPRING_PROFILES_ACTIVE: mysql
+#    ports:
+#      - "8080:8080"
+#
+volumes:
+  edu_cs_application_mysql_volume:
+
