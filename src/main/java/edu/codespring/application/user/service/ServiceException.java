@@ -2,6 +2,7 @@ package edu.codespring.application.user.service;
 
 public class ServiceException extends RuntimeException {
     public ServiceException() {
+        super();
     }
 
     public ServiceException(String message) {

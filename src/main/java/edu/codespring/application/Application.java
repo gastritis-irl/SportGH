@@ -21,19 +21,17 @@ public class Application {
     }
 
     @PostConstruct
-    void preSpring(){
+    void preSpring() {
         try {
-
-//            userService.login("ferko", "asd123");
-//            userService.signup("ferko5", "asd123");
+            // userService.login("ferko", "asd123");
+            // userService.signup("ferko5", "asd123");
             userService.login("ferko5", "asd123");
         } catch (ServiceException e) {
-//            System.out.println(e.getMessage());
+            // System.out.println(e.getMessage());
             log.error(e.getMessage());
-            e.printStackTrace();
+            // e.printStackTrace();
         }
-//        System.out.println("===============================");
-
+        // System.out.println("===============================");
         userService.findAll().forEach(msg -> log.info(msg.toString()));
     }
 

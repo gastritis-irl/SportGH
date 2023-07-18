@@ -1,8 +1,11 @@
 package edu.codespring.application.user.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+@Slf4j
 public class PasswordEncrypter {
     public static String generateHashedPassword(String password, String salt) {
         try {
@@ -12,12 +15,13 @@ public class PasswordEncrypter {
             algorithm.update(input);
             byte[] output = algorithm.digest();
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < output.length; i++) {
-                sb.append(String.format("%02x", output[i]));
+            for (byte outputByte : output) {
+                sb.append(String.format("%02x", outputByte));
             }
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            // e.printStackTrace();
             throw new RuntimeException(e);
         }
 

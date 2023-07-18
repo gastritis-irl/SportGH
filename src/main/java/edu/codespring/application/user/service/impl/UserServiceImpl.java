@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @PersistenceContext
     private final EntityManager entityManager;
+
     @Override
     @Transactional
     public User signup(String userName, String password) {
@@ -42,11 +43,13 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
     public void login(String userName, String password) {
         try {
             String uuid = userRepository.findUuid(userName);
             String passwordHash = PasswordEncrypter.generateHashedPassword(password, uuid);
-//            Optional<User> user = userRepository.findByUserNameAndPassword(userName, PasswordEncrypter.generateHashedPassword(password, uuid));
+            // Optional<User> user = userRepository.findByUserNameAndPassword
+            // (userName, PasswordEncrypter.generateHashedPassword(password, uuid));
             if (userRepository.existsByUserNameAndPassword(userName, passwordHash)) {
                 log.info("Login successful");
             } else {

@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{userId}")
-    public UserOutDTO findById (@PathVariable Long userId) {
+    public UserOutDTO findById(@PathVariable Long userId) {
         User user = userService.findById(userId);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -36,12 +36,12 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{userId}")
-    public void deleteById (@PathVariable Long userId) {
+    public void deleteById(@PathVariable Long userId) {
         userService.deleteById(userId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public UserOutDTO createUser (@RequestBody @Valid UserInDTO userInDTO) {
+    public UserOutDTO createUser(@RequestBody @Valid UserInDTO userInDTO) {
         User user = userService.signup(userInDTO.getUserName(), userInDTO.getPassword());
         return userMapper.userToOut(user);
     }
