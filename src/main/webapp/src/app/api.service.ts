@@ -10,7 +10,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getData(): Observable<any> {
-    const url = `${this.baseUrl}/data`; // Replace 'data' with your Spring API endpoint
+    const url = `${this.baseUrl}/users`;
     return this.http.get<any>(url);
   }
 }
