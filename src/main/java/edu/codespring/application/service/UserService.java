@@ -1,6 +1,6 @@
-package edu.codespring.application.user.service;
+package edu.codespring.application.service;
 
-import edu.codespring.application.user.model.User;
+import edu.codespring.application.model.User;
 
 import java.util.Collection;
 

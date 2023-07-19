@@ -1,7 +1,7 @@
-package edu.codespring.application.user.mapper;
+package edu.codespring.application.mapper;
 
-import edu.codespring.application.user.dto.UserOutDTO;
-import edu.codespring.application.user.model.User;
+import edu.codespring.application.dto.UserOutDTO;
+import edu.codespring.application.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

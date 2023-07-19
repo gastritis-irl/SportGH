@@ -1,4 +1,4 @@
-package edu.codespring.application.user.model;
+package edu.codespring.application.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

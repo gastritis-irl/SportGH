@@ -1,4 +1,4 @@
-package edu.codespring.application.user.service;
+package edu.codespring.application.service;
 
 public class ServiceException extends RuntimeException {
     public ServiceException() {

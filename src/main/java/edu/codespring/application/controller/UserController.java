@@ -1,10 +1,10 @@
-package edu.codespring.application.user.controller;
+package edu.codespring.application.controller;
 
-import edu.codespring.application.user.dto.UserInDTO;
-import edu.codespring.application.user.dto.UserOutDTO;
-import edu.codespring.application.user.mapper.UserMapper;
-import edu.codespring.application.user.model.User;
-import edu.codespring.application.user.service.UserService;
+import edu.codespring.application.dto.UserInDTO;
+import edu.codespring.application.dto.UserOutDTO;
+import edu.codespring.application.mapper.UserMapper;
+import edu.codespring.application.model.User;
+import edu.codespring.application.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

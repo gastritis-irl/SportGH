@@ -1,4 +1,4 @@
-package edu.codespring.application.user.dto;
+package edu.codespring.application.dto;
 
 import lombok.Data;
 

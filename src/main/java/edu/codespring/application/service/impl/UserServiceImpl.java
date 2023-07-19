@@ -1,10 +1,10 @@
-package edu.codespring.application.user.service.impl;
+package edu.codespring.application.service.impl;
 
-import edu.codespring.application.user.model.User;
-import edu.codespring.application.user.repository.UserRepository;
-import edu.codespring.application.user.service.ServiceException;
-import edu.codespring.application.user.service.UserService;
-import edu.codespring.application.user.utils.PasswordEncrypter;
+import edu.codespring.application.model.User;
+import edu.codespring.application.repository.UserRepository;
+import edu.codespring.application.service.ServiceException;
+import edu.codespring.application.service.UserService;
+import edu.codespring.application.utils.PasswordEncrypter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import jakarta.persistence.EntityManager;

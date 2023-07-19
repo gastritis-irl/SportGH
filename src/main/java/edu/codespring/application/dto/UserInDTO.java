@@ -1,4 +1,4 @@
-package edu.codespring.application.user.dto;
+package edu.codespring.application.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
