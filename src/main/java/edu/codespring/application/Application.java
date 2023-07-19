@@ -23,9 +23,9 @@ public class Application {
     @PostConstruct
     void preSpring() {
         try {
-            // userService.login("ferko", "asd123");
-            // userService.signup("ferko5", "asd123");
-            userService.login("ferko5", "asd123");
+            userService.login("asd", "asd123");
+            userService.signup("asd", "asd123");
+            userService.login("asd", "asd123");
         } catch (ServiceException e) {
             // System.out.println(e.getMessage());
             log.error(e.getMessage());

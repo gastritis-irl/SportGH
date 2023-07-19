@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
             user.setUserName(userName);
             user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
             userRepository.save(user);
+            log.info("Signup successful");
             return user;
         } catch (DataAccessException e) {
             log.error("Signup failed!");
