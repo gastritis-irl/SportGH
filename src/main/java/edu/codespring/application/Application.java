@@ -24,14 +24,14 @@ public class Application {
     void preSpring() {
         try {
             // userService.login("asd", "asd123");
-            // userService.signup("asd", "asd123");
-            userService.login("asd", "asd123");
+            // userService.signup("user1", "asd123");
+            // userService.signup("user2", "asd123");
+            // userService.signup("user3", "asd123");
+            // userService.signup("user4", "asd123");
+             userService.login("asd", "asd123");
         } catch (ServiceException e) {
-            // System.out.println(e.getMessage());
             log.error(e.getMessage());
-            // e.printStackTrace();
         }
-        // System.out.println("===============================");
         userService.findAll().forEach(msg -> log.info(msg.toString()));
     }
 
