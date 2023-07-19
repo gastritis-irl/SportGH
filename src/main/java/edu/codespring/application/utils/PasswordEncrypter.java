@@ -1,5 +1,6 @@
 package edu.codespring.application.utils;
 
+import edu.codespring.application.service.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.MessageDigest;
@@ -22,7 +23,7 @@ public class PasswordEncrypter {
         } catch (NoSuchAlgorithmException e) {
             log.error(e.getMessage());
             // e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new ServiceException("No such algorithm!", e);
         }
 
     }
