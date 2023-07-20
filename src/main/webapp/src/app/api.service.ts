@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'http://localhost:8080/api'; // Replace with your Spring server URL
+  private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 
   getData(): Observable<any> {
-    const url = `${this.baseUrl}/users`;
+    const url = `${this.baseUrl}/api/users`;
     return this.http.get<any>(url);
   }
 }
