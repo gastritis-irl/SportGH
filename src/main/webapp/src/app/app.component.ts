@@ -17,12 +17,15 @@ export class AppComponent implements OnInit {
   }
 
   getDataFromServer(): void {
+
     this.apiService.getData().subscribe(
-      (response) => {
-        this.data = response;
-      },
-      (error) => {
-        console.error('Error fetching data:', error);
+      {
+        next: (response) => {
+          this.data = response;
+        },
+        error: (error) => {
+          console.error('Error fetching data:', error);
+        },
       }
     );
   }
