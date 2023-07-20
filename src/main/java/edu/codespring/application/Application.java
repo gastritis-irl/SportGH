@@ -24,10 +24,11 @@ public class Application {
     void preSpring() {
         try {
             // add some data to db
-//            int nrOfUsers = 30;
-//            for (int i = 0; i <= nrOfUsers; i++) {
-//                userService.signup(String.format("user%d", i), "asd123");
-//            }
+
+            // int nrOfUsers = 30;
+            // for (int i = 0; i <= nrOfUsers; i++) {
+            //     userService.signup(String.format("user%d", i), "asd123");
+            // }
 
             userService.login("user1", "asd123");
         } catch (ServiceException e) {

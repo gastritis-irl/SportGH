@@ -46,4 +46,9 @@ public class UserController {
         User user = userService.signup(userInDTO.getUserName(), userInDTO.getPassword());
         return userMapper.userToOut(user);
     }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void deleteAllUsers() {
+        userService.deleteAll();
+    }
 }

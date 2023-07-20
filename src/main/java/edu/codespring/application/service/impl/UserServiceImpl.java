@@ -5,10 +5,10 @@ import edu.codespring.application.repository.UserRepository;
 import edu.codespring.application.service.ServiceException;
 import edu.codespring.application.service.UserService;
 import edu.codespring.application.utils.PasswordEncrypter;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,5 +76,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    // @Override
+    public void deleteAll() {
+        userRepository.deleteAll();
     }
 }
