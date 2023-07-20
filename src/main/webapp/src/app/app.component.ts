@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from './api.service';
+import {Component, OnInit} from '@angular/core';
+import {ApiService} from './api.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,8 @@ import { ApiService } from './api.service';
 export class AppComponent implements OnInit {
   data: any;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {
+  }
 
   ngOnInit(): void {
     this.getDataFromServer();
@@ -24,5 +25,9 @@ export class AppComponent implements OnInit {
         console.error('Error fetching data:', error);
       }
     );
+  }
+
+  logData(): any {
+    console.log(this.data);
   }
 }
