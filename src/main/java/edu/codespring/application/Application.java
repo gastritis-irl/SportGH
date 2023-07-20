@@ -23,12 +23,13 @@ public class Application {
     @PostConstruct
     void preSpring() {
         try {
-            // userService.login("asd", "asd123");
-            // userService.signup("user1", "asd123");
-            // userService.signup("user2", "asd123");
-            // userService.signup("user3", "asd123");
-            // userService.signup("user4", "asd123");
-             userService.login("asd", "asd123");
+            // add some data to db
+//            int nrOfUsers = 30;
+//            for (int i = 0; i <= nrOfUsers; i++) {
+//                userService.signup(String.format("user%d", i), "asd123");
+//            }
+
+            userService.login("user1", "asd123");
         } catch (ServiceException e) {
             log.error(e.getMessage());
         }
