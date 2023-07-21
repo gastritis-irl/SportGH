@@ -1,8 +1,8 @@
-<div class="content" role="main">
+<div>
   Main page<br>
-<!--  {{this.logData()}}-->
+<!--  {{this.logUsers()}}-->
   List of users in database:<br>
-  <div *ngFor="let user of this.data">
+  <div *ngFor="let user of this.users">
     {{user.userID}} - {{user.userName}}
   </div>
 </div>
