@@ -11,16 +11,16 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: application
-      MYSQL_USER: application
+      MYSQL_DATABASE: sportgh
+      MYSQL_USER: sportgh
       MYSQL_PASSWORD: 1234
     ports:
       - "3306:3306"
     volumes:
-      - "edu_cs_application_mysql_volume:/var/lib/mysql"
+      - "edu_cs_sportgh_mysql_volume:/var/lib/mysql"
 #
 #  educs-backend:
-#    image: edu-cs-application
+#    image: edu-cs-sportgh
 #    build: "."
 #    restart: unless-stopped
 #    environment:
@@ -29,5 +29,5 @@ services:
 #      - "8080:8080"
 #
 volumes:
-  edu_cs_application_mysql_volume:
+  edu_cs_sportgh_mysql_volume:
 
