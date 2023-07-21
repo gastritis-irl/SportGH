@@ -3,8 +3,6 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
 import edu.codespring.sportgh.utils.PasswordEncrypter;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -19,8 +17,6 @@ import java.util.Collection;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    @PersistenceContext
-    private final EntityManager entityManager;
 
     @Override
     @Transactional
@@ -33,10 +29,10 @@ public class UserServiceImpl implements UserService {
             user.setUserName(userName);
             user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
             userRepository.save(user);
-            log.info("Signup successful");
+            log.info("Signup successful ({}).", userName);
             return user;
         } catch (DataAccessException e) {
-            log.error(String.format("Signup failed: %s", e.getMessage()));
+            log.error("Signup failed: ({})", e.getMessage());
             throw new ServiceException("Signup failed!", e);
         }
 
@@ -48,12 +44,12 @@ public class UserServiceImpl implements UserService {
             String uuid = userRepository.findUuid(userName);
             String passwordHash = PasswordEncrypter.generateHashedPassword(password, uuid);
             if (userRepository.existsByUserNameAndPassword(userName, passwordHash)) {
-                log.info(String.format("Login successful (%s)", userName));
+                log.info("Login successful ({}).", userName);
             } else {
-                log.error("Invalid credentials!");
+                log.error("Invalid credentials for ({})!", userName);
             }
         } catch (DataAccessException e) {
-            log.error("Login failed!");
+            log.error("Login failed for ({})!\nERROR: ({})", userName, e.getMessage());
             throw new ServiceException("Login failed!", e);
         }
 
