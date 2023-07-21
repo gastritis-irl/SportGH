@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class UserInDTO {
+
     @Size(min = 5, max = 25)
     @NotNull
     private String userName;

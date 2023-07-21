@@ -9,6 +9,7 @@ import java.util.Collection;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+
     @Mapping(source = "id", target = "userID")
     UserOutDTO userToOut(User user);
 

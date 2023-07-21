@@ -1,6 +1,7 @@
 package edu.codespring.SportGH.service;
 
 public class ServiceException extends RuntimeException {
+
     public ServiceException() {
         super();
     }

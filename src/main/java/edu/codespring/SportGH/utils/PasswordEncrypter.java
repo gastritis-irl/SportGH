@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 
 @Slf4j
 public class PasswordEncrypter {
+
     public static String generateHashedPassword(String password, String salt) {
         try {
             MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
@@ -22,7 +23,6 @@ public class PasswordEncrypter {
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
             log.error(e.getMessage());
-            // e.printStackTrace();
             throw new ServiceException("No such algorithm!", e);
         }
 

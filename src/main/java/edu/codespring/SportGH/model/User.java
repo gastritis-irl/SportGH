@@ -16,6 +16,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
+
     @Column(name = "username", unique = true, length = 25)
     private String userName;
     @ToString.Exclude

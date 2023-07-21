@@ -17,6 +17,7 @@ import java.util.Collection;
 @Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     @PersistenceContext
     private final EntityManager entityManager;
@@ -25,8 +26,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User signup(String userName, String password) {
         if (userRepository.existsByUserName(userName)) {
-            userRepository.deleteByUserName(userName);
-            entityManager.flush();
+            throw new ServiceException("Signup failed! User with this username already exists.");
         }
         try {
             User user = new User();
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
             log.info("Signup successful");
             return user;
         } catch (DataAccessException e) {
-            log.error("Signup failed!");
+            log.error(String.format("Signup failed: %s", e.getMessage()));
             throw new ServiceException("Signup failed!", e);
         }
 
@@ -47,12 +47,10 @@ public class UserServiceImpl implements UserService {
         try {
             String uuid = userRepository.findUuid(userName);
             String passwordHash = PasswordEncrypter.generateHashedPassword(password, uuid);
-            // Optional<User> user = userRepository.findByUserNameAndPassword
-            // (userName, PasswordEncrypter.generateHashedPassword(password, uuid));
             if (userRepository.existsByUserNameAndPassword(userName, passwordHash)) {
-                log.info("Login successful");
+                log.info(String.format("Login successful (%s)", userName));
             } else {
-                log.error("Login failed");
+                log.error("Invalid credentials!");
             }
         } catch (DataAccessException e) {
             log.error("Login failed!");
@@ -76,7 +74,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userId);
     }
 
-    // @Override
+    @Override
     public void deleteAll() {
         userRepository.deleteAll();
     }

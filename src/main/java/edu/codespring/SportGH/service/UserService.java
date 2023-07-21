@@ -5,6 +5,7 @@ import edu.codespring.SportGH.model.User;
 import java.util.Collection;
 
 public interface UserService {
+
     User signup(String userName, String password);
 
     void login(String userName, String password);

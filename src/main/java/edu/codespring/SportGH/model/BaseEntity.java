@@ -13,6 +13,7 @@ import lombok.ToString;
 @Data
 @MappedSuperclass
 public abstract class BaseEntity extends AbstractModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
