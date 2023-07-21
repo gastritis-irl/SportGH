@@ -1,10 +1,10 @@
-package edu.codespring.SportGH.controller;
+package edu.codespring.sportgh.controller;
 
-import edu.codespring.SportGH.dto.UserOutDTO;
-import edu.codespring.SportGH.mapper.UserMapper;
-import edu.codespring.SportGH.model.User;
-import edu.codespring.SportGH.dto.UserInDTO;
-import edu.codespring.SportGH.service.UserService;
+import edu.codespring.sportgh.dto.UserOutDTO;
+import edu.codespring.sportgh.mapper.UserMapper;
+import edu.codespring.sportgh.model.User;
+import edu.codespring.sportgh.dto.UserInDTO;
+import edu.codespring.sportgh.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

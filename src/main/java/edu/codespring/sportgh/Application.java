@@ -1,7 +1,7 @@
-package edu.codespring.SportGH;
+package edu.codespring.sportgh;
 
-import edu.codespring.SportGH.service.ServiceException;
-import edu.codespring.SportGH.service.UserService;
+import edu.codespring.sportgh.service.ServiceException;
+import edu.codespring.sportgh.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
