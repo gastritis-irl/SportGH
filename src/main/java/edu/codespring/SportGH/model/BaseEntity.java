@@ -1,4 +1,4 @@
-package edu.codespring.application.model;
+package edu.codespring.SportGH.model;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

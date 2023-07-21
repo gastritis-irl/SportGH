@@ -1,10 +1,8 @@
-package edu.codespring.application.service.impl;
+package edu.codespring.SportGH.service;
 
-import edu.codespring.application.model.User;
-import edu.codespring.application.repository.UserRepository;
-import edu.codespring.application.service.ServiceException;
-import edu.codespring.application.service.UserService;
-import edu.codespring.application.utils.PasswordEncrypter;
+import edu.codespring.SportGH.model.User;
+import edu.codespring.SportGH.repository.UserRepository;
+import edu.codespring.SportGH.utils.PasswordEncrypter;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;

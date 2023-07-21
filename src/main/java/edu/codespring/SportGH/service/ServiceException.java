@@ -1,4 +1,4 @@
-package edu.codespring.application.service;
+package edu.codespring.SportGH.service;
 
 public class ServiceException extends RuntimeException {
     public ServiceException() {

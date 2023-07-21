@@ -1,6 +1,6 @@
-package edu.codespring.application.repository;
+package edu.codespring.SportGH.repository;
 
-import edu.codespring.application.model.User;
+import edu.codespring.SportGH.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

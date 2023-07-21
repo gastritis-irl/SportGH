@@ -1,6 +1,6 @@
-package edu.codespring.application.service;
+package edu.codespring.SportGH.service;
 
-import edu.codespring.application.model.User;
+import edu.codespring.SportGH.model.User;
 
 import java.util.Collection;
 

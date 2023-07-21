@@ -1,7 +1,7 @@
-package edu.codespring.application.mapper;
+package edu.codespring.SportGH.mapper;
 
-import edu.codespring.application.dto.UserOutDTO;
-import edu.codespring.application.model.User;
+import edu.codespring.SportGH.dto.UserOutDTO;
+import edu.codespring.SportGH.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,4 +1,4 @@
-package edu.codespring.application.dto;
+package edu.codespring.SportGH.dto;
 
 import lombok.Data;
 

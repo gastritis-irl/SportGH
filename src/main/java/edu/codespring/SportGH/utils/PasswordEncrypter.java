@@ -1,6 +1,6 @@
-package edu.codespring.application.utils;
+package edu.codespring.SportGH.utils;
 
-import edu.codespring.application.service.ServiceException;
+import edu.codespring.SportGH.service.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.MessageDigest;
