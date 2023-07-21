@@ -12,12 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootApplication
 @RequiredArgsConstructor
 @Slf4j
-public class Application {
+public class SportGH {
 
     private final UserService userService;
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(SportGH.class, args);
     }
 
     @PostConstruct

@@ -1,10 +1,10 @@
-package edu.codespring.application;
+package edu.codespring.sportgh;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApplicationTests {
+class SportGHTests {
 
     @Test
     void contextLoads() {
