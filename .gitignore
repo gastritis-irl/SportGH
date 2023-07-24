@@ -58,7 +58,7 @@ npm-debug.log
 yarn-error.log
 
 ### Miscellaneous ###
-/src/main/webapp/.angular/cache
+/.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
