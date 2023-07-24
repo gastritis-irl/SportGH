@@ -35,3 +35,37 @@ out/
 
 ### VS Code ###
 .vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+### other IDEs and editors ###
+.c9/
+*.launch
+*.sublime-workspace
+
+### Compiled output ###
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+### Node ###
+/node_modules
+npm-debug.log
+yarn-error.log
+
+### Miscellaneous ###
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+### System files ###
+.DS_Store
+Thumbs.db
