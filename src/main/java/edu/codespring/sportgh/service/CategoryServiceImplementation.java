@@ -33,32 +33,61 @@ public class CategoryServiceImplementation implements CategoryService{
 
     @Override
     public void updateCategory(Long categoryID, String categoryName, String categoryDescription, String categoryImageURL) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!categoryRepository.existsById(categoryID)) {
+            throw new ServiceException("Category with this ID does not exist.");
+        }
+        try {
+            Category category = categoryRepository.findById(categoryID).get();
+            category.setName(categoryName);
+            category.setDescription(categoryDescription);
+            category.setImageURL(categoryImageURL);
+            categoryRepository.save(category);
+            log.info("Category updated successfully ({}).", categoryName);
+        } catch (DataAccessException e) {
+            log.error("Category update failed: ({})", e.getMessage());
+            throw new ServiceException("Category update failed!", e);
+        }
     }
 
     @Override
     public void deleteCategory(Long categoryID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!categoryRepository.existsById(categoryID)) {
+            throw new ServiceException("Category with this ID does not exist.");
+        }
+        try {
+            Category category = categoryRepository.findById(categoryID).get();
+            categoryRepository.delete(category);
+            log.info("Category deleted successfully ({}).", category.getName());
+        } catch (DataAccessException e) {
+            log.error("Category deletion failed: ({})", e.getMessage());
+            throw new ServiceException("Category deletion failed!", e);
+        }
     }
 
     @Override
     public void deleteAllCategories() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            categoryRepository.deleteAll();
+            log.info("All categories deleted successfully.");
+        } catch (DataAccessException e) {
+            log.error("Category deletion failed: ({})", e.getMessage());
+            throw new ServiceException("Category deletion failed!", e);
+        }
     }
 
     @Override
     public boolean existsCategory(Long categoryID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return categoryRepository.existsById(categoryID);
     }
 
     @Override
     public boolean existsCategory(String categoryName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return categoryRepository.existsByName(categoryName);
     }
 
     @Override
     public Long countCategories() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return categoryRepository.count();
     }
 
     @Override
@@ -67,17 +96,33 @@ public class CategoryServiceImplementation implements CategoryService{
     }
 
     @Override
-    public void findCategoryById(Long categoryID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Category findCategoryById(Long categoryID) {
+        if (!categoryRepository.existsById(categoryID)) {
+            throw new ServiceException("Category with this ID does not exist.");
+        }
+        try {
+            Category category = categoryRepository.findById(categoryID).get();
+            log.info("Category found successfully ({}).", category.getName());
+            return category;
+        } catch (DataAccessException e) {
+            log.error("Category not found: ({})", e.getMessage());
+            throw new ServiceException("Category not found!", e);
+        }
     }
 
     @Override
-    public void findCategoryByName(String categoryName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Category findCategoryByName(String categoryName) {
+        if (!categoryRepository.existsByName(categoryName)) {
+            throw new ServiceException("Category with this name does not exist.");
+        }
+        try {
+            Category category = categoryRepository.findByName(categoryName);
+            log.info("Category found successfully ({}).", category.getName());
+            return category;
+        } catch (DataAccessException e) {
+            log.error("Category not found: ({})", e.getMessage());
+            throw new ServiceException("Category not found!", e);
+        }
     }
 
-    @Override
-    public void findCategoryByDescription(String categoryDescription) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
