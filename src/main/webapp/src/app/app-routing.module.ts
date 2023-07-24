@@ -5,20 +5,10 @@ import {AppComponent} from "./app.component";
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'users',
         title: 'Users',
         component: UserComponent,
     },
-    {
-        path: '/users',
-        title: 'Users',
-        component: UserComponent,
-    },
-    {
-        path: '/app',
-        title: 'App',
-        component: AppComponent,
-    }
 ];
 
 @NgModule({

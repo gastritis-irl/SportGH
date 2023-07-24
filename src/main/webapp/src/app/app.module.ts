@@ -5,7 +5,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {UserComponent} from './user/user.component';
 import {AppComponent} from "./app.component";
-import {RouterModule} from "@angular/router";
 
 @NgModule({
     declarations: [
@@ -14,14 +13,11 @@ import {RouterModule} from "@angular/router";
     ],
     imports: [
         BrowserModule,
-        RouterModule.forRoot([
-                { path: '', component: UserComponent },
-            ]),
+        AppRoutingModule,
         HttpClientModule
     ],
     providers: [],
     bootstrap: [
-        UserComponent,
         AppComponent
     ]
 })

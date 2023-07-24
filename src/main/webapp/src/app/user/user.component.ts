@@ -5,7 +5,7 @@ import {User} from './user.model';
 @Component({
     selector: 'sgh-user',
     templateUrl: './user.component.html',
-    styleUrls: ['./user.component.scss']
+    styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
     users: [User];
