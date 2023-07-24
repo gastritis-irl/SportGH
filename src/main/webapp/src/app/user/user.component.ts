@@ -19,7 +19,6 @@ export class UserComponent implements OnInit {
     }
 
     getUsersFromServer(): void {
-
         this.userService.getUsers().subscribe(
             {
                 next: (response) => {

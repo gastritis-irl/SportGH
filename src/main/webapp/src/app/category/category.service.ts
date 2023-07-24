@@ -5,10 +5,10 @@ import {AppService} from "../app.service";
 @Injectable({
     providedIn: 'root'
 })
-export class UserService extends AppService {
+export class CategoryService extends AppService {
 
-    getUsers(): Observable<any> {
-        const url: string = `${this.baseUrl}/users`;
+    getCategories(): Observable<any> {
+        const url: string = `${this.baseUrl}/categories`;
         return this.http.get<any>(url);
     }
 }
