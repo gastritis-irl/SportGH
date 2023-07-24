@@ -1,9 +1,8 @@
 package edu.codespring.sportgh.repository;
 
 import edu.codespring.sportgh.model.Category;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-
 
 public interface CategoryRepository  extends JpaRepository<Category, Long>{
 
