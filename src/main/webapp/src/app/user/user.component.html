@@ -1,10 +1,8 @@
 <div>
-  Main page<br>
-<!--  {{this.logUsers()}}-->
-  List of users in database:<br>
-  <div *ngFor="let user of this.users">
-    {{user.userID}} - {{user.userName}}
-  </div>
+    Main page<br>
+    <!--  {{this.logUsers()}}-->
+    List of users in database:<br>
+    <div *ngFor="let user of this.users">
+        {{user.userID}} - {{user.userName}}
+    </div>
 </div>
-
-<router-outlet></router-outlet>
