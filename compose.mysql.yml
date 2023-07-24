@@ -6,28 +6,39 @@
 version: "3.8"
 
 services:
-  educs-mysql:
-    image: mysql:5.7.24
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: sportgh
-      MYSQL_USER: sportgh
-      MYSQL_PASSWORD: 1234
-    ports:
-      - "3306:3306"
-    volumes:
-      - "edu_cs_sportgh_mysql_volume:/var/lib/mysql"
+    educs-mysql:
+        image: mysql:5.7.24
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: 1234
+            MYSQL_DATABASE: sportgh
+            MYSQL_USER: sportgh
+            MYSQL_PASSWORD: 1234
+        ports:
+            - "3306:3306"
+        volumes:
+            - "edu_cs_sportgh_mysql_volume:/var/lib/mysql"
+
+#    educs-backend:
+#        image: project
+#        build:
+#            context: .
+#            dockerfile: DockerfileBackend
+#        restart: unless-stopped
+#        environment:
+#            SPRING_PROFILES_ACTIVE: default
+#        ports:
+#            - "8080:8080"
 #
-#  educs-backend:
-#    image: edu-cs-sportgh
-#    build: "."
-#    restart: unless-stopped
-#    environment:
-#      SPRING_PROFILES_ACTIVE: mysql
-#    ports:
-#      - "8080:8080"
-#
+#    educs-frontend:
+#        image: project
+#        build:
+#            context: .
+#            dockerfile: DockerfileFrontend
+#        restart: unless-stopped
+#        ports:
+#            - "8081:8081"
+
 volumes:
-  edu_cs_sportgh_mysql_volume:
+    edu_cs_sportgh_mysql_volume:
 
