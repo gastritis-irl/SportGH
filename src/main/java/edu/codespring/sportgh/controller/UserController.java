@@ -1,9 +1,9 @@
 package edu.codespring.sportgh.controller;
 
+import edu.codespring.sportgh.dto.UserInDTO;
 import edu.codespring.sportgh.dto.UserOutDTO;
 import edu.codespring.sportgh.mapper.UserMapper;
 import edu.codespring.sportgh.model.User;
-import edu.codespring.sportgh.dto.UserInDTO;
 import edu.codespring.sportgh.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
