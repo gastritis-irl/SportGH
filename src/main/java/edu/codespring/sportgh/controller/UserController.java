@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Collection;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
 public class UserController {
