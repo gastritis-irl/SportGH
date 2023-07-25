@@ -22,27 +22,27 @@ export class CarouselComponent {
         this.categories=[
             {
                 categoryID: 1,
-                categoryName: 'Cat1',
-                categoryDescription: 'First category',
-                categoryImageURL: `https://picsum.photos/id/700/900/500`,
+                name: 'Cat1',
+                description: 'First category',
+                imageURL: `https://picsum.photos/id/700/900/500`,
             },
             {
                 categoryID: 2,
-                categoryName: 'Cat2',
-                categoryDescription: 'Second category',
-                categoryImageURL: `https://picsum.photos/id/533/900/500`,
+                name: 'Cat2',
+                description: 'Second category',
+                imageURL: `https://picsum.photos/id/533/900/500`,
             },
             {
                 categoryID: 3,
-                categoryName: 'Cat3',
-                categoryDescription: 'Third category',
-                categoryImageURL: `https://picsum.photos/id/807/900/500`,
+                name: 'Cat3',
+                description: 'Third category',
+                imageURL: `https://picsum.photos/id/807/900/500`,
             },
             {
                 categoryID: 4,
-                categoryName: 'Cat4',
-                categoryDescription: 'Fourth category',
-                categoryImageURL: `https://picsum.photos/id/124/900/500`,
+                name: 'Cat4',
+                description: 'Fourth category',
+                imageURL: `https://picsum.photos/id/124/900/500`,
             }
         ];
     }
