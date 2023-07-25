@@ -2,6 +2,8 @@ package edu.codespring.sportgh.service;
 
 import edu.codespring.sportgh.model.Category;
 
+import java.util.Collection;
+
 public interface CategoryService {
 
     void createCategory(String categoryName, String categoryDescription, String categoryImageURL);
@@ -18,7 +20,7 @@ public interface CategoryService {
 
     Long countCategories();
 
-    void findAllCategories();
+    Collection<Category> findAllCategories();
 
     Category findCategoryById(Long categoryID);
 

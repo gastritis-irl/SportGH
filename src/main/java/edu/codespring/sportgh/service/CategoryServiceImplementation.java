@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -91,8 +93,8 @@ public class CategoryServiceImplementation implements CategoryService{
     }
 
     @Override
-    public void findAllCategories() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Collection<Category> findAllCategories() {
+        return categoryRepository.findAll();
     }
 
     @Override
