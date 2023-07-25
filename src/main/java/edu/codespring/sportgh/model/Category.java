@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @AllArgsConstructor
-public class Category extends BaseEntity{
+public class Category extends BaseEntity {
 
     @Column(name = "name", unique = true, length = 25)
     private String name;
@@ -24,5 +24,4 @@ public class Category extends BaseEntity{
     @ToString.Exclude
     @Column(name = "imageURL", length = 1000)
     private String imageURL;
-
 }

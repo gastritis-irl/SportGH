@@ -6,9 +6,7 @@ import java.util.Collection;
 
 public interface CategoryService {
 
-    void createCategory(String categoryName, String categoryDescription, String categoryImageURL);
-
-    void updateCategory(Long categoryID, String categoryName, String categoryDescription, String categoryImageURL);
+    void saveCategory(Category category);
 
     void deleteCategory(Long categoryID);
 

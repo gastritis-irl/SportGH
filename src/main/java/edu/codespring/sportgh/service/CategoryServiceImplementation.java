@@ -12,44 +12,27 @@ import java.util.Collection;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class CategoryServiceImplementation implements CategoryService{
+public class CategoryServiceImplementation implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+
     @Override
-    public void createCategory(String categoryName, String categoryDescription, String categoryImageURL) {
-        if (categoryRepository.existsByName(categoryName)) {
+    public void saveCategory(Category category) {
+        if (category.getId() != null && !categoryRepository.existsById(category.getId())) {
+            throw new ServiceException("Category with this ID does not exist.");
+        }
+        if (category.getName() != null && categoryRepository.existsByName(category.getName())) {
             throw new ServiceException("Category with this name already exists.");
         }
         try {
-            Category category = new Category();
-            category.setName(categoryName);
-            category.setDescription(categoryDescription);
-            category.setImageURL(categoryImageURL);
-            categoryRepository.save(category);
-            log.info("Category created successfully ({}).", categoryName);
+            category = categoryRepository.save(category);
+            log.info("Category saved successfully ({}).", category.getName());
         } catch (DataAccessException e) {
-            log.error("Category creation failed: ({})", e.getMessage());
-            throw new ServiceException("Category creation failed!", e);
+            log.error("Category save failed: ({})", e.getMessage());
+            throw new ServiceException("Category save failed!", e);
         }
     }
 
-    @Override
-    public void updateCategory(Long categoryID, String categoryName, String categoryDescription, String categoryImageURL) {
-        if (!categoryRepository.existsById(categoryID)) {
-            throw new ServiceException("Category with this ID does not exist.");
-        }
-        try {
-            Category category = categoryRepository.findById(categoryID).get();
-            category.setName(categoryName);
-            category.setDescription(categoryDescription);
-            category.setImageURL(categoryImageURL);
-            categoryRepository.save(category);
-            log.info("Category updated successfully ({}).", categoryName);
-        } catch (DataAccessException e) {
-            log.error("Category update failed: ({})", e.getMessage());
-            throw new ServiceException("Category update failed!", e);
-        }
-    }
 
     @Override
     public void deleteCategory(Long categoryID) {
