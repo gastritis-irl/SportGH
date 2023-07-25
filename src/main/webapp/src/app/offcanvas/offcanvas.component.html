@@ -1,0 +1,18 @@
+<ng-template #content let-offcanvas>
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title">Login/Sign up</h4>
+    </div>
+
+    <div class="offcanvas-body">
+        User info (token):<br>
+        {{this.userToken}}<br>
+        <br>
+        <form class="offcanvas-form">
+            <input type="email" placeholder="Email address" required>
+            <input type="password" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openEnd(content)">Login/Sign up</button>
