@@ -101,20 +101,4 @@ public class CategoryServiceImplementation implements CategoryService{
     public Category findById(Long categoryID) {
         return categoryRepository.findById(categoryID).orElse(null);
     }
-
-    @Override
-    public Category findCategoryByName(String categoryName) {
-        if (!categoryRepository.existsByName(categoryName)) {
-            throw new ServiceException("Category with this name does not exist.");
-        }
-        try {
-            Category category = categoryRepository.findByName(categoryName);
-            log.info("Category found successfully ({}).", category.getName());
-            return category;
-        } catch (DataAccessException e) {
-            log.error("Category not found: ({})", e.getMessage());
-            throw new ServiceException("Category not found!", e);
-        }
-    }
-
 }

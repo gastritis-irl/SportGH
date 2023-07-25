@@ -23,6 +23,4 @@ public interface CategoryService {
     Collection<Category> findAllCategories();
 
     Category findById(Long categoryID);
-
-    Category findCategoryByName(String categoryName);
 }
