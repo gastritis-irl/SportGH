@@ -11,6 +11,7 @@ import {Category} from "../category/category.model";
     providers: [NgbCarouselConfig],
 })
 export class CarouselComponent {
+
     categories: Category[];
 
     constructor(config: NgbCarouselConfig) {
@@ -19,7 +20,7 @@ export class CarouselComponent {
         config.keyboard = true;
         config.pauseOnHover = true;
 
-        this.categories=[
+        this.categories = [
             {
                 categoryID: 1,
                 name: 'Cat1',

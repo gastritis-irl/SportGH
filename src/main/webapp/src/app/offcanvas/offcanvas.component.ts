@@ -8,14 +8,15 @@ import {NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
     encapsulation: ViewEncapsulation.None,
 })
 export class OffcanvasComponent {
+
     closeResult: string;
 
-    // user informations (logged in / role / image / etc)
-    userToken: string;
+    // user information (logged in / role / image / etc)
+    userData: string;
 
     constructor(private offcanvasService: NgbOffcanvas) {
         this.closeResult = '';
-        this.userToken = 'jwt: 1234abcd, name: user1, <-- const string from component constructor';
+        this.userData = '';
     }
 
     openEnd(content: TemplateRef<any>) {

@@ -8,10 +8,11 @@ import {User} from './user.model';
     styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
-    users: [User];
+
+    users: User[];
 
     constructor(private userService: UserService) {
-        this.users = [{}];
+        this.users = [];
     }
 
     ngOnInit(): void {
@@ -29,9 +30,5 @@ export class UserComponent implements OnInit {
                 },
             }
         );
-    }
-
-    logUsers(): void {
-        console.log(this.users);
     }
 }

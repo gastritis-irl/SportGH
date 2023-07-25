@@ -8,7 +8,8 @@ import {CategoryService} from "./category.service";
     styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
-    categories: [Category];
+
+    categories: Category[];
 
     constructor(private categoryService: CategoryService) {
         this.categories = [{}];

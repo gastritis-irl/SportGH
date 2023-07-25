@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
     providedIn: 'root'
 })
 export class AppService {
+
     protected readonly baseUrl: string = 'http://localhost:8080/api';
 
     constructor(protected http: HttpClient) {
