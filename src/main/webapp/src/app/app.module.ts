@@ -6,6 +6,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {UserComponent} from './user/user.component';
 import {AppComponent} from "./app.component";
 import {CategoryComponent} from "./category/category.component";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import {CategoryComponent} from "./category/category.component";
     imports: [
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        NgbModule
     ],
     providers: [],
     bootstrap: [
