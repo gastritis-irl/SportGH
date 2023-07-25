@@ -5,6 +5,7 @@ import {CategoryComponent} from "./category/category.component";
 import {OffcanvasComponent} from "./offcanvas/offcanvas.component";
 import {CarouselComponent} from "./carousel/carousel.component";
 import {ProductComponent} from "./product/product.component";
+import {NavbarComponent} from "./navbar/navbar.component";
 
 const routes: Routes = [
     {
@@ -31,7 +32,12 @@ const routes: Routes = [
         path: 'products',
         title: 'Products',
         component: ProductComponent,
-    }
+    },
+    {
+        path: 'navbar',
+        title: 'Navbar',
+        component: NavbarComponent,
+    },
 ];
 
 @NgModule({
