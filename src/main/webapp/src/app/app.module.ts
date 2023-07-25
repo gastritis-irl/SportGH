@@ -5,7 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {UserComponent} from './user/user.component';
 import {AppComponent} from "./app.component";
-import {CategoryComponent} from "./category/category.component";
+import {CategoryComponent} from "./home/category/category.component";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ProductComponent} from "./product/product.component";
 

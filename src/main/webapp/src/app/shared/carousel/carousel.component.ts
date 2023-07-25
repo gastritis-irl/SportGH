@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbCarouselConfig, NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgFor, NgIf, NgOptimizedImage} from '@angular/common';
-import {Category} from "../category/category.model";
+import {Category} from "../../home/category/category.model";
 
 @Component({
     selector: 'ngbd-carousel-config',

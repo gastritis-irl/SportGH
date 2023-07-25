@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {UserComponent} from "./user/user.component";
-import {CategoryComponent} from "./category/category.component";
-import {OffcanvasComponent} from "./offcanvas/offcanvas.component";
-import {CarouselComponent} from "./carousel/carousel.component";
+import {CategoryComponent} from "./home/category/category.component";
+import {OffcanvasComponent} from "./shared/offcanvas/offcanvas.component";
+import {CarouselComponent} from "./shared/carousel/carousel.component";
 import {ProductComponent} from "./product/product.component";
-import {NavbarComponent} from "./navbar/navbar.component";
+import {NavbarComponent} from "./shared/navbar/navbar.component";
 
 const routes: Routes = [
     {
