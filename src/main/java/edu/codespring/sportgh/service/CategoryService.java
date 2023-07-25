@@ -22,7 +22,7 @@ public interface CategoryService {
 
     Collection<Category> findAllCategories();
 
-    Category findCategoryById(Long categoryID);
+    Category findById(Long categoryID);
 
     Category findCategoryByName(String categoryName);
 }

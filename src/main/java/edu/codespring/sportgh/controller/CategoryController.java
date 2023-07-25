@@ -27,7 +27,7 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.GET, path = "/{categoryId}")
     public CategoryOutDTO findById(@PathVariable Long categoryId) {
         // TODO: Implement this method so it loads the products of the category as well.
-        Category category = categoryService.findCategoryById(categoryId);
+        Category category = categoryService.findById(categoryId);
         if (category == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -46,13 +46,18 @@ public class CategoryController {
 
     @RequestMapping(method = RequestMethod.POST)
     public CategoryOutDTO createCategory(@RequestBody CategoryOutDTO categoryOutDTO) {
-        categoryService.createCategory(categoryOutDTO.getCategoryName(), categoryOutDTO.getCategoryDescription(), categoryOutDTO.getImageURL());
+        categoryService.createCategory(categoryOutDTO.getName(), categoryOutDTO.getDescription(), categoryOutDTO.getImageURL());
         return categoryOutDTO;
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/{categoryId}")
     public CategoryOutDTO updateCategory(@PathVariable Long categoryId, @RequestBody CategoryOutDTO categoryOutDTO) {
-        categoryService.updateCategory(categoryId, categoryOutDTO.getCategoryName(), categoryOutDTO.getCategoryDescription(), categoryOutDTO.getImageURL());
+        if(categoryService.existsCategory(categoryId)) {
+
+            categoryService.updateCategory(categoryId, categoryOutDTO.getName(), categoryOutDTO.getDescription(), categoryOutDTO.getImageURL());
+        }else{
+            categoryService.createCategory(categoryOutDTO.getName(), categoryOutDTO.getDescription(), categoryOutDTO.getImageURL());
+        }
         return categoryOutDTO;
     }
 

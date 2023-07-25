@@ -18,11 +18,11 @@ public class Category extends BaseEntity{
     @Column(name = "name", unique = true, length = 25)
     private String name;
 
-    @Column(name = "description", length = 100)
+    @Column(name = "description", length = 1000)
     private String description;
 
     @ToString.Exclude
-    @Column(name = "imageURL", length = 100)
+    @Column(name = "imageURL", length = 1000)
     private String imageURL;
 
 }
