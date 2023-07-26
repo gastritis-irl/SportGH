@@ -2,10 +2,11 @@ import {Component, TemplateRef, ViewEncapsulation} from '@angular/core';
 import {NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'ngbd-offcanvas-options',
+    selector: 'sgh-offcanvas',
     standalone: true,
     templateUrl: './offcanvas.component.html',
     encapsulation: ViewEncapsulation.None,
+    styleUrls: [],
 })
 export class OffcanvasComponent {
 
@@ -20,6 +21,6 @@ export class OffcanvasComponent {
     }
 
     openEnd(content: TemplateRef<any>) {
-        this.offcanvasService.open(content, {position: 'end', scroll: true});
+        this.offcanvasService.open(content, {position: 'start', scroll: true});
     }
 }

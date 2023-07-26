@@ -16,7 +16,7 @@ export class CategoryComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getCategoriesFromServer();
+        this.getTemplateCategories();
     }
 
     getCategoriesFromServer(): void {
@@ -30,5 +30,34 @@ export class CategoryComponent implements OnInit {
                 },
             }
         );
+    }
+
+    getTemplateCategories(): void {
+        this.categories = [
+            {
+                categoryID: 1,
+                name: 'Cat1',
+                description: 'First category',
+                imageURL: `https://picsum.photos/id/700/900/500`,
+            },
+            {
+                categoryID: 2,
+                name: 'Cat2',
+                description: 'Second category',
+                imageURL: `https://picsum.photos/id/533/900/500`,
+            },
+            {
+                categoryID: 3,
+                name: 'Cat3',
+                description: 'Third category',
+                imageURL: `https://picsum.photos/id/807/900/500`,
+            },
+            {
+                categoryID: 4,
+                name: 'Cat4',
+                description: 'Fourth category',
+                imageURL: `https://picsum.photos/id/124/900/500`,
+            }
+        ];
     }
 }

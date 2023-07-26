@@ -1,11 +1,13 @@
-<ngb-carousel *ngIf="categories">
-    <ng-template ngbSlide *ngFor="let category of categories">
-        <div class="picsum-img-wrapper">
-            <img [src]="category.imageURL" alt="Random slide"/>
-        </div>
-        <div class="carousel-caption">
-            <h3>{{category.name}}</h3>
-            <p>{{category.description}}</p>
-        </div>
-    </ng-template>
-</ngb-carousel>
+<div class="carouselComp">
+    <ngb-carousel *ngIf="categories">
+        <ng-template ngbSlide *ngFor="let category of categories">
+            <div class="picsum-img-wrapper">
+                <img [src]="category.imageURL" alt="Random slide"/>
+            </div>
+            <div class="carousel-caption">
+                <h3>{{category.name}}</h3>
+                <p>{{category.description}}</p>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+</div>

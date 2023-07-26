@@ -6,38 +6,13 @@ import {OffcanvasComponent} from "./shared/offcanvas/offcanvas.component";
 import {CarouselComponent} from "./shared/carousel/carousel.component";
 import {ProductComponent} from "./product/product.component";
 import {NavbarComponent} from "./shared/navbar/navbar.component";
+import {HomeComponent} from "./home/home.component";
 
 const routes: Routes = [
     {
-        path: 'users',
-        title: 'Users',
-        component: UserComponent,
-    },
-    {
-        path: 'categories',
-        title: 'Categories',
-        component: CategoryComponent,
-    },
-    {
-        path: 'offcanvas',
-        title: 'Offcanvas',
-        component: OffcanvasComponent,
-    },
-    {
-        path: 'carousel',
-        title: 'Carousel',
-        component: CarouselComponent,
-    },
-    {
-        path: 'products',
-        title: 'Products',
-        component: ProductComponent,
-    },
-    {
-        path: 'navbar',
-        title: 'Navbar',
-        component: NavbarComponent,
-    },
+        path: 'home',
+        component: HomeComponent,
+    }
 ];
 
 @NgModule({

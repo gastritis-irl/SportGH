@@ -2,9 +2,10 @@ import {Component} from '@angular/core';
 import {NgbCarouselConfig, NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgFor, NgIf, NgOptimizedImage} from '@angular/common';
 import {Category} from "../../home/category/category.model";
+import {CategoryComponent} from "../../home/category/category.component";
 
 @Component({
-    selector: 'ngbd-carousel-config',
+    selector: 'sgh-carousel',
     standalone: true,
     imports: [NgbCarouselModule, NgIf, NgOptimizedImage, NgFor],
     templateUrl: './carousel.component.html',
@@ -14,37 +15,13 @@ export class CarouselComponent {
 
     categories: Category[];
 
-    constructor(config: NgbCarouselConfig) {
-        config.interval = 2000;
+    constructor(config: NgbCarouselConfig, private catComp: CategoryComponent) {
+        config.interval = 5000;
         config.wrap = false;
         config.keyboard = true;
         config.pauseOnHover = true;
 
-        this.categories = [
-            {
-                categoryID: 1,
-                name: 'Cat1',
-                description: 'First category',
-                imageURL: `https://picsum.photos/id/700/900/500`,
-            },
-            {
-                categoryID: 2,
-                name: 'Cat2',
-                description: 'Second category',
-                imageURL: `https://picsum.photos/id/533/900/500`,
-            },
-            {
-                categoryID: 3,
-                name: 'Cat3',
-                description: 'Third category',
-                imageURL: `https://picsum.photos/id/807/900/500`,
-            },
-            {
-                categoryID: 4,
-                name: 'Cat4',
-                description: 'Fourth category',
-                imageURL: `https://picsum.photos/id/124/900/500`,
-            }
-        ];
+        catComp.getTemplateCategories();
+        this.categories = catComp.categories;
     }
 }

@@ -5,7 +5,7 @@ import {Product} from "./product.model";
 @Component({
     selector: 'sgh-product',
     templateUrl: './product.component.html',
-    styleUrls: [''],
+    styleUrls: [],
 })
 export class ProductComponent implements OnInit {
 
