@@ -22,11 +22,11 @@ export class ProductComponent implements OnInit {
     getProductsFromServer(): void {
         this.productService.getProducts().subscribe(
             {
-                next: (response): void => {
+                next: (response: Product[]): void => {
                     this.products = response;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data:', error);
+                    console.error('Error fetching data (products):', error);
                 }
             }
         )

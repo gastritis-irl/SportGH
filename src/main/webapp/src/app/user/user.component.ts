@@ -22,11 +22,11 @@ export class UserComponent implements OnInit {
     getUsersFromServer(): void {
         this.userService.getUsers().subscribe(
             {
-                next: (response) => {
+                next: (response: User[]): void => {
                     this.users = response;
                 },
-                error: (error) => {
-                    console.error('Error fetching data:', error);
+                error: (error): void => {
+                    console.error('Error fetching data (users):', error);
                 },
             }
         );

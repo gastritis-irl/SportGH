@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbCarouselConfig, NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgFor, NgIf, NgOptimizedImage} from '@angular/common';
 import {Category} from "../../home/category/category.model";
-import {CategoryComponent} from "../../home/category/category.component";
+import {CategoryService} from "../../home/category/category.service";
 
 @Component({
     selector: 'sgh-carousel',
@@ -11,17 +11,29 @@ import {CategoryComponent} from "../../home/category/category.component";
     templateUrl: './carousel.component.html',
     providers: [NgbCarouselConfig],
 })
-export class CarouselComponent {
+export class CarouselComponent implements OnInit {
 
     categories: Category[];
 
-    constructor(config: NgbCarouselConfig, private catComp: CategoryComponent) {
+    constructor(config: NgbCarouselConfig, private categoryService: CategoryService) {
         config.interval = 5000;
         config.wrap = false;
         config.keyboard = true;
         config.pauseOnHover = true;
 
-        catComp.getTemplateCategories();
-        this.categories = catComp.categories;
+        this.categories = [];
+    }
+
+    ngOnInit(): void {
+        this.categoryService.getCategories().subscribe(
+            {
+                next: (response): void => {
+                    this.categories = response;
+                },
+                error: (error): void => {
+                    console.error('Error fetching data:', error);
+                }
+            }
+        )
     }
 }

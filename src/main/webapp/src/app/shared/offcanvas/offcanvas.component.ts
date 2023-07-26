@@ -20,7 +20,7 @@ export class OffcanvasComponent {
         this.userData = '';
     }
 
-    openEnd(content: TemplateRef<any>) {
+    openOc(content: TemplateRef<any>) {
         this.offcanvasService.open(content, {position: 'start', scroll: true});
     }
 }
