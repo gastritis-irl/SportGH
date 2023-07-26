@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -32,12 +33,12 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.GET, path = "/{categoryId}")
     public CategoryOutDTO findById(@PathVariable Long categoryId) {
         // TODO: Implement this method so it loads the products of the category as well.
-        Category category = categoryService.findById(categoryId);
-        if (category == null) {
-            log.error("Category with ID {} not found.", categoryId);
+        Optional<Category> category = categoryService.findById(categoryId);
+        if (category.isEmpty()) {
+            log.warn("Category with ID {} not found.", categoryId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return categoryMapper.categoryToOut(category);
+        return categoryMapper.categoryToOut(category.get());
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{categoryId}")
@@ -58,11 +59,7 @@ public class CategoryController {
         categoryService.saveCategory(category);
         CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
 
-        if (categoryId == null) {
-            return new ResponseEntity<>(categoryOutDTO, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/count")
