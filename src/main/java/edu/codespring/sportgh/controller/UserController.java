@@ -18,37 +18,37 @@ import java.util.Collection;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserService userService;
-    private final UserMapper userMapper;
+  private final UserService userService;
+  private final UserMapper userMapper;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Collection<UserOutDTO> findAllUsers() {
-        Collection<User> users = userService.findAll();
-        return userMapper.usersToOuts(users);
-    }
+  @RequestMapping(method = RequestMethod.GET)
+  public Collection<UserOutDTO> findAllUsers() {
+    Collection<User> users = userService.findAll();
+    return userMapper.usersToOuts(users);
+  }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{userId}")
-    public UserOutDTO findById(@PathVariable Long userId) {
-        User user = userService.findById(userId);
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return userMapper.userToOut(user);
+  @RequestMapping(method = RequestMethod.GET, path = "/{userId}")
+  public UserOutDTO findById(@PathVariable Long userId) {
+    User user = userService.findById(userId);
+    if (user == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
+    return userMapper.userToOut(user);
+  }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/{userId}")
-    public void deleteById(@PathVariable Long userId) {
-        userService.deleteById(userId);
-    }
+  @RequestMapping(method = RequestMethod.DELETE, path = "/{userId}")
+  public void deleteById(@PathVariable Long userId) {
+    userService.deleteById(userId);
+  }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public UserOutDTO createUser(@RequestBody @Valid UserInDTO userInDTO) {
-        User user = userService.signup(userInDTO.getUserName(), userInDTO.getPassword());
-        return userMapper.userToOut(user);
-    }
+  @RequestMapping(method = RequestMethod.POST)
+  public UserOutDTO createUser(@RequestBody @Valid UserInDTO userInDTO) {
+    User user = userService.signup(userInDTO.getUserName(), userInDTO.getPassword());
+    return userMapper.userToOut(user);
+  }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void deleteAllUsers() {
-        userService.deleteAll();
-    }
+  @RequestMapping(method = RequestMethod.DELETE)
+  public void deleteAllUsers() {
+    userService.deleteAll();
+  }
 }
