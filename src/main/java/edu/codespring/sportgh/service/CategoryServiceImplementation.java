@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -18,14 +19,10 @@ public class CategoryServiceImplementation implements CategoryService {
 
     @Override
     public void saveCategory(Category category) {
-        if (category.getId() != null && !categoryRepository.existsById(category.getId())) {
-            throw new ServiceException("Category with this ID does not exist.");
-        }
-        if (category.getName() != null && categoryRepository.existsByName(category.getName())) {
-            throw new ServiceException("Category with this name already exists.");
-        }
+        // Hibernate decides whether to perform an insert or an update operation based on the id field of the Category instance.
+        // If the id field is null, it will perform an insert; otherwise, it will perform an update.
         try {
-            category = categoryRepository.save(category);
+            categoryRepository.save(category);
             log.info("Category saved successfully ({}).", category.getName());
         } catch (DataAccessException e) {
             log.error("Category save failed: ({})", e.getMessage());
@@ -35,14 +32,14 @@ public class CategoryServiceImplementation implements CategoryService {
 
 
     @Override
-    public void deleteCategory(Long categoryID) {
-        if (!categoryRepository.existsById(categoryID)) {
-            throw new ServiceException("Category with this ID does not exist.");
-        }
+    public void deleteCategory(Long categoryId) {
         try {
-            Category category = categoryRepository.findById(categoryID).get();
-            categoryRepository.delete(category);
-            log.info("Category deleted successfully ({}).", category.getName());
+            if (categoryRepository.existsById(categoryId)) {
+                categoryRepository.deleteById(categoryId);
+                log.info("Category deleted successfully (ID: {}).", categoryId);
+            } else {
+                log.info("Category with ID {} does not exist. Nothing to delete.", categoryId);
+            }
         } catch (DataAccessException e) {
             log.error("Category deletion failed: ({})", e.getMessage());
             throw new ServiceException("Category deletion failed!", e);
@@ -81,7 +78,12 @@ public class CategoryServiceImplementation implements CategoryService {
     }
 
     @Override
-    public Category findById(Long categoryID) {
-        return categoryRepository.findById(categoryID).orElse(null);
+    public Optional<Category> findById(Long categoryId) {
+        try {
+            return categoryRepository.findById(categoryId);
+        } catch (DataAccessException e) {
+            log.error("Failed to find category by ID: ({})", e.getMessage());
+            throw new ServiceException("Failed to find category!", e);
+        }
     }
 }

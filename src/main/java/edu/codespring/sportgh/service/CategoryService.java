@@ -3,6 +3,7 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.model.Category;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface CategoryService {
 
@@ -20,5 +21,5 @@ public interface CategoryService {
 
     Collection<Category> findAllCategories();
 
-    Category findById(Long categoryID);
+    Optional<Category> findById(Long categoryID);
 }
