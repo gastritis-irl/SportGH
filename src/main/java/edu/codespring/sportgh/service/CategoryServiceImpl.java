@@ -19,8 +19,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void saveCategory(Category category) {
-        // Hibernate decides whether to perform an insert or an update operation based on the id field of the Category instance.
-        // If the id field is null, it will perform an insert; otherwise, it will perform an update.
         try {
             categoryRepository.save(category);
             log.info("Category saved successfully ({}).", category.getName());
