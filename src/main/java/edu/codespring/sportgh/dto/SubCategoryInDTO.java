@@ -1,6 +1,5 @@
 package edu.codespring.sportgh.dto;
 
-import edu.codespring.sportgh.model.Category;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -12,5 +11,6 @@ public class SubCategoryInDTO {
   @NotNull
   private String name;
 
-  private Category category;
+  @NotNull
+  private CategoryInDTO category;
 }
