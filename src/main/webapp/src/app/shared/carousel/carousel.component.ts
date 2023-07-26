@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgbCarouselConfig, NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgFor, NgIf, NgOptimizedImage} from '@angular/common';
 import {Category} from "../../home/category/category.model";
-import {CategoryService} from "../../home/category/category.service";
+import {Observable, of} from "rxjs";
 
 @Component({
     selector: 'sgh-carousel',
@@ -13,27 +13,22 @@ import {CategoryService} from "../../home/category/category.service";
 })
 export class CarouselComponent implements OnInit {
 
+    @Input() categoriesObservable: Observable<Category[]>;
     categories: Category[];
 
-    constructor(config: NgbCarouselConfig, private categoryService: CategoryService) {
+    constructor(config: NgbCarouselConfig) {
         config.interval = 5000;
         config.wrap = false;
         config.keyboard = true;
         config.pauseOnHover = true;
 
+        this.categoriesObservable = of([]);
         this.categories = [];
     }
 
     ngOnInit(): void {
-        this.categoryService.getCategories().subscribe(
-            {
-                next: (response): void => {
-                    this.categories = response;
-                },
-                error: (error): void => {
-                    console.error('Error fetching data:', error);
-                }
-            }
-        )
+        this.categoriesObservable.subscribe((data: Category[]): void => {
+            this.categories = data;
+        })
     }
 }
