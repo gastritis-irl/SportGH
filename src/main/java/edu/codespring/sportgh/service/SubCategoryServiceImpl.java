@@ -8,7 +8,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -74,10 +73,10 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     return subCategoryRepository.findAll();
   }
 
-  @Override
-  public Optional<SubCategory> findById(Long subCategoryID) {
+    @Override
+  public Collection<SubCategory> findByIds(Collection<Long> subCategoryIDs) {
     try{
-      return subCategoryRepository.findById(subCategoryID);
+      return subCategoryRepository.findByIdIn(subCategoryIDs);
     } catch (DataAccessException e) {
       log.error("SubCategory find failed: ({})", e.getMessage());
       throw new ServiceException("SubCategory find failed!", e);

@@ -10,7 +10,7 @@ import java.util.Collection;
 @Mapper(componentModel = "spring")
 public interface SubCategoryMapper {
 
-  @Mapping(source = "id", target = "subCategoryID")
+  @Mapping(source = "id", target = "subCategoryId")
   SubCategoryOutDTO subCategoryToOut(SubCategory subCategory);
 
   SubCategory dtoToSubCategory(SubCategoryOutDTO subCategoryOutDTO);

@@ -11,7 +11,7 @@ import java.util.Collection;
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
 
-  @Mapping(source = "id", target = "categoryID")
+  @Mapping(source = "id", target = "categoryId")
   CategoryOutDTO categoryToOut(Category category);
 
   Collection<CategoryOutDTO> categoriesToOuts(Collection<Category> categories);

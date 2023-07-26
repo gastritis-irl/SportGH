@@ -3,7 +3,6 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.model.SubCategory;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public interface SubCategoryService {
 
@@ -21,5 +20,5 @@ public interface SubCategoryService {
 
   Collection<SubCategory> findAll();
 
-  Optional<SubCategory> findById(Long subCategoryID);
+  Collection<SubCategory> findByIds(Collection<Long> subCategoryIDs);
 }
