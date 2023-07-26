@@ -10,13 +10,13 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class AbstractModel {
 
-    @Column(length = 36)
-    private String uuid;
+  @Column(length = 36)
+  private String uuid;
 
-    public String getUuid() {
-        if (uuid == null) {
-            uuid = UUID.randomUUID().toString();
-        }
-        return uuid;
+  public String getUuid() {
+    if (uuid == null) {
+      uuid = UUID.randomUUID().toString();
     }
+    return uuid;
+  }
 }
