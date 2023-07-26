@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class SubCategoryInDTO {
 
-  @Size(min = 5, max = 25)
-  @NotNull
-  private String name;
+    @Size(min = 5, max = 25)
+    @NotNull
+    private String name;
 
-  @NotNull
-  private CategoryInDTO category;
+    @NotNull
+    private CategoryInDTO category;
 }

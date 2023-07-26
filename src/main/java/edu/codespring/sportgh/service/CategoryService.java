@@ -7,19 +7,19 @@ import java.util.Optional;
 
 public interface CategoryService {
 
-  void saveCategory(Category category);
+    void saveCategory(Category category);
 
-  void deleteCategory(Long categoryID);
+    void deleteCategory(Long categoryID);
 
-  void deleteAllCategories();
+    void deleteAllCategories();
 
-  boolean existsCategory(Long categoryID);
+    boolean existsCategory(Long categoryID);
 
-  boolean existsCategory(String categoryName);
+    boolean existsCategory(String categoryName);
 
-  Long countCategories();
+    Long countCategories();
 
-  Collection<Category> findAllCategories();
+    Collection<Category> findAllCategories();
 
-  Optional<Category> findById(Long categoryID);
+    Optional<Category> findById(Long categoryID);
 }

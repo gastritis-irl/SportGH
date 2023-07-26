@@ -7,11 +7,11 @@ import java.util.Collection;
 
 public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
 
-  SubCategory findByName(String name);
+    SubCategory findByName(String name);
 
-  void deleteByName(String name);
+    void deleteByName(String name);
 
-  boolean existsByName(String name);
+    boolean existsByName(String name);
 
-  Collection<SubCategory> findByIdIn(Collection<Long> subCategoryIDs);
+    Collection<SubCategory> findByIdIn(Collection<Long> subCategoryIDs);
 }
