@@ -1,10 +1,15 @@
-image: gradle:latest
+stages:
+    - build
+    - test1     # backend
+    - test2     # frontend
+    - deploy
 
 before_script:
     - GRADLE_USER_HOME="$(pwd)/.gradle"
     - export GRADLE_USER_HOME
 
 build:
+    image: gradle:7.4.2-jdk17-alpine
     stage: build
     script: gradle --build-cache assemble
     cache:
@@ -14,11 +19,23 @@ build:
             - build
             - .gradle
 
-test:
-    stage: test
+test1:
+    image: gradle:7.4.2-jdk17-alpine
+    stage: test1
     script:
         - gradle check
-#        - eslint .
+    cache:
+        key: "$CI_COMMIT_REF_NAME"
+        policy: pull
+        paths:
+            - build
+            - .gradle
+
+test2:
+    image: node:18.14.2-alpine3.17
+    stage: test2
+    script:
+        - eslint .
     cache:
         key: "$CI_COMMIT_REF_NAME"
         policy: pull
