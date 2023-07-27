@@ -14,9 +14,19 @@ build:
             - build
             - .gradle
 
-test:
-    stage: test
+test1:
+    stage: test1
     script: gradle check
+    cache:
+        key: "$CI_COMMIT_REF_NAME"
+        policy: pull
+        paths:
+            - build
+            - .gradle
+
+test2:
+    stage: test2
+    script: npg eslint .
     cache:
         key: "$CI_COMMIT_REF_NAME"
         policy: pull
