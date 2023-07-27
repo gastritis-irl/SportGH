@@ -12,5 +12,6 @@ public class SubCategoryInDTO {
   private String name;
 
   @NotNull
-  private CategoryInDTO category;
+  private Long categoryId;
 }
+

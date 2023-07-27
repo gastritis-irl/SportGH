@@ -2,6 +2,7 @@ package edu.codespring.sportgh.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -13,11 +14,12 @@ import lombok.*;
 @AllArgsConstructor
 public class SubCategory extends BaseEntity {
 
-  @Column(name = "name", unique = true, length = 25)
-  private String name;
+    @Column(name = "name", unique = true, length = 25)
+    @NotNull
+    private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "category_id")
-  private Category category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 }

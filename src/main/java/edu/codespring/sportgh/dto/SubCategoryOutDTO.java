@@ -9,5 +9,5 @@ public class SubCategoryOutDTO {
 
   private String name;
 
-  private CategoryOutDTO category;
+  private Long categoryId;
 }

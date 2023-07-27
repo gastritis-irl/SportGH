@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.controller;
 
+import edu.codespring.sportgh.dto.SubCategoryInDTO;
 import edu.codespring.sportgh.dto.SubCategoryOutDTO;
 import edu.codespring.sportgh.mapper.SubCategoryMapper;
 import edu.codespring.sportgh.model.SubCategory;
@@ -10,10 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -47,11 +45,18 @@ public class SubCategoryController {
         subCategoryService.deleteAll();
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
-    public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryOutDTO subCategoryOutDTO) {
-        SubCategory subCategory = subCategoryMapper.dtoToSubCategory(subCategoryOutDTO);
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{subCategoryId}")
+    public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO, @PathVariable(required = false) Long subCategoryId) {
+        if(subCategoryService.existsById(subCategoryId)){
+            log.info("Updating subCategory with ID {}.", subCategoryId);
+        } else {
+            log.info("Creating new subCategory.");
+        }
+        SubCategory subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
+        subCategory.setId(subCategoryId);
         subCategoryService.save(subCategory);
         SubCategoryOutDTO subCategoryOutDTO1 = subCategoryMapper.subCategoryToOut(subCategory);
+
         return ResponseEntity.ok(subCategoryOutDTO1);
     }
 }

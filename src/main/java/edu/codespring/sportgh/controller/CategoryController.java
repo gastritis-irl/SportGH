@@ -21,49 +21,56 @@ import java.util.Optional;
 @Slf4j
 public class CategoryController {
 
-  private final CategoryService categoryService;
-  private final CategoryMapper categoryMapper;
+    private final CategoryService categoryService;
+    private final CategoryMapper categoryMapper;
 
-  @RequestMapping(method = RequestMethod.GET)
-  public Collection<CategoryOutDTO> findAllCategories() {
-    Collection<Category> categories = categoryService.findAllCategories();
-    return categoryMapper.categoriesToOuts(categories);
-  }
-
-  @RequestMapping(method = RequestMethod.GET, path = "/{categoryId}")
-  public CategoryOutDTO findById(@PathVariable Long categoryId) {
-    // TODO: Implement this method so it loads the products of the category as well.
-    Optional<Category> category = categoryService.findById(categoryId);
-    if (category.isEmpty()) {
-      log.warn("Category with ID {} not found.", categoryId);
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    @RequestMapping(method = RequestMethod.GET)
+    public Collection<CategoryOutDTO> findAllCategories() {
+        Collection<Category> categories = categoryService.findAllCategories();
+        return categoryMapper.categoriesToOuts(categories);
     }
-    return categoryMapper.categoryToOut(category.get());
-  }
 
-  @RequestMapping(method = RequestMethod.DELETE, path = "/{categoryId}")
-  public void deleteById(@PathVariable Long categoryId) {
-    log.info("Deleting category with ID {}.", categoryId);
-    categoryService.deleteCategory(categoryId);
-  }
+    @RequestMapping(method = RequestMethod.GET, path = "/{categoryId}")
+    public CategoryOutDTO findById(@PathVariable Long categoryId) {
+        // TODO: Implement this method so it loads the products of the category as well.
+        Optional<Category> category = categoryService.findById(categoryId);
+        if (category.isEmpty()) {
+            log.warn("Category with ID {} not found.", categoryId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return categoryMapper.categoryToOut(category.get());
+    }
 
-  @RequestMapping(method = RequestMethod.DELETE)
-  public void deleteAllCategories() {
-    categoryService.deleteAllCategories();
-  }
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{categoryId}")
+    public void deleteById(@PathVariable Long categoryId) {
+        log.info("Deleting category with ID {}.", categoryId);
+        categoryService.deleteCategory(categoryId);
+    }
 
-  @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
-  public ResponseEntity<CategoryOutDTO> saveCategory(@RequestBody CategoryInDTO categoryInDTO) {
-    Category category = categoryMapper.dtoToCategory(categoryInDTO);
-    categoryService.saveCategory(category);
-    CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void deleteAllCategories() {
+        categoryService.deleteAllCategories();
+    }
 
-    return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
-  }
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{categoryId}")
+    public ResponseEntity<CategoryOutDTO> saveCategory(@RequestBody CategoryInDTO categoryInDTO, @PathVariable(required = false) Long categoryId) {
+        if(categoryService.existsCategory(categoryId)){
+            log.info("Updating category with ID {}.", categoryId);
+        } else {
+            log.info("Creating new category.");
+        }
+        Category category = categoryMapper.inDtoToCategory(categoryInDTO);
+        category.setId(categoryId); // If id is null, it creates a new Category, else it updates the existing one
+        categoryService.saveCategory(category);
+        CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
 
-  @RequestMapping(method = RequestMethod.GET, path = "/count")
-  public Long countCategories() {
-    return categoryService.countCategories();
-  }
+        return new ResponseEntity<>(categoryOutDTO, categoryId == null ? HttpStatus.CREATED : HttpStatus.OK);
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, path = "/count")
+    public Long countCategories() {
+        return categoryService.countCategories();
+    }
 }
 
