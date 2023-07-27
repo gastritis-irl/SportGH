@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class SubCategoryOutDTO {
 
-    private Long subCategoryId;
+  private Long subCategoryId;
 
-    private String name;
+  private String name;
 
-    private CategoryOutDTO category;
+  private CategoryOutDTO category;
 }

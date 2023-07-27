@@ -52,9 +52,9 @@ task violations(type: se.bjurr.violations.gradle.plugin.ViolationsTask) {
     maxViolations = 0 // Will fail the build if total number of found violations is higher
 
     violations = [
-        ["FINDBUGS", buildDir.path, ".*/spotbugs/.*\\.xml\$", "SpotBugs"],
-        ["PMD", buildDir.path, ".*/pmd/.*\\.xml\$", "PMD"],
-        ["CHECKSTYLE", buildDir.path, ".*/checkstyle/.*\\.xml\$", "Checkstyle"]
+            ["FINDBUGS", buildDir.path, ".*/spotbugs/.*\\.xml\$", "SpotBugs"],
+            ["PMD", buildDir.path, ".*/pmd/.*\\.xml\$", "PMD"],
+            ["CHECKSTYLE", buildDir.path, ".*/checkstyle/.*\\.xml\$", "Checkstyle"]
     ]
 }
 

@@ -13,11 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 public class SubCategory extends BaseEntity {
 
-    @Column(name = "name", unique = true, length = 25)
-    private String name;
+  @Column(name = "name", unique = true, length = 25)
+  private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+  @ManyToOne
+  @JoinColumn(name = "category_id")
+  private Category category;
 
 }
