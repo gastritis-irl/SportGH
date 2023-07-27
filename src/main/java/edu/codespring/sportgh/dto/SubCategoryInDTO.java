@@ -7,6 +7,9 @@ import lombok.Data;
 @Data
 public class SubCategoryInDTO {
 
+  @NotNull
+  private Long subCategoryId;
+
   @Size(min = 5, max = 25)
   @NotNull
   private String name;

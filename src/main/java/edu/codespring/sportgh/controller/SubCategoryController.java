@@ -45,18 +45,21 @@ public class SubCategoryController {
         subCategoryService.deleteAll();
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{subCategoryId}")
-    public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO, @PathVariable(required = false) Long subCategoryId) {
-        if(subCategoryService.existsById(subCategoryId)){
-            log.info("Updating subCategory with ID {}.", subCategoryId);
-        } else {
-            log.info("Creating new subCategory.");
-        }
-        SubCategory subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
-        subCategory.setId(subCategoryId);
-        subCategoryService.save(subCategory);
-        SubCategoryOutDTO subCategoryOutDTO1 = subCategoryMapper.subCategoryToOut(subCategory);
-
-        return ResponseEntity.ok(subCategoryOutDTO1);
+  @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{subCategoryId}")
+  public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO, @PathVariable(required = false) Long subCategoryId) {
+    SubCategory subCategory;
+    if(subCategoryId != null && subCategoryService.existsById(subCategoryId)){
+      log.info("Updating subCategory with ID {}.", subCategoryId);
+      subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
+      subCategory.setId(subCategoryId);
+    } else {
+      log.info("Creating new subCategory.");
+      subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
     }
+    subCategoryService.save(subCategory);
+    SubCategoryOutDTO subCategoryOutDTO1 = subCategoryMapper.subCategoryToOut(subCategory);
+
+    return ResponseEntity.ok(subCategoryOutDTO1);
+  }
+
 }

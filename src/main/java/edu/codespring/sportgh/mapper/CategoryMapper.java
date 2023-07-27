@@ -20,6 +20,7 @@ public interface CategoryMapper {
 
     Collection<CategoryOutDTO> categoriesToOuts(Collection<Category> categories);
 
+    @Mapping(source = "categoryId", target = "id")
     @Mapping(source = "categoryName", target = "name")
     @Mapping(source = "categoryDescription", target = "description")
     @Mapping(source = "categoryImageURL", target = "imageURL")
