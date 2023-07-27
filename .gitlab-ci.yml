@@ -1,8 +1,13 @@
-image: gradle:alpine
+image: gradle:latest
 
 before_script:
     - GRADLE_USER_HOME="$(pwd)/.gradle"
     - export GRADLE_USER_HOME
+
+install-node:
+    stage: setup
+    script:
+        - apk add --no-cache nodejs npm
 
 build:
     stage: build
@@ -18,7 +23,7 @@ test:
     stage: test
     script:
         - gradle check
-        - npm ci
+        - npm install -g eslint
         - eslint .
     cache:
         key: "$CI_COMMIT_REF_NAME"
