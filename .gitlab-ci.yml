@@ -1,7 +1,6 @@
 stages:
     - build
-    - test1     # backend
-    - test2     # frontend
+    - lint
     - deploy
 
 before_script:
@@ -21,7 +20,7 @@ build:
 
 test1:
     image: gradle:7.4.2-jdk17-alpine
-    stage: test1
+    stage: lint
     script:
         - gradle check
     cache:
@@ -33,17 +32,18 @@ test1:
 
 test2:
     image: node:18.14.2-alpine3.17
-    stage: test2
+    stage: lint
     script:
-        - eslint .
+        - npm install
+        - npx eslint .
     cache:
         key: "$CI_COMMIT_REF_NAME"
         policy: pull
         paths:
             - build
-            - .gradle
+            - node_modules
 
 deploy:
     stage: deploy
-    script: echo "Warning - no deployment script"
+    script: echo "No deployment script"
     environment: production
