@@ -52,14 +52,17 @@ public class CategoryController {
         categoryService.deleteAllCategories();
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
-    public ResponseEntity<CategoryOutDTO> saveCategory(@RequestBody CategoryInDTO categoryInDTO) {
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{categoryId}")
+    public ResponseEntity<CategoryOutDTO> saveCategory(@PathVariable(required = false)
+                                                           Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
+        category.setId(categoryId);
         categoryService.saveCategory(category);
         CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
 
         return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
     }
+
 
     @RequestMapping(method = RequestMethod.GET, path = "/count")
     public Long countCategories() {
