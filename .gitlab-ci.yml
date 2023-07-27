@@ -16,7 +16,10 @@ build:
 
 test:
     stage: test
-    script: gradle check & eslint .
+    script:
+        - gradle check
+        - npm ci
+        - eslint .
     cache:
         key: "$CI_COMMIT_REF_NAME"
         policy: pull

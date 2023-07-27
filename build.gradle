@@ -18,7 +18,6 @@ configurations {
 }
 
 apply from: "$rootDir/lint.gradle"
-apply from: "$rootDir/.eslintrc.yml"
 
 repositories {
     mavenCentral()
