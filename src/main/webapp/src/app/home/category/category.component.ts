@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Category} from "./category.model";
-import {Observable, of} from "rxjs";
+import { Component, Input, OnInit } from '@angular/core';
+import { Category } from "./category.model";
+import { Observable, of } from "rxjs";
 
 @Component({
     selector: 'sgh-category',
@@ -9,12 +9,10 @@ import {Observable, of} from "rxjs";
 })
 export class CategoryComponent implements OnInit {
 
-    @Input() categoriesObservable: Observable<Category[]>;
-    categories: Category[];
+    @Input() categoriesObservable: Observable<Category[]> = of([]);
+    categories: Category[] = [];
 
     constructor() {
-        this.categories = [];
-        this.categoriesObservable = of([]);
     }
 
     ngOnInit(): void {

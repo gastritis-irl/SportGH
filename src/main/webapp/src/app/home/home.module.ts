@@ -1,9 +1,8 @@
-import {NgModule} from '@angular/core';
-import {NgForOf} from "@angular/common";
-import {HomeComponent} from "./home.component";
-import {CategoryComponent} from "./category/category.component";
-import {NavbarComponent} from "../shared/navbar/navbar.component";
-import {CarouselComponent} from "../shared/carousel/carousel.component";
+import { NgModule } from '@angular/core';
+import { NgForOf } from "@angular/common";
+import { HomeComponent } from "./home.component";
+import { CategoryComponent } from "./category/category.component";
+import { CarouselComponent } from "../shared/carousel/carousel.component";
 
 @NgModule({
     declarations: [
@@ -12,7 +11,6 @@ import {CarouselComponent} from "../shared/carousel/carousel.component";
     ],
     imports: [
         NgForOf,
-        NavbarComponent,
         CarouselComponent,
     ],
     providers: [
