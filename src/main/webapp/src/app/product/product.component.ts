@@ -27,6 +27,6 @@ export class ProductComponent implements OnInit {
                     console.error('Error fetching data (products):', error);
                 }
             }
-        )
+        );
     }
 }

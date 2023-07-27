@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CategoryService } from "./category/category.service";
 import { Category } from "./category/category.model";
-import { Observable, of } from "rxjs";
 
 @Component({
     selector: 'sgh-home',
@@ -9,12 +8,21 @@ import { Observable, of } from "rxjs";
 })
 export class HomeComponent implements OnInit {
 
-    @Input() categories: Observable<Category[]> = of([]);
+    @Input() categories: Category[] = [];
 
     constructor(private categoryService: CategoryService) {
     }
 
     ngOnInit(): void {
-        this.categories = this.categoryService.getCategories();
+        this.categoryService.getCategories().subscribe(
+            {
+                next: (data: Category[]): void => {
+                    this.categories = data;
+                },
+                error: (error): void => {
+                    console.error('Error fetching data (categories):', error);
+                }
+            }
+        );
     }
 }

@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgFor, NgIf, NgOptimizedImage } from '@angular/common';
 import { Category } from "../../home/category/category.model";
-import { Observable, of } from "rxjs";
 
 @Component({
     selector: 'sgh-carousel',
@@ -12,8 +11,7 @@ import { Observable, of } from "rxjs";
 })
 export class CarouselComponent implements OnInit {
 
-    @Input() categoriesObservable: Observable<Category[]> = of([]);
-    categories: Category[] = [];
+    @Input() categories: Category[] = [];
 
     constructor(private carouselConfig: NgbCarouselConfig) {
     }
@@ -23,9 +21,5 @@ export class CarouselComponent implements OnInit {
         this.carouselConfig.wrap = false;
         this.carouselConfig.keyboard = true;
         this.carouselConfig.pauseOnHover = true;
-
-        this.categoriesObservable.subscribe((data: Category[]): void => {
-            this.categories = data;
-        })
     }
 }
