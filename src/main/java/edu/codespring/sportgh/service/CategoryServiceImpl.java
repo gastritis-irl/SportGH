@@ -26,13 +26,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Long categoryId) {
-        if (categoryRepository.existsById(categoryId)) {
-            categoryRepository.deleteById(categoryId);
-            log.info("Category deleted successfully (ID: {}).", categoryId);
-        } else {
-            log.info("Category with ID {} does not exist. Nothing to delete.", categoryId);
-        }
-
+        categoryRepository.deleteById(categoryId);
+        log.info("Category with ID {} deleted successfully.", categoryId);
     }
 
     @Override

@@ -31,10 +31,8 @@ public abstract class SubCategoryMapper {
     @AfterMapping
     protected void handleDtoToEntityMapping(SubCategoryInDTO dto, @MappingTarget SubCategory entity) {
         if (dto.getCategoryId() != null) {
-            System.out.println("Category ID is not null");
             entity.setCategory(categoryService.findById(dto.getCategoryId()).orElse(null));
         } else {
-            System.out.println("Category ID is null");
             entity.setCategory(null);
         }
     }

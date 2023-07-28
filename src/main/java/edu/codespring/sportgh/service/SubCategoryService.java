@@ -21,4 +21,6 @@ public interface SubCategoryService {
     Collection<SubCategory> findAll();
 
     Collection<SubCategory> findByIds(Collection<Long> subCategoryIDs);
+
+    Collection<SubCategory> findByCategoryId(Long categoryId);
 }

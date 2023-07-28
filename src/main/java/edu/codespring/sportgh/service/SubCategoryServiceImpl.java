@@ -23,12 +23,8 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
     @Override
     public void delete(Long subCategoryID) {
-        if (subCategoryRepository.existsById(subCategoryID)) {
-            subCategoryRepository.deleteById(subCategoryID);
-            log.info("SubCategory deleted successfully (ID: {}).", subCategoryID);
-        } else {
-            log.info("SubCategory with ID {} does not exist. Nothing to delete.", subCategoryID);
-        }
+        subCategoryRepository.deleteById(subCategoryID);
+        log.info("SubCategory with ID {} deleted successfully.", subCategoryID);
     }
 
     @Override
@@ -60,5 +56,10 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     @Override
     public Collection<SubCategory> findByIds(Collection<Long> subCategoryIDs) {
         return subCategoryRepository.findByIdIn(subCategoryIDs);
+    }
+
+    @Override
+    public Collection<SubCategory> findByCategoryId(Long categoryId) {
+        return subCategoryRepository.findByCategoryId(categoryId);
     }
 }
