@@ -19,22 +19,19 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void saveCategory(Category category) {
         categoryRepository.save(category);
-        log.info("Category saved successfully ({}).", category.getName());
-
+        log.info("Category saved successfully ({}) with ID: ({}).", category.getName(), category.getId());
     }
-
 
     @Override
     public void deleteCategory(Long categoryId) {
-        categoryRepository.deleteById(categoryId);
-        log.info("Category with ID {} deleted successfully.", categoryId);
+        int rowsAffected = categoryRepository.deleteByIdCustom(categoryId);
+        log.info("Category with ID {} deleted successfully. Rows affected: {}.", categoryId, rowsAffected);
     }
 
     @Override
     public void deleteAllCategories() {
-        categoryRepository.deleteAll();
-        log.info("All categories deleted successfully.");
-
+        int rowsAffected = categoryRepository.deleteAllCustom();
+        log.info("All categories deleted successfully. Rows affected: {}.", rowsAffected);
     }
 
     @Override
