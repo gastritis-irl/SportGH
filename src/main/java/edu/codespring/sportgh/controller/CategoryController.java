@@ -63,7 +63,6 @@ public class CategoryController {
         return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
     }
 
-
     @RequestMapping(method = RequestMethod.GET, path = "/count")
     public Long countCategories() {
         return categoryService.countCategories();
