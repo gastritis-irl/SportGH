@@ -15,29 +15,29 @@ import java.util.Collection;
 @Mapper(componentModel = "spring")
 public abstract class SubCategoryMapper {
 
-  @Autowired
-  protected CategoryService categoryService;
+    @Autowired
+    protected CategoryService categoryService;
 
-  @Mapping(source = "id", target = "subCategoryId")
-  @Mapping(source = "category.id", target = "categoryId")
-  public abstract SubCategoryOutDTO subCategoryToOut(SubCategory subCategory);
+    @Mapping(source = "id", target = "subCategoryId")
+    @Mapping(source = "category.id", target = "categoryId")
+    public abstract SubCategoryOutDTO subCategoryToOut(SubCategory subCategory);
 
-  @Mapping(source = "name", target = "name")
-  @Mapping(source = "subCategoryId", target = "id")
-  public abstract SubCategory dtoToSubCategory(SubCategoryInDTO subCategoryInDTO);
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "subCategoryId", target = "id")
+    public abstract SubCategory dtoToSubCategory(SubCategoryInDTO subCategoryInDTO);
 
-  public abstract Collection<SubCategoryOutDTO> subCategoriesToOuts(Collection<SubCategory> subCategories);
+    public abstract Collection<SubCategoryOutDTO> subCategoriesToOuts(Collection<SubCategory> subCategories);
 
-  @AfterMapping
-  protected void handleDtoToEntityMapping(SubCategoryInDTO dto, @MappingTarget SubCategory entity) {
-    if (dto.getCategoryId() != null) {
-      System.out.println("Category ID is not null");
-      entity.setCategory(categoryService.findById(dto.getCategoryId()).orElse(null));
-    }else {
-      System.out.println("Category ID is null");
-      entity.setCategory(null);
+    @AfterMapping
+    protected void handleDtoToEntityMapping(SubCategoryInDTO dto, @MappingTarget SubCategory entity) {
+        if (dto.getCategoryId() != null) {
+            System.out.println("Category ID is not null");
+            entity.setCategory(categoryService.findById(dto.getCategoryId()).orElse(null));
+        } else {
+            System.out.println("Category ID is null");
+            entity.setCategory(null);
+        }
     }
-  }
 }
 
 

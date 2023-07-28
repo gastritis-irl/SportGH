@@ -8,7 +8,6 @@ import edu.codespring.sportgh.service.SubCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -45,21 +44,21 @@ public class SubCategoryController {
         subCategoryService.deleteAll();
     }
 
-  @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{subCategoryId}")
-  public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO, @PathVariable(required = false) Long subCategoryId) {
-    SubCategory subCategory;
-    if(subCategoryId != null && subCategoryService.existsById(subCategoryId)){
-      log.info("Updating subCategory with ID {}.", subCategoryId);
-      subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
-      subCategory.setId(subCategoryId);
-    } else {
-      log.info("Creating new subCategory.");
-      subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
-    }
-    subCategoryService.save(subCategory);
-    SubCategoryOutDTO subCategoryOutDTO1 = subCategoryMapper.subCategoryToOut(subCategory);
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{subCategoryId}")
+    public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO, @PathVariable(required = false) Long subCategoryId) {
+        SubCategory subCategory;
+        if (subCategoryId != null && subCategoryService.existsById(subCategoryId)) {
+            log.info("Updating subCategory with ID {}.", subCategoryId);
+            subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
+            subCategory.setId(subCategoryId);
+        } else {
+            log.info("Creating new subCategory.");
+            subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
+        }
+        subCategoryService.save(subCategory);
+        SubCategoryOutDTO subCategoryOutDTO1 = subCategoryMapper.subCategoryToOut(subCategory);
 
-    return ResponseEntity.ok(subCategoryOutDTO1);
-  }
+        return ResponseEntity.ok(subCategoryOutDTO1);
+    }
 
 }

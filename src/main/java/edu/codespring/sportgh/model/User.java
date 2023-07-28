@@ -17,12 +17,12 @@ import lombok.ToString;
 @Table(name = "users")
 public class User extends BaseEntity {
 
-  @Column(name = "username", unique = true, length = 25)
-  private String userName;
+    @Column(name = "username", unique = true, length = 25)
+    private String userName;
 
-  @ToString.Exclude
-  @Column(length = 64)
-  private String password;
+    @ToString.Exclude
+    @Column(length = 64)
+    private String password;
 
 }
 

@@ -7,14 +7,14 @@ import lombok.Data;
 @Data
 public class SubCategoryInDTO {
 
-  @NotNull
-  private Long subCategoryId;
+    @NotNull
+    private Long subCategoryId;
 
-  @Size(min = 5, max = 25)
-  @NotNull
-  private String name;
+    @Size(min = 5, max = 25)
+    @NotNull
+    private String name;
 
-  @NotNull
-  private Long categoryId;
+    @NotNull
+    private Long categoryId;
 }
 

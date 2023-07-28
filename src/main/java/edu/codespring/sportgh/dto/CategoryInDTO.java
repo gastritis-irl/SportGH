@@ -7,15 +7,15 @@ import lombok.Data;
 @Data
 public class CategoryInDTO {
 
-  @NotNull
-  private Long categoryId;
+    @NotNull
+    private Long categoryId;
 
-  @Size(min = 5, max = 25)
-  @NotNull
-  private String categoryName;
+    @Size(min = 5, max = 25)
+    @NotNull
+    private String categoryName;
 
-  @Size(min = 8, max = 100)
-  private String categoryDescription;
+    @Size(min = 8, max = 100)
+    private String categoryDescription;
 
-  private String categoryImageURL;
+    private String categoryImageURL;
 }

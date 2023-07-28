@@ -15,51 +15,51 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  @Override
-  @Transactional
-  public User signup(String userName, String password) {
-    if (userRepository.existsByUserName(userName)) {
-      throw new ServiceException("Signup failed! User with this username already exists.");
+    @Override
+    @Transactional
+    public User signup(String userName, String password) {
+        if (userRepository.existsByUserName(userName)) {
+            throw new ServiceException("Signup failed! User with this username already exists.");
+        }
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
+        userRepository.save(user);
+        log.info("Signup successful ({}).", userName);
+        return user;
+
     }
-    User user = new User();
-    user.setUserName(userName);
-    user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
-    userRepository.save(user);
-    log.info("Signup successful ({}).", userName);
-    return user;
 
-  }
-
-  @Override
-  public void login(String userName, String password) {
-    String uuid = userRepository.findUuid(userName);
-    String passwordHash = PasswordEncrypter.generateHashedPassword(password, uuid);
-    if (userRepository.existsByUserNameAndPassword(userName, passwordHash)) {
-      log.info("Login successful ({}).", userName);
-    } else {
-      log.error("Invalid credentials for ({})!", userName);
+    @Override
+    public void login(String userName, String password) {
+        String uuid = userRepository.findUuid(userName);
+        String passwordHash = PasswordEncrypter.generateHashedPassword(password, uuid);
+        if (userRepository.existsByUserNameAndPassword(userName, passwordHash)) {
+            log.info("Login successful ({}).", userName);
+        } else {
+            log.error("Invalid credentials for ({})!", userName);
+        }
     }
-  }
 
-  @Override
-  public Collection<User> findAll() {
-    return userRepository.findAll();
-  }
+    @Override
+    public Collection<User> findAll() {
+        return userRepository.findAll();
+    }
 
-  @Override
-  public User findById(Long userId) {
-    return userRepository.findById(userId).orElse(null);
-  }
+    @Override
+    public User findById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
 
-  @Override
-  public void deleteById(Long userId) {
-    userRepository.deleteById(userId);
-  }
+    @Override
+    public void deleteById(Long userId) {
+        userRepository.deleteById(userId);
+    }
 
-  @Override
-  public void deleteAll() {
-    userRepository.deleteAll();
-  }
+    @Override
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
 }

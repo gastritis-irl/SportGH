@@ -54,7 +54,7 @@ public class CategoryController {
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> saveCategory(@RequestBody CategoryInDTO categoryInDTO, @PathVariable(required = false) Long categoryId) {
-        if(categoryService.existsCategory(categoryId)){
+        if (categoryService.existsCategory(categoryId)) {
             log.info("Updating category with ID {}.", categoryId);
         } else {
             log.info("Creating new category.");

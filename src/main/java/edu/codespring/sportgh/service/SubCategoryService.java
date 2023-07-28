@@ -6,19 +6,19 @@ import java.util.Collection;
 
 public interface SubCategoryService {
 
-  void save(SubCategory subCategory);
+    void save(SubCategory subCategory);
 
-  void delete(Long subCategoryID);
+    void delete(Long subCategoryID);
 
-  void deleteAll();
+    void deleteAll();
 
-  boolean existsById(Long subCategoryID);
+    boolean existsById(Long subCategoryID);
 
-  boolean existsByName(String subCategoryName);
+    boolean existsByName(String subCategoryName);
 
-  Long count();
+    Long count();
 
-  Collection<SubCategory> findAll();
+    Collection<SubCategory> findAll();
 
-  Collection<SubCategory> findByIds(Collection<Long> subCategoryIDs);
+    Collection<SubCategory> findByIds(Collection<Long> subCategoryIDs);
 }
