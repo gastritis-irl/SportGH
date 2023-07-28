@@ -46,3 +46,14 @@ ul, ol {
 li {
     margin-bottom: 5px;
 }
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+.carousel-holder {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 65vh;
+}
