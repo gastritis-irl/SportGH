@@ -24,13 +24,13 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Collection<CategoryOutDTO> findAllCategories() {
         Collection<Category> categories = categoryService.findAllCategories();
         return categoryMapper.categoriesToOuts(categories);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{categoryId}")
+    @GetMapping(path = "/{categoryId}")
     public CategoryOutDTO findById(@PathVariable Long categoryId) {
         // TODO: Implement this method so it loads the products of the category as well.
         Optional<Category> category = categoryService.findById(categoryId);
@@ -41,20 +41,21 @@ public class CategoryController {
         return categoryMapper.categoryToOut(category.get());
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/{categoryId}")
+    @DeleteMapping(path = "/{categoryId}")
     public void deleteById(@PathVariable Long categoryId) {
         log.info("Deleting category with ID {}.", categoryId);
         categoryService.deleteCategory(categoryId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteAllCategories() {
         categoryService.deleteAllCategories();
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{categoryId}")
+    @PostMapping(path = "/{categoryId}")
+    @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> saveCategory(@PathVariable(required = false)
-                                                           Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
+                                                       Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
         log.info("Saving category with ID {}.", categoryId);
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
         category.setId(categoryId); // If id is null, it creates a new Category, else it updates the existing one
@@ -65,7 +66,7 @@ public class CategoryController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, path = "/count")
+    @GetMapping(path = "/count")
     public Long countCategories() {
         return categoryService.countCategories();
     }

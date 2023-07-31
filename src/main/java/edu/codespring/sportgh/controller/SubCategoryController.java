@@ -21,30 +21,31 @@ public class SubCategoryController {
     private final SubCategoryService subCategoryService;
     private final SubCategoryMapper subCategoryMapper;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Collection<SubCategoryOutDTO> findAllSubCategories() {
         Collection<SubCategory> subCategories = subCategoryService.findAll();
         return subCategoryMapper.subCategoriesToOuts(subCategories);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/ids/{subCategoryIDs}")
+    @GetMapping(path = "/ids/{subCategoryIDs}")
     public Collection<SubCategoryOutDTO> findByIds(@PathVariable Collection<Long> subCategoryIDs) {
         Collection<SubCategory> subCategories = subCategoryService.findByIds(subCategoryIDs);
         return subCategoryMapper.subCategoriesToOuts(subCategories);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/{subCategoryId}")
+    @DeleteMapping(path = "/{subCategoryId}")
     public void deleteById(@PathVariable Long subCategoryId) {
         log.info("Deleting subCategory with ID {}.", subCategoryId);
         subCategoryService.delete(subCategoryId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteAllSubCategories() {
         subCategoryService.deleteAll();
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{subCategoryId}")
+    @PostMapping(path = "/{subCategoryId}")
+    @PutMapping(path = "/{subCategoryId}")
     public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO,
                                                              @PathVariable(required = false) Long subCategoryId) {
         SubCategory subCategory;
@@ -59,7 +60,7 @@ public class SubCategoryController {
         return ResponseEntity.ok(subCategoryOutDTO1);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryId}")
+    @GetMapping(path = "/categories/{categoryId}")
     public Collection<SubCategoryOutDTO> findByCategoryId(@PathVariable Long categoryId) {
         Collection<SubCategory> subCategories = subCategoryService.findByCategoryId(categoryId);
         return subCategoryMapper.subCategoriesToOuts(subCategories);

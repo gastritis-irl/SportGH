@@ -21,13 +21,13 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Collection<UserOutDTO> findAllUsers() {
         Collection<User> users = userService.findAll();
         return userMapper.usersToOuts(users);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{userId}")
+    @GetMapping(path = "/{userId}")
     public UserOutDTO findById(@PathVariable Long userId) {
         User user = userService.findById(userId);
         if (user == null) {
@@ -36,18 +36,18 @@ public class UserController {
         return userMapper.userToOut(user);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/{userId}")
+    @DeleteMapping(path = "/{userId}")
     public void deleteById(@PathVariable Long userId) {
         userService.deleteById(userId);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public UserOutDTO createUser(@RequestBody @Valid UserInDTO userInDTO) {
         User user = userService.signup(userInDTO.getUserName(), userInDTO.getPassword());
         return userMapper.userToOut(user);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteAllUsers() {
         userService.deleteAll();
     }
