@@ -45,7 +45,8 @@ public class SubCategoryController {
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{subCategoryId}")
-    public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO, @PathVariable(required = false) Long subCategoryId) {
+    public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO,
+                                                             @PathVariable(required = false) Long subCategoryId) {
         SubCategory subCategory;
         subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
         log.info("Saving subCategory with ID {}.", subCategoryId);
