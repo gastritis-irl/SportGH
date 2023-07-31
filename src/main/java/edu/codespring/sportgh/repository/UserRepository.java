@@ -12,12 +12,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUserName(String userName);
 
-    void deleteById(Long id);
-
-
     @Modifying
     @Query("DELETE FROM User")
     int deleteAllWithCount();
+
     boolean existsByUserName(String userName);
 
     Optional<User> findByUserNameAndPassword(String userName, String password);

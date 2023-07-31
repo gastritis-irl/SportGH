@@ -11,8 +11,6 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> 
 
     SubCategory findByName(String name);
 
-    void deleteById(Long id);
-
     @Modifying
     @Query("DELETE FROM SubCategory")
     int deleteAllWithCount();
