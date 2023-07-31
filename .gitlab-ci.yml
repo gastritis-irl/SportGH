@@ -6,7 +6,6 @@ stages:
 before_script:
     - GRADLE_USER_HOME="$(pwd)/.gradle"
     - export GRADLE_USER_HOME
-    - npm install
 
 build:
     image: gradle:7.4.2-jdk17-alpine
@@ -36,13 +35,14 @@ frontend_linting:
     image: node:18.14.2-alpine3.17
     stage: lint
     script:
+        - npm install
         - npx eslint .
     cache:
         key: "$CI_COMMIT_REF_NAME"
         policy: pull
         paths:
             - build
-            - node_modules
+            - .gradle
 
 deploy:
     stage: deploy
