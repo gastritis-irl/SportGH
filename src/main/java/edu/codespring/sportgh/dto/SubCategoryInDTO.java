@@ -12,7 +12,7 @@ public class SubCategoryInDTO {
 
     @Size(min = 5, max = 25)
     @NotNull
-    private String name;
+    private String subCategoryName;
 
     @NotNull
     private Long categoryId;

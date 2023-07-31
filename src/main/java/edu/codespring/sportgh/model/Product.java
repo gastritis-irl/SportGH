@@ -14,7 +14,7 @@ import lombok.ToString;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    @Column(name = "productName", length = 50)
+    @Column(length = 50)
     private String name;
 
     @Column(length = 1000)

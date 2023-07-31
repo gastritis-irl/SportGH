@@ -19,10 +19,11 @@ public abstract class SubCategoryMapper {
     protected CategoryService categoryService;
 
     @Mapping(source = "id", target = "subCategoryId")
+    @Mapping(source = "name", target = "subCategoryName")
     @Mapping(source = "category.id", target = "categoryId")
     public abstract SubCategoryOutDTO subCategoryToOut(SubCategory subCategory);
 
-    @Mapping(source = "name", target = "name")
+    @Mapping(source = "subCategoryName", target = "name")
     @Mapping(source = "subCategoryId", target = "id")
     public abstract SubCategory dtoToSubCategory(SubCategoryInDTO subCategoryInDTO);
 

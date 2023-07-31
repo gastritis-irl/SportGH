@@ -3,6 +3,7 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.model.SubCategory;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface SubCategoryService {
 
@@ -15,6 +16,8 @@ public interface SubCategoryService {
     boolean existsById(Long subCategoryID);
 
     boolean existsByName(String subCategoryName);
+
+    Optional<SubCategory> findById(Long subCategoryID);
 
     Long count();
 

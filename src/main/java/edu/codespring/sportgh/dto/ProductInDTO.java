@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class ProductInDTO {
 
+    private Long productId;
+
     @Size(max = 50)
     @NotNull
     private String productName;
@@ -14,12 +16,11 @@ public class ProductInDTO {
     @Size(max = 1000)
     private String productDescription;
 
-    @Size(min = 0)
     @NotNull
     private Integer productRentPrice;
 
     @NotNull
-    private Long subcategoryId;
+    private Long subCategoryId;
 
     @NotNull
     private Long userId;

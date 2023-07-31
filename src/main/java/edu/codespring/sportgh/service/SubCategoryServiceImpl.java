@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -41,6 +42,11 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     @Override
     public boolean existsByName(String subCategoryName) {
         return subCategoryRepository.existsByName(subCategoryName);
+    }
+
+    @Override
+    public Optional<SubCategory> findById(Long subCategoryID) {
+        return subCategoryRepository.findById(subCategoryID);
     }
 
     @Override

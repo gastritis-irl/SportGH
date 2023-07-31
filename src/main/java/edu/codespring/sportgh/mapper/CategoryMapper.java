@@ -17,12 +17,10 @@ public interface CategoryMapper {
     @Mapping(source = "imageURL", target = "categoryImageURL")
     CategoryOutDTO categoryToOut(Category category);
 
-
     Collection<CategoryOutDTO> categoriesToOuts(Collection<Category> categories);
 
     @Mapping(source = "categoryName", target = "name")
     @Mapping(source = "categoryDescription", target = "description")
     @Mapping(source = "categoryImageURL", target = "imageURL")
-    Category inDtoToCategory(CategoryInDTO categoryInDTO);
-
+    Category dtoToCategory(CategoryInDTO categoryInDTO);
 }
