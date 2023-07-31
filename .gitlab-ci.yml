@@ -18,7 +18,7 @@ build:
             - build
             - .gradle
 
-test1:
+backend_linting:
     image: gradle:7.4.2-jdk17-alpine
     stage: lint
     script:
@@ -30,7 +30,7 @@ test1:
             - build
             - .gradle
 
-test2:
+frontend_linting:
     image: node:18.14.2-alpine3.17
     stage: lint
     script:
