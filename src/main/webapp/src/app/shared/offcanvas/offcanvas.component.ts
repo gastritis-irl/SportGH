@@ -11,7 +11,7 @@ export class OffcanvasComponent {
     constructor(private offcanvasService: NgbOffcanvas) {
     }
 
-    openOffcanvas(content: TemplateRef<any>): void {
+    openOffcanvas(content: TemplateRef<string>): void {
         this.offcanvasService.open(content, {position: 'start', scroll: true});
     }
 }
