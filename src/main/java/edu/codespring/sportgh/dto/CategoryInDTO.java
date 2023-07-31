@@ -11,7 +11,7 @@ public class CategoryInDTO {
     @NotNull
     private String categoryName;
 
-    @Size(min = 8, max = 100)
+    @Size(min = 8, max = 1000)
     private String categoryDescription;
 
     private String categoryImageURL;

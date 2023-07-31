@@ -12,9 +12,9 @@ import java.util.Collection;
 public interface CategoryMapper {
 
     @Mapping(source = "id", target = "categoryId")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "imageURL", target = "imageURL")
+    @Mapping(source = "name", target = "categoryName")
+    @Mapping(source = "description", target = "categoryDescription")
+    @Mapping(source = "imageURL", target = "categoryImageURL")
     CategoryOutDTO categoryToOut(Category category);
 
 

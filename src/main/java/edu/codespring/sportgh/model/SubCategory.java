@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.Set;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
@@ -22,4 +24,7 @@ public class SubCategory extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.REFRESH)
+    private Set<Product> products;
 }
