@@ -7,4 +7,6 @@ import java.util.Collection;
 public interface ProductService {
 
     Collection<Product> findAllProducts();
+
+    void saveProduct(Product product);
 }
