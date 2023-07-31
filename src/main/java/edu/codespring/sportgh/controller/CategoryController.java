@@ -53,7 +53,8 @@ public class CategoryController {
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{categoryId}")
-    public ResponseEntity<CategoryOutDTO> saveCategory(@PathVariable(required = false) Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
+    public ResponseEntity<CategoryOutDTO> saveCategory(@PathVariable(required = false)
+                                                           Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
         log.info("Saving category with ID {}.", categoryId);
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
         category.setId(categoryId); // If id is null, it creates a new Category, else it updates the existing one

@@ -31,10 +31,10 @@ public abstract class SubCategoryMapper {
 
     @AfterMapping
     protected void handleDtoToEntityMapping(SubCategoryInDTO dto, @MappingTarget SubCategory entity) {
-        if (dto.getCategoryId() != null) {
-            entity.setCategory(categoryService.findById(dto.getCategoryId()).orElse(null));
-        } else {
+        if (dto.getCategoryId() == null) {
             entity.setCategory(null);
+        } else {
+            entity.setCategory(categoryService.findById(dto.getCategoryId()).orElse(null));
         }
     }
 }
