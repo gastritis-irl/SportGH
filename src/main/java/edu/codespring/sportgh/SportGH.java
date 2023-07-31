@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @RequiredArgsConstructor
 @Slf4j
 public class SportGH {
+
     public static void main(String[] args) {
         SpringApplication.run(SportGH.class, args);
     }

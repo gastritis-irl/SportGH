@@ -1,10 +1,11 @@
 package edu.codespring.sportgh.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -16,6 +17,7 @@ import lombok.*;
 public class Category extends BaseEntity {
 
     @Column(name = "name", unique = true, length = 25)
+    @NotNull
     private String name;
 
     @Column(name = "description", length = 1000)
@@ -24,4 +26,8 @@ public class Category extends BaseEntity {
     @ToString.Exclude
     @Column(name = "imageURL", length = 1000)
     private String imageURL;
+
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private Set<SubCategory> subcategories;
 }
