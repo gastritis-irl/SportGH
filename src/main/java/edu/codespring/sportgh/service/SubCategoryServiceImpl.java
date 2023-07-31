@@ -23,13 +23,13 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
     @Override
     public void delete(Long subCategoryID) {
-        int rowsAffected = subCategoryRepository.deleteByIdCustom(subCategoryID);
-        log.info("Category with ID {} deleted successfully. Rows affected: {}.", subCategoryID, rowsAffected);
+        subCategoryRepository.deleteById(subCategoryID);
+        log.info("SubCategory with ID {} deleted successfully.", subCategoryID);
     }
 
     @Override
     public void deleteAll() {
-        int rowsAffected = subCategoryRepository.deleteAllCustom();
+        int rowsAffected = subCategoryRepository.deleteAllWithCount();
         log.info("All categories deleted successfully. Rows affected: {}.", rowsAffected);
     }
 

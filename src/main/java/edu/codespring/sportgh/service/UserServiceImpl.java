@@ -55,13 +55,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long userId) {
-        int rowsAffected = userRepository.deleteByIdCustom(userId);
-        log.info("User with ID {} deleted successfully. Rows affected: {}.", userId, rowsAffected);
+        userRepository.deleteById(userId);
+        log.info("User with ID {} deleted successfully.", userId);
     }
 
     @Override
     public void deleteAll() {
-        int rowsAffected = userRepository.deleteAllCustom();
+        int rowsAffected = userRepository.deleteAllWithCount();
         log.info("All users deleted successfully. Rows affected: {}.", rowsAffected);
     }
 }

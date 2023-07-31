@@ -24,13 +24,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Long categoryId) {
-        int rowsAffected = categoryRepository.deleteByIdCustom(categoryId);
-        log.info("Category with ID {} deleted successfully. Rows affected: {}.", categoryId, rowsAffected);
+        categoryRepository.deleteById(categoryId);
+        log.info("Category with ID {} deleted successfully.", categoryId);
     }
 
     @Override
     public void deleteAllCategories() {
-        int rowsAffected = categoryRepository.deleteAllCustom();
+        int rowsAffected = categoryRepository.deleteAllWithCount();
         log.info("All categories deleted successfully. Rows affected: {}.", rowsAffected);
     }
 
