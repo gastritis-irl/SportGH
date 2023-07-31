@@ -11,10 +11,18 @@ import java.util.Collection;
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
 
-    @Mapping(source = "id", target = "categoryID")
+    @Mapping(source = "id", target = "categoryId")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "description", target = "description")
+    @Mapping(source = "imageURL", target = "imageURL")
     CategoryOutDTO categoryToOut(Category category);
+
 
     Collection<CategoryOutDTO> categoriesToOuts(Collection<Category> categories);
 
-    Category dtoToCategory(CategoryInDTO categoryInDTO);
+    @Mapping(source = "categoryName", target = "name")
+    @Mapping(source = "categoryDescription", target = "description")
+    @Mapping(source = "categoryImageURL", target = "imageURL")
+    Category inDtoToCategory(CategoryInDTO categoryInDTO);
+
 }

@@ -10,7 +10,7 @@ import java.util.Collection;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(source = "id", target = "userID")
+    @Mapping(source = "id", target = "userId")
     UserOutDTO userToOut(User user);
 
     Collection<UserOutDTO> usersToOuts(Collection<User> users);

@@ -2,6 +2,7 @@ package edu.codespring.sportgh.repository;
 
 import edu.codespring.sportgh.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -11,7 +12,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUserName(String userName);
 
-    void deleteByUserName(String userName);
+    @Modifying
+    @Query("DELETE FROM User")
+    int deleteAllWithCount();
 
     boolean existsByUserName(String userName);
 
