@@ -6,6 +6,7 @@ stages:
 before_script:
     - GRADLE_USER_HOME="$(pwd)/.gradle"
     - export GRADLE_USER_HOME
+    - npm install
 
 build:
     image: gradle:7.4.2-jdk17-alpine
