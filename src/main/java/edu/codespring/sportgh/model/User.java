@@ -18,7 +18,7 @@ import java.util.Set;
 public class User extends BaseEntity {
 
     @Column(name = "username", unique = true, length = 25)
-    private String userName;
+    private String name;
 
     @ToString.Exclude
     @Column(length = 64)
