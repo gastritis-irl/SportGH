@@ -1,7 +1,7 @@
 export interface Category {
 
     categoryID?: number;
-    name?: string;
-    description?: string;
-    imageURL?: string;
+    categoryName?: string;
+    categoryDescription?: string;
+    categoryImageURL?: string;
 }
