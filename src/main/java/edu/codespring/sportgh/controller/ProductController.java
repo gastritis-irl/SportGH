@@ -23,16 +23,16 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public Collection<ProductOutDTO> findAllProducts() {
-        Collection<Product> products = productService.findAllProducts();
-        return productMapper.productToOuts(products);
+    public Collection<ProductOutDTO> findAll() {
+        Collection<Product> products = productService.findAll();
+        return productMapper.productsToOuts(products);
     }
 
     @PostMapping
-    public ResponseEntity<ProductOutDTO> saveProduct(@RequestBody ProductInDTO productInDTO) {
+    public ResponseEntity<ProductOutDTO> save(@RequestBody ProductInDTO productInDTO) {
         Product product = productMapper.dtoToProduct(productInDTO);
         log.info("{}", product);
-        productService.saveProduct(product);
+        productService.save(product);
         ProductOutDTO productOutDTO = productMapper.productToOut(product);
 
         return new ResponseEntity<>(productOutDTO, HttpStatus.CREATED);

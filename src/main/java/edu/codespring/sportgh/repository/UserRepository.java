@@ -9,7 +9,7 @@ public interface UserRepository extends BaseRepository<User> {
 
     @Modifying
     @Query("DELETE FROM User")
-    int deleteAllWithCount();
+    Integer deleteAllWithCount();
 
     boolean existsByNameAndPassword(String name, String password);
 

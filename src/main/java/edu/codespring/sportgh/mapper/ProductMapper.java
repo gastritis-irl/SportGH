@@ -29,7 +29,7 @@ public abstract class ProductMapper {
     @Mapping(source = "user.id", target = "userId")
     public abstract ProductOutDTO productToOut(Product product);
 
-    public abstract Collection<ProductOutDTO> productToOuts(Collection<Product> products);
+    public abstract Collection<ProductOutDTO> productsToOuts(Collection<Product> products);
 
     @Mapping(source = "productId", target = "id")
     @Mapping(source = "productName", target = "name")

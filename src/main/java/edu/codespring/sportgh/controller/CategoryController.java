@@ -25,8 +25,8 @@ public class CategoryController {
     private final CategoryMapper categoryMapper;
 
     @GetMapping
-    public Collection<CategoryOutDTO> findAllCategories() {
-        Collection<Category> categories = categoryService.findAllCategories();
+    public Collection<CategoryOutDTO> findAll() {
+        Collection<Category> categories = categoryService.findAll();
         return categoryMapper.categoriesToOuts(categories);
     }
 
@@ -44,22 +44,22 @@ public class CategoryController {
     @DeleteMapping(path = "/{categoryId}")
     public void deleteById(@PathVariable Long categoryId) {
         log.info("Deleting category with ID {}.", categoryId);
-        categoryService.deleteCategory(categoryId);
+        categoryService.delete(categoryId);
     }
 
     @DeleteMapping
-    public void deleteAllCategories() {
-        categoryService.deleteAllCategories();
+    public void deleteAll() {
+        categoryService.deleteAll();
     }
 
     @PostMapping(path = "/{categoryId}")
     @PutMapping(path = "/{categoryId}")
-    public ResponseEntity<CategoryOutDTO> saveCategory(@PathVariable(required = false)
+    public ResponseEntity<CategoryOutDTO> save(@PathVariable(required = false)
                                                        Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
         log.info("Saving category with ID {}.", categoryId);
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
         category.setId(categoryId); // If id is null, it creates a new Category, else it updates the existing one
-        categoryService.saveCategory(category);
+        categoryService.save(category);
         CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
 
         return new ResponseEntity<>(categoryOutDTO, categoryId == null ? HttpStatus.CREATED : HttpStatus.OK);
@@ -67,8 +67,8 @@ public class CategoryController {
 
 
     @GetMapping(path = "/count")
-    public Long countCategories() {
-        return categoryService.countCategories();
+    public Long count() {
+        return categoryService.count();
     }
 }
 

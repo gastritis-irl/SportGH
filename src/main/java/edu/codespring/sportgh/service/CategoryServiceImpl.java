@@ -17,40 +17,40 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public void saveCategory(Category category) {
+    public void save(Category category) {
         categoryRepository.save(category);
         log.info("Category saved successfully ({}) with ID: ({}).", category.getName(), category.getId());
     }
 
     @Override
-    public void deleteCategory(Long categoryId) {
+    public void delete(Long categoryId) {
         categoryRepository.deleteById(categoryId);
         log.info("Category with ID {} deleted successfully.", categoryId);
     }
 
     @Override
-    public void deleteAllCategories() {
+    public void deleteAll() {
         int rowsAffected = categoryRepository.deleteAllWithCount();
         log.info("All categories deleted successfully. Rows affected: {}.", rowsAffected);
     }
 
     @Override
-    public boolean existsCategory(Long categoryID) {
+    public boolean existsById(Long categoryID) {
         return categoryRepository.existsById(categoryID);
     }
 
     @Override
-    public boolean existsCategory(String categoryName) {
+    public boolean existsByName(String categoryName) {
         return categoryRepository.existsByName(categoryName);
     }
 
     @Override
-    public Long countCategories() {
+    public Long count() {
         return categoryRepository.count();
     }
 
     @Override
-    public Collection<Category> findAllCategories() {
+    public Collection<Category> findAll() {
         return categoryRepository.findAll();
     }
 

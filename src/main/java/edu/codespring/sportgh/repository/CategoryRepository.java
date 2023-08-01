@@ -8,5 +8,5 @@ public interface CategoryRepository extends BaseRepository<Category> {
 
     @Modifying
     @Query("DELETE FROM Category")
-    int deleteAllWithCount();
+    Integer deleteAllWithCount();
 }

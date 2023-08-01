@@ -22,7 +22,7 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public Collection<UserOutDTO> findAllUsers() {
+    public Collection<UserOutDTO> findAll() {
         Collection<User> users = userService.findAll();
         return userMapper.usersToOuts(users);
     }
@@ -42,13 +42,13 @@ public class UserController {
     }
 
     @PostMapping
-    public UserOutDTO createUser(@RequestBody @Valid UserInDTO userInDTO) {
+    public UserOutDTO save(@RequestBody @Valid UserInDTO userInDTO) {
         User user = userService.signup(userInDTO.getUserName(), userInDTO.getPassword());
         return userMapper.userToOut(user);
     }
 
     @DeleteMapping
-    public void deleteAllUsers() {
+    public void deleteAll() {
         userService.deleteAll();
     }
 }

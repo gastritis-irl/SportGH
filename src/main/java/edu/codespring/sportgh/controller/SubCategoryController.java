@@ -22,7 +22,7 @@ public class SubCategoryController {
     private final SubCategoryMapper subCategoryMapper;
 
     @GetMapping
-    public Collection<SubCategoryOutDTO> findAllSubCategories() {
+    public Collection<SubCategoryOutDTO> findAll() {
         Collection<SubCategory> subCategories = subCategoryService.findAll();
         return subCategoryMapper.subCategoriesToOuts(subCategories);
     }
@@ -40,14 +40,14 @@ public class SubCategoryController {
     }
 
     @DeleteMapping
-    public void deleteAllSubCategories() {
+    public void deleteAll() {
         subCategoryService.deleteAll();
     }
 
     @PostMapping(path = "/{subCategoryId}")
     @PutMapping(path = "/{subCategoryId}")
-    public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO,
-                                                             @PathVariable(required = false) Long subCategoryId) {
+    public ResponseEntity<SubCategoryOutDTO> save(@RequestBody SubCategoryInDTO subCategoryInDTO,
+                                                  @PathVariable(required = false) Long subCategoryId) {
         SubCategory subCategory;
         subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
         log.info("Saving subCategory with ID {}.", subCategoryId);

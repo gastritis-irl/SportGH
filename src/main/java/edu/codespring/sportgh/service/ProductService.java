@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface ProductService {
 
-    Collection<Product> findAllProducts();
+    Collection<Product> findAll();
 
-    void saveProduct(Product product);
+    void save(Product product);
 }
