@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class CategoryOutDTO {
 
-    private Long categoryId;
-    private String categoryName;
-    private String categoryDescription;
-    private String categoryImageURL;
+    private Long id;
+    private String name;
+    private String description;
+    private String imageURL;
 }

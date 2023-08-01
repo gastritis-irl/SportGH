@@ -43,7 +43,7 @@ public class UserController {
 
     @PostMapping
     public UserOutDTO save(@RequestBody @Valid UserInDTO userInDTO) {
-        User user = userService.signup(userInDTO.getUserName(), userInDTO.getPassword());
+        User user = userService.signup(userInDTO.getName(), userInDTO.getPassword());
         return userMapper.userToOut(user);
     }
 

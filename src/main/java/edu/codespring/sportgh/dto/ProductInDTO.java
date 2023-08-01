@@ -7,17 +7,17 @@ import lombok.Data;
 @Data
 public class ProductInDTO {
 
-    private Long productId;
+    private Long id;
 
     @Size(max = 50)
     @NotNull
-    private String productName;
+    private String name;
 
     @Size(max = 1000)
-    private String productDescription;
+    private String description;
 
     @NotNull
-    private Integer productRentPrice;
+    private Integer rentPrice;
 
     @NotNull
     private Long subCategoryId;

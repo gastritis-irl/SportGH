@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class ProductOutDTO {
 
-    private Long productId;
-    private String productName;
-    private String productDescription;
-    private Integer productRentPrice;
+    private Long id;
+    private String name;
+    private String description;
+    private Integer rentPrice;
     private Long subCategoryId;
     private Long userId;
 }

@@ -21,20 +21,12 @@ public abstract class ProductMapper {
     @Autowired
     protected UserService userService;
 
-    @Mapping(source = "id", target = "productId")
-    @Mapping(source = "name", target = "productName")
-    @Mapping(source = "description", target = "productDescription")
-    @Mapping(source = "rentPrice", target = "productRentPrice")
     @Mapping(source = "subCategory.id", target = "subCategoryId")
     @Mapping(source = "user.id", target = "userId")
     public abstract ProductOutDTO productToOut(Product product);
 
     public abstract Collection<ProductOutDTO> productsToOuts(Collection<Product> products);
 
-    @Mapping(source = "productId", target = "id")
-    @Mapping(source = "productName", target = "name")
-    @Mapping(source = "productDescription", target = "description")
-    @Mapping(source = "productRentPrice", target = "rentPrice")
     @Mapping(source = "subCategoryId", target = "subCategory.id")
     @Mapping(source = "userId", target = "user.id")
     public abstract Product dtoToProduct(ProductInDTO productInDTO);
