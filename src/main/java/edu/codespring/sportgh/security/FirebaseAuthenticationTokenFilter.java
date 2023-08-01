@@ -17,6 +17,7 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
     private final FirebaseService firebaseService;
 
     public FirebaseAuthenticationTokenFilter(FirebaseService firebaseService) {
+        super();
         this.firebaseService = firebaseService;
     }
 
@@ -30,7 +31,8 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
         if (authToken != null) {
             FirebaseToken firebaseToken = firebaseService.verifyToken(authToken);
-            FirebaseAuthenticationToken authentication = new FirebaseAuthenticationToken(new FirebaseTokenHolder(firebaseToken));
+            FirebaseAuthenticationToken authentication = new FirebaseAuthenticationToken(
+                new FirebaseTokenHolder(firebaseToken));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 

@@ -18,6 +18,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     @Bean
     public DefaultSecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -49,6 +51,7 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
