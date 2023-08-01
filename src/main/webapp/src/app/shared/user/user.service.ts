@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppService } from "../app.service";
+import { AppService } from "../../app.service";
 import { User } from "./user.model";
 
 @Injectable({
@@ -8,7 +8,7 @@ import { User } from "./user.model";
 })
 export class UserService extends AppService {
 
-    getUsers(): Observable<User[]> {
+    getAll(): Observable<User[]> {
         const url: string = `${this.baseUrl}/users`;
         return this.http.get<User[]>(url);
     }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CategoryService } from "./category/category.service";
-import { Category } from "./category/category.model";
+import { CategoryService } from "../shared/category/category.service";
+import { Category } from "../shared/category/category.model";
 
 @Component({
     selector: 'sgh-home',
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.categoryService.getCategories().subscribe(
+        this.categoryService.getAll().subscribe(
             {
                 next: (data: Category[]): void => {
                     this.categories = data;

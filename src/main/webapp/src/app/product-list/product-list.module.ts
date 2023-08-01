@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { ProductListComponent } from "./product-list.component";
-import { ProductComponent } from "./product/product.component";
+import { ProductComponent } from "../shared/product/product.component";
 import { NgFor } from '@angular/common';
 
 @NgModule({

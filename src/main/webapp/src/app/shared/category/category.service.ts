@@ -8,7 +8,7 @@ import { Category } from "./category.model";
 })
 export class CategoryService extends AppService {
 
-    getCategories(): Observable<Category[]> {
+    getAll(): Observable<Category[]> {
         const url: string = `${this.baseUrl}/categories`;
         return this.http.get<Category[]>(url);
     }

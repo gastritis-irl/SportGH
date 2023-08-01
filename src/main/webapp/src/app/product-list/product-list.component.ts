@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Product } from "./product/product.model";
-import { ProductService } from "./product/product.service";
+import { Product } from "../shared/product/product.model";
+import { ProductService } from "../shared/product/product.service";
 
 @Component({
     selector: 'sgh-product-list',
@@ -14,7 +14,7 @@ export class ProductListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.productService.getProducts().subscribe(
+        this.productService.getAll().subscribe(
             {
                 next: (data: Product[]): void => {
                     this.products = data;

@@ -1,8 +1,8 @@
 <ul>
     <li *ngFor="let product of products">
         {{product.id}} - {{product.name}} - {{product.rentPrice}}<br>
-        {{product.description}}<br>
         Owner: {{product.userId}}<br>
         Subcategory: {{product.subCategoryId}}<br>
+        <a href="/products/{{product.id}}">More...</a>
     </li>
 </ul>
