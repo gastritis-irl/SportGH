@@ -15,7 +15,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
         FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
         FirebaseToken decodedToken;
         try {
-            decodedToken = FirebaseAuth.getInstance().verifyIdToken(holder.getToken());
+            decodedToken = FirebaseAuth.getInstance().verifyIdToken(String.valueOf(holder.getToken()));
         } catch (Exception e) {
             throw new BadCredentialsException("Failed to decode token", e);
         }
