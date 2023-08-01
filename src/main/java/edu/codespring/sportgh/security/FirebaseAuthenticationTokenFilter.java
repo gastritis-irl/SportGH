@@ -2,16 +2,15 @@ package edu.codespring.sportgh.security;
 
 import com.google.firebase.auth.FirebaseToken;
 import edu.codespring.sportgh.service.FirebaseService;
+import edu.codespring.sportgh.utils.FirebaseTokenHolder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
@@ -31,10 +30,12 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
         if (authToken != null) {
             FirebaseToken firebaseToken = firebaseService.verifyToken(authToken);
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(firebaseToken.getUid(), null, new ArrayList<>());
+            FirebaseAuthenticationToken authentication = new FirebaseAuthenticationToken(new FirebaseTokenHolder(firebaseToken));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         filterChain.doFilter(request, response);
     }
+
 }
+

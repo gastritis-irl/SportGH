@@ -1,7 +1,7 @@
 package edu.codespring.sportgh.security;
 
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import edu.codespring.sportgh.utils.FirebaseTokenHolder;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 public class FirebaseAuthenticationToken extends AbstractAuthenticationToken {
 
