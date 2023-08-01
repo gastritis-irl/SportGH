@@ -4,6 +4,6 @@ export interface Product {
     productName?: string,
     productDescription?: string,
     productRentPrice?: number,
-    userId?: number,
     subCategoryId?: number,
+    userId?: number,
 }
