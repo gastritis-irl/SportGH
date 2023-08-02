@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/products")
@@ -32,17 +31,16 @@ public class ProductController {
 
     @GetMapping(path = "/{productId}")
     public ResponseEntity<ProductOutDTO> findById(@PathVariable Long productId) {
-        Optional<Product> product = productService.findById(productId);
-        if (product.isEmpty()) {
+        Product product = productService.findById(productId);
+        if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(productMapper.productToOut(product.get()), HttpStatus.OK);
+        return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<ProductOutDTO> save(@RequestBody ProductInDTO productInDTO) {
         Product product = productMapper.dtoToProduct(productInDTO);
-        log.info("{}", product);
         productService.save(product);
         ProductOutDTO productOutDTO = productMapper.productToOut(product);
 

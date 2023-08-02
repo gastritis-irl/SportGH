@@ -36,7 +36,7 @@ public abstract class ProductMapper {
         if (dto.getSubCategoryId() == null) {
             entity.setSubCategory(null);
         } else {
-            entity.setSubCategory(subCategoryService.findById(dto.getSubCategoryId()).orElse(null));
+            entity.setSubCategory(subCategoryService.findById(dto.getSubCategoryId()));
         }
         if (dto.getUserId() == null) {
             entity.setUser(null);

@@ -21,5 +21,5 @@ public interface CategoryService {
 
     Collection<Category> findAll();
 
-    Optional<Category> findById(Long categoryID);
+    Category findById(Long categoryID);
 }

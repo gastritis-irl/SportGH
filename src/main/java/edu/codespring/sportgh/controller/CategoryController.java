@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -32,13 +31,11 @@ public class CategoryController {
 
     @GetMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> findById(@PathVariable Long categoryId) {
-        // TODO: Implement this method so it loads the products of the category as well.
-        Optional<Category> category = categoryService.findById(categoryId);
-        if (category.isEmpty()) {
-            log.warn("Category with ID {} not found.", categoryId);
+        Category category = categoryService.findById(categoryId);
+        if (category == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(categoryMapper.categoryToOut(category.get()), HttpStatus.OK);
+        return new ResponseEntity<>(categoryMapper.categoryToOut(category), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{categoryId}")
@@ -56,8 +53,8 @@ public class CategoryController {
 
     @PostMapping(path = "/{categoryId}")
     @PutMapping(path = "/{categoryId}")
-    public ResponseEntity<CategoryOutDTO> save(@PathVariable(required = false)
-                                               Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
+    public ResponseEntity<CategoryOutDTO> save(@PathVariable(required = false) Long categoryId,
+                                               @RequestBody CategoryInDTO categoryInDTO) {
         log.info("Saving category with ID {}.", categoryId);
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
         category.setId(categoryId); // If id is null, it creates a new Category, else it updates the existing one

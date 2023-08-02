@@ -45,8 +45,8 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
     @Override
-    public Optional<SubCategory> findById(Long subCategoryID) {
-        return subCategoryRepository.findById(subCategoryID);
+    public SubCategory findById(Long subCategoryID) {
+        return subCategoryRepository.findById(subCategoryID).orElse(null);
     }
 
     @Override

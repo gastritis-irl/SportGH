@@ -17,7 +17,7 @@ public interface SubCategoryService {
 
     boolean existsByName(String subCategoryName);
 
-    Optional<SubCategory> findById(Long subCategoryID);
+    SubCategory findById(Long subCategoryID);
 
     Long count();
 

@@ -8,7 +8,7 @@ public interface CategoryRepository extends BaseRepository<Category> {
 
     @Modifying
     @Query("DELETE FROM Category")
-    Integer deleteAllWithCount();
+    int deleteAllWithCount();
 
     boolean existsByName(String name);
 }

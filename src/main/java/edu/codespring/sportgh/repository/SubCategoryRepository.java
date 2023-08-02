@@ -10,7 +10,7 @@ public interface SubCategoryRepository extends BaseRepository<SubCategory> {
 
     @Modifying
     @Query("DELETE FROM SubCategory")
-    Integer deleteAllWithCount();
+    int deleteAllWithCount();
 
     Collection<SubCategory> findByIdIn(Collection<Long> subCategoryIDs);
 
