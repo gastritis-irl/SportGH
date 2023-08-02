@@ -34,7 +34,7 @@ services:
 #        image: project
 #        build:
 #            context: .
-#            dockerfile: DockerfileFrontend
+#            dockerfile: Dockerfile
 #        restart: unless-stopped
 #        ports:
 #            - "8081:8081"
