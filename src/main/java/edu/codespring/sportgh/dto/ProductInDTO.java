@@ -17,7 +17,7 @@ public class ProductInDTO {
     private String description;
 
     @NotNull
-    private Integer rentPrice;
+    private Double rentPrice;
 
     @NotNull
     private Long subCategoryId;
