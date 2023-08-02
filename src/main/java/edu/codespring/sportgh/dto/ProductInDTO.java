@@ -9,6 +9,8 @@ public class ProductInDTO {
 
     private Long id;
 
+    private boolean available;
+
     @Size(max = 50)
     @NotNull
     private String name;
@@ -22,6 +24,10 @@ public class ProductInDTO {
     @NotNull
     private Long subCategoryId;
 
+    private String subCategoryName;
+
     @NotNull
     private Long userId;
+
+    private String username;
 }
