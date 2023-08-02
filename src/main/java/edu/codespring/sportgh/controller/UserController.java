@@ -45,7 +45,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserOutDTO> save(@RequestBody @Valid UserInDTO userInDTO) {
-        User user = userService.signup(userInDTO.getName(), userInDTO.getPassword());
+        User user = userService.signup(userInDTO.getUsername(), userInDTO.getPassword());
         return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 

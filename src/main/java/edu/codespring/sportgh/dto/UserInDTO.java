@@ -10,7 +10,7 @@ public class UserInDTO {
 
     @Size(min = 5, max = 25)
     @NotNull
-    private String name;
+    private String username;
 
     @Size(min = 8, max = 32)
     @NotNull

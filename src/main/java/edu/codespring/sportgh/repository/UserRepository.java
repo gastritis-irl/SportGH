@@ -11,8 +11,10 @@ public interface UserRepository extends BaseRepository<User> {
     @Query("DELETE FROM User")
     Integer deleteAllWithCount();
 
-    boolean existsByNameAndPassword(String name, String password);
+    boolean existsByUsernameAndPassword(String name, String password);
 
-    @Query("select user.uuid from User user where user.name=:example")
+    boolean existsByUsername(String name);
+
+    @Query("select user.uuid from User user where user.username=:example")
     String findUuid(@Param("example") String name);
 }
