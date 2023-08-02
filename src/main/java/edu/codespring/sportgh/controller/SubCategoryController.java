@@ -7,6 +7,7 @@ import edu.codespring.sportgh.model.SubCategory;
 import edu.codespring.sportgh.service.SubCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,26 +23,28 @@ public class SubCategoryController {
     private final SubCategoryMapper subCategoryMapper;
 
     @GetMapping
-    public Collection<SubCategoryOutDTO> findAll() {
+    public ResponseEntity<Collection<SubCategoryOutDTO>> findAll() {
         Collection<SubCategory> subCategories = subCategoryService.findAll();
-        return subCategoryMapper.subCategoriesToOuts(subCategories);
+        return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
     @GetMapping(path = "/ids/{subCategoryIDs}")
-    public Collection<SubCategoryOutDTO> findByIds(@PathVariable Collection<Long> subCategoryIDs) {
+    public ResponseEntity<Collection<SubCategoryOutDTO>> findByIds(@PathVariable Collection<Long> subCategoryIDs) {
         Collection<SubCategory> subCategories = subCategoryService.findByIds(subCategoryIDs);
-        return subCategoryMapper.subCategoriesToOuts(subCategories);
+        return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{subCategoryId}")
-    public void deleteById(@PathVariable Long subCategoryId) {
+    public ResponseEntity<?> deleteById(@PathVariable Long subCategoryId) {
         log.info("Deleting subCategory with ID {}.", subCategoryId);
         subCategoryService.delete(subCategoryId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void deleteAll() {
+    public ResponseEntity<?> deleteAll() {
         subCategoryService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(path = "/{subCategoryId}")
@@ -61,9 +64,9 @@ public class SubCategoryController {
     }
 
     @GetMapping(path = "/categories/{categoryId}")
-    public Collection<SubCategoryOutDTO> findByCategoryId(@PathVariable Long categoryId) {
+    public ResponseEntity<Collection<SubCategoryOutDTO>> findByCategoryId(@PathVariable Long categoryId) {
         Collection<SubCategory> subCategories = subCategoryService.findByCategoryId(categoryId);
-        return subCategoryMapper.subCategoriesToOuts(subCategories);
+        return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
 }

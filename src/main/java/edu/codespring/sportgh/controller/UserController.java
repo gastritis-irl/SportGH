@@ -8,6 +8,7 @@ import edu.codespring.sportgh.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,33 +23,35 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public Collection<UserOutDTO> findAll() {
+    public ResponseEntity<Collection<UserOutDTO>> findAll() {
         Collection<User> users = userService.findAll();
-        return userMapper.usersToOuts(users);
+        return new ResponseEntity<>(userMapper.usersToOuts(users), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{userId}")
-    public UserOutDTO findById(@PathVariable Long userId) {
+    public ResponseEntity<UserOutDTO> findById(@PathVariable Long userId) {
         User user = userService.findById(userId);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return userMapper.userToOut(user);
+        return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{userId}")
-    public void deleteById(@PathVariable Long userId) {
+    public ResponseEntity<?> deleteById(@PathVariable Long userId) {
         userService.deleteById(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping
-    public UserOutDTO save(@RequestBody @Valid UserInDTO userInDTO) {
+    public ResponseEntity<UserOutDTO> save(@RequestBody @Valid UserInDTO userInDTO) {
         User user = userService.signup(userInDTO.getName(), userInDTO.getPassword());
-        return userMapper.userToOut(user);
+        return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void deleteAll() {
+    public ResponseEntity<?> deleteAll() {
         userService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

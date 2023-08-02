@@ -25,18 +25,18 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public Collection<ProductOutDTO> findAll() {
+    public ResponseEntity<Collection<ProductOutDTO>> findAll() {
         Collection<Product> products = productService.findAll();
-        return productMapper.productsToOuts(products);
+        return new ResponseEntity<>(productMapper.productsToOuts(products), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{productId}")
-    public ProductOutDTO findById(@PathVariable Long productId) {
+    public ResponseEntity<ProductOutDTO> findById(@PathVariable Long productId) {
         Optional<Product> product = productService.findById(productId);
         if (product.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return productMapper.productToOut(product.get());
+        return new ResponseEntity<>(productMapper.productToOut(product.get()), HttpStatus.OK);
     }
 
     @PostMapping

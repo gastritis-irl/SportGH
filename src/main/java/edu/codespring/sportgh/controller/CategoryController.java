@@ -25,37 +25,39 @@ public class CategoryController {
     private final CategoryMapper categoryMapper;
 
     @GetMapping
-    public Collection<CategoryOutDTO> findAll() {
+    public ResponseEntity<Collection<CategoryOutDTO>> findAll() {
         Collection<Category> categories = categoryService.findAll();
-        return categoryMapper.categoriesToOuts(categories);
+        return new ResponseEntity<>(categoryMapper.categoriesToOuts(categories), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{categoryId}")
-    public CategoryOutDTO findById(@PathVariable Long categoryId) {
+    public ResponseEntity<CategoryOutDTO> findById(@PathVariable Long categoryId) {
         // TODO: Implement this method so it loads the products of the category as well.
         Optional<Category> category = categoryService.findById(categoryId);
         if (category.isEmpty()) {
             log.warn("Category with ID {} not found.", categoryId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return categoryMapper.categoryToOut(category.get());
+        return new ResponseEntity<>(categoryMapper.categoryToOut(category.get()), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{categoryId}")
-    public void deleteById(@PathVariable Long categoryId) {
+    public ResponseEntity<?> deleteById(@PathVariable Long categoryId) {
         log.info("Deleting category with ID {}.", categoryId);
         categoryService.delete(categoryId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void deleteAll() {
+    public ResponseEntity<?> deleteAll() {
         categoryService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(path = "/{categoryId}")
     @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> save(@PathVariable(required = false)
-                                                       Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
+                                               Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
         log.info("Saving category with ID {}.", categoryId);
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
         category.setId(categoryId); // If id is null, it creates a new Category, else it updates the existing one
@@ -67,8 +69,8 @@ public class CategoryController {
 
 
     @GetMapping(path = "/count")
-    public Long count() {
-        return categoryService.count();
+    public ResponseEntity<Long> count() {
+        return new ResponseEntity<>(categoryService.count(), HttpStatus.OK);
     }
 }
 
