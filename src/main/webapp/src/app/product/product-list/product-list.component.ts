@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Product } from "../shared/product/product.model";
-import { ProductService } from "../shared/product/product.service";
+import { Component, OnInit } from "@angular/core";
+import { Product } from "../product.model";
+import { ProductService } from '../product.service';
 
 @Component({
     selector: 'sgh-product-list',
@@ -8,7 +8,7 @@ import { ProductService } from "../shared/product/product.service";
 })
 export class ProductListComponent implements OnInit {
 
-    @Input() products: Product[] = [];
+    products: Product[] = [];
 
     constructor(private productService: ProductService) {
     }

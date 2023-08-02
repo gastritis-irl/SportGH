@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CategoryService } from "../shared/category/category.service";
-import { Category } from "../shared/category/category.model";
+import { CategoryService } from "../category/category.service";
+import { Category } from "../category/category.model";
 
 @Component({
     selector: 'sgh-home',
