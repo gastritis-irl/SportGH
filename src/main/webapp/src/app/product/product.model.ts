@@ -1,7 +1,7 @@
 export interface Product {
 
     id?: number,
-    available: boolean,
+    available?: boolean,
     name?: string,
     description?: string,
     rentPrice?: number,
