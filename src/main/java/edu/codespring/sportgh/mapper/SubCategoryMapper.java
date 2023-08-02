@@ -31,7 +31,7 @@ public abstract class SubCategoryMapper {
         if (dto.getCategoryId() == null) {
             entity.setCategory(null);
         } else {
-            entity.setCategory(categoryService.findById(dto.getCategoryId()).orElse(null));
+            entity.setCategory(categoryService.findById(dto.getCategoryId()));
         }
     }
 }

@@ -3,7 +3,6 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.model.Category;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public interface CategoryService {
 
