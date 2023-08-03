@@ -40,7 +40,7 @@ public class DataGenerator {
     }
 
     public void initUsers(int nrOfUsers) {
-        for (int i = 0; i < nrOfUsers; i++) {
+        for (int i = 1; i <= nrOfUsers; i++) {
             String username = String.format("user%d", i);
             String password = String.format("password%d", i);
             userService.signup(username, password);
@@ -56,7 +56,7 @@ public class DataGenerator {
             "https://penaltyfile.com/wp-content/uploads/2021/03/types-of-winter-sports-Mar222021-1-min.jpg",
         };
 
-        for (int i = 0; i < nrOfCategories; i++) {
+        for (int i = 1; i <= nrOfCategories; i++) {
             String name = String.format("Category%d", i);
             String description = String.format("Category%d description", i);
             String imageURL = images[i % images.length];
@@ -66,22 +66,22 @@ public class DataGenerator {
     }
 
     public void initSubCategories(int nrOfSubCategories, int nrOfCategories) {
-        for (int i = 0; i < nrOfSubCategories; i++) {
+        for (int i = 1; i <= nrOfSubCategories; i++) {
             String name = String.format("Subcategory%d", i);
-            Category category = categoryService.findById((long) i % nrOfCategories);
+            Category category = categoryService.findById((long) i % nrOfCategories + 1);
             SubCategory subCategory = new SubCategory(name, category, null);
             subCategoryService.save(subCategory);
         }
     }
 
     public void initProducts(int nrOfProducts, int nrOfSubCategories, int nrOfUsers) {
-        for (int i = 0; i < nrOfProducts; i++) {
+        for (int i = 1; i <= nrOfProducts; i++) {
             boolean available = true;
             String name = String.format("Product%d", i);
             String description = String.format("Product%d description", i);
             Double rentPrice = 75.0 + i % 35;
-            SubCategory subCategory = subCategoryService.findById((long) i % nrOfSubCategories);
-            User user = userService.findById((long) i % nrOfUsers);
+            SubCategory subCategory = subCategoryService.findById((long) i % nrOfSubCategories + 1);
+            User user = userService.findById((long) i % nrOfUsers + 1);
             Product product = new Product(available, name, description, rentPrice, subCategory, user);
             productService.save(product);
         }
