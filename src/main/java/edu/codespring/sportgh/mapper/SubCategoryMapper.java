@@ -18,12 +18,10 @@ public abstract class SubCategoryMapper {
     @Autowired
     protected CategoryService categoryService;
 
-    @Mapping(source = "id", target = "subCategoryId")
     @Mapping(source = "category.id", target = "categoryId")
     public abstract SubCategoryOutDTO subCategoryToOut(SubCategory subCategory);
 
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "subCategoryId", target = "id")
+    @Mapping(source = "categoryId", target = "category.id")
     public abstract SubCategory dtoToSubCategory(SubCategoryInDTO subCategoryInDTO);
 
     public abstract Collection<SubCategoryOutDTO> subCategoriesToOuts(Collection<SubCategory> subCategories);
@@ -33,7 +31,7 @@ public abstract class SubCategoryMapper {
         if (dto.getCategoryId() == null) {
             entity.setCategory(null);
         } else {
-            entity.setCategory(categoryService.findById(dto.getCategoryId()).orElse(null));
+            entity.setCategory(categoryService.findById(dto.getCategoryId()));
         }
     }
 }

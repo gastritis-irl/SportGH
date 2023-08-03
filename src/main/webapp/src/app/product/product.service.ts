@@ -8,8 +8,13 @@ import { Product } from "./product.model";
 })
 export class ProductService extends AppService {
 
-    getProducts(): Observable<Product[]> {
+    getAll(): Observable<Product[]> {
         const url: string = `${this.baseUrl}/products`;
         return this.http.get<Product[]>(url);
+    }
+
+    getById(id: number): Observable<Product> {
+        const url: string = `${this.baseUrl}/products/${id}`;
+        return this.http.get<Product>(url);
     }
 }

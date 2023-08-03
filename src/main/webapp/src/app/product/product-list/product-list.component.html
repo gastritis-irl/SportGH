@@ -1,0 +1,8 @@
+<ul>
+    <li *ngFor="let product of products">
+        {{product.id}} - {{product.name}} - {{product.rentPrice}}<br>
+        Owner: {{product.userId}}<br>
+        Subcategory: {{product.subCategoryId}}<br>
+        <a routerLink="/products/{{product.id}}">More...</a>
+    </li>
+</ul>

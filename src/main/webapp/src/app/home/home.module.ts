@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NgForOf } from "@angular/common";
 import { HomeComponent } from "./home.component";
-import { CategoryComponent } from "./category/category.component";
+import { CategoryComponent } from "../category/category.component";
 import { CarouselComponent } from "../shared/carousel/carousel.component";
 
 @NgModule({
