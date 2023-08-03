@@ -3,13 +3,13 @@
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          name="JavaRules"
          xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
-         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.net/ruleset_2_0_0.xsd">
 
     <description>
         PMD Rules Configuration
     </description>
 
-    <!-- bestpractices -->
+    <!-- best practices -->
     <rule ref="category/java/bestpractices.xml">
         <exclude name="GuardLogStatement"/>
         <exclude name="AbstractClassWithoutAbstractMethod"/>
@@ -41,8 +41,8 @@
         <properties>
             <property name="xpath">
                 <value>
-                    //VariableDeclaratorId[(string-length(@Image) &lt; 3) and (not (@Image='id')) and (not (@Image='i'))
-                    and (not (@Image='it')) and (not (@Image='e')) and (not (@Image='ex')) and (not (@Image='sb'))]
+                    //VariableDeclaratorId[(string-length(@Name) &lt; 3) and (not (@Name='id')) and (not (@Name='i'))
+                    and (not (@Name='it')) and (not (@Name='e')) and (not (@Name='ex')) and (not (@Name='sb'))]
                     [not(ancestor::ForInit)]
                     [not((ancestor::FormalParameter) and (ancestor::TryStatement))]
                 </value>
@@ -95,7 +95,7 @@
         </properties>
     </rule>
 
-    <!-- errorprone-->
+    <!-- error prone-->
     <rule ref="category/java/errorprone.xml">
         <exclude name="CloseResource"/>
         <exclude name="DataflowAnomalyAnalysis"/>

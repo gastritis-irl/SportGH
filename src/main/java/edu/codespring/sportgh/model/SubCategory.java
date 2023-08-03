@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.Set;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
@@ -18,8 +20,11 @@ public class SubCategory extends BaseEntity {
     @NotNull
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "subCategory")
+    private Set<Product> products;
 }

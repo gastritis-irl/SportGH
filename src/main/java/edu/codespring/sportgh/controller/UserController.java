@@ -8,6 +8,7 @@ import edu.codespring.sportgh.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,34 +22,36 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Collection<UserOutDTO> findAllUsers() {
+    @GetMapping
+    public ResponseEntity<Collection<UserOutDTO>> findAll() {
         Collection<User> users = userService.findAll();
-        return userMapper.usersToOuts(users);
+        return new ResponseEntity<>(userMapper.usersToOuts(users), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{userId}")
-    public UserOutDTO findById(@PathVariable Long userId) {
+    @GetMapping(path = "/{userId}")
+    public ResponseEntity<UserOutDTO> findById(@PathVariable Long userId) {
         User user = userService.findById(userId);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return userMapper.userToOut(user);
+        return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/{userId}")
-    public void deleteById(@PathVariable Long userId) {
+    @DeleteMapping(path = "/{userId}")
+    public ResponseEntity<?> deleteById(@PathVariable Long userId) {
         userService.deleteById(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public UserOutDTO createUser(@RequestBody @Valid UserInDTO userInDTO) {
-        User user = userService.signup(userInDTO.getUserName(), userInDTO.getPassword());
-        return userMapper.userToOut(user);
+    @PostMapping
+    public ResponseEntity<UserOutDTO> save(@RequestBody @Valid UserInDTO userInDTO) {
+        User user = userService.signup(userInDTO.getUsername(), userInDTO.getPassword());
+        return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void deleteAllUsers() {
+    @DeleteMapping
+    public ResponseEntity<?> deleteAll() {
         userService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
