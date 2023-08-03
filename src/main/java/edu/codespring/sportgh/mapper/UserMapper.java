@@ -11,6 +11,7 @@ import java.util.Collection;
 public interface UserMapper {
 
     @Mapping(source = "id", target = "userId")
+    @Mapping(source = "firebaseUid", target = "firebaseUid")
     UserOutDTO userToOut(User user);
 
     Collection<UserOutDTO> usersToOuts(Collection<User> users);

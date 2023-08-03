@@ -16,4 +16,10 @@ public class UserInDTO {
     @NotNull
     @Pattern(regexp = "[a-zA-Z0-9]+")
     private String password;
+
+    @NotNull
+    private String firebaseUid; // added for firebase authentication
+
+    @NotNull
+    private String role;
 }

@@ -11,9 +11,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.springframework.context.annotation.Bean;
+import edu.codespring.sportgh.security.FirebaseAuthenticationProvider;
+
 @Slf4j
 @Configuration
 public class FirebaseConfig {
+
+    @Bean
+    public FirebaseAuthenticationProvider firebaseAuthenticationProvider() {
+        return new FirebaseAuthenticationProvider();
+    }
 
     @PostConstruct
     public void initialize() {

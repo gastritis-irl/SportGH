@@ -17,5 +17,7 @@ public interface UserService {
     void deleteById(Long userId);
 
     void deleteAll();
+
+    User findByFirebaseUid(String firebaseUid);
 }
 

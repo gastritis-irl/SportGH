@@ -25,6 +25,5 @@ public class PasswordEncrypter {
             log.error(e.getMessage());
             throw new ServiceException("No such algorithm!", e);
         }
-
     }
 }

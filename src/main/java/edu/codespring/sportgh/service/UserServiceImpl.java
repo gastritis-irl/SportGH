@@ -13,33 +13,39 @@ import java.util.Collection;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
-    public User signup(String userName, String password) {
-        if (userRepository.existsByUserName(userName)) {
-            throw new ServiceException("Signup failed! User with this username already exists.");
-        }
-        User user = new User();
-        user.setUserName(userName);
-        user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
-        userRepository.save(user);
-        log.info("Signup successful ({}).", userName);
-        return user;
-
+    public User findByFirebaseUid(String firebaseUid) {
+        return userRepository.findByFirebaseUid(firebaseUid);
     }
 
     @Override
-    public void login(String userName, String password) {
-        String uuid = userRepository.findUuid(userName);
+    @Transactional
+    public User signup(String firebaseUid, String password) {
+        if (userRepository.existsByFirebaseUid(firebaseUid)) {
+            log.error("User with firebaseUid {} already exists!", firebaseUid);
+            return null;
+        }
+        User user = new User();
+        user.setFirebaseUid(firebaseUid);
+        user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
+        userRepository.save(user);
+        log.info("Signup successful ({}).", firebaseUid);
+        return user;
+    }
+
+    @Override
+    public void login(String firebaseUid, String password) {
+        String uuid = userRepository.findUuidByFirebaseUid(firebaseUid);
         String passwordHash = PasswordEncrypter.generateHashedPassword(password, uuid);
-        if (userRepository.existsByUserNameAndPassword(userName, passwordHash)) {
-            log.info("Login successful ({}).", userName);
+        if (userRepository.existsByFirebaseUidAndPassword(firebaseUid, passwordHash)) {
+            log.info("Login successful ({}).", firebaseUid);
         } else {
-            log.error("Invalid credentials for ({})!", userName);
+            log.error("Invalid credentials for ({})!", firebaseUid);
         }
     }
 

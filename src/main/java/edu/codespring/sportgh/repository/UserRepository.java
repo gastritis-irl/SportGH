@@ -24,4 +24,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select user.uuid from User user where user.userName=:example")
     String findUuid(@Param("example") String userName);
+
+    @Query("select user from User user where user.firebaseUid=:example")
+    User findByFirebaseUid(@Param("example") String firebaseUid);
+
+    boolean existsByFirebaseUid(String firebaseUid);
+
+    @Query("select user.uuid from User user where user.firebaseUid=:example")
+    String findUuidByFirebaseUid(@Param("example") String firebaseUid);
+
+    boolean existsByFirebaseUidAndPassword(String firebaseUid, String passwordHash);
 }

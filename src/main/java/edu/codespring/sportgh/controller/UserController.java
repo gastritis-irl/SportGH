@@ -1,11 +1,9 @@
 package edu.codespring.sportgh.controller;
 
-import edu.codespring.sportgh.dto.UserInDTO;
 import edu.codespring.sportgh.dto.UserOutDTO;
 import edu.codespring.sportgh.mapper.UserMapper;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.service.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -41,11 +39,6 @@ public class UserController {
         userService.deleteById(userId);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public UserOutDTO createUser(@RequestBody @Valid UserInDTO userInDTO) {
-        User user = userService.signup(userInDTO.getUserName(), userInDTO.getPassword());
-        return userMapper.userToOut(user);
-    }
 
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteAllUsers() {

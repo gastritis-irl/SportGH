@@ -1,21 +1,20 @@
 package edu.codespring.sportgh.service;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import edu.codespring.sportgh.utils.FirebaseTokenHolder;
+import org.springframework.security.core.Authentication;
 
-@Service
-@Slf4j
-public class FirebaseService {
+public interface FirebaseService {
 
-    public FirebaseToken verifyToken(String idToken) {
-        try {
-            return FirebaseAuth.getInstance().verifyIdToken(idToken);
-        } catch (FirebaseAuthException e) {
-            log.error("Invalid firebase token", e);
-            throw new ServiceException("Invalid firebase token", e);
-        }
-    }
+    FirebaseToken verifyToken(String idToken);
+
+    FirebaseToken verifyToken(String idToken, boolean checkRevoked);
+
+    FirebaseTokenHolder verifyTokenAndReturnTokenHolder(String idToken);
+
+    FirebaseTokenHolder verifyTokenAndReturnTokenHolder(String idToken, boolean checkRevoked);
+
+    String parseToken(String idToken);
+
+    Authentication getAuthentication(String idToken);
 }
