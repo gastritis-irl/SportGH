@@ -22,7 +22,7 @@ public class Product extends BaseEntity {
 
     private Double rentPrice;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "subcategory_id")
     private SubCategory subCategory;
 

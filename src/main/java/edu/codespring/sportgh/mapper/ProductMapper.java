@@ -22,13 +22,17 @@ public abstract class ProductMapper {
     protected UserService userService;
 
     @Mapping(source = "subCategory.id", target = "subCategoryId")
+    @Mapping(source = "subCategory.name", target = "subCategoryName")
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.username", target = "username")
     public abstract ProductOutDTO productToOut(Product product);
 
     public abstract Collection<ProductOutDTO> productsToOuts(Collection<Product> products);
 
     @Mapping(source = "subCategoryId", target = "subCategory.id")
+    @Mapping(source = "subCategoryName", target = "subCategory.name")
     @Mapping(source = "userId", target = "user.id")
+    @Mapping(source = "username", target = "user.username")
     public abstract Product dtoToProduct(ProductInDTO productInDTO);
 
     @AfterMapping

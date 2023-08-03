@@ -9,6 +9,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 @Profile("data-gen")
@@ -31,10 +32,15 @@ public class DataGenerator {
 
         try {
             initUsers(nrOfUsers);
+        } catch (ServiceException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
             initCategories(nrOfCategories);
             initSubCategories(nrOfSubCategories, nrOfCategories);
             initProducts(nrOfProducts, nrOfSubCategories, nrOfUsers);
-        } catch (ServiceException e) {
+        } catch (DataIntegrityViolationException e) {
             log.error(e.getMessage());
         }
     }
