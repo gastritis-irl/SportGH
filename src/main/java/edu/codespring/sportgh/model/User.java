@@ -25,6 +25,6 @@ public class User extends BaseEntity {
     private String password;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "user")
     private Set<Product> products;
 }

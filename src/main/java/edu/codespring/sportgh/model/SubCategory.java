@@ -25,6 +25,6 @@ public class SubCategory extends BaseEntity {
     private Category category;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "subCategory")
     private Set<Product> products;
 }
