@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductService } from "./product.service";
+import { Component, Input, OnInit } from '@angular/core';
 import { Product } from "./product.model";
 
 @Component({
@@ -8,25 +7,11 @@ import { Product } from "./product.model";
 })
 export class ProductComponent implements OnInit {
 
-    products: Product[] = [];
+    @Input() products: Product[] = [];
 
-    constructor(private productService: ProductService) {
+    constructor() {
     }
 
     ngOnInit(): void {
-        this.getProductsFromServer();
-    }
-
-    getProductsFromServer(): void {
-        this.productService.getProducts().subscribe(
-            {
-                next: (response: Product[]): void => {
-                    this.products = response;
-                },
-                error: (error): void => {
-                    console.error('Error fetching data (products):', error);
-                }
-            }
-        );
     }
 }

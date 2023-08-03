@@ -20,11 +20,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User signup(String userName, String password) {
-        if (userRepository.existsByUserName(userName)) {
+        if (userRepository.existsByUsername(userName)) {
             throw new ServiceException("Signup failed! User with this username already exists.");
         }
         User user = new User();
-        user.setUserName(userName);
+        user.setUsername(userName);
         user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
         userRepository.save(user);
         log.info("Signup successful ({}).", userName);
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     public void login(String userName, String password) {
         String uuid = userRepository.findUuid(userName);
         String passwordHash = PasswordEncrypter.generateHashedPassword(password, uuid);
-        if (userRepository.existsByUserNameAndPassword(userName, passwordHash)) {
+        if (userRepository.existsByUsernameAndPassword(userName, passwordHash)) {
             log.info("Login successful ({}).", userName);
         } else {
             log.error("Invalid credentials for ({})!", userName);

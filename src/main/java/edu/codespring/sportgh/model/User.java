@@ -1,13 +1,13 @@
 package edu.codespring.sportgh.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.Set;
 
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
@@ -18,11 +18,13 @@ import lombok.ToString;
 public class User extends BaseEntity {
 
     @Column(name = "username", unique = true, length = 25)
-    private String userName;
+    private String username;
 
     @ToString.Exclude
     @Column(length = 64)
     private String password;
 
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "user")
+    private Set<Product> products;
 }
-

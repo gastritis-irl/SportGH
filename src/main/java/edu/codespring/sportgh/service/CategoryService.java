@@ -3,23 +3,22 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.model.Category;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public interface CategoryService {
 
-    void saveCategory(Category category);
+    void save(Category category);
 
-    void deleteCategory(Long categoryID);
+    void delete(Long categoryID);
 
-    void deleteAllCategories();
+    void deleteAll();
 
-    boolean existsCategory(Long categoryID);
+    boolean existsById(Long categoryID);
 
-    boolean existsCategory(String categoryName);
+    boolean existsByName(String categoryName);
 
-    Long countCategories();
+    Long count();
 
-    Collection<Category> findAllCategories();
+    Collection<Category> findAll();
 
-    Optional<Category> findById(Long categoryID);
+    Category findById(Long categoryID);
 }
