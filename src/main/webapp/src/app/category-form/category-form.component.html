@@ -1,1 +1,3 @@
-<p>category-form works!</p>
+<div *ngFor="let field of fields">
+    {{field}}: <input type="text" [(ngModel)]="category[field]">
+</div>

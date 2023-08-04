@@ -10,6 +10,7 @@ import { HomeModule } from "./home/home.module";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { ProductModule } from './product/product.module';
 import { CategoryFormComponent } from './category-form/category-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { CategoryFormComponent } from './category-form/category-form.component';
         HomeModule,
         ProductModule,
         NavbarComponent,
+        FormsModule,
     ],
     providers: [],
     bootstrap: [
