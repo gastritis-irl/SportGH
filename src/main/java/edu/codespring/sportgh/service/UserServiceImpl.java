@@ -13,7 +13,6 @@ import java.util.Collection;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -31,6 +30,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         User user = new User();
+        user.setUsername(userName);
         user.setFirebaseUid(firebaseUid);
         user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
         userRepository.save(user);

@@ -6,10 +6,8 @@ import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
@@ -22,29 +20,31 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Collection<UserOutDTO> findAllUsers() {
+    @GetMapping
+    public ResponseEntity<Collection<UserOutDTO>> findAll() {
         Collection<User> users = userService.findAll();
-        return userMapper.usersToOuts(users);
+        return new ResponseEntity<>(userMapper.usersToOuts(users), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{userId}")
-    public UserOutDTO findById(@PathVariable Long userId) {
+    @GetMapping(path = "/{userId}")
+    public ResponseEntity<UserOutDTO> findById(@PathVariable Long userId) {
         User user = userService.findById(userId);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return userMapper.userToOut(user);
+        return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/{userId}")
-    public void deleteById(@PathVariable Long userId) {
+    @DeleteMapping(path = "/{userId}")
+    public ResponseEntity<?> deleteById(@PathVariable Long userId) {
         userService.deleteById(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void deleteAllUsers() {
+    @DeleteMapping
+    public ResponseEntity<?> deleteAll() {
         userService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

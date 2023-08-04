@@ -6,6 +6,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import java.util.Set;
+
+
 @Builder
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
@@ -17,7 +25,7 @@ import lombok.*;
 public class User extends BaseEntity {
 
     @Column(name = "username", unique = true, length = 25)
-    private String userName;
+    private String username;
 
     @Column(name = "email", unique = true, length = 64)
     private String email;
@@ -31,5 +39,9 @@ public class User extends BaseEntity {
 
     @Column(name = "role", length = 25)
     private String role;
+
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "user")
+    private Set<Product> products;
 }
 

@@ -1,11 +1,11 @@
 <ul ngbNav #nav="ngbNav" [activeId]="2" class="nav-tabs justify-content-center">
     <li [ngbNavItem]="2">
-        <button ngbNavLink><a href="/home">Home</a></button>
+        <button ngbNavLink><a routerLink="/home">Home</a></button>
     </li>
     <li ngbDropdown class="nav-item" role="presentation">
         <button type="button" class="nav-link" ngbDropdownToggle>Menu</button>
         <div ngbDropdownMenu>
-            <button ngbDropdownItem>Action1</button>
+            <button ngbDropdownItem><a routerLink="/products">All products</a></button>
             <button ngbDropdownItem>Action2</button>
             <button ngbDropdownItem>Action3</button>
             <div class="dropdown-divider"></div>

@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class UserOutDTO {
 
-    private Long userId;
-    private String userName;
+    private Long id;
+    private String username;
     private String firebaseUid; // added for firebase authentication
     private String role;
 }

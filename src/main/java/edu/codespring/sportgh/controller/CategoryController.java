@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -24,50 +23,51 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Collection<CategoryOutDTO> findAllCategories() {
-        Collection<Category> categories = categoryService.findAllCategories();
-        return categoryMapper.categoriesToOuts(categories);
+    @GetMapping
+    public ResponseEntity<Collection<CategoryOutDTO>> findAll() {
+        Collection<Category> categories = categoryService.findAll();
+        return new ResponseEntity<>(categoryMapper.categoriesToOuts(categories), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{categoryId}")
-    public CategoryOutDTO findById(@PathVariable Long categoryId) {
-        // TODO: Implement this method so it loads the products of the category as well.
-        Optional<Category> category = categoryService.findById(categoryId);
-        if (category.isEmpty()) {
-            log.warn("Category with ID {} not found.", categoryId);
+    @GetMapping(path = "/{categoryId}")
+    public ResponseEntity<CategoryOutDTO> findById(@PathVariable Long categoryId) {
+        Category category = categoryService.findById(categoryId);
+        if (category == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return categoryMapper.categoryToOut(category.get());
+        return new ResponseEntity<>(categoryMapper.categoryToOut(category), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/{categoryId}")
-    public void deleteById(@PathVariable Long categoryId) {
+    @DeleteMapping(path = "/{categoryId}")
+    public ResponseEntity<?> deleteById(@PathVariable Long categoryId) {
         log.info("Deleting category with ID {}.", categoryId);
-        categoryService.deleteCategory(categoryId);
+        categoryService.delete(categoryId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void deleteAllCategories() {
-        categoryService.deleteAllCategories();
+    @DeleteMapping
+    public ResponseEntity<?> deleteAll() {
+        categoryService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{categoryId}")
-    public ResponseEntity<CategoryOutDTO> saveCategory(@PathVariable(required = false)
-                                                       Long categoryId, @RequestBody CategoryInDTO categoryInDTO) {
+    @PostMapping(path = "/{categoryId}")
+    @PutMapping(path = "/{categoryId}")
+    public ResponseEntity<CategoryOutDTO> save(@PathVariable(required = false) Long categoryId,
+                                               @RequestBody CategoryInDTO categoryInDTO) {
         log.info("Saving category with ID {}.", categoryId);
-        Category category = categoryMapper.inDtoToCategory(categoryInDTO);
+        Category category = categoryMapper.dtoToCategory(categoryInDTO);
         category.setId(categoryId); // If id is null, it creates a new Category, else it updates the existing one
-        categoryService.saveCategory(category);
+        categoryService.save(category);
         CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
 
         return new ResponseEntity<>(categoryOutDTO, categoryId == null ? HttpStatus.CREATED : HttpStatus.OK);
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, path = "/count")
-    public Long countCategories() {
-        return categoryService.countCategories();
+    @GetMapping(path = "/count")
+    public ResponseEntity<Long> count() {
+        return new ResponseEntity<>(categoryService.count(), HttpStatus.OK);
     }
 }
 

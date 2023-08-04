@@ -7,6 +7,7 @@ import edu.codespring.sportgh.model.SubCategory;
 import edu.codespring.sportgh.service.SubCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,32 +22,35 @@ public class SubCategoryController {
     private final SubCategoryService subCategoryService;
     private final SubCategoryMapper subCategoryMapper;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Collection<SubCategoryOutDTO> findAllSubCategories() {
+    @GetMapping
+    public ResponseEntity<Collection<SubCategoryOutDTO>> findAll() {
         Collection<SubCategory> subCategories = subCategoryService.findAll();
-        return subCategoryMapper.subCategoriesToOuts(subCategories);
+        return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/ids/{subCategoryIDs}")
-    public Collection<SubCategoryOutDTO> findByIds(@PathVariable Collection<Long> subCategoryIDs) {
+    @GetMapping(path = "/ids/{subCategoryIDs}")
+    public ResponseEntity<Collection<SubCategoryOutDTO>> findByIds(@PathVariable Collection<Long> subCategoryIDs) {
         Collection<SubCategory> subCategories = subCategoryService.findByIds(subCategoryIDs);
-        return subCategoryMapper.subCategoriesToOuts(subCategories);
+        return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/{subCategoryId}")
-    public void deleteById(@PathVariable Long subCategoryId) {
+    @DeleteMapping(path = "/{subCategoryId}")
+    public ResponseEntity<?> deleteById(@PathVariable Long subCategoryId) {
         log.info("Deleting subCategory with ID {}.", subCategoryId);
         subCategoryService.delete(subCategoryId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void deleteAllSubCategories() {
+    @DeleteMapping
+    public ResponseEntity<?> deleteAll() {
         subCategoryService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/{subCategoryId}")
-    public ResponseEntity<SubCategoryOutDTO> saveSubCategory(@RequestBody SubCategoryInDTO subCategoryInDTO,
-                                                             @PathVariable(required = false) Long subCategoryId) {
+    @PostMapping(path = "/{subCategoryId}")
+    @PutMapping(path = "/{subCategoryId}")
+    public ResponseEntity<SubCategoryOutDTO> save(@RequestBody SubCategoryInDTO subCategoryInDTO,
+                                                  @PathVariable(required = false) Long subCategoryId) {
         SubCategory subCategory;
         subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
         log.info("Saving subCategory with ID {}.", subCategoryId);
@@ -59,10 +63,10 @@ public class SubCategoryController {
         return ResponseEntity.ok(subCategoryOutDTO1);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryId}")
-    public Collection<SubCategoryOutDTO> findByCategoryId(@PathVariable Long categoryId) {
+    @GetMapping(path = "/categories/{categoryId}")
+    public ResponseEntity<Collection<SubCategoryOutDTO>> findByCategoryId(@PathVariable Long categoryId) {
         Collection<SubCategory> subCategories = subCategoryService.findByCategoryId(categoryId);
-        return subCategoryMapper.subCategoriesToOuts(subCategories);
+        return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
 }
