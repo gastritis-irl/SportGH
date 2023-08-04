@@ -55,11 +55,11 @@ public class DataGenerator {
 
     public void initCategories(int nrOfCategories) {
         String[] images = {
-            "https://www.bls.gov/spotlight/2017/sports-and-exercise/images/cover_image.jpg",
-            "https://i0.wp.com/academiamag.com/wp-content/uploads/2017/09/sports-at-school-1.png?fit=1920%2C1280&ssl=1",
-            "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
-            "https://h5d9a9f8.rocketcdn.me/wp-content/uploads/2023/03/yeti-gathering-nepal-rb-224-e1679498823335.jpg",
-            "https://penaltyfile.com/wp-content/uploads/2021/03/types-of-winter-sports-Mar222021-1-min.jpg",
+           "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
+           "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
+           "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
+           "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
+           "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
         };
 
         for (int i = 1; i <= nrOfCategories; i++) {
