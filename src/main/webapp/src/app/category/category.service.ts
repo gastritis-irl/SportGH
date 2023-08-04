@@ -23,7 +23,7 @@ export class CategoryService extends AppService {
         return this.http.put(url, newData);
     }
 
-    delete(categoryId: number | undefined): Observable<Object> {
+    delete(categoryId: number | undefined): Observable<Category> {
         const url: string = `${this.baseUrl}/categories/${categoryId}`;
         return this.http.delete(url);
     }
