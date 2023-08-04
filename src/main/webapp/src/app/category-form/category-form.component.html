@@ -1,3 +1,6 @@
-<div *ngFor="let field of fields">
-    {{field}}: <input type="text" [(ngModel)]="category[field]">
-</div>
+<form (ngSubmit)="onSubmit()">
+    Name: <input type="text" [(ngModel)]="category.name"><br>
+    Description: <input type="text" [(ngModel)]="category.description"><br>
+    ImageURL("upload image"): <input type="text" [(ngModel)]="category.imageURL"><br>
+    <input type="submit" value="Add">
+</form>
