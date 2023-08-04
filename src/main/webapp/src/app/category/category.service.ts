@@ -14,7 +14,7 @@ export class CategoryService extends AppService {
     }
 
     create(data: Category): Observable<Category> {
-        const url: string = `${this.baseUrl}/categories/`;
+        const url: string = `${this.baseUrl}/categories`;
         return this.http.post(url, data);
     }
 
