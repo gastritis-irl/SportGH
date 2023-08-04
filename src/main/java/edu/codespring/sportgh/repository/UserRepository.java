@@ -15,8 +15,6 @@ public interface UserRepository extends BaseRepository<User> {
 
     boolean existsByUsername(String name);
 
-    boolean existsByUserNameAndPassword(String userName, String password);
-
     @Query("select user.uuid from User user where user.username=:example")
     String findUuid(@Param("example") String username);
 

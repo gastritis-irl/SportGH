@@ -14,7 +14,6 @@ import lombok.ToString;
 import java.util.Set;
 
 
-@Builder
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @AllArgsConstructor
