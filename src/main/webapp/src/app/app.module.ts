@@ -9,11 +9,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from "./home/home.module";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { ProductModule } from './product/product.module';
+import { CategoryFormComponent } from './category-form/category-form.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         UserComponent,
+        CategoryFormComponent,
     ],
     imports: [
         BrowserModule,
