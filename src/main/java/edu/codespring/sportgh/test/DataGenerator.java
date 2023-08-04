@@ -50,7 +50,7 @@ public class DataGenerator {
             String username = String.format("user%d", i);
             String password = String.format("password%d", i);
             String firebaseUid = String.format("firebaseUid%d", i);
-            userService.signup(username,firebaseUid, password);
+            userService.signup(username, firebaseUid, password);
         }
     }
 

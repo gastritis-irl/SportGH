@@ -17,7 +17,7 @@ public class AuthenticationController {
     private final UserService userService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/signup")
-    public void signup(@RequestParam String username,@RequestParam String idToken, @RequestParam String password) {
+    public void signup(@RequestParam String username, @RequestParam String idToken, @RequestParam String password) {
         String firebaseUid = firebaseService.parseToken(idToken);
         userService.signup(username, firebaseUid, password);
     }
