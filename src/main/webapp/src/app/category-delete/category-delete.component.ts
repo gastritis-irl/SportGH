@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../category/category.model';
+import { CategoryService } from '../category/category.service';
 
 @Component({
     selector: 'app-category-delete',
@@ -7,6 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryDeleteComponent implements OnInit {
 
+    category: Category = {
+        id: 0,
+    };
+
+    constructor(private categoryService: CategoryService) {
+    }
+
     ngOnInit(): void {
+    }
+
+    onSubmit(): void {
+        this.categoryService.delete(this.category.id).subscribe(
+            {
+                next: (): void => {
+                },
+                error: (error): void => {
+                    console.error(error);
+                }
+            }
+        );
     }
 }

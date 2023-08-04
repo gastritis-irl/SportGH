@@ -19,6 +19,9 @@ import { RouterLink } from '@angular/router';
         CategoryComponent
     ],
     bootstrap: [],
+    exports: [
+        CategoryComponent
+    ]
 })
 export class HomeModule {
 

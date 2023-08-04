@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../category/category.model';
+import { CategoryService } from '../category/category.service';
 
 @Component({
     selector: 'app-category-form',
@@ -14,10 +15,21 @@ export class CategoryCreateComponent implements OnInit {
         imageURL: ''
     };
 
+    constructor(private categoryService: CategoryService) {
+    }
+
     ngOnInit(): void {
     }
 
     onSubmit(): void {
-        console.log("request sent: ", this.category);
+        this.categoryService.create(this.category).subscribe(
+            {
+                next: (): void => {
+                },
+                error: (error): void => {
+                    console.error(error);
+                }
+            }
+        );
     }
 }
