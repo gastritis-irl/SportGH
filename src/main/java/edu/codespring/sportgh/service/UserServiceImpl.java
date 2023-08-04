@@ -24,13 +24,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User signup(String firebaseUid, String password) {
+    public User signup(String username, String firebaseUid, String password) {
         if (userRepository.existsByFirebaseUid(firebaseUid)) {
             log.error("User with firebaseUid {} already exists!", firebaseUid);
             return null;
         }
         User user = new User();
-        user.setUsername(userName);
+        user.setUsername(username);
         user.setFirebaseUid(firebaseUid);
         user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
         userRepository.save(user);

@@ -49,7 +49,8 @@ public class DataGenerator {
         for (int i = 1; i <= nrOfUsers; i++) {
             String username = String.format("user%d", i);
             String password = String.format("password%d", i);
-            userService.signup(username, password);
+            String firebaseUid = String.format("firebaseUid%d", i);
+            userService.signup(username,firebaseUid, password);
         }
     }
 
