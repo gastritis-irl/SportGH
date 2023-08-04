@@ -4,12 +4,13 @@
     </div>
 
     <div class="offcanvas-body">
-        <form class="offcanvas-form">
-            <input type="email" placeholder="Email address" required>
-            <input type="password" placeholder="Password" required>
-            <input type="submit" value="Login">
+        <form class="offcanvas-form" (ngSubmit)="register()">
+            <input type="email" placeholder="Email address" required [(ngModel)]="email">
+            <input type="password" placeholder="Password" required [(ngModel)]="password">
+            <input type="submit" value="Sign-up">
         </form>
     </div>
 </ng-template>
 
-<button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openOffcanvas(content)">Login/Sign up</button>
+<button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openOffcanvas(content)">Login</button>
+<button class="btn btn-lg btn-outline-primary mb-2" (click)="openOffcanvas(content)">Sign up</button>

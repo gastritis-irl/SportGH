@@ -19,7 +19,6 @@ import java.io.IOException;
 @Component
 public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
     private final FirebaseService firebaseService;
 
     @Override

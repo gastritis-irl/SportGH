@@ -10,6 +10,21 @@ import { HomeModule } from "./home/home.module";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { ProductModule } from './product/product.module';
 
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
+const firebaseConfig = {
+    apiKey: "your-api-key",
+    authDomain: "your-auth-domain",
+    databaseURL: "your-database-url",
+    projectId: "your-project-id",
+    storageBucket: "your-storage-bucket",
+    messagingSenderId: "your-messaging-sender-id",
+    appId: "your-app-id"
+};
+
+firebase.initializeApp(firebaseConfig);
+
 @NgModule({
     declarations: [
         AppComponent,
