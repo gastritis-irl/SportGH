@@ -9,13 +9,13 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
-RUN gradle --no-daemon bootJar -x check
+RUN gradle --no-daemon bootWar -x check
 
 FROM docker.io/openjdk:17.0.1-jdk-slim
 
 WORKDIR /sportgh
 
-COPY --from=build /usr/src/app/build/libs/sportgh-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /usr/src/app/build/libs/*.jar app.jar
 
 COPY application.properties .
 
