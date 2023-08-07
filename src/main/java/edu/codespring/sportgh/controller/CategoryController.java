@@ -65,6 +65,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryOutDTO> create(@RequestBody CategoryInDTO categoryInDTO) {
+        log.info("Creating category with name: {}.", categoryInDTO.getName());
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
         categoryService.save(category);
         CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
