@@ -26,8 +26,10 @@ export class CategoryUpdateComponent implements OnInit {
         this.categoryService.update(this.category.id, this.category).subscribe(
             {
                 next: (): void => {
+                    alert("Ok");
                 },
                 error: (error): void => {
+                    alert("Error");
                     console.error(error);
                 }
             }

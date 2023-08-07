@@ -23,8 +23,10 @@ export class CategoryDeleteComponent implements OnInit {
         this.categoryService.delete(this.category.id).subscribe(
             {
                 next: (): void => {
+                    alert("Ok");
                 },
                 error: (error): void => {
+                    alert("Error");
                     console.error(error);
                 }
             }

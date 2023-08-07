@@ -25,8 +25,10 @@ export class CategoryCreateComponent implements OnInit {
         this.categoryService.create(this.category).subscribe(
             {
                 next: (): void => {
+                    alert("Ok");
                 },
                 error: (error): void => {
+                    alert("Error");
                     console.error(error);
                 }
             }
