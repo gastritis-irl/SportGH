@@ -1,0 +1,22 @@
+#
+# docker build -t mp2-common-2022 .
+# docker run -it --rm -p 8080:8080 mp2-common-2022
+#
+
+FROM gradle:7.4.2-jdk17-alpine AS build
+
+WORKDIR /usr/src/app
+
+COPY . ./
+
+RUN gradle --no-daemon bootJar -x check
+
+FROM docker.io/openjdk:17.0.1-jdk-slim
+
+WORKDIR /sportgh
+
+COPY --from=build /usr/src/app/build/libs/sportgh-0.0.1-SNAPSHOT.jar app.jar
+
+EXPOSE 8080
+
+CMD java -jar app.jar
