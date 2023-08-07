@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 
 @Slf4j
 public class FirebaseAuthenticationProvider implements AuthenticationProvider {
+
     @Override
     public Authentication authenticate(Authentication authentication) {
         FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();

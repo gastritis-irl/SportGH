@@ -40,6 +40,6 @@ public class WebSecurityConfig {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(fbAuthProvider);  // Use our custom Firebase authentication provider
+        auth.authenticationProvider(fbAuthProvider);
     }
 }

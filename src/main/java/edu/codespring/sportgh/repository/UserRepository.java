@@ -15,16 +15,16 @@ public interface UserRepository extends BaseRepository<User> {
 
     boolean existsByUsername(String name);
 
-    @Query("select user.uuid from User user where user.username=:example")
-    String findUuid(@Param("example") String username);
+    @Query("select user.uuid from User user where user.username=:username")
+    String findUuid(@Param("username") String username);
 
-    @Query("select user from User user where user.firebaseUid=:example")
-    User findByFirebaseUid(@Param("example") String firebaseUid);
+    @Query("select user from User user where user.firebaseUid=:firebasUid")
+    User findByFirebaseUid(@Param("firebaseUid") String firebaseUid);
 
     boolean existsByFirebaseUid(String firebaseUid);
 
-    @Query("select user.uuid from User user where user.firebaseUid=:example")
-    String findUuidByFirebaseUid(@Param("example") String firebaseUid);
+    @Query("select user.uuid from User user where user.firebaseUid=:firebasUid")
+    String findUuidByFirebaseUid(@Param("firebaseUid") String firebaseUid);
 
     boolean existsByFirebaseUidAndPassword(String firebaseUid, String passwordHash);
 }

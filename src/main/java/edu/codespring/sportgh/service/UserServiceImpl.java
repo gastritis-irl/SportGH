@@ -25,10 +25,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User signup(String username, String firebaseUid, String password) {
-        if (userRepository.existsByFirebaseUid(firebaseUid)) {
-            log.error("User with firebaseUid {} already exists!", firebaseUid);
-            return null;
-        }
         User user = new User();
         user.setUsername(username);
         user.setFirebaseUid(firebaseUid);
@@ -45,7 +41,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByFirebaseUidAndPassword(firebaseUid, passwordHash)) {
             log.info("Login successful ({}).", firebaseUid);
         } else {
-            log.error("Invalid credentials for ({})!", firebaseUid);
+            log.warn("Invalid credentials for ({})!", firebaseUid);
         }
     }
 
