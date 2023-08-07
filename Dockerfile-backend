@@ -12,8 +12,6 @@ WORKDIR /sportgh
 
 COPY --from=build /usr/src/app/build/libs/*.jar app.jar
 
-COPY application.properties .
-
 EXPOSE 8080
 
 CMD java -jar app.jar
