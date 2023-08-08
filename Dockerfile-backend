@@ -10,8 +10,8 @@ FROM docker.io/openjdk:17.0.1-jdk-slim
 
 WORKDIR /sportgh
 
-COPY --from=build /usr/src/app/build/libs/*.jar app.jar
+COPY --from=build /usr/src/app/build/libs/*.war app.war
 
 EXPOSE 8080
 
-CMD java -jar app.jar
+CMD java -jar app.war
