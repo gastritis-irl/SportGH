@@ -11,9 +11,9 @@ import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { ProductModule } from './product/product.module'
 import { FormsModule } from '@angular/forms';
 
-
 import * as firebase from 'firebase/app';
 import {environment} from "./environment";
+import { SharedModule } from './shared/shared.module';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -31,6 +31,7 @@ firebase.initializeApp(environment.firebaseConfig);
         HomeModule,
         ProductModule,
         NavbarComponent,
+        SharedModule
     ],
     providers: [],
     bootstrap: [

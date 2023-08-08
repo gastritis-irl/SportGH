@@ -32,7 +32,7 @@ public class User extends BaseEntity {
     private String firebaseUid;
 
     @Column(name = "role", length = 25)
-    private String role;
+    private String role = "USER";
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "user")
