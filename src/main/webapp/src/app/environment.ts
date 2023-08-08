@@ -1,3 +1,3 @@
 export const environment = {
-    baseURL: "http://sportgh-backend:8080",
+    baseURL: "http://localhost:8080",
 };
