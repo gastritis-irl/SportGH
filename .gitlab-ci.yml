@@ -23,6 +23,7 @@ frontend_linting:
     image: node:18.14.2-alpine3.17
     stage: lint
     script:
+        - npm install
         - npx eslint .
     cache:
         key: "$CI_COMMIT_REF_NAME"
