@@ -1,11 +1,36 @@
 stages:
-    - build
     - lint
+    - build
     - deploy
 
 before_script:
     - GRADLE_USER_HOME="$(pwd)/.gradle"
     - export GRADLE_USER_HOME
+
+backend_linting:
+    image: gradle:7.4.2-jdk17-alpine
+    stage: lint
+    script:
+        - gradle check
+    cache:
+        key: "$CI_COMMIT_REF_NAME"
+        policy: pull
+        paths:
+            - build
+            - .gradle
+
+frontend_linting:
+    image: node:18.14.2-alpine3.17
+    stage: lint
+    script:
+        - npm install
+        - npx eslint .
+    cache:
+        key: "$CI_COMMIT_REF_NAME"
+        policy: pull
+        paths:
+            - dist
+            - node_modules
 
 backend_build:
     image: gradle:7.4.2-jdk17-alpine
@@ -29,35 +54,5 @@ frontend_build:
         key: "$CI_COMMIT_REF_NAME"
         policy: push
         paths:
-            - build
+            - dist
             - node_modules
-
-
-backend_linting:
-    image: gradle:7.4.2-jdk17-alpine
-    stage: lint
-    script:
-        - gradle check
-    cache:
-        key: "$CI_COMMIT_REF_NAME"
-        policy: pull
-        paths:
-            - build
-            - .gradle
-
-frontend_linting:
-    image: node:18.14.2-alpine3.17
-    stage: lint
-    script:
-        - npx eslint .
-    cache:
-        key: "$CI_COMMIT_REF_NAME"
-        policy: pull
-        paths:
-            - build
-            - .gradle
-
-deploy:
-    stage: deploy
-    script: echo "No deployment script"
-    environment: production
