@@ -3,7 +3,7 @@ import { Category } from '../category/category.model';
 import { CategoryService } from '../category/category.service';
 
 @Component({
-    selector: 'app-category-delete',
+    selector: 'sgh-category-delete',
     templateUrl: './category-delete.component.html',
     styleUrls: ['./category-delete.component.scss']
 })

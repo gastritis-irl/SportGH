@@ -3,7 +3,7 @@ import { Category } from '../category/category.model';
 import { CategoryService } from '../category/category.service';
 
 @Component({
-    selector: 'app-category-form',
+    selector: 'sgh-category-create',
     templateUrl: './category-create.component.html',
     styleUrls: ['./category-create.component.scss']
 })

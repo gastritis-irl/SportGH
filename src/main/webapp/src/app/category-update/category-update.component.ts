@@ -3,7 +3,7 @@ import { Category } from '../category/category.model';
 import { CategoryService } from '../category/category.service';
 
 @Component({
-    selector: 'app-category-update',
+    selector: 'sgh-category-update',
     templateUrl: './category-update.component.html',
     styleUrls: ['./category-update.component.scss']
 })
