@@ -1,25 +1,26 @@
-<ul ngbNav #nav="ngbNav" [activeId]="2" class="navbar-custom">
-    <li [ngbNavItem]="1" ngbDropdown class="nav-item navbar-item">
-        <button type="button" class="nav-link" ngbDropdownToggle>Sports</button>
+<div ngbNav></div>
+<ul ngbNav #nav="ngbNav" [activeId]="1" class="navbar-custom">
+    <li [ngbNavItem]="1" ngbDropdown class="nav-item">
+        <button type="button" class="nav-link navbar-btn" ngbDropdownToggle>Sports</button>
         <div ngbDropdownMenu>
             <button *ngFor="let sport of ['sp1','sp2','sp3','sp4','sp5']" ngbDropdownItem>
                 <a><!--routerLink="categories/id/sub" -->{{sport}}</a>
             </button>
         </div>
     </li>
-    <li [ngbNavItem]="2" class="nav-item navbar-item">
+    <li [ngbNavItem]="2" class="nav-item">
         <div>
-            <a routerLink="/home">Home</a>
+            <a class="navbar-btn" routerLink="/home">Home</a>
         </div>
     </li>
-    <li [ngbNavItem]="3" class="nav-item navbar-item">
+    <li [ngbNavItem]="3" class="nav-item">
         <div>
-            About
+            <a class="navbar-btn" routerLink="">About</a>
         </div>
     </li>
-    <li [ngbNavItem]="4" class="nav-item navbar-item">
+    <li [ngbNavItem]="4" class="nav-item">
         <div>
-            Contact
+            <a class="navbar-btn" routerLink="">Contact</a>
         </div>
     </li>
 </ul>
