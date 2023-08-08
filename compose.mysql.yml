@@ -12,14 +12,6 @@ services:
         ports:
             - "3306:3306"
 
-    sportgh-frontend:
-        build:
-            context: .
-            dockerfile: Dockerfile-frontend
-        restart: unless-stopped
-        ports:
-            - "4200:80"
-
     sportgh-backend:
         build:
             context: .
@@ -31,3 +23,15 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:mysql://sportgh-mysql:3306/sportgh?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
             - SPRING_DATASOURCE_USERNAME=root
             - SPRING_DATASOURCE_PASSWORD=1234
+        depends_on:
+            - sportgh-mysql
+
+    sportgh-frontend:
+        build:
+            context: .
+            dockerfile: Dockerfile-frontend
+        restart: unless-stopped
+        ports:
+            - "4200:80"
+        depends_on:
+            - sportgh-backend
