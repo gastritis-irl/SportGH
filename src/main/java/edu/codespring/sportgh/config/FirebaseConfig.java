@@ -38,8 +38,8 @@ public class FirebaseConfig {
                 FirebaseApp.initializeApp(options);
             }
         } catch (IOException e) {
-            log.error("Could not open serviceAccountKey\n" +
-                "Set the environment variable for the file path to the file containing the ServiceAccountKey.", e);
+            log.error("Could not open serviceAccountKey\n"
+                + "Set the environment variable for the file path to the file containing the ServiceAccountKey.", e);
             throw new IllegalStateException("Could not open serviceAccountKey file", e);
         }
     }
