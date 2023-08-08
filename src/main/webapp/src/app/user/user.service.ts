@@ -32,29 +32,15 @@ export class UserService extends AppService {
         const idToken = await getIdToken(user);
         localStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/login`;
-        return this.http.post<User>(url, null, {
-            params: {
-                idToken,
-                password,
-            },
-        });
+        return this.http.post<User>(url, { idToken, password });
     }
 
-
-    async registerWithFirebase( email: string, password: string): Promise<Observable<User>> {
+    async registerWithFirebase(email: string, password: string): Promise<Observable<User>> {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const idToken = await getIdToken(user);
         localStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/signup`;
-        return this.http.post<User>(url, null, {
-            params: {
-                email,
-                idToken,
-                password,
-            },
-        });
+        return this.http.post<User>(url, { email, idToken, password });
     }
-
-
 }

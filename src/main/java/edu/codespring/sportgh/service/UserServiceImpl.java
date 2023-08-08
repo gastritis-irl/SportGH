@@ -2,6 +2,7 @@ package edu.codespring.sportgh.service;
 
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
+import edu.codespring.sportgh.utils.EmailToUsername;
 import edu.codespring.sportgh.utils.PasswordEncrypter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +27,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User signup(String email, String firebaseUid, String password) {
         User user = new User();
+
+        String username = EmailToUsername.extractUsernameFromEmail(email);
+
         user.setEmail(email);
-        user.setUsername(email);
+        user.setUsername(username);
         user.setFirebaseUid(firebaseUid);
         user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
         userRepository.save(user);

@@ -2,6 +2,8 @@ package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.service.FirebaseService;
 import edu.codespring.sportgh.service.UserService;
+import edu.codespring.sportgh.utils.LoginRequest;
+import edu.codespring.sportgh.utils.SignupRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +16,15 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public void signup(@RequestParam String email, @RequestParam String idToken, @RequestParam String password) {
-        String firebaseUid = firebaseService.parseToken(idToken);
-        userService.signup(email, firebaseUid, password);
+    public void signup(@RequestBody SignupRequest request) {
+        String firebaseUid = firebaseService.parseToken(request.getIdToken());
+        userService.signup(request.getEmail(), firebaseUid, request.getPassword());
     }
 
     @PostMapping("/login")
-    public void login(@RequestParam String idToken, @RequestParam String password) {
-        String firebaseUid = firebaseService.parseToken(idToken);
-        userService.login(firebaseUid, password);
+    public void login(@RequestBody LoginRequest request) {
+        String firebaseUid = firebaseService.parseToken(request.getIdToken());
+        userService.login(firebaseUid, request.getPassword());
     }
+
 }

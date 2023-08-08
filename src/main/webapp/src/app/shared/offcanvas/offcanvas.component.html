@@ -6,7 +6,7 @@
         <form class="offcanvas-form" (ngSubmit)="login()">
             <input type="email" placeholder="Email address" required [(ngModel)]="email" name="email">
             <input type="password" placeholder="Password" required [(ngModel)]="password" name="password">
-            <input type="submit" value="Login">
+            <button class="btn btn-lg btn-outline-primary mb-2 me-2" type="submit" value="Login"></button>
         </form>
     </div>
 </ng-template>
@@ -19,10 +19,10 @@
         <form class="offcanvas-form" (ngSubmit)="register()">
             <input type="email" placeholder="Email address" required [(ngModel)]="email" name="email">
             <input type="password" placeholder="Password" required [(ngModel)]="password" name="password">
-            <input type="submit" value="Sign-up">
+            <button class="btn btn-lg btn-outline-primary mb-2 me-2" type="submit" value="Sign-up"></button>
         </form>
     </div>
 </ng-template>
 
-<button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openOffcanvas(loginContent)">Login</button>
+<button  class="btn btn-lg btn-outline-primary mb-2 me-2"class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openOffcanvas(loginContent)">Login</button>
 <button class="btn btn-lg btn-outline-primary mb-2" (click)="openOffcanvas(signupContent)">Sign up</button>
