@@ -92,7 +92,11 @@ Global classes
 .navbar-custom {
     font: $fontDef;
     font-size: $sizeDef;
-    color: $colorNeutral;
-    text-decoration-color: $colorNeutral;
     background-color: $colorMain1;
+}
+
+.navbar-item {
+    margin: 5px;
+    font-family: $fontDef;
+    color: $colorNeutral;
 }
