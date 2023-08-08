@@ -57,11 +57,14 @@ Global variables
 
 // Colors
 $colorNeutral: #FFFFFF;
-$colorMain1: #8D8BA7;
-$colorMain2: #F2F1FA;
+$colorMain1: #5D5A88;
+$colorMain2: #8D8BA7;
+$colorMain3: #F2F1FA;
 
 // Fonts
-$fontDef1: 'DM Sans';
+$fontDef: 'DM Sans';
+$fontNav: 'Text single/200/Regular';
+$fontButton: 'Text single/100/Bold';
 $fontCard1: 'Text single/200/Bold';
 $fontCard2: 'Text single/300/Bold';
 
@@ -87,5 +90,9 @@ Global classes
 }
 
 .navbar-custom {
-
+    font: $fontDef;
+    font-size: $sizeDef;
+    color: $colorNeutral;
+    text-decoration-color: $colorNeutral;
+    background-color: $colorMain1;
 }
