@@ -50,10 +50,42 @@ li {
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 
+
+/*
+Global variables
+ */
+
+// Colors
+$colorNeutral: #FFFFFF;
+$colorMain1: #8D8BA7;
+$colorMain2: #F2F1FA;
+
+// Fonts
+$fontDef1: 'DM Sans';
+$fontCard1: 'Text single/200/Bold';
+$fontCard2: 'Text single/300/Bold';
+
+// Text size
+$sizeH1: 66px;
+$sizeH2: 36px;
+$sizeH3: 24px;
+$sizeDef: 16px;
+$sizeCard1: 20px;
+$sizeCard2: 24px;
+
+
+/*
+Global classes
+ */
+
 .carousel-holder {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     height: 65vh;
+}
+
+.navbar-custom {
+
 }
