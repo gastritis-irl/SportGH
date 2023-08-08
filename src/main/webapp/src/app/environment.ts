@@ -1,3 +1,3 @@
-export const environment: { backendPort: number } = {
-    backendPort: 8080,
+export const environment = {
+    baseURL: "http://sportgh-backend:8080",
 };
