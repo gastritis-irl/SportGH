@@ -2,7 +2,7 @@ FROM node:18.14.2-alpine3.17 as build
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package*.json .
 
 RUN npm install
 
@@ -10,13 +10,11 @@ COPY . .
 
 RUN npm run build --prod
 
-FROM nginx:alpine
-
-RUN rm -rf /etc/nginx/conf.d/*
+FROM nginx:stable-alpine3.17-slim
 
 COPY --from=build /usr/src/app/dist/webapp /usr/share/nginx/html
 
-EXPOSE 4200
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
 
