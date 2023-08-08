@@ -14,9 +14,9 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public void signup(@RequestParam String username, @RequestParam String idToken, @RequestParam String password) {
+    public void signup(@RequestParam String email, @RequestParam String idToken, @RequestParam String password) {
         String firebaseUid = firebaseService.parseToken(idToken);
-        userService.signup(username, firebaseUid, password);
+        userService.signup(email, firebaseUid, password);
     }
 
     @PostMapping("/login")

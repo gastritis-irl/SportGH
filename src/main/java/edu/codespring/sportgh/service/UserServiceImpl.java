@@ -24,9 +24,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User signup(String username, String firebaseUid, String password) {
+    public User signup(String email, String firebaseUid, String password) {
         User user = new User();
-        user.setUsername(username);
+        user.setEmail(email);
+        user.setUsername(email);
         user.setFirebaseUid(firebaseUid);
         user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
         userRepository.save(user);
