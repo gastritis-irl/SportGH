@@ -17,13 +17,13 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public void signup(@RequestBody SignupRequest request) {
-        String firebaseUid = firebaseService.parseToken(request.getIdToken());
+        String firebaseUid = firebaseService.getFirebaseUidFromToken(request.getIdToken());
         userService.signup(request.getEmail(), firebaseUid, request.getPassword());
     }
 
     @PostMapping("/login")
     public void login(@RequestBody LoginRequest request) {
-        String firebaseUid = firebaseService.parseToken(request.getIdToken());
+        String firebaseUid = firebaseService.getFirebaseUidFromToken(request.getIdToken());
         userService.login(firebaseUid, request.getPassword());
     }
 

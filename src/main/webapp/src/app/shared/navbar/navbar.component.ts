@@ -7,7 +7,7 @@ import { SharedModule } from '../shared.module';
 @Component({
     selector: 'sgh-navbar',
     standalone: true,
-    imports: [NgbNavModule, NgbDropdownModule,SharedModule, RouterLink],
+    imports: [NgbNavModule, NgbDropdownModule, SharedModule, RouterLink],
     templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {

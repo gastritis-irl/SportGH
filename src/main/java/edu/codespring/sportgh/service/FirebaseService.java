@@ -7,7 +7,7 @@ public interface FirebaseService {
 
     FirebaseTokenHolder verifyTokenAndReturnTokenHolder(String idToken);
 
-    String parseToken(String idToken);
+    String getFirebaseUidFromToken(String idToken);
 
     Authentication getAuthentication(String idToken);
 }

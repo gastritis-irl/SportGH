@@ -23,15 +23,10 @@ public class FirebaseServiceImpl implements FirebaseService {
     private final UserRepository userRepository;
 
     @Override
-    public String parseToken(String idToken) {
+    public String getFirebaseUidFromToken(String idToken) {
         FirebaseTokenHolder tokenHolder = verifyTokenAndReturnTokenHolder(idToken);
-        return getFirebaseUid(tokenHolder);
-    }
-
-    public String getFirebaseUid(FirebaseTokenHolder tokenHolder) {
         return tokenHolder.getUid();
     }
-
 
     @Override
     public FirebaseTokenHolder verifyTokenAndReturnTokenHolder(String idToken) {
