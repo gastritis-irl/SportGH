@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         user.setUsername(username);
         user.setFirebaseUid(firebaseUid);
-        user.setPassword(UserUtil.generateHashedPassword(password,firebaseUid));
+        user.setPassword(UserUtil.generateHashedPassword(password, firebaseUid));
         userRepository.save(user);
         log.info("Signup successful ({}).", user);
         return user;
