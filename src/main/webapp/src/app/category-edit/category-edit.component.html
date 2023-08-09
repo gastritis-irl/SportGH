@@ -1,0 +1,19 @@
+<div>
+    <div>
+        <a routerLink="/admin/categories">&larr;Go back</a><br>
+    </div>
+
+    <form class="adminForm" (ngSubmit)="updateCategory()">
+        Name:
+        <input type="text" name="name" [(ngModel)]="category.name"
+               placeholder="{{category.name}}"><br>
+        Description:
+        <input type="text" name="description" [(ngModel)]="category.description"
+               placeholder="{{category.description}}"><br>
+        ImageURL("upload image"):
+        <input type="text" name="imageURL" [(ngModel)]="category.imageURL"
+               placeholder="{{category.imageURL}}"><br>
+        <button type="submit">Save</button>
+        <button type="submit" (click)="deleteCategory()">Delete category</button>
+    </form>
+</div>

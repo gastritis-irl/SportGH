@@ -13,6 +13,11 @@ export class CategoryService extends AppService {
         return this.http.get<Category[]>(url);
     }
 
+    getById(categoryId: number): Observable<Category> {
+        const url: string = `${this.baseUrl}/categories/${categoryId}`;
+        return this.http.get<Category>(url);
+    }
+
     create(data: Category): Observable<Category> {
         const url: string = `${this.baseUrl}/categories`;
         return this.http.post(url, data);

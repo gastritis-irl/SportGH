@@ -1,6 +1,11 @@
-<form class="adminForm" (ngSubmit)="onSubmit()">
-    Name: <input type="text" name="name" [(ngModel)]="category.name"><br>
-    Description: <input type="text" name="description" [(ngModel)]="category.description"><br>
-    ImageURL("upload image"): <input type="text" name="imageURL" [(ngModel)]="category.imageURL"><br>
-    <button type="submit">Create</button>
-</form>
+<div>
+    <div>
+        <a routerLink="/admin/categories">&larr;Go back</a>
+    </div>
+    <form class="adminForm" (ngSubmit)="createCategory()">
+        Name: <input type="text" name="name" [(ngModel)]="category.name"><br>
+        Description: <input type="text" name="description" [(ngModel)]="category.description"><br>
+        ImageURL("upload image"): <input type="text" name="imageURL" [(ngModel)]="category.imageURL"><br>
+        <button type="submit">Create</button>
+    </form>
+</div>

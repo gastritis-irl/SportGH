@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../category/category.service';
 import { Category } from '../category/category.model';
 
@@ -8,7 +8,7 @@ import { Category } from '../category/category.model';
 })
 export class AdminComponent implements OnInit {
 
-    @Input() categories: Category[] = [];
+    categories: Category[] = [];
 
     constructor(private categoryService: CategoryService) {
     }

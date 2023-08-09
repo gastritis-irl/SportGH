@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../category/category.model';
 import { CategoryService } from '../category/category.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'sgh-category-create',
@@ -15,20 +16,21 @@ export class CategoryCreateComponent implements OnInit {
         imageURL: ''
     };
 
-    constructor(private categoryService: CategoryService) {
+    constructor(private categoryService: CategoryService, private router: Router) {
     }
 
     ngOnInit(): void {
     }
 
-    onSubmit(): void {
+    createCategory(): void {
         this.categoryService.create(this.category).subscribe(
             {
-                next: (): void => {
-                    alert("Ok");
+                next: (resp: Category): void => {
+                    this.router.navigate(['/admin/categories'])
+                        .then(() => alert(`Category (ID ${resp.id}) successfully created!`));
                 },
                 error: (error): void => {
-                    alert("Error");
+                    alert('Error');
                     console.error(error);
                 }
             }
