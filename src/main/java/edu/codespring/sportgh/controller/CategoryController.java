@@ -63,10 +63,10 @@ public class CategoryController {
                                                  @RequestBody CategoryInDTO categoryInDTO) {
         log.info("Updating category with ID {}.", categoryId);
         if (!Objects.equals(categoryId, categoryInDTO.getId())) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if (!categoryService.existsById(categoryId)) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         CategoryOutDTO categoryOutDTO = save(categoryInDTO);
         return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
