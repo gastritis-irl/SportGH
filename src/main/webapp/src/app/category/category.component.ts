@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Category } from "./category.model";
+import { CategoryService } from './category.service';
 
 @Component({
     selector: 'sgh-category',
@@ -10,9 +11,12 @@ export class CategoryComponent implements OnInit {
 
     @Input() categories: Category[] = [];
 
-    constructor() {
-    }
+    constructor(private categoryService: CategoryService) { }
+
 
     ngOnInit(): void {
+        this.categoryService.getAll().subscribe((categories) => {
+            this.categories = categories;
+        });
     }
 }

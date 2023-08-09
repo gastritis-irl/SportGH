@@ -5,3 +5,39 @@
     align-items: center;
     height: 10vh;
 }
+
+.category-container {
+  width: 1440px;
+  padding: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.category-heading {
+  color: #5D5A88;
+  font-size: 36px;
+  font-family: 'DM Sans';
+  font-weight: 700;
+  line-height: 46px;
+  text-align: center;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.category-item {
+  display: flex;
+  gap: 16px;
+}
+
+.category-icon {
+  /* Add styling for the icon */
+}
+
+.category-name {
+  /* Add styling for the category name */
+}
