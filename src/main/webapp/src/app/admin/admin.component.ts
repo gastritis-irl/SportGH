@@ -25,4 +25,8 @@ export class AdminComponent implements OnInit {
             }
         );
     }
+
+    deleteCategory(categoryId: number | undefined): void {
+        // delete
+    }
 }

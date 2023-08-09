@@ -10,10 +10,10 @@
             <td></td>
             <td>Image</td>
             <td>Name</td>
-            <td>Description</td>
         </tr>
         <tr *ngFor="let category of categories">
             <td>
+                <button (click)="deleteCategory(category.id)">Delete</button>
                 <button routerLink="/admin/categories/{{category.id}}">Edit</button>
             </td>
             <td>
@@ -22,7 +22,6 @@
                      alt="Error loading img">
             </td>
             <td>{{category.name}}</td>
-            <td>{{category.description}}</td>
         </tr>
     </table>
 </div>
