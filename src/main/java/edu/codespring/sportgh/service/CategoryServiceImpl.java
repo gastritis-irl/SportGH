@@ -23,12 +23,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Long categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElse(null);
-        if (category != null) {
-            category.deleteAssociations();
-            categoryRepository.deleteById(categoryId);
-            log.info("Category with ID {} deleted successfully.", categoryId);
-        }
+        categoryRepository.deleteById(categoryId);
+        log.info("Category with ID {} deleted successfully.", categoryId);
     }
 
     @Override
