@@ -27,10 +27,8 @@ public class UserServiceImpl implements UserService {
     public User signup(String email, String firebaseUid, String password) {
         User user = new User();
 
-        String username = UserUtil.extractUsernameFromEmail(email);
-
         user.setEmail(email);
-        user.setUsername(username);
+        user.setUsername(email);
         user.setFirebaseUid(firebaseUid);
         user.setPassword(UserUtil.generateHashedPassword(password, firebaseUid));
         userRepository.save(user);
