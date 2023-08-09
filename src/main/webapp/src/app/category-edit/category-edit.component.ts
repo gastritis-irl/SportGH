@@ -4,7 +4,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Category } from '../category/category.model';
 
 type ClickHandlerFunction = () => void;
-const redirectUrl: string = '/admin/categories';
 
 @Component({
     selector: 'sgh-category-edit',
@@ -16,7 +15,7 @@ export class CategoryEditComponent implements OnInit {
     param: string = '';
     id: number = 0;
     category: Category = {};
-    onSubmitFunction: ClickHandlerFunction = (): void => {
+    clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
 
     constructor(private categoryService: CategoryService, private router: Router, private route: ActivatedRoute) {
@@ -43,11 +42,11 @@ export class CategoryEditComponent implements OnInit {
     loadData(): void {
         if (this.param) {
             if (this.param === 'new') {
-                this.onSubmitFunction = this.createCategory;
+                this.clickHandlerFunction = this.createCategory;
             }
             this.id = parseInt(this.param);
             if (!isNaN(this.id)) {
-                this.onSubmitFunction = this.updateCategory;
+                this.clickHandlerFunction = this.updateCategory;
                 this.categoryService.getById(this.id).subscribe(
                     {
                         next: (data: Category): void => {
@@ -66,7 +65,7 @@ export class CategoryEditComponent implements OnInit {
         this.categoryService.create(this.category).subscribe(
             {
                 next: (resp: Category): void => {
-                    this.router.navigate([redirectUrl])
+                    this.router.navigate(['/admin/categories'])
                         .then(() => alert(`Category (ID ${resp.id}) successfully created!`));
                 },
                 error: (error): void => {
@@ -80,11 +79,11 @@ export class CategoryEditComponent implements OnInit {
         this.categoryService.update(this.category.id, this.category).subscribe(
             {
                 next: (): void => {
-                    this.router.navigate([redirectUrl])
+                    this.router.navigate(['/admin/categories'])
                         .then(() => alert(`Category (ID ${this.category.id}) successfully updated!`));
                 },
                 error: (error): void => {
-                    alert(`Error updating category (with ID ${this.category.id}): status code:` + error.status);
+                    alert(`Error updating category (ID ${this.category.id}): status code:` + error.status);
                 }
             }
         );

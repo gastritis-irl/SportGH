@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../category/category.service';
 import { Category } from '../category/category.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'sgh-admin',
@@ -10,7 +11,7 @@ export class AdminComponent implements OnInit {
 
     categories: Category[] = [];
 
-    constructor(private categoryService: CategoryService) {
+    constructor(private categoryService: CategoryService, private router: Router) {
     }
 
     ngOnInit(): void {
@@ -26,7 +27,18 @@ export class AdminComponent implements OnInit {
         );
     }
 
-    deleteCategory(categoryId: number | undefined): void {
-        // delete
+    deleteCategory(categoryId: number | undefined, index: number): void {
+        this.categoryService.delete(categoryId).subscribe(
+            {
+                next: (): void => {
+                    this.categories.splice(index, 1);
+                    this.router.navigate(['/admin/categories'])
+                        .then(() => alert(`Category (ID ${categoryId}) successfully deleted!`));
+                },
+                error: (error): void => {
+                    alert(`Error deleting category (ID ${categoryId}): ` + error);
+                }
+            }
+        );
     }
 }

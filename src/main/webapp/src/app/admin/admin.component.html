@@ -11,13 +11,13 @@
             <td>Image</td>
             <td>Name</td>
         </tr>
-        <tr *ngFor="let category of categories">
+        <tr *ngFor="let category of categories;let i = index">
             <td>
-                <button (click)="deleteCategory(category.id)">Delete</button>
+                <button (click)="deleteCategory(category.id,i)">Delete</button>
                 <button routerLink="/admin/categories/{{category.id}}">Edit</button>
             </td>
             <td>
-                <img style="width: 100px"
+                <img width="100" height="auto"
                      src="{{category.imageURL}}"
                      alt="Error loading img">
             </td>

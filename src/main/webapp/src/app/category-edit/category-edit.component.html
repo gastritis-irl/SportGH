@@ -4,7 +4,7 @@
         <br>
     </div>
 
-    <form class="adminForm" (ngSubmit)="onSubmitFunction()">
+    <form class="adminForm" (ngSubmit)="clickHandlerFunction()">
         Name:
         <input type="text" name="name" [(ngModel)]="category.name"
                placeholder="{{category.name}}"><br>
@@ -14,7 +14,7 @@
         ImageURL("upload image"):
         <input type="text" name="imageURL" [(ngModel)]="category.imageURL"
                placeholder="{{category.imageURL}}"><br>
-        <img style="width: 100px"
+        <img width="100px" height="auto"
              src="{{category.imageURL}}"
              alt="Error loading img">
         <button type="submit">Save</button>
