@@ -1,6 +1,6 @@
 <div>
     <div>
-        <a routerLink="/home">&larr;Go back</a>
+        <button routerLink="/home">&larr;Go back</button>
     </div>
     <div>
         <button routerLink="/admin/categories/new">Create new category</button>
@@ -14,9 +14,13 @@
         </tr>
         <tr *ngFor="let category of categories">
             <td>
-                <a routerLink="/admin/categories/{{category.id}}">Edit</a>
+                <button routerLink="/admin/categories/{{category.id}}">Edit</button>
             </td>
-            <td>Image placeholder</td>
+            <td>
+                <img style="width: 100px"
+                     src="{{category.imageURL}}"
+                     alt="Error loading img">
+            </td>
             <td>{{category.name}}</td>
             <td>{{category.description}}</td>
         </tr>
