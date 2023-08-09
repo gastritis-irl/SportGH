@@ -25,7 +25,7 @@ public class FirebaseConfig {
     @PostConstruct
     public void initialize() {
         try {
-            String serviceAccountPath = System.getenv("FIREBASE_SERVICE_ACCOUNT_KEY_PATH");
+            String serviceAccountPath = "serviceAccountKey.json";
             GoogleCredentials credentials = GoogleCredentials.fromStream(Files.newInputStream(
                 Paths.get(serviceAccountPath)
             ));
