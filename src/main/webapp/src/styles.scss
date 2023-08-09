@@ -69,34 +69,76 @@ $fontCard1: 'Text single/200/Bold';
 $fontCard2: 'Text single/300/Bold';
 
 // Text size
-$sizeH1: 66px;
-$sizeH2: 36px;
-$sizeH3: 24px;
-$sizeDef: 16px;
-$sizeCard1: 20px;
-$sizeCard2: 24px;
+$sizeH1: 63px;
+$sizeH2: 40px;
+$sizeH3: 25px;
+$sizeDef: 18px;
+$sizeCard1: 25px;
+$sizeCard2: 29px;
 
+// Margin/Border/Gap/Padding
+$navbarGap: 33px;
+$navbarHeaderFrameGap: 10px;
+$navbarHeaderGap: 195px;
+$navbarHeight: 50px;
+$navbarItemPosTop: 8px;
+$navbarItemPosLeft: auto;
+$navbarHeaderPadding: 0px 120px;
 
 /*
 Global classes
  */
 
+//
+// Navbar
+//
+.navbar-header-frame {
+    display: flex;
+    width: auto;
+    background-color: $colorNeutral;
+    padding: $navbarHeaderPadding;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: $navbarHeaderFrameGap;
+}
+
+.navbar-header {
+    display: flex;
+    width: auto;
+    padding: $navbarHeaderPadding;
+    justify-content: center;
+    align-items: center;
+    gap: $navbarHeaderGap;
+}
+
+.navbar-frame {
+    width: auto;
+    height: $navbarHeight;
+    background-color: $colorMain1;
+}
+
+.navbar {
+    font: $fontDef;
+    font-size: $sizeDef;
+    color: $colorNeutral;
+    background-color: $colorMain1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $navbarGap;
+    position: absolute;
+    left: $navbarItemPosLeft;
+    top: $navbarItemPosTop;
+}
+
+//
+// Carousel
+//
 .carousel-holder {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     height: 65vh;
-}
-
-.navbar-custom {
-    font: $fontDef;
-    font-size: $sizeDef;
-    background-color: $colorMain1;
-}
-
-.navbar-btn {
-    margin: 5px;
-    font-family: $fontDef;
-    color: $colorNeutral;
 }

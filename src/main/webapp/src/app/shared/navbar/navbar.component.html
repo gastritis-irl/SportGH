@@ -1,28 +1,37 @@
-<div ngbNav></div>
-<ul ngbNav #nav="ngbNav" [activeId]="1" class="navbar-custom">
-    <li [ngbNavItem]="1" ngbDropdown class="nav-item">
-        <button type="button" class="nav-link navbar-btn" ngbDropdownToggle>Sports</button>
-        <div ngbDropdownMenu>
-            <button *ngFor="let sport of ['sp1','sp2','sp3','sp4','sp5']" ngbDropdownItem>
-                <a><!--routerLink="categories/id/sub" -->{{sport}}</a>
-            </button>
+<div>
+    <div class="navbar-header-frame">
+        <div class="navbar-header">
+            <div class="navbar-header-item">
+                <div class="navbar-header-logo"></div>
+                <div class="navbar-header-title">SportGH</div>
+            </div>
         </div>
-    </li>
-    <li [ngbNavItem]="2" class="nav-item">
-        <div>
-            <a class="navbar-btn" routerLink="/home">Home</a>
-        </div>
-    </li>
-    <li [ngbNavItem]="3" class="nav-item">
-        <div>
-            <a class="navbar-btn" routerLink="">About</a>
-        </div>
-    </li>
-    <li [ngbNavItem]="4" class="nav-item">
-        <div>
-            <a class="navbar-btn" routerLink="">Contact</a>
-        </div>
-    </li>
-</ul>
-
-<div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+    <div class="navbar-frame">
+        <ul class="navbar">
+            <li ngbDropdown>
+                <button type="button" class="nav-link navbar-btn" ngbDropdownToggle>Sports</button>
+                <div ngbDropdownMenu>
+                    <button *ngFor="let sport of ['sp1','sp2','sp3','sp4','sp5']" ngbDropdownItem>
+                        <a><!--routerLink="categories/id/sub" -->{{sport}}</a>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <a routerLink="/home">Home</a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <a routerLink="">About</a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <a routerLink="">Contact</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
