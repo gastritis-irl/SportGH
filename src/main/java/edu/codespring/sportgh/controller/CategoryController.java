@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -51,25 +52,31 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    private CategoryOutDTO save(CategoryInDTO categoryInDTO) {
+        Category category = categoryMapper.dtoToCategory(categoryInDTO);
+        categoryService.save(category);
+        return categoryMapper.categoryToOut(category);
+    }
+
     @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> update(@PathVariable Long categoryId,
                                                  @RequestBody CategoryInDTO categoryInDTO) {
         log.info("Updating category with ID {}.", categoryId);
-        Category category = categoryMapper.dtoToCategory(categoryInDTO);
-        category.setId(categoryId);
-        categoryService.save(category);
-        CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
-
+        if (!Objects.equals(categoryId, categoryInDTO.getId())) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        if (!categoryService.existsById(categoryId)) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        CategoryOutDTO categoryOutDTO = save(categoryInDTO);
         return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<CategoryOutDTO> create(@RequestBody CategoryInDTO categoryInDTO) {
         log.info("Creating category with name: {}.", categoryInDTO.getName());
-        Category category = categoryMapper.dtoToCategory(categoryInDTO);
-        categoryService.save(category);
-        CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
 
+        CategoryOutDTO categoryOutDTO = save(categoryInDTO);
         return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
     }
 
