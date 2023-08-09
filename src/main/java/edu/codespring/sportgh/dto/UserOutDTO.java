@@ -7,7 +7,6 @@ public class UserOutDTO {
 
     private Long id;
     private String username;
-    private String firebaseUid; // added for firebase authentication
     private String role;
 }
 

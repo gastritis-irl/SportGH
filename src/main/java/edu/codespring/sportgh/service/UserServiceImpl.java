@@ -32,20 +32,20 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         user.setUsername(username);
         user.setFirebaseUid(firebaseUid);
-        user.setPassword(UserUtil.generateHashedPassword(password, user.getUuid()));
+        user.setPassword(UserUtil.generateHashedPassword(password,firebaseUid));
         userRepository.save(user);
-        log.info("Signup successful ({}).", firebaseUid);
+        log.info("Signup successful ({}).", user);
         return user;
     }
 
     @Override
     public void login(String firebaseUid, String password) {
-        String uuid = userRepository.findUuidByFirebaseUid(firebaseUid);
-        String passwordHash = UserUtil.generateHashedPassword(password, uuid);
+        String passwordHash = UserUtil.generateHashedPassword(password, firebaseUid);
+        User user = userRepository.findByFirebaseUid(firebaseUid);
         if (userRepository.existsByFirebaseUidAndPassword(firebaseUid, passwordHash)) {
-            log.info("Login successful ({}).", firebaseUid);
+            log.info("Login successful ({}).", user);
         } else {
-            log.warn("Invalid credentials for ({})!", firebaseUid);
+            log.warn("Invalid credentials for ({})!", user);
         }
     }
 
