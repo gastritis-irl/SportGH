@@ -1,4 +1,4 @@
-package edu.codespring.sportgh.utils;
+package edu.codespring.sportgh.security;
 
 import com.google.firebase.auth.FirebaseToken;
 import lombok.AllArgsConstructor;

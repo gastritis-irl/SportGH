@@ -1,12 +1,11 @@
 package edu.codespring.sportgh.service;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
-import edu.codespring.sportgh.utils.FirebaseTokenHolder;
+import edu.codespring.sportgh.security.FirebaseTokenHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,50 +34,9 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 
     @Override
-    public FirebaseToken verifyToken(String idToken) {
-        try {
-            return FirebaseAuth.getInstance().verifyIdToken(idToken);
-        } catch (FirebaseAuthException e) {
-            log.error("Invalid firebase token", e);
-            throw new ServiceException("Invalid firebase token", e);
-        }
-    }
-
-    @Override
-    public FirebaseToken verifyToken(String idToken, boolean checkRevoked) {
-        try {
-            return FirebaseAuth.getInstance().verifyIdToken(idToken, checkRevoked);
-        } catch (FirebaseAuthException e) {
-            log.error("Invalid firebase token", e);
-            throw new ServiceException("Invalid firebase token", e);
-        }
-    }
-
-    @Override
     public FirebaseTokenHolder verifyTokenAndReturnTokenHolder(String idToken) {
         try {
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(idToken);
-            return new FirebaseTokenHolder(token);
-        } catch (FirebaseAuthException e) {
-            log.error("Invalid firebase token", e);
-            throw new ServiceException("Invalid firebase token", e);
-        }
-    }
-
-    @Override
-    public FirebaseTokenHolder verifyTokenAndReturnTokenHolder(String idToken, boolean checkRevoked) {
-        try {
-            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(idToken, checkRevoked);
-            return new FirebaseTokenHolder(token);
-        } catch (FirebaseAuthException e) {
-            log.error("Invalid firebase token", e);
-            throw new ServiceException("Invalid firebase token", e);
-        }
-    }
-
-    public FirebaseTokenHolder verifyTokenAndReturnTokenHolder(String idToken, String firebaseApp) {
-        try {
-            FirebaseToken token = FirebaseAuth.getInstance(FirebaseApp.getInstance(firebaseApp)).verifyIdToken(idToken);
             return new FirebaseTokenHolder(token);
         } catch (FirebaseAuthException e) {
             log.error("Invalid firebase token", e);

@@ -2,8 +2,8 @@ package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.service.FirebaseService;
 import edu.codespring.sportgh.service.UserService;
-import edu.codespring.sportgh.utils.LoginRequest;
-import edu.codespring.sportgh.utils.SignupRequest;
+import edu.codespring.sportgh.dto.auth.LoginRequest;
+import edu.codespring.sportgh.dto.auth.SignupRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

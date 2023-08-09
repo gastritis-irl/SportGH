@@ -2,8 +2,7 @@ package edu.codespring.sportgh.service;
 
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
-import edu.codespring.sportgh.utils.EmailToUsername;
-import edu.codespring.sportgh.utils.PasswordEncrypter;
+import edu.codespring.sportgh.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,12 +27,12 @@ public class UserServiceImpl implements UserService {
     public User signup(String email, String firebaseUid, String password) {
         User user = new User();
 
-        String username = EmailToUsername.extractUsernameFromEmail(email);
+        String username = UserUtil.extractUsernameFromEmail(email);
 
         user.setEmail(email);
         user.setUsername(username);
         user.setFirebaseUid(firebaseUid);
-        user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
+        user.setPassword(UserUtil.generateHashedPassword(password, user.getUuid()));
         userRepository.save(user);
         log.info("Signup successful ({}).", firebaseUid);
         return user;
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void login(String firebaseUid, String password) {
         String uuid = userRepository.findUuidByFirebaseUid(firebaseUid);
-        String passwordHash = PasswordEncrypter.generateHashedPassword(password, uuid);
+        String passwordHash = UserUtil.generateHashedPassword(password, uuid);
         if (userRepository.existsByFirebaseUidAndPassword(firebaseUid, passwordHash)) {
             log.info("Login successful ({}).", firebaseUid);
         } else {

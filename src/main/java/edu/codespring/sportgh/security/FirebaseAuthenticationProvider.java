@@ -3,8 +3,6 @@ package edu.codespring.sportgh.security;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import edu.codespring.sportgh.utils.FirebaseAuthenticatedToken;
-import edu.codespring.sportgh.utils.FirebaseTokenHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
