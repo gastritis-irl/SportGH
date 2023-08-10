@@ -12,7 +12,6 @@ type ClickHandlerFunction = () => void;
 })
 export class CategoryEditComponent implements OnInit {
 
-    param: string = '';
     id: number = 0;
     category: Category = {};
     clickHandlerFunction: ClickHandlerFunction = (): void => {
@@ -23,14 +22,13 @@ export class CategoryEditComponent implements OnInit {
 
     ngOnInit(): void {
         this.getParam();
-        this.loadData();
     }
 
     getParam(): void {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
-                    this.param = params['categoryId'];
+                    this.loadData(params['categoryId']);
                 },
                 error: (error): void => {
                     console.error('Error fetching data (categoryId):', error);
@@ -39,12 +37,12 @@ export class CategoryEditComponent implements OnInit {
         );
     }
 
-    loadData(): void {
-        if (this.param) {
-            if (this.param === 'new') {
+    loadData(param: string | undefined): void {
+        if (param) {
+            if (param === 'new') {
                 this.clickHandlerFunction = this.createCategory;
             }
-            this.id = parseInt(this.param);
+            this.id = parseInt(param);
             if (!isNaN(this.id)) {
                 this.clickHandlerFunction = this.updateCategory;
                 this.categoryService.getById(this.id).subscribe(
