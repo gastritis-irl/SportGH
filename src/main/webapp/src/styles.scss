@@ -60,6 +60,7 @@ $colorNeutral: #FFFFFF;
 $colorMain1: #5D5A88;
 $colorMain2: #8D8BA7;
 $colorMain3: #F2F1FA;
+$colorMain4: #1f6567;
 $colorInputBackground: $colorMain3;
 $colorBtn1: $colorNeutral;
 $colorBtn2: $colorMain1;
@@ -72,9 +73,9 @@ $fontCard1: 'Text single/200/Bold';
 $fontCard2: 'Text single/300/Bold';
 
 // Text Size
-$sizeH1: 63px;
-$sizeH2: 40px;
-$sizeH3: 25px;
+$sizeH1: 35px;
+$sizeH2: 27px;
+$sizeH3: 20px;
 $sizeDef: 18px;
 
 // Item Size
@@ -106,7 +107,7 @@ Global classes
 //
 // Navbar
 //
-.navbar-header-frame {
+.nav-header-frame {
     width: auto;
     background-color: $colorNeutral;
     padding: $paddingNavHeader;
@@ -115,7 +116,7 @@ Global classes
     gap: $gapNavHeaderFrame;
 }
 
-.navbar-header {
+.nav-header-content {
     display: flex;
     flex-direction: row;
     width: auto;
@@ -126,20 +127,29 @@ Global classes
     gap: $gapNavHeader;
 }
 
-.navbar-header-icon {
+.nav-header-icon {
     display: flex;
     flex-direction: row;
     gap: $gapNavHeaderIcon;
 }
 
-.navbar-header-searchbar {
+.nav-header-logo {
+}
+
+.nav-header-title {
+    font-size: $sizeH1;
+    font-weight: bold;
+    color: $colorMain4;
+}
+
+.nav-header-searchbar {
     width: $widthNavSearchbar;
     height: $heightNavSearchbar;
     border-radius: $borderRadiusInput;
     background-color: $colorInputBackground;
 }
 
-.navbar-header-buttons {
+.nav-header-buttons {
     display: flex;
     flex-direction: row;
     gap: $gapNavButton;
@@ -161,7 +171,7 @@ Global classes
     background-color: $colorBtn2;
 }
 
-.navbar-frame {
+.nav-frame {
     position: relative;
     display: flex;
     justify-content: center;
@@ -170,7 +180,7 @@ Global classes
     background-color: $colorMain1;
 }
 
-.navbar {
+.nav-content {
     font: $fontDef;
     font-size: $sizeDef;
     color: $colorNeutral;
@@ -179,9 +189,14 @@ Global classes
     justify-content: center;
     align-items: center;
     gap: $gapNav;
-    position: absolute;
+    position: relative;
     left: $posLeftNavItem;
     top: auto;
+}
+
+.nav-content a {
+    color: $colorNeutral;
+    text-decoration: none;
 }
 
 //

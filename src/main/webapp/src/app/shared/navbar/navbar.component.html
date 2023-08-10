@@ -1,15 +1,15 @@
 <div>
-    <div class="navbar-header-frame">
-        <div class="navbar-header">
-            <div class="navbar-header-icon">
-                <img class="navbar-header-logo" src="./main/webapp/src/Info.svg" alt="Logo">
-                <div class="navbar-header-title">SportGH</div>
+    <div class="nav-header-frame">
+        <div class="nav-header-content">
+            <div class="nav-header-icon">
+                <img class="nav-header-logo" src="./main/webapp/src/Info.svg" alt="Logo">
+                <div class="nav-header-title">SportGH</div>
             </div>
             <div>
-                <input class="navbar-header-searchbar" type="text" placeholder="Search for...">
+                <input class="nav-header-searchbar" type="text" placeholder="Search for...">
             </div>
             <div class="navbar-header-login-check">
-                <div class="navbar-header-buttons" *ngIf="true"> <!--if not logged in-->
+                <div class="nav-header-buttons" *ngIf="true"> <!--if not logged in-->
                     <div>
                         <button class="sign-in-btn">
                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none">
@@ -33,31 +33,25 @@
             </div>
         </div>
     </div>
-    <div class="navbar-frame">
-        <ul class="navbar">
-            <li ngbDropdown>
+    <div class="nav-frame">
+        <div class="nav-content">
+            <div ngbDropdown>
                 <button type="button" class="nav-link navbar-btn" ngbDropdownToggle>Sports</button>
                 <div ngbDropdownMenu>
                     <button *ngFor="let sport of ['sp1','sp2','sp3','sp4','sp5']" ngbDropdownItem>
                         <a><!--routerLink="categories/id/sub" -->{{sport}}</a>
                     </button>
                 </div>
-            </li>
-            <li>
-                <div>
-                    <a routerLink="/home">Home</a>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <a routerLink="">About</a>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <a routerLink="">Contact</a>
-                </div>
-            </li>
-        </ul>
+            </div>
+            <div>
+                <a routerLink="/home">Home</a>
+            </div>
+            <div>
+                <a routerLink="">About</a>
+            </div>
+            <div>
+                <a routerLink="">Contact</a>
+            </div>
+        </div>
     </div>
 </div>
