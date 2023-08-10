@@ -55,6 +55,10 @@ li {
 Global variables
  */
 
+// Img URLs
+$navHeaderLogoIcon: url("Info.svg");
+
+
 // Colors
 $colorNeutral1: #FFFFFF;
 $colorNeutral2: #000000;
@@ -132,8 +136,6 @@ Global classes
     width: auto;
     background-color: $colorNeutral1;
     padding: $paddingNavHeader;
-    justify-content: center;
-    align-items: center;
     gap: $gapNavHeaderFrame;
 }
 
@@ -151,10 +153,13 @@ Global classes
 .nav-header-logo {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     gap: $gapNavHeaderIcon;
 }
 
 .nav-header-logo-icon {
+    content: $navHeaderLogoIcon;
 }
 
 .nav-header-logo-title {
