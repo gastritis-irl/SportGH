@@ -8,11 +8,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 @Data
 @MappedSuperclass
-public abstract class BaseEntity extends AbstractModel {
+public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

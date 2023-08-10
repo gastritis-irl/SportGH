@@ -7,7 +7,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 @Slf4j
-public class PasswordEncrypter {
+public class UserUtil {
+
+    public static String extractUsernameFromEmail(String email) {
+        // Split the email at the '@' symbol and return the part before it
+        return email.split("@")[0];
+    }
 
     public static String generateHashedPassword(String password, String salt) {
         try {
@@ -25,6 +30,5 @@ public class PasswordEncrypter {
             log.error(e.getMessage());
             throw new ServiceException("No such algorithm!", e);
         }
-
     }
 }
