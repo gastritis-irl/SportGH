@@ -13,7 +13,7 @@
         </tr>
         <tr *ngFor="let category of categories;let i = index">
             <td>
-                <button (click)="deleteCategory(category.id,i)">Delete</button>
+                <button (click)="deleteCategory(category.id, i)">Delete</button>
                 <button routerLink="/admin/categories/{{category.id}}">Edit</button>
             </td>
             <td>

@@ -52,10 +52,11 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private CategoryOutDTO save(CategoryInDTO categoryInDTO) {
+    private ResponseEntity<CategoryOutDTO> save(CategoryInDTO categoryInDTO) {
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
         categoryService.save(category);
-        return categoryMapper.categoryToOut(category);
+        CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
+        return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
     }
 
     @PutMapping(path = "/{categoryId}")
@@ -68,16 +69,16 @@ public class CategoryController {
         if (!categoryService.existsById(categoryId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        CategoryOutDTO categoryOutDTO = save(categoryInDTO);
-        return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
+        return save(categoryInDTO);
     }
 
     @PostMapping
     public ResponseEntity<CategoryOutDTO> create(@RequestBody CategoryInDTO categoryInDTO) {
         log.info("Creating category with name: {}.", categoryInDTO.getName());
-
-        CategoryOutDTO categoryOutDTO = save(categoryInDTO);
-        return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
+        if (categoryInDTO.getId() != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return save(categoryInDTO);
     }
 
     @GetMapping(path = "/count")

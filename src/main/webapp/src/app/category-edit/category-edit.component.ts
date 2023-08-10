@@ -30,7 +30,7 @@ export class CategoryEditComponent implements OnInit {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
-                    this.param = params["categoryId"];
+                    this.param = params['categoryId'];
                 },
                 error: (error): void => {
                     console.error('Error fetching data (categoryId):', error);
