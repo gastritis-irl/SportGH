@@ -17,7 +17,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    @Column(name = "username", unique = true, length = 25)
+    @Column(name = "username", unique = true, length = 64)
     private String username;
 
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
