@@ -1,13 +1,10 @@
 <div class="category-list-holder">
-    <div class="category-container">
-        <h1 class="category-heading">Equipment categories</h1>
-        <div class="categories">
-            <!-- Repeat for each category -->
-            <div class="category-item" *ngFor="let category of categories">
+    <h1 class="category-heading">Equipment categories</h1>
+    <div class="categories">
+        <!-- Repeat for each category -->
+        <div class="category-item" *ngFor="let category of categories">
             <img [src]="category.imageURL" alt="Category Icon" class="category-icon" />
             <p class="category-name">{{ category.name }}</p>
-            <p class="category-description">{{ category.description }}</p>
-            </div>
         </div>
     </div>
 </div>
