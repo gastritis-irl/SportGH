@@ -115,9 +115,10 @@ $gapNavHeaderIcon: 15px;
 $gapNavButton: 15px;
 
 // Effects/Transitions
-$signBtnDrop: 2.5px;
-$signBtnDropTime: .1s;
-$signBtnLetterSpacingEffect: 1.5px;
+$dropScaleSignBtn: 2.5px;
+$dropTimeSignBtn: .1s;
+$letterSpacingScaleSignBtn: 1.5px;
+$transitionTimeNavSignBtn: .1s;
 
 
 /*
@@ -261,19 +262,17 @@ Global classes
     border-radius: $borderRadiusBtn;
     letter-spacing: $signBtnLetterSpacing;
     font-size: $sizeDef;
-    transition: all .5s ease;
+    transition: all $transitionTimeNavSignBtn ease;
 }
 
 .nav-sign-btn:hover {
-    letter-spacing: $signBtnLetterSpacing + $signBtnLetterSpacingEffect;
-    box-shadow: $colorMain1 $boxShadowSize1;
+    letter-spacing: $signBtnLetterSpacing + $letterSpacingScaleSignBtn;
 }
 
 .nav-sign-btn:active {
-    letter-spacing: $signBtnLetterSpacing + $signBtnLetterSpacingEffect;
-    box-shadow: $colorMain1 $boxShadowSize2;
-    transform: translateY($signBtnDrop);
-    transition: $signBtnDropTime;
+    letter-spacing: $signBtnLetterSpacing + $letterSpacingScaleSignBtn;
+    transform: translateY($dropScaleSignBtn);
+    transition: $dropTimeSignBtn;
 }
 
 .nav-sign-in-btn {
