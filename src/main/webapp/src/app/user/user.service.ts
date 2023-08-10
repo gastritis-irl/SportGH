@@ -1,11 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {AppService} from "../app.service";
-import {User} from "./user.model";
-import {initializeApp} from "firebase/app";
-import {createUserWithEmailAndPassword, getAuth, getIdToken, signInWithEmailAndPassword} from "firebase/auth";
-import {environment} from '../environment';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AppService } from '../app.service';
+import { User } from './user.model';
+import { initializeApp } from 'firebase/app';
+import { createUserWithEmailAndPassword, getAuth, getIdToken, signInWithEmailAndPassword } from 'firebase/auth';
+import { environment } from '../environment';
 
 
 const firebaseApp = initializeApp(environment.firebaseConfig);
@@ -16,10 +15,6 @@ const auth = getAuth(firebaseApp);
     providedIn: 'root'
 })
 export class UserService extends AppService {
-
-    constructor(http: HttpClient) {
-        super(http);
-    }
 
     getAll(): Observable<User[]> {
         const url: string = `${this.baseUrl}/users`;
@@ -32,7 +27,7 @@ export class UserService extends AppService {
         const idToken = await getIdToken(user);
         localStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/login`;
-        return this.http.post<User>(url, { idToken, password });
+        return this.http.post<User>(url, {idToken, password});
     }
 
     async registerWithFirebase(email: string, password: string): Promise<Observable<User>> {
@@ -41,6 +36,6 @@ export class UserService extends AppService {
         const idToken = await getIdToken(user);
         localStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/signup`;
-        return this.http.post<User>(url, { email, idToken, password });
+        return this.http.post<User>(url, {email, idToken, password});
     }
 }

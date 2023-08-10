@@ -1,21 +1,22 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { UserService } from '../../user/user.service';
-import { Router } from '@angular/router'; // Import Router for navigation
+import { UserService } from '../user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
-    selector: 'sgh-offcanvas',
-    templateUrl: './offcanvas.component.html',
+    selector: 'sgh-authentication',
+    templateUrl: './authentication.component.html',
 })
-export class OffcanvasComponent {
+
+export class AuthenticationComponent {
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
 
     loggedInUserEmail: string | null = null;
 
-    email: string = "";
-    password: string = "";
-    errorMessage: string = ""; // To display error messages
+    email: string = '';
+    password: string = '';
+    errorMessage: string = ''; // To display error messages
     isOffcanvasOpen: boolean = false;
 
     constructor(private offcanvasService: NgbOffcanvas, private userService: UserService, private router: Router) {
@@ -44,7 +45,7 @@ export class OffcanvasComponent {
             error => {
                 console.error('Login failed', error);
                 alert('Login failed' + error.message);
-                this.errorMessage = 'Login failed. Please try again.'; 
+                this.errorMessage = 'Login failed. Please try again.';
             }
         );
     }).catch(error => {
