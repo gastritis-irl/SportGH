@@ -17,7 +17,7 @@
 .category-heading {
   color: #5D5A88;
   font-size: 36px;
-  font-family: 'DM Sans';
+  font-family: DM Sans;
   font-weight: 700;
   line-height: 46px;
   text-align: center;
@@ -34,15 +34,17 @@
   gap: 16px;
 }
 
-img {
+.category-icon {
     width: 200px;
     height: auto;
 }
 
-.category-icon {
-  /* Add styling for the icon */
-}
-
 .category-name {
-  /* Add styling for the category name */
+    width: 100%;
+    color: #5D5A88;
+    font-size: 20px;
+    font-family: DM Sans;
+    font-weight: 700;
+    line-height: 20px;
+    word-wrap: break-word
 }
