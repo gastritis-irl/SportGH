@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -51,19 +52,34 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(path = "/{categoryId}")
-    @PutMapping(path = "/{categoryId}")
-    public ResponseEntity<CategoryOutDTO> save(@PathVariable(required = false) Long categoryId,
-                                               @RequestBody CategoryInDTO categoryInDTO) {
-        log.info("Saving category with ID {}.", categoryId);
+    private ResponseEntity<CategoryOutDTO> save(CategoryInDTO categoryInDTO) {
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
-        category.setId(categoryId); // If id is null, it creates a new Category, else it updates the existing one
         categoryService.save(category);
         CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
-
-        return new ResponseEntity<>(categoryOutDTO, categoryId == null ? HttpStatus.CREATED : HttpStatus.OK);
+        return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
     }
 
+    @PutMapping(path = "/{categoryId}")
+    public ResponseEntity<CategoryOutDTO> update(@PathVariable Long categoryId,
+                                                 @RequestBody CategoryInDTO categoryInDTO) {
+        log.info("Updating category with ID {}.", categoryId);
+        if (!Objects.equals(categoryId, categoryInDTO.getId())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (!categoryService.existsById(categoryId)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return save(categoryInDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<CategoryOutDTO> create(@RequestBody CategoryInDTO categoryInDTO) {
+        log.info("Creating category with name: {}.", categoryInDTO.getName());
+        if (categoryInDTO.getId() != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return save(categoryInDTO);
+    }
 
     @GetMapping(path = "/count")
     public ResponseEntity<Long> count() {

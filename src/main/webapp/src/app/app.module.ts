@@ -14,8 +14,11 @@ import { FormsModule } from '@angular/forms';
 import * as firebase from 'firebase/app';
 import {environment} from "./environment";
 import { SharedModule } from './shared/shared.module';
+import { CategoryModule } from './category/category.module';
+import { AdminModule } from './admin/admin.module';
 
 firebase.initializeApp(environment.firebaseConfig);
+
 
 @NgModule({
     declarations: [
@@ -30,6 +33,8 @@ firebase.initializeApp(environment.firebaseConfig);
         NgbModule,
         HomeModule,
         ProductModule,
+        CategoryModule,
+        AdminModule,
         NavbarComponent,
         SharedModule
     ],
