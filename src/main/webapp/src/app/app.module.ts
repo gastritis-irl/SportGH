@@ -9,6 +9,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from "./home/home.module";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { ProductModule } from './product/product.module';
+import { CategoryModule } from './category/category.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
     declarations: [
@@ -22,6 +24,8 @@ import { ProductModule } from './product/product.module';
         NgbModule,
         HomeModule,
         ProductModule,
+        CategoryModule,
+        AdminModule,
         NavbarComponent,
     ],
     providers: [],

@@ -1,0 +1,22 @@
+<div>
+    <div>
+        <button routerLink="/admin/categories">&larr;Go back</button>
+        <br>
+    </div>
+
+    <form class="category-form" (ngSubmit)="clickHandlerFunction()">
+        Name:
+        <input type="text" name="name" [(ngModel)]="category.name"
+               placeholder="{{category.name}}"><br>
+        Description:
+        <textarea type="text" name="description" [(ngModel)]="category.description"
+                  placeholder="{{category.description}}"></textarea><br>
+        ImageURL("upload image"):
+        <input type="text" name="imageURL" [(ngModel)]="category.imageURL"
+               placeholder="{{category.imageURL}}"><br>
+        <img width="100px" height="auto"
+             src="{{category.imageURL}}"
+             alt="Error loading img">
+        <button type="submit">Save</button>
+    </form>
+</div>
