@@ -7,5 +7,6 @@ public class UserOutDTO {
 
     private Long id;
     private String username;
+    private String role;
 }
 

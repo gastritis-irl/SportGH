@@ -1,0 +1,33 @@
+<ng-template #loginContent>
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title">Login</h4>
+    </div>
+    <div class="offcanvas-body">
+        <form class="offcanvas-form" (ngSubmit)="login()">
+            <input type="email" placeholder="Email address" required [(ngModel)]="email" name="email">
+            <input type="password" placeholder="Password" required [(ngModel)]="password" name="password">
+            <button class="btn btn-lg btn-outline-primary mb-2 me-2" type="submit" value="Login">Login</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #signupContent>
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title">Sign up</h4>
+    </div>
+    <div class="offcanvas-body">
+        <form class="offcanvas-form" (ngSubmit)="register()">
+            <input type="email" placeholder="Email address" required [(ngModel)]="email" name="email">
+            <input type="password" placeholder="Password" required [(ngModel)]="password" name="password">
+            <button class="btn btn-lg btn-outline-primary mb-2 me-2" type="submit" value="Sign-up">Sign-up</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="loggedInUserEmail; else notLoggedIn">
+    <div>Welcome {{loggedInUserEmail}}</div>
+</ng-container>
+<ng-template #notLoggedIn>
+    <button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openOffcanvas(loginContent)">Login</button>
+    <button class="btn btn-lg btn-outline-primary mb-2" (click)="openOffcanvas(signupContent)">Sign up</button>
+</ng-template>

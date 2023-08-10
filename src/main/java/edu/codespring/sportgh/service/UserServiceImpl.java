@@ -2,7 +2,7 @@ package edu.codespring.sportgh.service;
 
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
-import edu.codespring.sportgh.utils.PasswordEncrypter;
+import edu.codespring.sportgh.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,28 +18,32 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
-    public User signup(String userName, String password) {
-        if (userRepository.existsByUsername(userName)) {
-            throw new ServiceException("Signup failed! User with this username already exists.");
-        }
-        User user = new User();
-        user.setUsername(userName);
-        user.setPassword(PasswordEncrypter.generateHashedPassword(password, user.getUuid()));
-        userRepository.save(user);
-        log.info("Signup successful ({}).", userName);
-        return user;
-
+    public User findByFirebaseUid(String firebaseUid) {
+        return userRepository.findByFirebaseUid(firebaseUid);
     }
 
     @Override
-    public void login(String userName, String password) {
-        String uuid = userRepository.findUuid(userName);
-        String passwordHash = PasswordEncrypter.generateHashedPassword(password, uuid);
-        if (userRepository.existsByUsernameAndPassword(userName, passwordHash)) {
-            log.info("Login successful ({}).", userName);
+    @Transactional
+    public User signup(String email, String firebaseUid, String password) {
+        User user = new User();
+
+        user.setEmail(email);
+        user.setUsername(email);
+        user.setFirebaseUid(firebaseUid);
+        user.setPassword(UserUtil.generateHashedPassword(password, firebaseUid));
+        userRepository.save(user);
+        log.info("Signup successful ({}).", user);
+        return user;
+    }
+
+    @Override
+    public void login(String firebaseUid, String password) {
+        String passwordHash = UserUtil.generateHashedPassword(password, firebaseUid);
+        User user = userRepository.findByFirebaseUid(firebaseUid);
+        if (userRepository.existsByFirebaseUidAndPassword(firebaseUid, passwordHash)) {
+            log.info("Login successful ({}).", user);
         } else {
-            log.error("Invalid credentials for ({})!", userName);
+            log.warn("Invalid credentials for ({})!", user);
         }
     }
 
