@@ -60,6 +60,9 @@ $colorNeutral: #FFFFFF;
 $colorMain1: #5D5A88;
 $colorMain2: #8D8BA7;
 $colorMain3: #F2F1FA;
+$colorInputBackground: $colorMain3;
+$colorBtn1: $colorNeutral;
+$colorBtn2: $colorMain1;
 
 // Fonts
 $fontDef: 'DM Sans';
@@ -68,22 +71,33 @@ $fontButton: 'Text single/100/Bold';
 $fontCard1: 'Text single/200/Bold';
 $fontCard2: 'Text single/300/Bold';
 
-// Text size
+// Text Size
 $sizeH1: 63px;
 $sizeH2: 40px;
 $sizeH3: 25px;
 $sizeDef: 18px;
-$sizeCard1: 25px;
-$sizeCard2: 29px;
 
-// Margin/Border/Gap/Padding
-$navbarGap: 33px;
-$navbarHeaderFrameGap: 10px;
-$navbarHeaderGap: 195px;
-$navbarHeight: 50px;
-$navbarItemPosTop: 8px;
-$navbarItemPosLeft: auto;
-$navbarHeaderPadding: 0px 120px;
+// Item Size
+$heightNavHeader: 80px;
+$heightNav: 50px;
+$heightBtn: 35px;
+$widthBtn1: 65px;
+$widthBtn2: 85px;
+$widthNavSearchbar: 300px; // fit-content?
+$heightNavSearchbar: 35px;
+
+// Margin/Border/Padding
+$posLeftNavItem: auto;
+$paddingNavHeader: 0px 75px;
+$borderRadiusInput: 15px;
+$borderRadiusBtn: 25px;
+
+// Gap
+$gapNav: 33px;
+$gapNavHeader: 65px;
+$gapNavHeaderFrame: 10px;
+$gapNavHeaderIcon: 15px;
+$gapNavButton: 10px;
 
 /*
 Global classes
@@ -93,28 +107,66 @@ Global classes
 // Navbar
 //
 .navbar-header-frame {
-    display: flex;
     width: auto;
     background-color: $colorNeutral;
-    padding: $navbarHeaderPadding;
-    flex-direction: column;
+    padding: $paddingNavHeader;
     justify-content: center;
     align-items: center;
-    gap: $navbarHeaderFrameGap;
+    gap: $gapNavHeaderFrame;
 }
 
 .navbar-header {
     display: flex;
+    flex-direction: row;
     width: auto;
-    padding: $navbarHeaderPadding;
+    height: $heightNavHeader;
+    padding: $paddingNavHeader;
     justify-content: center;
     align-items: center;
-    gap: $navbarHeaderGap;
+    gap: $gapNavHeader;
+}
+
+.navbar-header-icon {
+    display: flex;
+    flex-direction: row;
+    gap: $gapNavHeaderIcon;
+}
+
+.navbar-header-searchbar {
+    width: $widthNavSearchbar;
+    height: $heightNavSearchbar;
+    border-radius: $borderRadiusInput;
+    background-color: $colorInputBackground;
+}
+
+.navbar-header-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: $gapNavButton;
+}
+
+.sign-in-btn {
+    height: $heightBtn;
+    width: $widthBtn2;
+    border-radius: $borderRadiusBtn;
+    color: $colorMain1;
+    background-color: $colorBtn1;
+}
+
+.sign-up-btn {
+    height: $heightBtn;
+    width: $widthBtn2;
+    border-radius: $borderRadiusBtn;
+    color: $colorNeutral;
+    background-color: $colorBtn2;
 }
 
 .navbar-frame {
+    position: relative;
+    display: flex;
+    justify-content: center;
     width: auto;
-    height: $navbarHeight;
+    height: $heightNav;
     background-color: $colorMain1;
 }
 
@@ -126,10 +178,10 @@ Global classes
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: $navbarGap;
+    gap: $gapNav;
     position: absolute;
-    left: $navbarItemPosLeft;
-    top: $navbarItemPosTop;
+    left: $posLeftNavItem;
+    top: auto;
 }
 
 //
