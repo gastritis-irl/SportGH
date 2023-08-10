@@ -56,13 +56,14 @@ Global variables
  */
 
 // Colors
-$colorNeutral: #FFFFFF;
+$colorNeutral1: #FFFFFF;
+$colorNeutral2: #000000;
 $colorMain1: #5D5A88;
 $colorMain2: #8D8BA7;
 $colorMain3: #F2F1FA;
 $colorMain4: #1f6567;
 $colorInputBackground: $colorMain3;
-$colorBtn1: $colorNeutral;
+$colorBtn1: $colorNeutral1;
 $colorBtn2: $colorMain1;
 
 // Fonts
@@ -77,28 +78,47 @@ $sizeH1: 35px;
 $sizeH2: 27px;
 $sizeH3: 20px;
 $sizeDef: 18px;
+$signBtnLetterSpacing: 2px;
 
 // Item Size
 $heightNavHeader: 80px;
 $heightNav: 50px;
-$heightBtn: 35px;
-$widthBtn1: 65px;
-$widthBtn2: 85px;
+$heightBtn: 40px;
+$widthBtn1: 120px;
+$widthBtn2: 100px;
 $widthNavSearchbar: 300px; // fit-content?
 $heightNavSearchbar: 35px;
+$heightSignInIcon: 25px;
+$sizeSearchbarIcon: 16px;
+
+// Box-shadow
+$boxShadowSize1: 0 7px 29px 0;
+$boxShadowSize2: 0 0 0 0;
+$boxShadowSearchbar1: 0 0 3px;
+$boxShadowSearchbar2: 0 0 0 5px;
+
 
 // Margin/Border/Padding
 $posLeftNavItem: auto;
-$paddingNavHeader: 0px 75px;
+$paddingNavHeader: 0px 25px;
+$borderInput: 2px solid transparent;
 $borderRadiusInput: 15px;
 $borderRadiusBtn: 25px;
+$paddingNavSignButtonText: 4px 15px;
+$paddingNavSearchbar: 0 16px 0 48px;
 
 // Gap
 $gapNav: 33px;
-$gapNavHeader: 65px;
+$gapNavHeader: 120px;
 $gapNavHeaderFrame: 10px;
 $gapNavHeaderIcon: 15px;
-$gapNavButton: 10px;
+$gapNavButton: 15px;
+
+// Effects/Transitions
+$signBtnDrop: 2.5px;
+$signBtnDropTime: .1s;
+$signBtnLetterSpacingEffect: 1.5px;
+
 
 /*
 Global classes
@@ -109,7 +129,7 @@ Global classes
 //
 .nav-header-frame {
     width: auto;
-    background-color: $colorNeutral;
+    background-color: $colorNeutral1;
     padding: $paddingNavHeader;
     justify-content: center;
     align-items: center;
@@ -127,48 +147,19 @@ Global classes
     gap: $gapNavHeader;
 }
 
-.nav-header-icon {
+.nav-header-logo {
     display: flex;
     flex-direction: row;
     gap: $gapNavHeaderIcon;
 }
 
-.nav-header-logo {
+.nav-header-logo-icon {
 }
 
-.nav-header-title {
+.nav-header-logo-title {
     font-size: $sizeH1;
     font-weight: bold;
     color: $colorMain4;
-}
-
-.nav-header-searchbar {
-    width: $widthNavSearchbar;
-    height: $heightNavSearchbar;
-    border-radius: $borderRadiusInput;
-    background-color: $colorInputBackground;
-}
-
-.nav-header-buttons {
-    display: flex;
-    flex-direction: row;
-    gap: $gapNavButton;
-}
-
-.sign-in-btn {
-    height: $heightBtn;
-    width: $widthBtn2;
-    border-radius: $borderRadiusBtn;
-    color: $colorMain1;
-    background-color: $colorBtn1;
-}
-
-.sign-up-btn {
-    height: $heightBtn;
-    width: $widthBtn2;
-    border-radius: $borderRadiusBtn;
-    color: $colorNeutral;
-    background-color: $colorBtn2;
 }
 
 .nav-frame {
@@ -183,7 +174,7 @@ Global classes
 .nav-content {
     font: $fontDef;
     font-size: $sizeDef;
-    color: $colorNeutral;
+    color: $colorNeutral1;
     background-color: $colorMain1;
     display: flex;
     justify-content: center;
@@ -194,9 +185,18 @@ Global classes
     top: auto;
 }
 
-.nav-content a {
-    color: $colorNeutral;
+.nav-content-link a {
+    color: $colorNeutral1;
     text-decoration: none;
+}
+
+.nav-content-link {
+    font-size: $sizeDef;
+}
+
+.nav-content-link:hover {
+    font-size: larger;
+    transition: .1s;
 }
 
 //
@@ -208,4 +208,108 @@ Global classes
     justify-content: center;
     align-items: center;
     height: 65vh;
+}
+
+//
+// Searchbar
+//
+.nav-searchbar {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.nav-searchbar-input {
+    height: $heightNavSearchbar;
+    width: $widthNavSearchbar;
+    padding: $paddingNavSearchbar;
+    border: $borderInput;
+    border-radius: $borderRadiusInput;
+    outline: none;
+    background-color: $colorMain3;
+    box-shadow: $boxShadowSearchbar1 $colorMain2, $boxShadowSearchbar2 $colorMain3;
+    transition: .3s ease;
+}
+
+.nav-searchbar-input:hover {
+    background-color: $colorNeutral1;
+    box-shadow: $boxShadowSearchbar1 $colorMain3, $boxShadowSearchbar2 $colorMain2;
+}
+
+.nav-searchbar-input:focus {
+    background-color: $colorNeutral1;
+    box-shadow: $boxShadowSearchbar1 $colorMain3, $boxShadowSearchbar2 $colorMain2;
+}
+
+.nav-searchbar-icon {
+    position: absolute;
+    left: $sizeSearchbarIcon;
+    fill: $colorMain1;
+    width: $sizeSearchbarIcon;
+    height: $sizeSearchbarIcon;
+}
+
+//
+// Sign in/Sign up button
+//
+.nav-sign-btn {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    gap: $gapNavButton;
+    padding: $paddingNavSignButtonText;
+    border-radius: $borderRadiusBtn;
+    letter-spacing: $signBtnLetterSpacing;
+    font-size: $sizeDef;
+    transition: all .5s ease;
+}
+
+.nav-sign-btn:hover {
+    letter-spacing: $signBtnLetterSpacing + $signBtnLetterSpacingEffect;
+    box-shadow: $colorMain1 $boxShadowSize1;
+}
+
+.nav-sign-btn:active {
+    letter-spacing: $signBtnLetterSpacing + $signBtnLetterSpacingEffect;
+    box-shadow: $colorMain1 $boxShadowSize2;
+    transform: translateY($signBtnDrop);
+    transition: $signBtnDropTime;
+}
+
+.nav-sign-in-btn {
+    height: $heightBtn;
+    width: $widthBtn1;
+    background-color: $colorBtn1;
+    color: $colorNeutral2;
+    stroke: $colorNeutral2;
+}
+
+.nav-sign-in-btn:hover {
+    background-color: $colorBtn2;
+    color: $colorNeutral1;
+    stroke: $colorNeutral1;
+}
+
+.nav-sign-up-btn {
+    height: $heightBtn;
+    width: $widthBtn2;
+    background-color: $colorBtn2;
+    color: $colorNeutral1;
+}
+
+.nav-sign-up-btn:hover {
+    background-color: $colorBtn1;
+    color: $colorNeutral2;
+}
+
+.nav-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: $gapNavButton;
+}
+
+.nav-sign-in-icon {
+    width: auto;
+    height: $heightSignInIcon;
 }
