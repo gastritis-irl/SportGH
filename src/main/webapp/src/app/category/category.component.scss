@@ -2,38 +2,39 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 1.25em; /* 20px */
 }
 
 .category-heading {
     color: #5D5A88;
-    font-size: 36px;
+    font-size: 2.25em; /* 36px */
     font-family: 'DM Sans', sans-serif;
     font-weight: 700;
-    line-height: 46px;
+    line-height: 2.875em; /* 46px */
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25em; /* 20px */
 }
 
 .categories {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 2.5em; /* 40px */
     justify-content: center;
 }
 
 .category-item {
+    position: relative; /* Adding relative positioning here */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 5%;
     width: 20%;
     height: 100%;
     background: white;
-    border-radius: 10px;
-    border: 0.50px #D4D2E3 solid;
+    border-radius: 4%;
+    border: 0.03125em #D4D2E3 solid;
     overflow: hidden;
     transition: 0.2s ease-in-out;
 }
@@ -45,16 +46,16 @@
 .category-icon {
     width: 100%;
     height: auto;
-    border-radius: top 10px;
+    border-radius: 10px 10px 0 0;
     display: flex;
 }
 
 .category-name {
     color: #5D5A88;
-    font-size: 20px;
+    font-size: 1.25em; /* 20px */
     font-family: 'DM Sans', sans-serif;
     font-weight: 700;
-    line-height: 20px;
+    line-height: 1.25em; /* 20px */
     text-align: center;
     word-wrap: break-word;
 }
@@ -75,20 +76,35 @@
 
 .category-item:hover > .category-icon {
     height: 65%;
-    filter: blur(7px);
+    filter: blur(1px);
     animation: anim 3s infinite;
 }
-
 .textBox {
+    position: absolute; /* Absolute positioning */
+    top: 0;
+    left: 0;
+    right: 0;
     opacity: 0;
-    display: flex;
+    display: bottom;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 15px;
     transition: 0.2s ease-in-out;
     z-index: 2;
+    padding: 5%;
+    width: 100%;
+    height: 40%; /* Adjust the height to cover only part of the icon */
+    // background: rgba(255, 255, 255, 0.7); /* Background with slight opacity */
+    overflow: hidden; /* Hide excess text */
 }
+
+.category-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show only the first 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 
 .category-item:hover > .textBox {
     opacity: 1;
