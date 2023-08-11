@@ -1,5 +1,5 @@
 export const environment = {
-    backendPort: 8080,
+    baseURL: "http://localhost:8080",
     firebaseConfig : {
         apiKey: "AIzaSyCxsKJn2Y2-ZlVKIvFGi4-vr7l76W8DkeU",
         authDomain: "sportgh-a9112.firebaseapp.com",
