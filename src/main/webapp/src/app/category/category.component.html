@@ -4,6 +4,10 @@
         <!-- Repeat for each category -->
         <div class="category-item" *ngFor="let category of categories">
             <img [src]="category.imageURL" alt="Category Icon" class="category-icon" />
+            <div class="textBox">
+                <p class="category-description">{{ category.description }}</p>
+                <a [routerLink]="['/category', category.id]" class="category-link">View category</a>
+            </div>
             <p class="category-name">{{ category.name }}</p>
         </div>
     </div>
