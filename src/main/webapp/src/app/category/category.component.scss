@@ -1,111 +1,136 @@
+// Colors
+$color-main: #5D5A88;
+$category-background: white;
+$category-border: #D4D2E3;
+
+// Fonts
+$font-default: 'DM Sans', sans-serif;
+
+// Sizes
+$heading-font-size: 2.25em; // 36px
+$heading-line-height: 2.875em; // 46px
+$name-font-size: 1.25em; // 20px
+$name-line-height: 1.25em; // 20px
+$category-gap: 2.5em; // 40px
+$category-border-width: 0.03125em; // 0.5px
+$text-box-height: 40%;
+
 .category-list-holder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.25em; /* 20px */
-}
-
-.category-heading {
-    color: #5D5A88;
-    font-size: 2.25em; /* 36px */
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    line-height: 2.875em; /* 46px */
-    text-align: center;
-    margin-bottom: 1.25em; /* 20px */
-}
-
-.categories {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 2.5em; /* 40px */
-    justify-content: center;
-}
-
-.category-item {
-    position: relative; /* Adding relative positioning here */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5%;
-    width: 20%;
-    height: 100%;
-    background: white;
-    border-radius: 4%;
-    border: 0.03125em #D4D2E3 solid;
-    overflow: hidden;
-    transition: 0.2s ease-in-out;
-}
-
-.category-item:hover {
-    transform: scale(1.04) rotate(-1deg);
-}
-
-.category-icon {
-    width: 100%;
-    height: auto;
-    border-radius: 10px 10px 0 0;
-    display: flex;
-}
-
-.category-name {
-    color: #5D5A88;
-    font-size: 1.25em; /* 20px */
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    line-height: 1.25em; /* 20px */
-    text-align: center;
-    word-wrap: break-word;
-}
-
-@keyframes anim {
-    0% {
-        transform: translateY(0);
+    .category-heading {
+        color: $color-main;
+        font-size: $heading-font-size;
+        font-family: $font-default;
+        font-weight: 700;
+        line-height: $heading-line-height;
+        text-align: center;
+        margin-bottom: $category-gap;
     }
 
-    50% {
-        transform: translateY(-20px);
+    .categories {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: $category-gap;
+        justify-content: center;
     }
 
-    100% {
-        transform: translateY(0);
+    .category-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+        width: 20%;
+        height: 100%;
+        background: $category-background;
+        border-radius: 4%;
+        border: $category-border-width $category-border solid;
+        overflow: hidden;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+            transform: scale(1.04) rotate(-1deg);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            background-color: $category-border;
+        }
+
+        .category-icon {
+            width: 100%;
+            height: auto;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+        }
+
+        .category-name {
+            color: $color-main;
+            font-size: $name-font-size;
+            font-family: $font-default;
+            font-weight: 700;
+            line-height: $name-line-height;
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        .textBox {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            display: bottom;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s ease-in-out;
+            z-index: 2;
+            padding: 5%;
+            width: 100%;
+            height: $text-box-height;
+            overflow-y: scroll; // Enable vertical scrolling for the description
+            scrollbar-width: none; // Hide scrollbar for Firefox
+            -ms-overflow-style: none; // Hide scrollbar for IE and Edge
+
+            &::-webkit-scrollbar {
+                display: none; // Hide scrollbar for Chrome, Safari, and Opera
+            }
+
+            .category-description {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+            }
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &:hover>.category-icon {
+            height: 65%;
+            filter: blur(0.5px); // Reduce the blur amount for a lighter effect
+            background: rgba(255, 255, 255, 0.5); // Reduce the background opacity for a lighter effect
+            animation: anim 3s infinite;
+        }
     }
-}
 
-.category-item:hover > .category-icon {
-    height: 65%;
-    filter: blur(1px);
-    animation: anim 3s infinite;
-}
-.textBox {
-    position: absolute; /* Absolute positioning */
-    top: 0;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    display: bottom;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s ease-in-out;
-    z-index: 2;
-    padding: 5%;
-    width: 100%;
-    height: 40%; /* Adjust the height to cover only part of the icon */
-    // background: rgba(255, 255, 255, 0.7); /* Background with slight opacity */
-    overflow: hidden; /* Hide excess text */
-}
+    @keyframes anim {
+        0% {
+            transform: translateY(0);
+        }
 
-.category-description {
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Show only the first 3 lines */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
+        50% {
+            transform: translateY(-20px);
+        }
 
+        100% {
+            transform: translateY(0);
+        }
+    }
 
-.category-item:hover > .textBox {
-    opacity: 1;
+    .category-item:hover>.category-icon {
+        height: 65%;
+        filter: blur(1px);
+        animation: anim 3s infinite;
+    }
 }
