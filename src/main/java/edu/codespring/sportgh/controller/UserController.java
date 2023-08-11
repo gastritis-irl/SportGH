@@ -1,11 +1,9 @@
 package edu.codespring.sportgh.controller;
 
-import edu.codespring.sportgh.dto.UserInDTO;
 import edu.codespring.sportgh.dto.UserOutDTO;
 import edu.codespring.sportgh.mapper.UserMapper;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.service.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,11 +41,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<UserOutDTO> save(@RequestBody @Valid UserInDTO userInDTO) {
-        User user = userService.signup(userInDTO.getUsername(), userInDTO.getPassword());
-        return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
-    }
 
     @DeleteMapping
     public ResponseEntity<?> deleteAll() {

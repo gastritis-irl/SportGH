@@ -8,7 +8,17 @@ import { AppComponent } from "./app.component";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from "./home/home.module";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
-import { ProductModule } from './product/product.module';
+import { ProductModule } from './product/product.module'
+import { FormsModule } from '@angular/forms';
+
+import * as firebase from 'firebase/app';
+import {environment} from "./environment";
+import { SharedModule } from './shared/shared.module';
+import { CategoryModule } from './category/category.module';
+import { AdminModule } from './admin/admin.module';
+
+firebase.initializeApp(environment.firebaseConfig);
+
 
 @NgModule({
     declarations: [
@@ -16,13 +26,17 @@ import { ProductModule } from './product/product.module';
         UserComponent,
     ],
     imports: [
+        FormsModule,
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
         NgbModule,
         HomeModule,
         ProductModule,
+        CategoryModule,
+        AdminModule,
         NavbarComponent,
+        SharedModule
     ],
     providers: [],
     bootstrap: [

@@ -6,9 +6,9 @@ import java.util.Collection;
 
 public interface UserService {
 
-    User signup(String userName, String password);
+    User signup(String userName, String firebaseUid, String password);
 
-    void login(String userName, String password);
+    void login(String firebaseUid, String password);
 
     Collection<User> findAll();
 
@@ -17,5 +17,7 @@ public interface UserService {
     void deleteById(Long userId);
 
     void deleteAll();
+
+    User findByFirebaseUid(String firebaseUid);
 }
 
