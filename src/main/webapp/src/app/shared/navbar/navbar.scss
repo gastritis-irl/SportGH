@@ -1,0 +1,112 @@
+@import '../../../styles.scss';
+
+//
+// Nav (header, title, searchbar, login)
+//
+.nav-header-frame {
+    width: auto;
+    background-color: $colorNeutral1;
+    padding: $paddingNavHeader;
+    gap: $gapNavHeaderFrame;
+
+    .nav-header-content {
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        height: $heightNavHeader;
+        padding: $paddingNavHeader;
+        justify-content: center;
+        align-items: center;
+        gap: $gapNavHeader;
+
+        .nav-header-logo {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: $gapNavHeaderIcon;
+
+            .nav-header-logo-icon {
+                content: $navHeaderLogoIcon;
+            }
+
+            .nav-header-logo-title {
+                font-size: $sizeH1;
+                font-weight: bold;
+                color: $colorMain1;
+            }
+        }
+
+        .nav-searchbar {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .nav-searchbar-icon {
+                position: absolute;
+                left: $sizeSearchbarIcon;
+                fill: $colorMain1;
+                width: $sizeSearchbarIcon;
+                height: $sizeSearchbarIcon;
+            }
+
+            .nav-searchbar-input {
+                height: $heightNavSearchbar;
+                width: $widthNavSearchbar;
+                padding: $paddingNavSearchbar;
+                border: $borderInput;
+                border-radius: $borderRadiusInput;
+                outline: none;
+                background-color: $colorMain3;
+                box-shadow: $boxShadowSearchbar1 $colorMain2, $boxShadowSearchbar2 $colorMain3;
+                transition: .3s ease;
+
+                &:hover {
+                    background-color: $colorNeutral1;
+                    box-shadow: $boxShadowSearchbar1 $colorMain3, $boxShadowSearchbar2 $colorMain2;
+                }
+
+                &:focus {
+                    background-color: $colorNeutral1;
+                    box-shadow: $boxShadowSearchbar1 $colorMain3, $boxShadowSearchbar2 $colorMain2;
+                }
+            }
+        }
+    }
+}
+
+
+//
+// Nav (with menu options)
+//
+.nav-frame {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    height: $heightNav;
+    background-color: $colorMain1;
+
+    .nav-content {
+        font: $fontDef;
+        font-size: $sizeDef;
+        color: $colorNeutral1;
+        background-color: $colorMain1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: $gapNav;
+        position: relative;
+        left: $posLeftNavItem;
+        top: auto;
+
+        .nav-content-link {
+            font-size: $sizeDef;
+
+            a {
+                color: $colorNeutral1;
+                text-decoration: none;
+            }
+        }
+    }
+}

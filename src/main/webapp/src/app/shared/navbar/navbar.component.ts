@@ -10,6 +10,7 @@ import { NgForOf, NgIf } from '@angular/common';
     standalone: true,
     imports: [NgbNavModule, NgbDropdownModule, RouterLink, AuthModule, NgForOf, NgIf],
     templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.scss'],
 })
 export class NavbarComponent {
 }

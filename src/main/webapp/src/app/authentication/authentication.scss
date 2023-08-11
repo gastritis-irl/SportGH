@@ -1,0 +1,53 @@
+@import '../../styles.scss';
+
+//
+// Sign in/Sign up button
+//
+.nav-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: $gapNavButton;
+
+    .nav-sign-btn {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        gap: $gapNavButton;
+        padding: $paddingNavSignButtonText;
+        border-radius: $borderRadiusBtn;
+        letter-spacing: $signBtnLetterSpacing;
+        font-size: $sizeDef;
+
+        &.nav-sign-in-btn {
+            height: $heightBtn;
+            width: $widthBtn1;
+            background-color: $colorBtn1;
+            color: $colorNeutral2;
+            stroke: $colorNeutral2;
+
+            &:hover {
+                background-color: $colorBtn2;
+                color: $colorNeutral1;
+                stroke: $colorNeutral1;
+            }
+
+            .nav-sign-in-icon {
+                width: auto;
+                height: $heightSignInIcon;
+            }
+        }
+
+        &.nav-sign-up-btn {
+            height: $heightBtn;
+            width: $widthBtn2;
+            background-color: $colorBtn2;
+            color: $colorNeutral1;
+
+            &:hover {
+                background-color: $colorBtn1;
+                color: $colorNeutral2;
+            }
+        }
+    }
+}
