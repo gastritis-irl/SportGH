@@ -26,14 +26,14 @@ services:
         depends_on:
             - sportgh-mysql
 
-    sportgh-frontend:
-        build:
-            context: .
-            dockerfile: Dockerfile-frontend
-        restart: unless-stopped
-        ports:
-            - "4200:80"
-        depends_on:
-            - sportgh-backend
-        environment:
-            - BASE_URL=http://sportgh-backend:8080
+#    sportgh-frontend:
+#        build:
+#            context: .
+#            dockerfile: Dockerfile-frontend
+#        restart: unless-stopped
+#        ports:
+#            - "4200:80"
+#        depends_on:
+#            - sportgh-backend
+#        environment:
+#            - BASE_URL=http://sportgh-backend:8080
