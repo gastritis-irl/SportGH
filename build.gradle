@@ -25,8 +25,24 @@ repositories {
 
 dependencies {
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '8.0.1.Final'
+
+    // https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http
+    implementation group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: '1.19.0'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-web
+    implementation group: 'org.springframework', name: 'spring-web', version: '6.0.11'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-resource-server
+    implementation group: 'org.springframework.security', name: 'spring-security-oauth2-resource-server', version: '6.1.2'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-web
+    implementation group: 'org.springframework.security', name: 'spring-security-web', version: '6.1.2'
+
+    // https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
+    implementation group: 'com.google.firebase', name: 'firebase-admin', version: '9.2.0'
+    implementation 'org.jetbrains:annotations:24.0.0'
 
     // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
     runtimeOnly group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'
@@ -36,6 +52,9 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '3.1.1'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.1.1'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '3.1.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.1.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '3.1.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '3.1.1'
 
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.28'
@@ -49,10 +68,7 @@ dependencies {
 
     // default spring boot dependencies from initializr
     implementation 'org.springframework.boot:spring-boot-starter-groovy-templates'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
-    // developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    // developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

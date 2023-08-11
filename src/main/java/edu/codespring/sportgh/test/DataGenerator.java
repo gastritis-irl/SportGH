@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Profile("data-gen")
 @Slf4j
 @RequiredArgsConstructor
@@ -49,7 +51,8 @@ public class DataGenerator {
         for (int i = 1; i <= nrOfUsers; i++) {
             String username = String.format("user%d", i);
             String password = String.format("password%d", i);
-            userService.signup(username, password);
+            String firebaseUid = UUID.randomUUID().toString();
+            userService.signup(username, firebaseUid, password);
         }
     }
 
