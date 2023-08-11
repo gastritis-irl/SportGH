@@ -49,10 +49,10 @@ public class DataGenerator {
 
     public void initUsers(int nrOfUsers) {
         for (int i = 1; i <= nrOfUsers; i++) {
-            String username = String.format("user%d", i);
+            String email = String.format("user%d@email.com", i);
             String password = String.format("password%d", i);
             String firebaseUid = UUID.randomUUID().toString();
-            userService.signup(username, firebaseUid, password);
+            userService.signup(email, firebaseUid, password);
         }
     }
 

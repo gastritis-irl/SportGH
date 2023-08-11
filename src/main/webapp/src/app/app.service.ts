@@ -7,7 +7,7 @@ import { environment } from './environment';
 })
 export class AppService {
 
-    protected readonly baseUrl: string = `http://localhost:${environment.backendPort}/api`;
+    protected readonly baseUrl: string = `${environment.baseURL}/api`;
 
     constructor(protected http: HttpClient) {
     }
