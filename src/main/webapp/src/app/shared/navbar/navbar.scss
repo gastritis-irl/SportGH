@@ -1,5 +1,30 @@
 @import '../../../style-variables.scss';
 
+// Item Size
+$heightNavHeader: 4.25em;
+$heightNav: 2.7em;
+$widthNavSearchbar: 100%;
+$heightNavSearchbar: 2.15em;
+$sizeSearchbarIcon: 1em;
+
+// Margin/Border/Padding
+$posLeftNavItem: auto;
+$paddingNavHeader: auto;
+$borderInput: 0.1em solid transparent;
+$borderRadiusSearchbar: 2.5em;
+$paddingNavSearchbar: 0 0 0 2.5em;
+
+// Gap
+$gapNav: 15%;
+$gapNavHeader: 10%;
+$gapNavHeaderFrame: 10%;
+$gapNavHeaderIcon: 0.5em;
+
+// Box-shadow
+$boxShadowSearchbar1: 0 0 3px;
+$boxShadowSearchbar2: 0 0 0 5px;
+
+
 //
 // Nav (header, title, searchbar, login)
 //
@@ -55,7 +80,7 @@
                 width: $widthNavSearchbar;
                 padding: $paddingNavSearchbar;
                 border: $borderInput;
-                border-radius: $borderRadiusInput;
+                border-radius: $borderRadiusSearchbar;
                 outline: none;
                 background-color: $colorMain3;
                 box-shadow: $boxShadowSearchbar1 $colorMain2, $boxShadowSearchbar2 $colorMain3;

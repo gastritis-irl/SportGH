@@ -24,47 +24,7 @@ $fontCard1: 'Text single/200/Bold';
 $fontCard2: 'Text single/300/Bold';
 
 // Text Size
-$sizeH1: 35px;
-$sizeH2: 27px;
-$sizeH3: 20px;
-$sizeDef: 18px;
-$signBtnLetterSpacing: 2px;
-
-// Item Size
-$heightNavHeader: 80px;
-$heightNav: 50px;
-$heightBtn: 40px;
-$widthBtn1: 120px;
-$widthBtn2: 100px;
-$widthNavSearchbar: 300px; // fit-content?
-$heightNavSearchbar: 35px;
-$heightSignInIcon: 25px;
-$sizeSearchbarIcon: 16px;
-
-// Box-shadow
-$boxShadowSize1: 0 7px 29px 0;
-$boxShadowSize2: 0 0 0 0;
-$boxShadowSearchbar1: 0 0 3px;
-$boxShadowSearchbar2: 0 0 0 5px;
-
-// Margin/Border/Padding
-$posLeftNavItem: auto;
-$paddingNavHeader: 0px 25px;
-$borderInput: 2px solid transparent;
-$borderRadiusInput: 15px;
-$borderRadiusBtn: 25px;
-$paddingNavSignButtonText: 4px 15px;
-$paddingNavSearchbar: 0 16px 0 48px;
-
-// Gap
-$gapNav: 33px;
-$gapNavHeader: 120px;
-$gapNavHeaderFrame: 10px;
-$gapNavHeaderIcon: 15px;
-$gapNavButton: 15px;
-
-// Effects/Transitions
-$dropScaleSignBtn: 2.5px;
-$dropTimeSignBtn: .1s;
-$letterSpacingScaleSignBtn: 1.5px;
-$transitionTimeNavSignBtn: .1s;
+$sizeH1: 175%;
+$sizeH2: 130%;
+$sizeH3: 115%;
+$sizeDef: 100%;

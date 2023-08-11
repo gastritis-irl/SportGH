@@ -1,9 +1,28 @@
 @import '../../style-variables.scss';
 
+// Text size
+$btnTextSize: $sizeDef;
+
+// Item Size
+$heightBtn: 100%;
+$widthBtn1: 100%;
+$widthBtn2: 100%;
+$heightSignInIcon: 100%;
+
+// Margin/Border/Padding
+$borderRadiusBtn: 2em;
+$paddingNavSignButtonText: 0.35em 1em;
+
+// Gap
+$gapNavButton: 0.5em;
+
+
 //
 // Sign in/Sign up button
 //
 .nav-buttons {
+    font-family: $fontDef;
+    font-size: $btnTextSize;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -16,8 +35,6 @@
         gap: $gapNavButton;
         padding: $paddingNavSignButtonText;
         border-radius: $borderRadiusBtn;
-        letter-spacing: $signBtnLetterSpacing;
-        font-size: $sizeDef;
 
         &.nav-sign-in-btn {
             height: $heightBtn;
