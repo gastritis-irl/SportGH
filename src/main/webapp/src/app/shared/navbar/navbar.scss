@@ -1,5 +1,7 @@
 @import '../../../style-variables.scss';
 
+$mediaWidthLimit: 580px;
+
 // Item Size
 $heightNavHeader: 4.25em;
 $heightNav: 2.7em;
@@ -13,10 +15,14 @@ $paddingNavHeader: auto;
 $borderInput: 0.1em solid transparent;
 $borderRadiusSearchbar: 2.5em;
 $paddingNavSearchbar: 0 0 0 2.5em;
+$marginNav: 10px;
+$marginNavHeader: 15px;
 
 // Gap
-$gapNav: 15%;
-$gapNavHeader: 10%;
+$gapNav1: 15%;
+$gapNav2: 15px;
+$gapNavHeader1: 10%;
+$gapNavHeader2: 15px;
 $gapNavHeaderFrame: 10%;
 $gapNavHeaderIcon: 0.5em;
 
@@ -36,13 +42,19 @@ $boxShadowSearchbar2: 0 0 0 5px;
 
     .nav-header-content {
         display: flex;
-        flex-direction: row;
-        width: auto;
-        height: $heightNavHeader;
+        @media (max-width: $mediaWidthLimit) {
+            flex-direction: column;
+            row-gap: $gapNavHeader2;
+        }
+        @media(min-width: $mediaWidthLimit) {
+            flex-direction: row;
+            height: $heightNavHeader;
+            gap: $gapNavHeader1;
+        }
+        margin: $marginNavHeader;
         padding: $paddingNavHeader;
         justify-content: center;
         align-items: center;
-        gap: $gapNavHeader;
 
         .nav-header-logo {
             display: flex;
@@ -63,6 +75,9 @@ $boxShadowSearchbar2: 0 0 0 5px;
         }
 
         .nav-searchbar {
+            @media (max-width: $mediaWidthLimit) {
+                // visibility: hidden;
+            }
             display: flex;
             align-items: center;
             position: relative;
@@ -108,22 +123,31 @@ $boxShadowSearchbar2: 0 0 0 5px;
     position: relative;
     display: flex;
     justify-content: center;
-    width: auto;
-    height: $heightNav;
+    @media(min-width: $mediaWidthLimit) {
+        height: $heightNav;
+    }
     background-color: $colorMain1;
 
     .nav-content {
+        display: flex;
+        @media (max-width: $mediaWidthLimit) {
+            flex-direction: column;
+            row-gap: $gapNav2;
+        }
+        @media(min-width: $mediaWidthLimit) {
+            flex-direction: row;
+            gap: $gapNav1;
+        }
+
+        margin: $marginNav;
         font: $fontDef;
         font-size: $sizeDef;
         color: $colorNeutral1;
         background-color: $colorMain1;
-        display: flex;
         justify-content: center;
         align-items: center;
-        gap: $gapNav;
         position: relative;
         left: $posLeftNavItem;
-        top: auto;
 
         .nav-content-link {
             font-size: $sizeDef;
