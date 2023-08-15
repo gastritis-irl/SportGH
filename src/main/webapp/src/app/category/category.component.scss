@@ -11,7 +11,7 @@ $heading-font-size: 2.25em; // 36px
 $heading-line-height: 2.875em; // 46px
 $name-font-size: 1.25em; // 20px
 $name-line-height: 1.25em; // 20px
-$category-gap: 5%; 
+$category-gap: 5%;
 $category-border-width: 0.03125em; // 0.5px
 $text-box-height: 40%;
 
@@ -29,8 +29,6 @@ $breakpoint-large: 1024px; // For larger devices like desktops
         line-height: $heading-line-height;
         text-align: center;
         margin-bottom: $category-gap;
-        column-gap: $category-gap;
-        row-gap: $category-gap;
     }
 
     .categories {
@@ -60,6 +58,7 @@ $breakpoint-large: 1024px; // For larger devices like desktops
         border: $category-border-width $category-border solid;
         overflow: hidden;
         transition: 0.2s ease-in-out;
+        margin-bottom: $category-gap;
 
         &:hover {
             transform: scale(1.04) rotate(-1deg);
@@ -69,9 +68,16 @@ $breakpoint-large: 1024px; // For larger devices like desktops
 
         .category-icon {
             width: 100%;
-            height: auto;
+            height: 100%;
             border-radius: 10px 10px 0 0;
             display: flex;
+            object-fit: cover; // Ensures image covers the set dimensions without distortion
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; // Ensures image covers the set dimensions without distortion
+            }
         }
 
         .category-name {
@@ -129,19 +135,19 @@ $breakpoint-large: 1024px; // For larger devices like desktops
         }
 
         @media (max-width: $breakpoint-small) {
-            width: 120%; // Use a larger width for small screens
-            margin: auto auto; // Center the items
+            width: 100%; // Use full width for small screens
+            margin-bottom: 1.5em; // Provide some vertical spacing between items
 
             .category-name,
             .category-heading {
-                $name-font-size: 0.75em; // Reduce font size for better fit
-                $heading-font-size: 1.5em; // Reduce font size for better fit
+                font-size: 0.75em; // Reduce font size for better fit
             }
         }
 
         @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
-            width: 50%; // Use a larger width for medium screens (like tablets)
+            width: 45%; // Use half width for medium screens (like tablets)
         }
+
     }
 
     @keyframes anim {
