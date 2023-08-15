@@ -11,9 +11,14 @@ $heading-font-size: 2.25em; // 36px
 $heading-line-height: 2.875em; // 46px
 $name-font-size: 1.25em; // 20px
 $name-line-height: 1.25em; // 20px
-$category-gap: 2.5em; // 40px
+$category-gap: 5%; 
 $category-border-width: 0.03125em; // 0.5px
 $text-box-height: 40%;
+
+// Define breakpoints
+$breakpoint-small: 480px; // For small devices like smartphones
+$breakpoint-medium: 768px; // For medium devices like tablets
+$breakpoint-large: 1024px; // For larger devices like desktops
 
 .category-list-holder {
     .category-heading {
@@ -24,6 +29,8 @@ $text-box-height: 40%;
         line-height: $heading-line-height;
         text-align: center;
         margin-bottom: $category-gap;
+        column-gap: $category-gap;
+        row-gap: $category-gap;
     }
 
     .categories {
@@ -32,6 +39,11 @@ $text-box-height: 40%;
         flex-wrap: wrap;
         gap: $category-gap;
         justify-content: center;
+
+        @media (max-width: $breakpoint-small) {
+            flex-direction: column; // Stack categories vertically on small screens
+            $category-gap: 1.5%; // Reduce the gap
+        }
     }
 
     .category-item {
@@ -40,7 +52,7 @@ $text-box-height: 40%;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 5%;
+        gap: $category-gap;
         width: 20%;
         height: 100%;
         background: $category-background;
@@ -70,6 +82,8 @@ $text-box-height: 40%;
             line-height: $name-line-height;
             text-align: center;
             word-wrap: break-word;
+            padding: 0 5%;
+            display: flex;
         }
 
         .textBox {
@@ -99,6 +113,7 @@ $text-box-height: 40%;
                 display: -webkit-box;
                 -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;
+                text-size-adjust: 100%;
             }
 
             &:hover {
@@ -108,9 +123,24 @@ $text-box-height: 40%;
 
         &:hover>.category-icon {
             height: 65%;
-            filter: blur(0.5px); // Reduce the blur amount for a lighter effect
-            background: rgba(255, 255, 255, 0.5); // Reduce the background opacity for a lighter effect
+            filter: blur(0.5px);
+            background: rgba(255, 255, 255, 0.5);
             animation: anim 3s infinite;
+        }
+
+        @media (max-width: $breakpoint-small) {
+            width: 120%; // Use a larger width for small screens
+            margin: auto auto; // Center the items
+
+            .category-name,
+            .category-heading {
+                $name-font-size: 0.75em; // Reduce font size for better fit
+                $heading-font-size: 1.5em; // Reduce font size for better fit
+            }
+        }
+
+        @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
+            width: 50%; // Use a larger width for medium screens (like tablets)
         }
     }
 
@@ -131,6 +161,7 @@ $text-box-height: 40%;
     .category-item:hover>.category-icon {
         height: 65%;
         filter: blur(1px);
+        opacity: 0.4;
         animation: anim 3s infinite;
     }
 }
