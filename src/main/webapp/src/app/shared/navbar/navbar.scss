@@ -29,6 +29,14 @@ $boxShadowSearchbar2: 0 0 0 5px;
 
 
 //
+// Font
+//
+body {
+    font-family: $fontDef;
+}
+
+
+//
 // Nav (header, title, searchbar, login)
 //
 .nav-header-frame {
@@ -139,7 +147,6 @@ $boxShadowSearchbar2: 0 0 0 5px;
             align-items: center;
         }
 
-        font: $fontDef;
         font-size: $sizeDef;
         color: $colorNeutral1;
         background-color: $colorMain1;
