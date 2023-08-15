@@ -12,9 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {
-        ResponseStatusException.class,
-    })
+    @ExceptionHandler(ResponseStatusException.class)
     protected ResponseEntity<Object> handleNotFound(RuntimeException e, WebRequest request) {
         String bodyOfResponse = "Item not found.";
 
