@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
 import { Router } from '@angular/router';
 
@@ -20,19 +20,10 @@ export class AuthenticationComponent {
     errorMessage: string = ''; // To display error messages
     isOffcanvasOpen: boolean = false;
 
-    constructor(private offcanvasService: NgbOffcanvas, private userService: UserService, private router: Router) {
-    }
+    constructor(private modalService: NgbModal, private userService: UserService, private router: Router) {}
 
-    openOffcanvas(content: TemplateRef<string>): void {
-        this.offcanvasService.open(content, { position: 'start', scroll: true });
-        this.isOffcanvasOpen = true;
-    }
-
-    closeOffcanvas(): void {
-        if (this.isOffcanvasOpen) {
-            this.offcanvasService.dismiss();
-            this.isOffcanvasOpen = false;
-        }
+    openModal(content: TemplateRef<string>): void {
+        this.modalService.open(content, { centered: true, scrollable: true });
     }
 
     login(): void {
@@ -40,7 +31,6 @@ export class AuthenticationComponent {
             userObservable.subscribe({
                 next: () => {
                     this.loggedInUserEmail = this.email; // Store the logged-in email
-                    this.closeOffcanvas();
                     this.router.navigate(['/home']);
                 },
                 error: (error) => {
@@ -61,7 +51,7 @@ export class AuthenticationComponent {
             userObservable.subscribe({
                 next: () => {
                     alert('Registration successful');
-                    this.openOffcanvas(this.loginContent);
+                    this.openModal(this.loginContent);
                 },
                 error: (error) => {
                     console.error('Registration failed', error);

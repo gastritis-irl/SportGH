@@ -28,6 +28,6 @@
     <div>Welcome {{loggedInUserEmail}}</div>
 </ng-container>
 <ng-template #notLoggedIn>
-    <button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openOffcanvas(loginContent)">Login</button>
-    <button class="btn btn-lg btn-outline-primary mb-2" (click)="openOffcanvas(signupContent)">Sign up</button>
+    <button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openModal(loginContent)">Login</button>
+    <button class="btn btn-lg btn-outline-primary mb-2" (click)="openModal(signupContent)">Sign up</button>
 </ng-template>
