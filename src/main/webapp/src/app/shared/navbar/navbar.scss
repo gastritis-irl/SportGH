@@ -1,29 +1,26 @@
 @import '../../../style-variables.scss';
 
-$mediaWidthLimit: 580px;
+// Media size
+$mediaWidthLimit: 640px;
 
 // Item Size
 $heightNavHeader: 4.25em;
 $heightNav: 2.7em;
 $widthNavSearchbar: 100%;
 $heightNavSearchbar: 2.15em;
-$sizeSearchbarIcon: 1em;
 
 // Margin/Border/Padding
-$posLeftNavItem: auto;
-$paddingNavHeader: auto;
+$paddingNavHoriz: 10%;
+$paddingNavVert: 15px;
+$paddingLeftSearchbar: 2.5em;
 $borderInput: 0.1em solid transparent;
 $borderRadiusSearchbar: 2.5em;
-$paddingNavSearchbar: 0 0 0 2.5em;
-$marginNav: 10px;
-$marginNavHeader: 15px;
+$posSearchbarIcon: 1em;
 
 // Gap
-$gapNav1: 15%;
+$gapNav1: 33px;
 $gapNav2: 15px;
-$gapNavHeader1: 10%;
-$gapNavHeader2: 15px;
-$gapNavHeaderFrame: 10%;
+$rowGapNav: 15px;
 $gapNavHeaderIcon: 0.5em;
 
 // Box-shadow
@@ -35,25 +32,25 @@ $boxShadowSearchbar2: 0 0 0 5px;
 // Nav (header, title, searchbar, login)
 //
 .nav-header-frame {
-    width: auto;
     background-color: $colorNeutral1;
-    padding: $paddingNavHeader;
-    gap: $gapNavHeaderFrame;
+    padding-left: $paddingNavHoriz;
+    padding-right: $paddingNavHoriz;
 
     .nav-header-content {
         display: flex;
         @media (max-width: $mediaWidthLimit) {
             flex-direction: column;
-            row-gap: $gapNavHeader2;
+            row-gap: $rowGapNav;
+            padding-top: $paddingNavVert;
+            padding-bottom: $paddingNavVert;
         }
         @media(min-width: $mediaWidthLimit) {
             flex-direction: row;
             height: $heightNavHeader;
-            gap: $gapNavHeader1;
+            justify-content: space-between;
+            gap: $gapNav1
         }
-        margin: $marginNavHeader;
-        padding: $paddingNavHeader;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
 
         .nav-header-logo {
@@ -76,7 +73,7 @@ $boxShadowSearchbar2: 0 0 0 5px;
 
         .nav-searchbar {
             @media (max-width: $mediaWidthLimit) {
-                // visibility: hidden;
+                visibility: collapse;
             }
             display: flex;
             align-items: center;
@@ -84,16 +81,16 @@ $boxShadowSearchbar2: 0 0 0 5px;
 
             .nav-searchbar-icon {
                 position: absolute;
-                left: $sizeSearchbarIcon;
+                left: $posSearchbarIcon;
                 fill: $colorMain1;
-                width: $sizeSearchbarIcon;
-                height: $sizeSearchbarIcon;
+                width: $posSearchbarIcon;
+                height: $posSearchbarIcon;
             }
 
             .nav-searchbar-input {
                 height: $heightNavSearchbar;
                 width: $widthNavSearchbar;
-                padding: $paddingNavSearchbar;
+                padding-left: $paddingLeftSearchbar;
                 border: $borderInput;
                 border-radius: $borderRadiusSearchbar;
                 outline: none;
@@ -122,10 +119,11 @@ $boxShadowSearchbar2: 0 0 0 5px;
 .nav-frame {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     @media(min-width: $mediaWidthLimit) {
         height: $heightNav;
     }
+    padding-left: $paddingNavHoriz;
     background-color: $colorMain1;
 
     .nav-content {
@@ -133,21 +131,19 @@ $boxShadowSearchbar2: 0 0 0 5px;
         @media (max-width: $mediaWidthLimit) {
             flex-direction: column;
             row-gap: $gapNav2;
+            align-items: unset;
         }
         @media(min-width: $mediaWidthLimit) {
             flex-direction: row;
             gap: $gapNav1;
+            align-items: center;
         }
 
-        margin: $marginNav;
         font: $fontDef;
         font-size: $sizeDef;
         color: $colorNeutral1;
         background-color: $colorMain1;
-        justify-content: center;
-        align-items: center;
         position: relative;
-        left: $posLeftNavItem;
 
         .nav-content-link {
             font-size: $sizeDef;

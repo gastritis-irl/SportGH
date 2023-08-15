@@ -5,13 +5,11 @@ $btnTextSize: $sizeDef;
 
 // Item Size
 $heightBtn: 100%;
-$widthBtn1: 100%;
-$widthBtn2: 100%;
 $heightSignInIcon: 100%;
 
 // Margin/Border/Padding
-$borderRadiusBtn: 2em;
-$paddingNavSignButtonText: 0.35em 1em;
+$borderRadiusButton: 2em;
+$paddingButtonText: 0.35em 1em;
 
 // Gap
 $gapNavButton: 0.5em;
@@ -33,12 +31,12 @@ $gapNavButton: 0.5em;
         flex-direction: row;
         text-align: center;
         gap: $gapNavButton;
-        padding: $paddingNavSignButtonText;
-        border-radius: $borderRadiusBtn;
+        padding: $paddingButtonText;
+        border-radius: $borderRadiusButton;
+        border-style: solid;
 
         &.nav-sign-in-btn {
             height: $heightBtn;
-            width: $widthBtn1;
             background-color: $colorBtn1;
             color: $colorNeutral2;
             stroke: $colorNeutral2;
@@ -50,14 +48,12 @@ $gapNavButton: 0.5em;
             }
 
             .nav-sign-in-icon {
-                width: auto;
                 height: $heightSignInIcon;
             }
         }
 
         &.nav-sign-up-btn {
             height: $heightBtn;
-            width: $widthBtn2;
             background-color: $colorBtn2;
             color: $colorNeutral1;
 
