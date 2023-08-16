@@ -1,11 +1,10 @@
 package edu.codespring.sportgh.service;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.*;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
 import edu.codespring.sportgh.security.FirebaseTokenHolder;
+import edu.codespring.sportgh.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,6 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 @Slf4j
@@ -72,4 +74,29 @@ public class FirebaseServiceImpl implements FirebaseService {
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
+    @Override
+    public Collection<User> getUsers() {
+        Collection<User> users = new ArrayList<>();
+        try {
+            ListUsersPage listUsersPage = FirebaseAuth.getInstance().listUsers(null);
+            for (ExportedUserRecord i : listUsersPage.getValues()) {
+                users.add(new User(
+                    UserUtil.extractUsernameFromEmail(i.getEmail()),
+                    i.getEmail(),
+                    i.getPasswordHash(),    // use their auth method instead of our,
+                                            // so then we won't have to store the password
+                                            // (change signIn/signUp method/controller/service)
+                                            // NOT WORKING PROPERLY!!!
+                                            // NOT WORKING PROPERLY!!!
+                                            // NOT WORKING PROPERLY!!!
+                    i.getUid(),
+                    "USER",
+                    null)
+                );
+            }
+        } catch (FirebaseAuthException e) {
+            throw new ServiceException("[FbService] listUsers failed!", e);
+        }
+        return users;
+    }
 }

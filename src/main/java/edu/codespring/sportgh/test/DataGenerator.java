@@ -9,10 +9,10 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
+import java.util.Collection;
+
 
 @Profile("data-gen")
 @Slf4j
@@ -24,36 +24,16 @@ public class DataGenerator {
     private final CategoryService categoryService;
     private final SubCategoryService subCategoryService;
     private final ProductService productService;
+    private final FirebaseService firebaseService;
 
     @PostConstruct
     public void init() {
-        int nrOfUsers = 10;
-        int nrOfCategories = 5;
-        int nrOfSubCategories = 25;
-        int nrOfProducts = 100;
-
-        try {
-            initUsers(nrOfUsers);
-        } catch (ServiceException e) {
-            log.error(e.getMessage());
-        }
-
-        try {
-            initCategories(nrOfCategories);
-            initSubCategories(nrOfSubCategories, nrOfCategories);
-            initProducts(nrOfProducts, nrOfSubCategories, nrOfUsers);
-        } catch (DataIntegrityViolationException e) {
-            log.error(e.getMessage());
-        }
+        initUsers();
     }
 
-    public void initUsers(int nrOfUsers) {
-        for (int i = 1; i <= nrOfUsers; i++) {
-            String email = String.format("user%d@email.com", i);
-            String password = String.format("password%d", i);
-            String firebaseUid = UUID.randomUUID().toString();
-            userService.signup(email, firebaseUid, password);
-        }
+    public void initUsers() {
+        Collection<User> userList = firebaseService.getUsers();
+        log.info("[Init] Users: {}", userList);
     }
 
     public void initCategories(int nrOfCategories) {
