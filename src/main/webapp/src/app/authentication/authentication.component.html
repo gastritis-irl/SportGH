@@ -1,9 +1,9 @@
 <ng-template #loginContent>
-    <div class="offcanvas-header">
-        <h4 class="offcanvas-title">Login</h4>
+    <div class="modal-header">
+        <h4 class="modal-title">Login</h4>
     </div>
-    <div class="offcanvas-body">
-        <form class="offcanvas-form" (ngSubmit)="login()">
+    <div class="modal-body">
+        <form class="modal-form" (ngSubmit)="login()">
             <input type="email" placeholder="Email address" required [(ngModel)]="email" name="email">
             <input type="password" placeholder="Password" required [(ngModel)]="password" name="password">
             <button class="btn btn-lg btn-outline-primary mb-2 me-2" type="submit" value="Login">Login</button>
@@ -12,11 +12,11 @@
 </ng-template>
 
 <ng-template #signupContent>
-    <div class="offcanvas-header">
-        <h4 class="offcanvas-title">Sign up</h4>
+    <div class="modal-header">
+        <h4 class="modal-title">Sign up</h4>
     </div>
-    <div class="offcanvas-body">
-        <form class="offcanvas-form" (ngSubmit)="register()">
+    <div class="modal-body">
+        <form class="modal-form" (ngSubmit)="register()">
             <input type="email" placeholder="Email address" required [(ngModel)]="email" name="email">
             <input type="password" placeholder="Password" required [(ngModel)]="password" name="password">
             <button class="btn btn-lg btn-outline-primary mb-2 me-2" type="submit" value="Sign-up">Sign-up</button>
