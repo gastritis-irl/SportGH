@@ -1,22 +1,37 @@
 package edu.codespring.sportgh.controller;
 
+import edu.codespring.sportgh.service.ServiceException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+@Slf4j
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(ResponseStatusException.class)
-    protected ResponseEntity<Object> handleNotFound(RuntimeException e, WebRequest request) {
-        String bodyOfResponse = "Item not found.";
+    @ExceptionHandler({
+        IllegalArgumentException.class, OptimisticLockingFailureException.class, ServiceException.class
+    })
+    protected ResponseEntity<Object> handleServerError(RuntimeException e, WebRequest request) {
+        log.error(e.getMessage());
+        return handleExceptionInternal(e, e.getMessage(),
+            new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
 
-        return handleExceptionInternal(e, bodyOfResponse,
-            new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    @ExceptionHandler({
+        BadCredentialsException.class, UsernameNotFoundException.class
+    })
+    protected ResponseEntity<Object> handleBadRequest(RuntimeException e, WebRequest request) {
+        log.info("Bad request: {}", e.getMessage());
+        return handleExceptionInternal(e, e.getMessage(),
+            new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }
