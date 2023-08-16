@@ -65,6 +65,10 @@ body {
             align-items: center;
             gap: $gap-nav-header-icon;
 
+            &:hover {
+                cursor: pointer;
+            }
+
             .nav-header-logo-icon {
                 content: $nav-header-logo-icon;
             }
