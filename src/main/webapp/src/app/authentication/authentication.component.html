@@ -1,9 +1,10 @@
 <ng-template #loginContent>
     <div class="modal-header">
-        <h4 class="modal-title">Login</h4>
+        <h4 class="modal-title form-title">Login</h4>
+        <p class="form-paragraph">Enter your login credentials below</p>
     </div>
     <div class="modal-body">
-        <form class="modal-form" (ngSubmit)="login()">
+        <form class="modal-form form" (ngSubmit)="login()">
             <input type="email" placeholder="Email address" required [(ngModel)]="email" name="email">
             <input type="password" placeholder="Password" required [(ngModel)]="password" name="password">
             <button class="btn btn-lg btn-outline-primary mb-2 me-2" type="submit" value="Login">Login</button>
@@ -13,16 +14,18 @@
 
 <ng-template #signupContent>
     <div class="modal-header">
-        <h4 class="modal-title">Sign up</h4>
+        <h4 class="modal-title form-title">Sign up</h4>
+        <p class="form-paragraph">Create a new account</p>
     </div>
     <div class="modal-body">
-        <form class="modal-form" (ngSubmit)="register()">
+        <form class="modal-form form" (ngSubmit)="register()">
             <input type="email" placeholder="Email address" required [(ngModel)]="email" name="email">
             <input type="password" placeholder="Password" required [(ngModel)]="password" name="password">
             <button class="btn btn-lg btn-outline-primary mb-2 me-2" type="submit" value="Sign-up">Sign-up</button>
         </form>
     </div>
 </ng-template>
+
 
 <ng-container *ngIf="loggedInUserEmail; else notLoggedIn">
     <div>Welcome {{loggedInUserEmail}}</div>

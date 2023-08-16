@@ -3,12 +3,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
 import { Router } from '@angular/router';
 
-    
+
 @Component({
     selector: 'sgh-authentication',
     templateUrl: './authentication.component.html',
+    styleUrls: ['./authentication.component.scss']
 })
-    
+
 export class AuthenticationComponent {
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
@@ -18,12 +19,11 @@ export class AuthenticationComponent {
     email: string = '';
     password: string = '';
     errorMessage: string = ''; // To display error messages
-    isOffcanvasOpen: boolean = false;
 
     constructor(private modalService: NgbModal, private userService: UserService, private router: Router) {}
 
     openModal(content: TemplateRef<string>): void {
-        this.modalService.open(content, { centered: true, scrollable: true });
+        this.modalService.open(content, { centered: true, scrollable: true, animation: true });
     }
 
     login(): void {
