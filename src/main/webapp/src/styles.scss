@@ -50,6 +50,15 @@ li {
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 
+/* Importing global variables */
+@import './style-variables.scss';
+
+/*
+Global classes
+ */
+
+
+/* ----------Carousel---------- */
 .carousel-holder {
     display: flex;
     flex-direction: row;
@@ -58,6 +67,66 @@ li {
     height: auto;
 }
 
-.category-form {
-    border-style: solid;
+
+/* ----------Sign in/Sign up button---------- */
+
+// Text size
+$button-text-size: $size-default;
+
+// Item Size
+$height-button: 100%;
+$height-sign-in-icon: 100%;
+
+// Margin/Border/Padding
+$border-radius-button: 2em;
+$padding-button-text: 0.35em 1em;
+
+// Gap
+$gap-buttons: 0.5em;
+
+.buttons {
+    font-family: $font-default;
+    font-size: $button-text-size;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: $gap-buttons;
+
+    .button-default {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        gap: $gap-buttons;
+        padding: $padding-button-text;
+        border-radius: $border-radius-button;
+        border-style: solid;
+
+        &.button-secondary {
+            height: $height-button;
+            background-color: $color-btn-1;
+            color: $color-neutral-2;
+            stroke: $color-neutral-2;
+
+            &:hover {
+                background-color: $color-btn-2;
+                color: $color-neutral-1;
+                stroke: $color-neutral-1;
+            }
+
+            .sign-in-icon {
+                height: $height-sign-in-icon;
+            }
+        }
+
+        &.button-primary {
+            height: $height-button;
+            background-color: $color-btn-2;
+            color: $color-neutral-1;
+
+            &:hover {
+                background-color: $color-btn-1;
+                color: $color-neutral-2;
+            }
+        }
+    }
 }
