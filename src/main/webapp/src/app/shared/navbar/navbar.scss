@@ -1,38 +1,38 @@
 @import '../../../style-variables.scss';
 
 // Media size
-$mediaWidthLimit: 640px;
+$media-width-limit: 640px;
 
 // Item Size
-$heightNavHeader: 4.25em;
-$heightNav: 2.7em;
-$widthNavSearchbar: 100%;
-$heightNavSearchbar: 2.15em;
+$height-nav-header: 4.25em;
+$height-nav: 2.7em;
+$width-nav-searchbar: 100%;
+$height-nav-searchbar: 2.15em;
 
 // Margin/Border/Padding
-$paddingNavHoriz: 10%;
-$paddingNavVert: 15px;
-$paddingLeftSearchbar: 2.5em;
-$borderInput: 0.1em solid transparent;
-$borderRadiusSearchbar: 2.5em;
-$posSearchbarIcon: 1em;
+$padding-nav-horiz: 10%;
+$padding-nav-vert: 15px;
+$padding-left-searchbar: 2.5em;
+$border-input: 0.1em solid transparent;
+$border-radius-searchbar: 2.5em;
+$pos-searchbar-icon: 1em;
 
 // Gap
-$gapNav1: 33px;
-$gapNav2: 15px;
-$rowGapNav: 15px;
-$gapNavHeaderIcon: 0.5em;
+$gap-nav-1: 33px;
+$gap-nav-2: 15px;
+$row-gap-nav: 15px;
+$gap-nav-header-icon: 0.5em;
 
 // Box-shadow
-$boxShadowSearchbar1: 0 0 3px;
-$boxShadowSearchbar2: 0 0 0 5px;
+$box-shadow-searchbar-1: 0 0 3px;
+$box-shadow-searchbar-2: 0 0 0 5px;
 
 
 //
 // Font
 //
 body {
-    font-family: $fontDef;
+    font-family: $font-default;
 }
 
 
@@ -40,26 +40,26 @@ body {
 // Nav (header, title, searchbar, login)
 //
 .nav-header-frame {
-    background-color: $colorNeutral1;
-    padding-left: $paddingNavHoriz;
-    padding-right: $paddingNavHoriz;
+    background-color: $color-neutral-1;
+    padding-left: $padding-nav-horiz;
+    padding-right: $padding-nav-horiz;
 
     .nav-header-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        @media (max-width: $mediaWidthLimit) {
+        @media (max-width: $media-width-limit) {
             flex-direction: column;
-            row-gap: $rowGapNav;
-            padding-top: $paddingNavVert;
-            padding-bottom: $paddingNavVert;
+            row-gap: $row-gap-nav;
+            padding-top: $padding-nav-vert;
+            padding-bottom: $padding-nav-vert;
         }
-        @media(min-width: $mediaWidthLimit) {
+        @media(min-width: $media-width-limit) {
             flex-direction: row;
-            height: $heightNavHeader;
+            height: $height-nav-header;
             justify-content: space-between;
-            gap: $gapNav1
+            gap: $gap-nav-1
         }
 
         .nav-header-logo {
@@ -67,16 +67,16 @@ body {
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            gap: $gapNavHeaderIcon;
+            gap: $gap-nav-header-icon;
 
             .nav-header-logo-icon {
-                content: $navHeaderLogoIcon;
+                content: $nav-header-logo-icon;
             }
 
             .nav-header-logo-title {
-                font-size: $sizeH1;
+                font-size: $size-h1;
                 font-weight: bold;
-                color: $colorMain1;
+                color: $color-main-1;
             }
         }
 
@@ -85,37 +85,37 @@ body {
             align-items: center;
             position: relative;
 
-            @media (max-width: $mediaWidthLimit) {
+            @media (max-width: $media-width-limit) {
                 visibility: collapse;
             }
 
             .nav-searchbar-icon {
                 position: absolute;
-                left: $posSearchbarIcon;
-                fill: $colorMain1;
-                width: $posSearchbarIcon;
-                height: $posSearchbarIcon;
+                left: $pos-searchbar-icon;
+                fill: $color-main-1;
+                width: $pos-searchbar-icon;
+                height: $pos-searchbar-icon;
             }
 
             .nav-searchbar-input {
-                height: $heightNavSearchbar;
-                width: $widthNavSearchbar;
-                padding-left: $paddingLeftSearchbar;
-                border: $borderInput;
-                border-radius: $borderRadiusSearchbar;
+                height: $height-nav-searchbar;
+                width: $width-nav-searchbar;
+                padding-left: $padding-left-searchbar;
+                border: $border-input;
+                border-radius: $border-radius-searchbar;
                 outline: none;
-                background-color: $colorMain3;
-                box-shadow: $boxShadowSearchbar1 $colorMain2, $boxShadowSearchbar2 $colorMain3;
+                background-color: $color-main-3;
+                box-shadow: $box-shadow-searchbar-1 $color-main-2, $box-shadow-searchbar-2 $color-main-3;
                 transition: .3s ease;
 
                 &:hover {
-                    background-color: $colorNeutral1;
-                    box-shadow: $boxShadowSearchbar1 $colorMain3, $boxShadowSearchbar2 $colorMain2;
+                    background-color: $color-neutral-1;
+                    box-shadow: $box-shadow-searchbar-1 $color-main-3, $box-shadow-searchbar-2 $color-main-2;
                 }
 
                 &:focus {
-                    background-color: $colorNeutral1;
-                    box-shadow: $boxShadowSearchbar1 $colorMain3, $boxShadowSearchbar2 $colorMain2;
+                    background-color: $color-neutral-1;
+                    box-shadow: $box-shadow-searchbar-1 $color-main-3, $box-shadow-searchbar-2 $color-main-2;
                 }
             }
         }
@@ -130,36 +130,36 @@ body {
     position: relative;
     display: flex;
     justify-content: flex-start;
-    padding-left: $paddingNavHoriz;
-    background-color: $colorMain1;
+    padding-left: $padding-nav-horiz;
+    background-color: $color-main-1;
 
-    @media(min-width: $mediaWidthLimit) {
-        height: $heightNav;
+    @media(min-width: $media-width-limit) {
+        height: $height-nav;
     }
 
     .nav-content {
         display: flex;
-        font-size: $sizeDef;
-        color: $colorNeutral1;
-        background-color: $colorMain1;
+        font-size: $size-default;
+        color: $color-neutral-1;
+        background-color: $color-main-1;
         position: relative;
 
-        @media (max-width: $mediaWidthLimit) {
+        @media (max-width: $media-width-limit) {
             flex-direction: column;
-            row-gap: $gapNav2;
+            row-gap: $gap-nav-2;
             align-items: unset;
         }
-        @media(min-width: $mediaWidthLimit) {
+        @media(min-width: $media-width-limit) {
             flex-direction: row;
-            gap: $gapNav1;
+            gap: $gap-nav-1;
             align-items: center;
         }
 
         .nav-content-link {
-            font-size: $sizeDef;
+            font-size: $size-default;
 
             a {
-                color: $colorNeutral1;
+                color: $color-neutral-1;
                 text-decoration: none;
             }
         }

@@ -4,22 +4,22 @@ Global variables
 
 
 // Img URLs
-$navHeaderLogoIcon: url("Info.svg");
+$nav-header-logo-icon: url("Info.svg");
 
 // Colors
-$colorNeutral1: #FFFFFF;
-$colorNeutral2: #000000;
-$colorMain1: #5D5A88;
-$colorMain2: #8D8BA7;
-$colorMain3: #F2F1FA;
-$colorBtn1: $colorNeutral1;
-$colorBtn2: $colorMain1;
+$color-neutral-1: #FFFFFF;
+$color-neutral-2: #000000;
+$color-main-1: #5D5A88;
+$color-main-2: #8D8BA7;
+$color-main-3: #F2F1FA;
+$color-btn-1: $color-neutral-1;
+$color-btn-2: $color-main-1;
 
 // Fonts
-$fontDef: 'DM Sans', sans-serif;
+$font-default: 'DM Sans', sans-serif;
 
 // Text Size
-$sizeH1: 175%;
-$sizeH2: 130%;
-$sizeH3: 115%;
-$sizeDef: 100%;
+$size-h1: 175%;
+$size-h2: 130%;
+$size-h3: 115%;
+$size-default: 100%;

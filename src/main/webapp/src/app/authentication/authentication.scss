@@ -1,25 +1,25 @@
 @import '../../style-variables.scss';
 
 // Text size
-$btnTextSize: $sizeDef;
+$btn-text-size: $size-default;
 
 // Item Size
-$heightBtn: 100%;
-$heightSignInIcon: 100%;
+$height-btn: 100%;
+$height-sign-in-icon: 100%;
 
 // Margin/Border/Padding
-$borderRadiusButton: 2em;
-$paddingButtonText: 0.35em 1em;
+$border-radius-button: 2em;
+$padding-button-text: 0.35em 1em;
 
 // Gap
-$gapNavButton: 0.5em;
+$gap-nav-button: 0.5em;
 
 
 //
 // Font
 //
 body {
-    font-family: $fontDef;
+    font-family: $font-default;
 }
 
 
@@ -27,47 +27,47 @@ body {
 // Sign in/Sign up button
 //
 .nav-buttons {
-    font-family: $fontDef;
-    font-size: $btnTextSize;
+    font-family: $font-default;
+    font-size: $btn-text-size;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: $gapNavButton;
+    gap: $gap-nav-button;
 
     .nav-sign-btn {
         display: flex;
         flex-direction: row;
         text-align: center;
-        gap: $gapNavButton;
-        padding: $paddingButtonText;
-        border-radius: $borderRadiusButton;
+        gap: $gap-nav-button;
+        padding: $padding-button-text;
+        border-radius: $border-radius-button;
         border-style: solid;
 
         &.nav-sign-in-btn {
-            height: $heightBtn;
-            background-color: $colorBtn1;
-            color: $colorNeutral2;
-            stroke: $colorNeutral2;
+            height: $height-btn;
+            background-color: $color-btn-1;
+            color: $color-neutral-2;
+            stroke: $color-neutral-2;
 
             &:hover {
-                background-color: $colorBtn2;
-                color: $colorNeutral1;
-                stroke: $colorNeutral1;
+                background-color: $color-btn-2;
+                color: $color-neutral-1;
+                stroke: $color-neutral-1;
             }
 
             .nav-sign-in-icon {
-                height: $heightSignInIcon;
+                height: $height-sign-in-icon;
             }
         }
 
         &.nav-sign-up-btn {
-            height: $heightBtn;
-            background-color: $colorBtn2;
-            color: $colorNeutral1;
+            height: $height-btn;
+            background-color: $color-btn-2;
+            color: $color-neutral-1;
 
             &:hover {
-                background-color: $colorBtn1;
-                color: $colorNeutral2;
+                background-color: $color-btn-1;
+                color: $color-neutral-2;
             }
         }
     }
