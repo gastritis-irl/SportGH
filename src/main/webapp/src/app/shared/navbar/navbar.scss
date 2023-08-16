@@ -1,7 +1,7 @@
 @import '../../../style-variables.scss';
 
 // Media size
-$media-width-limit: 640px;
+$media-width-limit: 660px;
 
 // Item Size
 $height-nav-header: 4.25em;
@@ -80,10 +80,6 @@ body {
             display: flex;
             align-items: center;
             position: relative;
-
-            @media (max-width: $media-width-limit) {
-                visibility: collapse;
-            }
 
             .nav-searchbar-icon {
                 position: absolute;
