@@ -77,14 +77,14 @@ $breakpoint-large: 1024px;
         gap: $category-gap;
         width: $category-item-width;
         background: $category-background;
-        border-radius: 4%;
+        border-radius: 4% 4% 0 0; // Adjusting the bottom border-radius to 0        
         border: $category-border-width solid $category-border-color;
         overflow: hidden;
         transition: 0.2s ease-in-out;
         margin-bottom: $category-gap;
         // Default card widths (can be for mobile or common styles)
-        min-width: $card-min-width-small;
-        max-width: $card-max-width-small;
+        min-width: $card-min-width-large;
+        max-width: $card-max-width-large;
 
         // Tablet screens
         @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
@@ -107,7 +107,7 @@ $breakpoint-large: 1024px;
         .category-icon {
             width: 100%;
             height: $category-icon-height;
-            border-radius: 10px 10px 0 0;
+            border-radius: 4% 4% 0 0; // Matches the border-radius of the card at the top
             object-fit: cover;
         }
 
@@ -120,6 +120,7 @@ $breakpoint-large: 1024px;
             text-align: center;
             word-wrap: break-word;
             padding: $category-name-padding;
+            flex-grow: 1; // This ensures that category-name takes up the remaining space, pushing the image to the top
         }
 
         .textBox {
