@@ -42,7 +42,7 @@ export class AuthenticationComponent {
                 next: () => {
                     this.loggedInUserEmail = this.email; // Store the logged-in email
                     this.closeOffcanvas();
-                    this.router.navigate(['/home']);
+                    this.router.navigate(['/']);
                 },
                 error: (error) => {
                     console.error('Login failed', error);
