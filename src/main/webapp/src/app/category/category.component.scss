@@ -21,6 +21,9 @@ $breakpoint-medium: 768px; // For medium devices like tablets
 $breakpoint-large: 1024px; // For larger devices like desktops
 
 .category-list-holder {
+    margin-left: $category-gap;
+    margin-right: $category-gap;
+    
     .category-heading {
         color: $color-main;
         font-size: $heading-font-size;
