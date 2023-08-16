@@ -1,74 +1,8 @@
 @import '../../style-variables.scss';
 
-// Text size
-$btn-text-size: $size-default;
-
-// Item Size
-$height-btn: 100%;
-$height-sign-in-icon: 100%;
-
-// Margin/Border/Padding
-$border-radius-button: 2em;
-$padding-button-text: 0.35em 1em;
-
-// Gap
-$gap-nav-button: 0.5em;
-
-
 //
 // Font
 //
 body {
     font-family: $font-default;
-}
-
-
-//
-// Sign in/Sign up button
-//
-.nav-buttons {
-    font-family: $font-default;
-    font-size: $btn-text-size;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: $gap-nav-button;
-
-    .nav-sign-btn {
-        display: flex;
-        flex-direction: row;
-        text-align: center;
-        gap: $gap-nav-button;
-        padding: $padding-button-text;
-        border-radius: $border-radius-button;
-        border-style: solid;
-
-        &.nav-sign-in-btn {
-            height: $height-btn;
-            background-color: $color-btn-1;
-            color: $color-neutral-2;
-            stroke: $color-neutral-2;
-
-            &:hover {
-                background-color: $color-btn-2;
-                color: $color-neutral-1;
-                stroke: $color-neutral-1;
-            }
-
-            .nav-sign-in-icon {
-                height: $height-sign-in-icon;
-            }
-        }
-
-        &.nav-sign-up-btn {
-            height: $height-btn;
-            background-color: $color-btn-2;
-            color: $color-neutral-1;
-
-            &:hover {
-                background-color: $color-btn-1;
-                color: $color-neutral-2;
-            }
-        }
-    }
 }
