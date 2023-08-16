@@ -28,17 +28,13 @@ $box-shadow-searchbar-1: 0 0 3px;
 $box-shadow-searchbar-2: 0 0 0 5px;
 
 
-//
-// Font
-//
+/* ----------Font---------- */
 body {
     font-family: $font-default;
 }
 
 
-//
-// Nav (header, title, searchbar, login)
-//
+/* ----------Nav (header, title, searchbar, login)---------- */
 .nav-header-frame {
     background-color: $color-neutral-1;
     padding-left: $padding-nav-horiz;
@@ -123,9 +119,7 @@ body {
 }
 
 
-//
-// Nav (with menu options)
-//
+/* ----------Nav (with menu options)---------- */
 .nav-frame {
     position: relative;
     display: flex;
