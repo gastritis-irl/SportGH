@@ -28,7 +28,8 @@ public class DataGenerator {
 
     @PostConstruct
     public void init() {
-        initUsers();
+        // initUsers();
+        initCategories();
     }
 
     public void initUsers() {
@@ -36,21 +37,27 @@ public class DataGenerator {
         log.info("[Init] Users: {}", userList);
     }
 
-    public void initCategories(int nrOfCategories) {
-        String[] images = {
-            "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
-            "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
-            "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
-            "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
-            "https://www.getyourguide.com/magazine/wp-content/migrated-content/uploads/2019/09/Header-2019.09.25-5-underrated-hiking-trails-in-Eastern-Europe-GetYourGuide.jpg",
-        };
-
-        for (int i = 1; i <= nrOfCategories; i++) {
-            String name = String.format("Category%d", i);
-            String description = String.format("Category%d description", i);
-            String imageURL = images[i % images.length];
-            Category category = new Category(name, description, imageURL, null);
-            categoryService.save(category);
+    public void initCategories() {
+        if (!categoryService.existsByName("Water sports")) {
+            categoryService.save(new Category("Water sports", "...", "", null));
+        }
+        if(!categoryService.existsByName("Combat sports")){
+            categoryService.save(new Category("Combat sports", "...", "", null));
+        }
+        if(!categoryService.existsByName("Extreme sports")){
+            categoryService.save(new Category("Extreme sports", "...", "", null));
+        }
+        if(!categoryService.existsByName("Team sports")){
+            categoryService.save(new Category("Team sports", "...", "", null));
+        }
+        if(!categoryService.existsByName("Winter sports")){
+            categoryService.save(new Category("Winter sports", "...", "", null));
+        }
+        if(!categoryService.existsByName("Track & Field")){
+            categoryService.save(new Category("Track & Field", "...", "", null));
+        }
+        if(!categoryService.existsByName("Other")){
+            categoryService.save(new Category("Other", "Other sports", "", null));
         }
     }
 
