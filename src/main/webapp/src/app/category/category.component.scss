@@ -1,34 +1,55 @@
 // Colors
 $color-main: #5D5A88;
 $category-background: white;
-$category-border: #D4D2E3;
+$category-border-color: #D4D2E3;
 
 // Fonts
 $font-default: 'DM Sans', sans-serif;
+$font-weight-bold: 700;
 
 // Sizes
-$heading-font-size: 2.25em; // 36px
-$heading-line-height: 2.875em; // 46px
-$name-font-size: 1.25em; // 20px
-$name-line-height: 1.25em; // 20px
+$heading-font-size: 2.25em;
+$heading-line-height: 2.875em;
+$name-font-size: 1.25em;
+$name-line-height: 1.25em;
 $category-gap: 5%;
-$category-border-width: 0.03125em; // 0.5px
+$category-border-width: 0.03125em;
 $text-box-height: 40%;
+$category-item-width: 20%;
+$category-icon-height: 10em;
+$category-name-padding: 0 5%;
+$text-box-padding: 5%;
+$hover-transform: scale(1.04) rotate(-1deg);
+$hover-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+$hover-bg-color: $category-border-color;
+$hover-icon-height: $category-icon-height;
+$hover-icon-filter: blur(1px);
+$hover-icon-opacity: 0.4;
+// Min and Max width for cards
+$card-min-width-small: 90%; // 90% of the viewport for mobile screens
+$card-max-width-small: 100%; // 100% for mobile screens to take the full width
+$card-min-width-medium: 200px; // 200px for tablet screens
+$card-max-width-medium: 300px; // 300px for tablet screens
+$card-min-width-large: 250px; // 250px for desktop screens
+$card-max-width-large: 400px; // 400px for desktop screens
+
+// Animation
+$animation-duration: 3s;
+$animation-translation: -20px;
 
 // Define breakpoints
-$breakpoint-small: 480px; // For small devices like smartphones
-$breakpoint-medium: 768px; // For medium devices like tablets
-$breakpoint-large: 1024px; // For larger devices like desktops
+$breakpoint-small: 480px;
+$breakpoint-medium: 768px;
+$breakpoint-large: 1024px;
 
 .category-list-holder {
-    margin-left: $category-gap;
-    margin-right: $category-gap;
-    
+    margin: 0 $category-gap;
+
     .category-heading {
         color: $color-main;
         font-size: $heading-font-size;
         font-family: $font-default;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         line-height: $heading-line-height;
         text-align: center;
         margin-bottom: $category-gap;
@@ -42,8 +63,8 @@ $breakpoint-large: 1024px; // For larger devices like desktops
         justify-content: center;
 
         @media (max-width: $breakpoint-small) {
-            flex-direction: column; // Stack categories vertically on small screens
-            $category-gap: 1.5%; // Reduce the gap
+            flex-direction: column;
+            gap: 1.5%;
         }
     }
 
@@ -54,45 +75,51 @@ $breakpoint-large: 1024px; // For larger devices like desktops
         align-items: center;
         justify-content: center;
         gap: $category-gap;
-        width: 20%;
-        height: 100%;
+        width: $category-item-width;
         background: $category-background;
         border-radius: 4%;
-        border: $category-border-width $category-border solid;
+        border: $category-border-width solid $category-border-color;
         overflow: hidden;
         transition: 0.2s ease-in-out;
         margin-bottom: $category-gap;
+        // Default card widths (can be for mobile or common styles)
+        min-width: $card-min-width-small;
+        max-width: $card-max-width-small;
+
+        // Tablet screens
+        @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
+            min-width: $card-min-width-medium;
+            max-width: $card-max-width-medium;
+        }
+
+        // Desktop screens
+        @media (min-width: $breakpoint-large) {
+            min-width: $card-min-width-large;
+            max-width: $card-max-width-large;
+        }
 
         &:hover {
-            transform: scale(1.04) rotate(-1deg);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            background-color: $category-border;
+            transform: $hover-transform;
+            box-shadow: $hover-box-shadow;
+            background-color: $hover-bg-color;
         }
 
         .category-icon {
             width: 100%;
-            height: 100%;
+            height: $category-icon-height;
             border-radius: 10px 10px 0 0;
-            display: flex;
-            object-fit: cover; // Ensures image covers the set dimensions without distortion
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover; // Ensures image covers the set dimensions without distortion
-            }
+            object-fit: cover;
         }
 
         .category-name {
             color: $color-main;
             font-size: $name-font-size;
             font-family: $font-default;
-            font-weight: 700;
+            font-weight: $font-weight-bold;
             line-height: $name-line-height;
             text-align: center;
             word-wrap: break-word;
-            padding: 0 5%;
-            display: flex;
+            padding: $category-name-padding;
         }
 
         .textBox {
@@ -107,15 +134,15 @@ $breakpoint-large: 1024px; // For larger devices like desktops
             justify-content: center;
             transition: 0.2s ease-in-out;
             z-index: 2;
-            padding: 5%;
+            padding: $text-box-padding;
             width: 100%;
             height: $text-box-height;
-            overflow-y: scroll; // Enable vertical scrolling for the description
-            scrollbar-width: none; // Hide scrollbar for Firefox
-            -ms-overflow-style: none; // Hide scrollbar for IE and Edge
+            overflow-y: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
 
             &::-webkit-scrollbar {
-                display: none; // Hide scrollbar for Chrome, Safari, and Opera
+                display: none;
             }
 
             .category-description {
@@ -131,26 +158,25 @@ $breakpoint-large: 1024px; // For larger devices like desktops
         }
 
         &:hover>.category-icon {
-            height: 65%;
-            filter: blur(0.5px);
-            background: rgba(255, 255, 255, 0.5);
-            animation: anim 3s infinite;
+            height: $hover-icon-height;
+            filter: $hover-icon-filter;
+            opacity: $hover-icon-opacity;
+            animation: anim $animation-duration infinite;
         }
 
         @media (max-width: $breakpoint-small) {
-            width: 100%; // Use full width for small screens
-            margin-bottom: 1.5em; // Provide some vertical spacing between items
+            width: 100%;
+            margin-bottom: 1.5em;
 
             .category-name,
             .category-heading {
-                font-size: 0.75em; // Reduce font size for better fit
+                font-size: 0.75em;
             }
         }
 
         @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
-            width: 45%; // Use half width for medium screens (like tablets)
+            width: 45%;
         }
-
     }
 
     @keyframes anim {
@@ -159,18 +185,11 @@ $breakpoint-large: 1024px; // For larger devices like desktops
         }
 
         50% {
-            transform: translateY(-20px);
+            transform: translateY($animation-translation);
         }
 
         100% {
             transform: translateY(0);
         }
-    }
-
-    .category-item:hover>.category-icon {
-        height: 65%;
-        filter: blur(1px);
-        opacity: 0.4;
-        animation: anim 3s infinite;
     }
 }
