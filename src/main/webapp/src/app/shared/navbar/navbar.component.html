@@ -26,8 +26,8 @@
             <div ngbDropdown class="">
                 <button type="button" class="nav-link" ngbDropdownToggle>Sports</button>
                 <div ngbDropdownMenu>
-                    <button *ngFor="let sport of ['sp1','sp2','sp3','sp4','sp5']" ngbDropdownItem>
-                        <a><!--routerLink="categories/id/sub" -->{{sport}}</a>
+                    <button *ngFor="let category of categories" ngbDropdownItem>
+                        <a><!--routerLink="categories/id/sub" -->{{category.name}}</a>
                     </button>
                 </div>
             </div>
