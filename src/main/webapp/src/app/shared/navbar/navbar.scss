@@ -46,6 +46,9 @@ body {
 
     .nav-header-content {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+
         @media (max-width: $mediaWidthLimit) {
             flex-direction: column;
             row-gap: $rowGapNav;
@@ -58,8 +61,6 @@ body {
             justify-content: space-between;
             gap: $gapNav1
         }
-        justify-content: space-between;
-        align-items: center;
 
         .nav-header-logo {
             display: flex;
@@ -80,12 +81,13 @@ body {
         }
 
         .nav-searchbar {
-            @media (max-width: $mediaWidthLimit) {
-                visibility: collapse;
-            }
             display: flex;
             align-items: center;
             position: relative;
+
+            @media (max-width: $mediaWidthLimit) {
+                visibility: collapse;
+            }
 
             .nav-searchbar-icon {
                 position: absolute;
@@ -128,14 +130,20 @@ body {
     position: relative;
     display: flex;
     justify-content: flex-start;
-    @media(min-width: $mediaWidthLimit) {
-        height: $heightNav;
-    }
     padding-left: $paddingNavHoriz;
     background-color: $colorMain1;
 
+    @media(min-width: $mediaWidthLimit) {
+        height: $heightNav;
+    }
+
     .nav-content {
         display: flex;
+        font-size: $sizeDef;
+        color: $colorNeutral1;
+        background-color: $colorMain1;
+        position: relative;
+
         @media (max-width: $mediaWidthLimit) {
             flex-direction: column;
             row-gap: $gapNav2;
@@ -146,11 +154,6 @@ body {
             gap: $gapNav1;
             align-items: center;
         }
-
-        font-size: $sizeDef;
-        color: $colorNeutral1;
-        background-color: $colorMain1;
-        position: relative;
 
         .nav-content-link {
             font-size: $sizeDef;
