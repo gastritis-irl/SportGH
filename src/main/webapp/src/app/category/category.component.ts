@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Category} from "./category.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { Category } from "./category.model";
 
 @Component({
     selector: 'sgh-category',
