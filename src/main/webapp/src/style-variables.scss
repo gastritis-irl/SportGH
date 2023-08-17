@@ -14,12 +14,22 @@ $color-main-2: #8D8BA7;
 $color-main-3: #F2F1FA;
 $color-btn-1: $color-neutral-1;
 $color-btn-2: $color-main-1;
+$border-color: #D4D2E3;
+
 
 // Fonts
 $font-default: 'DM Sans', sans-serif;
+$font-weight-bold: 700;
+
 
 // Text Size
 $size-h1: 175%;
 $size-h2: 130%;
 $size-h3: 115%;
 $size-default: 100%;
+
+
+// Define breakpoints
+$breakpoint-small: 480px;
+$breakpoint-medium: 768px;
+$breakpoint-large: 1024px;
