@@ -22,7 +22,7 @@ export class CategoryEditComponent implements OnInit {
         private categoryService: CategoryService,
         private router: Router,
         private route: ActivatedRoute,
-        private toastr: ToastrService,
+        private toastNotify: ToastrService,
     ) {
     }
 
@@ -37,7 +37,7 @@ export class CategoryEditComponent implements OnInit {
                     this.loadData(params['categoryId']);
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (categoryId):', error);
+                    this.toastNotify.error(`Error fetching data (categoryId): ${error}`);
                 }
             }
         );
@@ -57,7 +57,7 @@ export class CategoryEditComponent implements OnInit {
                             this.category = data;
                         },
                         error: (error): void => {
-                            alert(`Error fetching data (category with ID ${this.id}): ` + error);
+                            this.toastNotify.error(`Error fetching data (category with ID ${this.id}): ${error}`);
                         }
                     }
                 );
@@ -70,10 +70,15 @@ export class CategoryEditComponent implements OnInit {
             {
                 next: (resp: Category): void => {
                     this.router.navigate(['/admin/categories'])
-                        .then(() => this.toastr.success(`Category (ID ${resp.id}) successfully created!`));
+                        .then((): void => {
+                            this.toastNotify.success(`Category (ID ${resp.id}) successfully created!`);
+                        })
+                        .catch((): void => {
+                            this.toastNotify.error(`Error redirecting to route '/admin/categories`);
+                        });
                 },
                 error: (error): void => {
-                    alert('Error creating category: status code:' + error.status);
+                    this.toastNotify.error(`Error creating category: ${error}`);
                 }
             }
         );
@@ -84,7 +89,7 @@ export class CategoryEditComponent implements OnInit {
             {
                 next: (): void => {
                     this.router.navigate(['/admin/categories'])
-                        .then(() => this.toastr.success(`Category (ID ${this.category.id}) successfully updated!`));
+                        .then(() => this.toastNotify.success(`Category (ID ${this.category.id}) successfully updated!`));
                 },
                 error: (error): void => {
                     alert(`Error updating category (ID ${this.category.id}): status code:` + error.status);

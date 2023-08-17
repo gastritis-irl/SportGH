@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit {
     constructor(
         private categoryService: CategoryService,
         private router: Router,
-        private toastr: ToastrService,
+        private toastNotify: ToastrService,
     ) {
     }
 
@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit {
                     this.categories = data;
                 },
                 error: (error): void => {
-                    console.error(`Error fetching data (categories): ${error}`);
+                    this.toastNotify.error(`Error fetching data (categories): ${error}`);
                 }
             }
         );
@@ -38,10 +38,15 @@ export class AdminComponent implements OnInit {
                 next: (): void => {
                     this.categories.splice(index, 1);
                     this.router.navigate(['/admin/categories'])
-                        .then(() => this.toastr.success(`Category (ID ${categoryId}) successfully deleted!`));
+                        .then((): void => {
+                            this.toastNotify.success(`Category (ID ${categoryId}) successfully deleted!`);
+                        })
+                        .catch((): void => {
+                            this.toastNotify.error('Error redirecting to route /admin/categories');
+                        });
                 },
                 error: (error): void => {
-                    this.toastr.error(`Error deleting category (ID ${categoryId}): ${error}`);
+                    this.toastNotify.error(`Error deleting category (ID ${categoryId}): ${error}`);
                 }
             }
         );

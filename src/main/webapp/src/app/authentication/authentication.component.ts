@@ -2,6 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -18,10 +19,14 @@ export class AuthenticationComponent {
 
     email: string = '';
     password: string = '';
-    errorMessage: string = ''; // To display error messages
     isOffcanvasOpen: boolean = false;
 
-    constructor(private offcanvasService: NgbOffcanvas, private userService: UserService, private router: Router) {
+    constructor(
+        private offcanvasService: NgbOffcanvas,
+        private userService: UserService,
+        private router: Router,
+        private toastNotify: ToastrService,
+    ) {
     }
 
     openOffcanvas(content: TemplateRef<string>): void {
@@ -39,41 +44,43 @@ export class AuthenticationComponent {
     login(): void {
         this.userService.signinWithFirebase(this.email, this.password).then(userObservable => {
             userObservable.subscribe({
-                next: () => {
+                next: (): void => {
                     this.loggedInUserEmail = this.email; // Store the logged-in email
                     this.closeOffcanvas();
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/'])
+                        .then((): void => {
+                            this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                        })
+                        .catch((): void => {
+                            this.toastNotify.error('Error redirecting to home page.');
+                        });
                 },
-                error: (error) => {
-                    console.error('Login failed', error);
-                    alert('Login failed' + error.message);
-                    this.errorMessage = 'Login failed. Please try again.';
+                error: (error): void => {
+                    console.error(`Login failed: ${error}`);
+                    this.toastNotify.error(`Login failed ${error.message}`);
                 }
             });
         }).catch(error => {
-            console.error('Error in Firebase authentication', error);
-            alert('Login failed' + error.message);
-            this.errorMessage = 'An error occurred during login. Please try again later.';
+            console.error(`Error in Firebase authentication ${error}`);
+            this.toastNotify.error(`Login failed ${error.message}`);
         });
     }
 
     register(): void {
         this.userService.registerWithFirebase(this.email, this.password).then(userObservable => {
             userObservable.subscribe({
-                next: () => {
-                    alert('Registration successful');
+                next: (): void => {
+                    this.toastNotify.success('Registration successful');
                     this.openOffcanvas(this.loginContent);
                 },
-                error: (error) => {
-                    console.error('Registration failed', error);
-                    alert('Registration failed' + error.message);
-                    this.errorMessage = 'Registration failed. Please try again.';
+                error: (error): void => {
+                    console.error(`Registration failed ${error}`);
+                    this.toastNotify.error(`Registration failed ${error.message}`);
                 }
             });
         }).catch(error => {
-            console.error('Error in Firebase registration', error);
-            alert('Registration failed.\n' + error.message);
-            this.errorMessage = 'An error occurred during registration. Please try again later.';
+            console.error(`Error in Firebase registration ${error}`);
+            this.toastNotify.error(`Registration failed.\n${error.message}`);
         });
     }
 
