@@ -7,14 +7,13 @@ import lombok.Data;
 @Data
 public class SubCategoryInDTO {
 
-    @NotNull
     private Long id;
 
-    @Size(min = 5, max = 25)
-    @NotNull
+    @Size(min = 5, max = 50,message = "Subcategory name must be between 5-50 characters")
+    @NotNull(message = "Subcategory name can't be empty")
     private String name;
 
-    @NotNull
+    @NotNull(message = "Category must be given")
     private Long categoryId;
 }
 

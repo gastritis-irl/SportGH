@@ -11,23 +11,21 @@ public class ProductInDTO {
 
     private boolean available;
 
-    @Size(max = 50)
-    @NotNull
+    @Size(min = 5, max = 50, message = "Product name must be between 5-50 characters")
+    @NotNull(message = "Product name can't be empty.")
     private String name;
 
-    @Size(max = 1000)
+    @Size(min = 0, max = 1000, message = "Product description must be between 0-1000 characters")
     private String description;
 
-    @NotNull
+    @NotNull(message = "Rend price can't be empty")
     private Double rentPrice;
 
-    @NotNull
+    @NotNull(message = "Subcategory must be given")
     private Long subCategoryId;
 
     private String subCategoryName;
 
-    @NotNull
+    @NotNull(message = "Owner must be given")
     private Long userId;
-
-    private String username;
 }
