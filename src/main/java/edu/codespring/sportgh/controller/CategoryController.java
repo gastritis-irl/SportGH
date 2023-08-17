@@ -5,6 +5,7 @@ import edu.codespring.sportgh.dto.CategoryOutDTO;
 import edu.codespring.sportgh.mapper.CategoryMapper;
 import edu.codespring.sportgh.model.Category;
 import edu.codespring.sportgh.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,7 @@ public class CategoryController {
 
     @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> update(@PathVariable Long categoryId,
-                                                 @RequestBody CategoryInDTO categoryInDTO) {
+                                                 @Valid @RequestBody CategoryInDTO categoryInDTO) {
         log.info("Updating category with ID {}.", categoryId);
         if (!Objects.equals(categoryId, categoryInDTO.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

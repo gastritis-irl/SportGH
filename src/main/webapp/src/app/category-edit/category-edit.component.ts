@@ -77,7 +77,7 @@ export class CategoryEditComponent implements OnInit {
                         });
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error creating category: ${error}`);
+                    this.toastNotify.error(`Error creating category: ${error.message}`);
                 }
             }
         );
@@ -97,7 +97,7 @@ export class CategoryEditComponent implements OnInit {
                 },
                 error: (error): void => {
                     console.error(error);
-                    this.toastNotify.error(`Error updating category (ID ${this.category.id}): ${error}`);
+                    this.toastNotify.error(`Error updating category (ID ${this.category.id}): ${error.message}`);
                 }
             }
         );

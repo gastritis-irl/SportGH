@@ -1,9 +1,11 @@
 package edu.codespring.sportgh.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+@Valid
 @Data
 public class ProductInDTO {
 
