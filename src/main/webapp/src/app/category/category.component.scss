@@ -17,7 +17,7 @@ $category-border-width: 0.03125em;
 $text-box-height: 40%;
 $category-item-width: 20%;
 $category-icon-height: 10em;
-$category-name-padding: 0 5%;
+$category-name-padding: 5%;
 $text-box-padding: 5%;
 $hover-transform: scale(1.04) rotate(-1deg);
 $hover-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -43,7 +43,7 @@ $breakpoint-medium: 768px;
 $breakpoint-large: 1024px;
 
 .category-list-holder {
-    margin: 0 $category-gap;
+    margin-left: 10%;
 
     .category-heading {
         color: $color-main;
@@ -51,8 +51,9 @@ $breakpoint-large: 1024px;
         font-family: $font-default;
         font-weight: $font-weight-bold;
         line-height: $heading-line-height;
-        text-align: center;
+        text-align: flex-start;
         margin-bottom: $category-gap;
+        padding-top: $category-name-padding;
     }
 
     .categories {
@@ -77,7 +78,7 @@ $breakpoint-large: 1024px;
         gap: $category-gap;
         width: $category-item-width;
         background: $category-background;
-        border-radius: 10px 10px 0 0; // Adjusting the bottom border-radius to 0
+        border-radius: 10px; // Adjusting the bottom border-radius to 0
         border: $category-border-width solid $category-border-color;
         overflow: hidden;
         transition: 0.2s ease-in-out;
