@@ -50,6 +50,9 @@ li {
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 
+/* Toast notification style */
+@import 'ngx-toastr/toastr';
+
 /* Importing global variables */
 @import './style-variables.scss';
 

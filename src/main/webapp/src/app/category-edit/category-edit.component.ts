@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../category/category.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Category } from '../category/category.model';
+import { ToastrService } from 'ngx-toastr';
 
 type ClickHandlerFunction = () => void;
 
@@ -17,7 +18,12 @@ export class CategoryEditComponent implements OnInit {
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
 
-    constructor(private categoryService: CategoryService, private router: Router, private route: ActivatedRoute) {
+    constructor(
+        private categoryService: CategoryService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private toastr: ToastrService,
+    ) {
     }
 
     ngOnInit(): void {
@@ -64,7 +70,7 @@ export class CategoryEditComponent implements OnInit {
             {
                 next: (resp: Category): void => {
                     this.router.navigate(['/admin/categories'])
-                        .then(() => alert(`Category (ID ${resp.id}) successfully created!`));
+                        .then(() => this.toastr.success(`Category (ID ${resp.id}) successfully created!`));
                 },
                 error: (error): void => {
                     alert('Error creating category: status code:' + error.status);
@@ -78,7 +84,7 @@ export class CategoryEditComponent implements OnInit {
             {
                 next: (): void => {
                     this.router.navigate(['/admin/categories'])
-                        .then(() => alert(`Category (ID ${this.category.id}) successfully updated!`));
+                        .then(() => this.toastr.success(`Category (ID ${this.category.id}) successfully updated!`));
                 },
                 error: (error): void => {
                     alert(`Error updating category (ID ${this.category.id}): status code:` + error.status);

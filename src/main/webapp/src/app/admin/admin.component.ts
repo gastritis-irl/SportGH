@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../category/category.service';
 import { Category } from '../category/category.model';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'sgh-admin',
@@ -11,7 +12,11 @@ export class AdminComponent implements OnInit {
 
     categories: Category[] = [];
 
-    constructor(private categoryService: CategoryService, private router: Router) {
+    constructor(
+        private categoryService: CategoryService,
+        private router: Router,
+        private toastr: ToastrService,
+    ) {
     }
 
     ngOnInit(): void {
@@ -21,7 +26,7 @@ export class AdminComponent implements OnInit {
                     this.categories = data;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (categories):', error);
+                    console.error(`Error fetching data (categories): ${error}`);
                 }
             }
         );
@@ -33,10 +38,10 @@ export class AdminComponent implements OnInit {
                 next: (): void => {
                     this.categories.splice(index, 1);
                     this.router.navigate(['/admin/categories'])
-                        .then(() => alert(`Category (ID ${categoryId}) successfully deleted!`));
+                        .then(() => this.toastr.success(`Category (ID ${categoryId}) successfully deleted!`));
                 },
                 error: (error): void => {
-                    alert(`Error deleting category (ID ${categoryId}): ` + error);
+                    this.toastr.error(`Error deleting category (ID ${categoryId}): ${error}`);
                 }
             }
         );

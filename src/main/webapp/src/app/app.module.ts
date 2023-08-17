@@ -15,6 +15,7 @@ import * as firebase from 'firebase/app';
 import {environment} from "./environment";
 import { CategoryModule } from './category/category.module';
 import { AdminModule } from './admin/admin.module';
+import { ToastrModule } from 'ngx-toastr';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -35,6 +36,7 @@ firebase.initializeApp(environment.firebaseConfig);
         CategoryModule,
         AdminModule,
         NavbarComponent,
+        ToastrModule.forRoot(),
     ],
     providers: [],
     bootstrap: [
