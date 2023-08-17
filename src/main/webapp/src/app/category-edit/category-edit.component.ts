@@ -47,7 +47,7 @@ export class CategoryEditComponent implements OnInit {
             if (param === 'new') {
                 this.clickHandlerFunction = this.createCategory;
             }
-            let id: number = parseInt(param);
+            const id: number = parseInt(param);
             if (!isNaN(id)) {
                 this.clickHandlerFunction = this.updateCategory;
                 this.categoryService.getById(id).subscribe(

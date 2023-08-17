@@ -62,9 +62,24 @@ Global classes
 
 
 /* ----------Toast---------- */
-.toast-container {
+.toast-success {
     border-radius: 15px;
-    background-color: $color-main-1;
+    background-color: green;
+}
+
+.toast-info {
+    border-radius: 15px;
+    background-color: cornflowerblue;
+}
+
+.toast-warning {
+    border-radius: 15px;
+    background-color: orange;
+}
+
+.toast-error {
+    border-radius: 15px;
+    background-color: red;
 }
 
 
