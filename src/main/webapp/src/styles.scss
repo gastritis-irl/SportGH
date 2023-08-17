@@ -83,16 +83,6 @@ Global classes
 }
 
 
-/* ----------Carousel---------- */
-.carousel-holder {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-}
-
-
 /* ----------Sign in/Sign up button---------- */
 
 // Text size
@@ -125,6 +115,7 @@ $gap-buttons: 0.5em;
         padding: $padding-button-text;
         border-radius: $border-radius-button;
         border-style: solid;
+        border-color: white;
 
         &.button-secondary {
             height: $height-button;

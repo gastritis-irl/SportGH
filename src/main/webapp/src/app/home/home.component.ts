@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CategoryService } from '../category/category.service';
-import { Category } from '../category/category.model';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'sgh-home',
@@ -8,21 +6,9 @@ import { Category } from '../category/category.model';
 })
 export class HomeComponent implements OnInit {
 
-    @Input() categories: Category[] = [];
-
-    constructor(private categoryService: CategoryService) {
+    constructor() {
     }
 
     ngOnInit(): void {
-        this.categoryService.getAll().subscribe(
-            {
-                next: (data: Category[]): void => {
-                    this.categories = data;
-                },
-                error: (error): void => {
-                    console.error(`Error fetching data (categories): ${error}`);
-                }
-            }
-        );
     }
 }

@@ -69,8 +69,6 @@ dependencies {
 
     // default spring boot dependencies from initializr
     implementation 'org.springframework.boot:spring-boot-starter-groovy-templates'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
