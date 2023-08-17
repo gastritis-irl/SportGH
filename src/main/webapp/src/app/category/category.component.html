@@ -3,7 +3,7 @@
     <div class="categories">
         <!-- Repeat for each category -->
         <div class="category-item" [routerLink]="['/categories', category.id]" *ngFor="let category of categories">
-            <img [src]="category.imageURL" (error)="onImageError($event)" class="category-icon" />
+            <img [src]="category.imageURL ? category.imageURL : 'C:/Users/bfcsa/Desktop/codespring/szakmaigyakorlat2023/sportgh/src/main/webapp/src/assets/images/placeholder/png'" class="category-icon" />
 
             <div class="textBox">
                 <p class="category-description">
