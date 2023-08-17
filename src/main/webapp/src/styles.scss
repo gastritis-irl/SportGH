@@ -100,6 +100,7 @@ $gap-buttons: 0.5em;
         padding: $padding-button-text;
         border-radius: $border-radius-button;
         border-style: solid;
+        border-color: white;
 
         &.button-secondary {
             height: $height-button;
