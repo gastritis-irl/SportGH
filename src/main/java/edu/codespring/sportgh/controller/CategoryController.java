@@ -62,7 +62,7 @@ public class CategoryController {
 
     @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> update(@PathVariable Long categoryId,
-                                                 @Valid @RequestBody CategoryInDTO categoryInDTO) {
+                                                 @RequestBody @Valid CategoryInDTO categoryInDTO) {
         log.info("Updating category with ID {}.", categoryId);
         if (!Objects.equals(categoryId, categoryInDTO.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
