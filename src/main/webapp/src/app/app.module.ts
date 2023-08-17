@@ -16,6 +16,7 @@ import {environment} from "./environment";
 import { CategoryModule } from './category/category.module';
 import { AdminModule } from './admin/admin.module';
 import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -36,7 +37,10 @@ firebase.initializeApp(environment.firebaseConfig);
         CategoryModule,
         AdminModule,
         NavbarComponent,
-        ToastrModule.forRoot(),
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            timeOut: 250000,
+        }),
     ],
     providers: [],
     bootstrap: [

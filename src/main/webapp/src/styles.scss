@@ -50,7 +50,7 @@ li {
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 
-/* Toast notification style */
+/* Toast notification default style */
 @import 'ngx-toastr/toastr';
 
 /* Importing global variables */
@@ -59,6 +59,13 @@ li {
 /*
 Global classes
  */
+
+
+/* ----------Toast---------- */
+.toast-container {
+    border-radius: 15px;
+    background-color: $color-main-1;
+}
 
 
 /* ----------Carousel---------- */

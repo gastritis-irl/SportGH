@@ -88,10 +88,15 @@ export class CategoryEditComponent implements OnInit {
             {
                 next: (): void => {
                     this.router.navigate(['/admin/categories'])
-                        .then(() => this.toastNotify.success(`Category (ID ${this.category.id}) successfully updated!`));
+                        .then((): void => {
+                            this.toastNotify.success(`Category (ID ${this.category.id}) successfully updated!`);
+                        })
+                        .catch((): void => {
+                            this.toastNotify.error(`Error redirecting to route /admin/categories`);
+                        });
                 },
                 error: (error): void => {
-                    alert(`Error updating category (ID ${this.category.id}): status code:` + error.status);
+                    this.toastNotify.error(`Error updating category (ID ${this.category.id}): status code: ${error.status}`);
                 }
             }
         );
