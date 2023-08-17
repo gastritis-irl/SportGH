@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
                     this.categories = data;
                 },
                 error: (error): void => {
-                    console.error(error);
+                    console.error(`Error loading categories into navbar: ${error}`);
                 }
             }
         );

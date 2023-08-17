@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { Product } from "../product.model";
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit {
                     this.products = data;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (products):', error);
+                    console.error(`Error fetching data (products): ${error}`);
                 }
             }
         );

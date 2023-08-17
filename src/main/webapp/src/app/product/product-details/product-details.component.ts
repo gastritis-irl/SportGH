@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { Product } from "../product.model";
-import { ProductService } from "../product.service";
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../product.model';
+import { ProductService } from '../product.service';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -19,10 +19,10 @@ export class ProductDetailsComponent implements OnInit {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
-                    this.productId = params["productId"];
+                    this.productId = params['productId'];
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (productId):', error);
+                    console.error(`Error fetching data (productId): ${error}`);
                 }
             }
         );
@@ -33,7 +33,7 @@ export class ProductDetailsComponent implements OnInit {
                     this.product = data;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (product):', error);
+                    console.error(`Error fetching data (product): ${error}`);
                 }
             }
         );

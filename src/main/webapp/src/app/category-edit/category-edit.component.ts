@@ -13,7 +13,6 @@ type ClickHandlerFunction = () => void;
 })
 export class CategoryEditComponent implements OnInit {
 
-    id: number = 0;
     category: Category = {};
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
@@ -48,16 +47,16 @@ export class CategoryEditComponent implements OnInit {
             if (param === 'new') {
                 this.clickHandlerFunction = this.createCategory;
             }
-            this.id = parseInt(param);
-            if (!isNaN(this.id)) {
+            let id: number = parseInt(param);
+            if (!isNaN(id)) {
                 this.clickHandlerFunction = this.updateCategory;
-                this.categoryService.getById(this.id).subscribe(
+                this.categoryService.getById(id).subscribe(
                     {
                         next: (data: Category): void => {
                             this.category = data;
                         },
                         error: (error): void => {
-                            this.toastNotify.error(`Error fetching data (category with ID ${this.id}): ${error}`);
+                            this.toastNotify.error(`Error fetching data (category with ID ${id}): ${error}`);
                         }
                     }
                 );

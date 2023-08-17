@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CategoryService } from "../category/category.service";
-import { Category } from "../category/category.model";
+import { CategoryService } from '../category/category.service';
+import { Category } from '../category/category.model';
 
 @Component({
     selector: 'sgh-home',
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
                     this.categories = data;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (categories):', error);
+                    console.error(`Error fetching data (categories): ${error}`);
                 }
             }
         );

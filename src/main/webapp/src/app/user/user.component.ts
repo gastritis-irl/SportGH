@@ -24,7 +24,7 @@ export class UserComponent implements OnInit {
                     this.users = response;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (users):', error);
+                    console.error(`Error fetching data (users): ${error}`);
                 },
             }
         );
