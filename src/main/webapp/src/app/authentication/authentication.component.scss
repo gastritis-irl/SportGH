@@ -5,84 +5,137 @@
 body {
     font-family: $font-default;
 }
+
 .form {
-    background-color: transparent;
-    box-shadow: 0 10px 60px rgb(218, 229, 255);
-    border: 1px solid rgb(159, 159, 160);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+    background-color: white;
+    padding: 20px;
     border-radius: 20px;
-    padding: 2rem 0.7rem 0.7rem 0.7rem;
-    text-align: left;
-    font-size: 1.125rem;
-    max-width: 640px;
+    position: relative;
 }
 
-.form-title {
-    color: #000000;
-    font-size: 1.8rem;
-    font-weight: 500;
-}
-
-.form-paragraph {
-    margin-top: 10px;
-    font-size: 0.9375rem;
-    color: transparent;
-}
-
-.drop-container {
-    background-color: #fff;
+.title {
+    font-size: 28px;
+    color: $color-main-1;
+    font-weight: 600;
+    letter-spacing: -1px;
     position: relative;
     display: flex;
-    gap: 10px;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 10px;
-    margin-top: 2.1875rem;
-    border-radius: 10px;
-    border: 2px dashed rgb(171, 202, 255);
-    color: #444;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
+    padding-left: 30px;
 }
 
-.drop-container:hover {
-    background: rgba(0, 140, 255, 0.164);
-    border-color: rgba(17, 17, 17, 0.616);
+.title::before,
+.title::after {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 0px;
+    background-color: $color-main-1;
 }
 
-.drop-container:hover .drop-title {
-    color: #222;
+.title::before {
+    width: 18px;
+    height: 18px;
+    background-color: $color-main-1;
 }
 
-.drop-title {
-    color: #444;
-    font-size: 20px;
-    font-weight: bold;
+.title::after {
+    width: 18px;
+    height: 18px;
+    animation: pulse 1s linear infinite;
+}
+
+.message,
+.signin {
+    color: rgba(88, 87, 87, 0.822);
+    font-size: 14px;
+}
+
+.signin {
     text-align: center;
-    transition: color 0.2s ease-in-out;
 }
 
-#file-input {
-    width: 350px;
-    max-width: 100%;
-    color: #444;
-    padding: 2px;
-    background: #fff;
+.signin a {
+    color: $color-main-1;
+}
+
+.signin a:hover {
+    text-decoration: underline $color-main-1;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+}
+
+.form label {
+    position: relative;
+}
+
+.form label .input {
+    width: 100%;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
     border-radius: 10px;
-    border: 1px solid rgba(8, 8, 8, 0.288);
 }
 
-#file-input::file-selector-button {
-    margin-right: 20px;
+.form label .input+span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: grey;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+}
+
+.form label .input:placeholder-shown+span {
+    top: 15px;
+    font-size: 0.9em;
+}
+
+.form label .input:focus+span,
+.form label .input:valid+span {
+    top: 30px;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+.form label .input:valid+span {
+    color: green;
+}
+
+.submit {
     border: none;
-    background: #084cdf;
-    padding: 10px 20px;
+    outline: none;
+    background-color: $color-main-1;
+    padding: 10px;
     border-radius: 10px;
     color: #fff;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out;
+    font-size: 16px;
+    transform: .3s ease;
 }
 
-#file-input::file-selector-button:hover {
-    background: #0d45a5;
+.submit:hover {
+    background-color: rgb(56, 90, 194);
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(0.9);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(1.8);
+        opacity: 0;
+    }
 }
