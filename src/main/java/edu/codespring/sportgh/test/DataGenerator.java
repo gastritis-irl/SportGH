@@ -72,257 +72,187 @@ public class DataGenerator {
     }
 
     public void initCategories() {
-        if (!categoryService.existsByName("Water sports")) {
-            categoryService.save(new Category(
-                    "Water sports",
-                    "...",
-                    "https://img.freepik.com/premium-vector/rafling-water-sport-cartoon_18591-19936.jpg?"
-                            + "w=2000",
-                    null
-            ));
-        }
-        if (!categoryService.existsByName("Combat sports")) {
-            categoryService.save(new Category(
-                    "Combat sports",
-                    "...",
-                    "https://media.istockphoto.com/id/1142510634/vector/two-sport-karate-man-character"
-                            + "s-fight-sport-training-concept-vector-flat-cartoon-graphic.jpg?"
-                            + "s=170667a&w=0&k=20&c=mgj8QGQairRtGwnBUcJWcGwNyBwq-FIWCTWMyNJxBnc=",
-                    null
-            ));
-        }
-        if (!categoryService.existsByName("Extreme sports")) {
-            categoryService.save(new Category(
-                    "Extreme sports",
-                    "...",
-                    "https://graphicriver.img.customer.envatousercontent.com/files/350625383/preview.jpg?"
-                            + "auto=compress%2Cformat&fit=crop&crop=top&w=590&h=590&s=8333982ebd8d4088c241978b83ca98c4",
-                    null
-            ));
-        }
-        if (!categoryService.existsByName("Team sports")) {
-            categoryService.save(new Category(
-                    "Team sports",
-                    "...",
-                    "https://img.freepik.com/premium-vector/soccer-players-team-groupt-cartoon-"
-                            + "illustration_9026-23.jpg?w=2000",
-                    null
-            ));
-        }
-        if (!categoryService.existsByName("Winter sports")) {
-            categoryService.save(new Category(
-                    "Winter sports",
-                    "...",
-                    "https://encrypted-tbn0.gstatic.com/images?"
-                            + "q=tbn:ANd9GcQZTKlVUnqUD-Z_GERKB7NtyH_2wpBHt_ZH2Q&usqp=CAU",
-                    null
-            ));
-        }
-        if (!categoryService.existsByName("Track & Field")) {
-            categoryService.save(new Category(
-                    "Track & Field",
-                    "...",
-                    "https://static.vecteezy.com/system/resources/previews/002/471/108/original/"
-                            + "running-young-men-sport-in-the-race-track-free-vector.jpg",
-                    null
-            ));
-        }
-        if (!categoryService.existsByName("Other")) {
-            categoryService.save(new Category(
-                    "Other",
-                    "Other sports",
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3TN373IJFyFN4sjMCItC"
-                            + "ugy7f1P9RqVdX4gRkApSZSgRLpUYCIcFfcUS5YCZEkL-JUBE&usqp=CAU",
-                    null
-            ));
-        }
+        saveCategory(
+                "Water sports",
+                "...",
+                "https://img.freepik.com/premium-vector/rafling-water-sport-cartoon_18591-19936.jpg?"
+                        + "w=2000"
+        );
+        saveCategory(
+                "Combat sports",
+                "...",
+                "https://media.istockphoto.com/id/1142510634/vector/two-sport-karate-man-character"
+                        + "s-fight-sport-training-concept-vector-flat-cartoon-graphic.jpg?"
+                        + "s=170667a&w=0&k=20&c=mgj8QGQairRtGwnBUcJWcGwNyBwq-FIWCTWMyNJxBnc="
+        );
+        saveCategory(
+                "Extreme sports",
+                "...",
+                "https://graphicriver.img.customer.envatousercontent.com/files/350625383/preview.jpg?"
+                        + "auto=compress%2Cformat&fit=crop&crop=top&w=590&h=590&s=8333982ebd8d4088c241978b83ca98c4"
+        );
+        saveCategory(
+                "Team sports",
+                "...",
+                "https://img.freepik.com/premium-vector/soccer-players-team-groupt-cartoon-"
+                        + "illustration_9026-23.jpg?w=2000"
+        );
+        saveCategory(
+                "Winter sports",
+                "...",
+                "https://encrypted-tbn0.gstatic.com/images?"
+                        + "q=tbn:ANd9GcQZTKlVUnqUD-Z_GERKB7NtyH_2wpBHt_ZH2Q&usqp=CAU"
+        );
+        saveCategory(
+                "Track & Field",
+                "...",
+                "https://static.vecteezy.com/system/resources/previews/002/471/108/original/"
+                        + "running-young-men-sport-in-the-race-track-free-vector.jpg"
+        );
+        saveCategory(
+                "Other",
+                "Other sports",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3TN373IJFyFN4sjMCItC"
+                        + "ugy7f1P9RqVdX4gRkApSZSgRLpUYCIcFfcUS5YCZEkL-JUBE&usqp=CAU"
+        );
     }
 
     public void initSubCategories() {
-        Category category;
-
-        category = categoryService.findByName("Water sports");
-        if (category != null) {
-            if (!subCategoryService.existsByName("Swimming")) {
-                subCategoryService.save(new SubCategory(
-                        "Swimming",
-                        category,
-                        null
-                ));
-            }
-            if (!subCategoryService.existsByName("Surfing")) {
-                subCategoryService.save(new SubCategory(
-                        "Surfing",
-                        category,
-                        null
-                ));
-            }
-        }
-
-        category = categoryService.findByName("Combat sports");
-        if (category != null) {
-            if (!subCategoryService.existsByName("Boxing")) {
-                subCategoryService.save(new SubCategory(
-                        "Boxing",
-                        category,
-                        null
-                ));
-            }
-            if (!subCategoryService.existsByName("Judo")) {
-                subCategoryService.save(new SubCategory(
-                        "Judo",
-                        category,
-                        null
-                ));
-            }
-        }
-
-        category = categoryService.findByName("Extreme sports");
-        if (category != null) {
-            if (!subCategoryService.existsByName("Rock Climbing")) {
-                subCategoryService.save(new SubCategory(
-                        "Rock Climbing",
-                        category,
-                        null
-                ));
-            }
-            if (!subCategoryService.existsByName("Skydiving")) {
-                subCategoryService.save(new SubCategory(
-                        "Skydiving",
-                        category,
-                        null
-                ));
-            }
-        }
-
-        category = categoryService.findByName("Team sports");
-        if (category != null) {
-            if (!subCategoryService.existsByName("Soccer (football)")) {
-                subCategoryService.save(new SubCategory(
-                        "Soccer (football)",
-                        category,
-                        null
-                ));
-            }
-            if (!subCategoryService.existsByName("Basketball")) {
-                subCategoryService.save(new SubCategory(
-                        "Basketball",
-                        category,
-                        null
-                ));
-            }
-        }
-
-        category = categoryService.findByName("Winter sports");
-        if (category != null) {
-            if (!subCategoryService.existsByName("Skiing")) {
-                subCategoryService.save(new SubCategory(
-                        "Skiing",
-                        category,
-                        null
-                ));
-            }
-            if (!subCategoryService.existsByName("Ice Hockey")) {
-                subCategoryService.save(new SubCategory(
-                        "Ice Hockey",
-                        category,
-                        null
-                ));
-            }
-        }
-
-        category = categoryService.findByName("Track & Field");
-        if (category != null) {
-            if (!subCategoryService.existsByName("Running")) {
-                subCategoryService.save(new SubCategory(
-                        "Running",
-                        category,
-                        null
-                ));
-            }
-            if (!subCategoryService.existsByName("Cycling")) {
-                subCategoryService.save(new SubCategory(
-                        "Cycling",
-                        category,
-                        null
-                ));
-            }
-        }
+        saveSubcategory(
+                "Swimming",
+                "Water sports"
+        );
+        saveSubcategory(
+                "Surfing",
+                "Water sports"
+        );
+        saveSubcategory(
+                "Boxing",
+                "Combat sports"
+        );
+        saveSubcategory(
+                "Judo",
+                "Combat sports"
+        );
+        saveSubcategory(
+                "Rock Climbing",
+                "Extreme sports"
+        );
+        saveSubcategory(
+                "Skydiving",
+                "Extreme sports"
+        );
+        saveSubcategory(
+                "Soccer (football)",
+                "Team sports"
+        );
+        saveSubcategory(
+                "Basketball",
+                "Team sports"
+        );
+        saveSubcategory(
+                "Skiing",
+                "Winter sports"
+        );
+        saveSubcategory(
+                "Ice Hockey",
+                "Winter sports"
+        );
+        saveSubcategory(
+                "Running",
+                "Track & Field"
+        );
+        saveSubcategory(
+                "Cycling",
+                "Track & Field"
+        );
     }
 
     public void initProducts() {
-        SubCategory subCategory;
         User user = userService.findByUsername("akos@test.com");
         if (user == null) {
             throw new ServiceException("User doesn't exist.");
         }
 
-        subCategory = subCategoryService.findByName("Swimming");
-        if (subCategory != null) {
-            if (!productService.existsByNameAndUser("Swimming googles", user)) {
-                productService.save(new Product(
-                        true,
-                        "Swimming googles",
-                        "Googles for swimming",
-                        20.0,
-                        subCategory,
-                        user
-                ));
-            }
-            if (!productService.existsByNameAndUser("Flip flops", user)) {
-                productService.save(new Product(
-                        true,
-                        "Flip flops",
-                        "Flip flops for easier swimming",
-                        35.0,
-                        subCategory,
-                        user
-                ));
-            }
-        }
+        saveProduct(
+                "Swimming googles",
+                "Googles for swimming",
+                20.0,
+                "Swimming",
+                user
+        );
+        saveProduct(
+                "Flip flops",
+                "Flip flops for easier swimming",
+                35.0,
+                "Swimming",
+                user
+        );
+        saveProduct(
+                "Bike",
+                "Bike for cycling",
+                100.0,
+                "Cycling",
+                user
+        );
+        saveProduct(
+                "Helmet",
+                "Helmet for your protection",
+                18.0,
+                "Cycling",
+                user
 
-        subCategory = subCategoryService.findByName("Cycling");
-        if (subCategory != null) {
-            if (!productService.existsByNameAndUser("Bike", user)) {
-                productService.save(new Product(
-                        true,
-                        "Bike",
-                        "Bike for cycling",
-                        100.0,
-                        subCategory,
-                        user
-                ));
-            }
-            if (!productService.existsByNameAndUser("Helmet", user)) {
-                productService.save(new Product(
-                        true,
-                        "Helmet",
-                        "Helmet for your protection",
-                        18.0,
-                        subCategory,
-                        user
-                ));
-            }
-            if (!productService.existsByNameAndUser("Flashlight", user)) {
-                productService.save(new Product(
-                        true,
-                        "Flashlight",
-                        "Flashlight for better visibility",
-                        15.0,
-                        subCategory,
-                        user
-                ));
-            }
-            if (!productService.existsByNameAndUser("Bicycle lock", user)) {
-                productService.save(new Product(
-                        true,
-                        "Bicycle lock",
-                        "Bicycle lock for your bike's protection",
-                        20.0,
-                        subCategory,
-                        user
-                ));
-            }
+        );
+        saveProduct(
+                "Flashlight",
+                "Flashlight for better visibility",
+                15.0,
+                "Cycling",
+                user
+
+        );
+        saveProduct(
+                "Bicycle lock",
+                "Bicycle lock for your bike's protection",
+                20.0,
+                "Cycling",
+                user
+        );
+    }
+
+    public void saveCategory(String name, String description, String imageURL) {
+        if (!categoryService.existsByName(name)) {
+            categoryService.save(new Category(
+                    name,
+                    description,
+                    imageURL,
+                    null
+            ));
+        }
+    }
+
+    public void saveSubcategory(String name, String categoryName) {
+        Category category = categoryService.findByName(categoryName);
+        if (category != null && !subCategoryService.existsByName(name)) {
+            subCategoryService.save(new SubCategory(
+                    name,
+                    category,
+                    null
+            ));
+        }
+    }
+
+    public void saveProduct(String name, String description, Double rendPrice, String subCategoryName, User user) {
+        SubCategory subCategory = subCategoryService.findByName(subCategoryName);
+        if (subCategory != null && !productService.existsByNameAndUser(name, user)) {
+            productService.save(new Product(
+                    true,
+                    name,
+                    description,
+                    rendPrice,
+                    subCategory,
+                    user
+            ));
         }
     }
 }
