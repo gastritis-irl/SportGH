@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'sgh-product-details',
@@ -12,7 +13,11 @@ export class ProductDetailsComponent implements OnInit {
     product: Product = {};
     productId: number = 0;
 
-    constructor(private productService: ProductService, private route: ActivatedRoute) {
+    constructor(
+        private productService: ProductService,
+        private route: ActivatedRoute,
+        private toastNotify:ToastrService,
+    ) {
     }
 
     ngOnInit(): void {
@@ -22,7 +27,7 @@ export class ProductDetailsComponent implements OnInit {
                     this.productId = params['productId'];
                 },
                 error: (error): void => {
-                    console.error(`Error fetching data (productId): ${error}`);
+                    this.toastNotify.error(`Error fetching data (productId): ${error}`);
                 }
             }
         );
@@ -33,7 +38,7 @@ export class ProductDetailsComponent implements OnInit {
                     this.product = data;
                 },
                 error: (error): void => {
-                    console.error(`Error fetching data (product): ${error}`);
+                    this.toastNotify.error(`Error fetching data (product): ${error}`);
                 }
             }
         );

@@ -57,12 +57,12 @@ export class AuthenticationComponent {
                 },
                 error: (error): void => {
                     console.error(`Login failed: ${error}`);
-                    this.toastNotify.error(`Login failed ${error.message}`);
+                    this.toastNotify.warning(`Login failed ${error.message}`);
                 }
             });
         }).catch(error => {
             console.error(`Error in Firebase authentication ${error}`);
-            this.toastNotify.error(`Login failed ${error.message}`);
+            this.toastNotify.warning(`Login failed ${error.message}`);
         });
     }
 
@@ -75,12 +75,12 @@ export class AuthenticationComponent {
                 },
                 error: (error): void => {
                     console.error(`Registration failed ${error}`);
-                    this.toastNotify.error(`Registration failed ${error.message}`);
+                    this.toastNotify.warning(`Registration failed ${error.message}`);
                 }
             });
         }).catch(error => {
             console.error(`Error in Firebase registration ${error}`);
-            this.toastNotify.error(`Registration failed.\n${error.message}`);
+            this.toastNotify.warning(`Registration failed.\n${error.message}`);
         });
     }
 
