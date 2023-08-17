@@ -60,7 +60,7 @@ $breakpoint-large: 1024px;
         flex-direction: row;
         flex-wrap: wrap;
         gap: $category-gap;
-        justify-content: center;
+        justify-content: flex-start;
 
         @media (max-width: $breakpoint-small) {
             flex-direction: column;
@@ -77,7 +77,7 @@ $breakpoint-large: 1024px;
         gap: $category-gap;
         width: $category-item-width;
         background: $category-background;
-        border-radius: 4% 4% 0 0; // Adjusting the bottom border-radius to 0        
+        border-radius: 10px 10px 0 0; // Adjusting the bottom border-radius to 0
         border: $category-border-width solid $category-border-color;
         overflow: hidden;
         transition: 0.2s ease-in-out;
@@ -107,7 +107,7 @@ $breakpoint-large: 1024px;
         .category-icon {
             width: 100%;
             height: $category-icon-height;
-            border-radius: 4% 4% 0 0; // Matches the border-radius of the card at the top
+            border-radius: 10px 10px 0 0; // Matches the border-radius of the card at the top
             object-fit: cover;
         }
 
