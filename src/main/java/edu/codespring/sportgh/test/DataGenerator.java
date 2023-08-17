@@ -82,8 +82,8 @@ public class DataGenerator {
                     "...",
                     "https://img.freepik.com/premium-vector/rafling-water-sport-cartoon_18591-19936.jpg?"
                             + "w=2000",
-                    null)
-            );
+                    null
+            ));
         }
         if (!categoryService.existsByName("Combat sports")) {
             categoryService.save(new Category(
@@ -92,8 +92,8 @@ public class DataGenerator {
                     "https://media.istockphoto.com/id/1142510634/vector/two-sport-karate-man-character"
                             + "s-fight-sport-training-concept-vector-flat-cartoon-graphic.jpg?"
                             + "s=170667a&w=0&k=20&c=mgj8QGQairRtGwnBUcJWcGwNyBwq-FIWCTWMyNJxBnc=",
-                    null)
-            );
+                    null
+            ));
         }
         if (!categoryService.existsByName("Extreme sports")) {
             categoryService.save(new Category(
@@ -101,8 +101,8 @@ public class DataGenerator {
                     "...",
                     "https://graphicriver.img.customer.envatousercontent.com/files/350625383/preview.jpg?"
                             + "auto=compress%2Cformat&fit=crop&crop=top&w=590&h=590&s=8333982ebd8d4088c241978b83ca98c4",
-                    null)
-            );
+                    null
+            ));
         }
         if (!categoryService.existsByName("Team sports")) {
             categoryService.save(new Category(
@@ -110,8 +110,8 @@ public class DataGenerator {
                     "...",
                     "https://img.freepik.com/premium-vector/soccer-players-team-groupt-cartoon-"
                             + "illustration_9026-23.jpg?w=2000",
-                    null)
-            );
+                    null
+            ));
         }
         if (!categoryService.existsByName("Winter sports")) {
             categoryService.save(new Category(
@@ -119,8 +119,8 @@ public class DataGenerator {
                     "...",
                     "https://encrypted-tbn0.gstatic.com/images?"
                             + "q=tbn:ANd9GcQZTKlVUnqUD-Z_GERKB7NtyH_2wpBHt_ZH2Q&usqp=CAU",
-                    null)
-            );
+                    null
+            ));
         }
         if (!categoryService.existsByName("Track & Field")) {
             categoryService.save(new Category(
@@ -128,8 +128,8 @@ public class DataGenerator {
                     "...",
                     "https://static.vecteezy.com/system/resources/previews/002/471/108/original/"
                             + "running-young-men-sport-in-the-race-track-free-vector.jpg",
-                    null)
-            );
+                    null
+            ));
         }
         if (!categoryService.existsByName("Other")) {
             categoryService.save(new Category(
@@ -137,12 +137,97 @@ public class DataGenerator {
                     "Other sports",
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3TN373IJFyFN4sjMCItC"
                             + "ugy7f1P9RqVdX4gRkApSZSgRLpUYCIcFfcUS5YCZEkL-JUBE&usqp=CAU",
-                    null)
-            );
+                    null
+            ));
         }
     }
 
     public void initSubCategories() {
+        Category category;
+
+        category = categoryService.findByName("Water sports");
+        if (category != null) {
+            subCategoryService.save(new SubCategory(
+                    "Swimming",
+                    category,
+                    null
+            ));
+            subCategoryService.save(new SubCategory(
+                    "Surfing",
+                    category,
+                    null
+            ));
+        }
+
+        category = categoryService.findByName("Combat sports");
+        if (category != null) {
+            subCategoryService.save(new SubCategory(
+                    "Boxing",
+                    category,
+                    null
+            ));
+            subCategoryService.save(new SubCategory(
+                    "Judo",
+                    category,
+                    null
+            ));
+        }
+
+        category = categoryService.findByName("Extreme sports");
+        if (category != null) {
+            subCategoryService.save(new SubCategory(
+                    "Rock Climbing",
+                    category,
+                    null
+            ));
+            subCategoryService.save(new SubCategory(
+                    "Skydiving",
+                    category,
+                    null
+            ));
+        }
+
+        category = categoryService.findByName("Team sports");
+        if (category != null) {
+            subCategoryService.save(new SubCategory(
+                    "Soccer (football)",
+                    category,
+                    null
+            ));
+            subCategoryService.save(new SubCategory(
+                    "Basketball",
+                    category,
+                    null
+            ));
+        }
+
+        category = categoryService.findByName("Winter sports");
+        if (category != null) {
+            subCategoryService.save(new SubCategory(
+                    "Skiing",
+                    category,
+                    null
+            ));
+            subCategoryService.save(new SubCategory(
+                    "Ice Hockey",
+                    category,
+                    null
+            ));
+        }
+
+        category = categoryService.findByName("Track & Field");
+        if (category != null) {
+            subCategoryService.save(new SubCategory(
+                    "Running",
+                    category,
+                    null
+            ));
+            subCategoryService.save(new SubCategory(
+                    "Cycling",
+                    category,
+                    null
+            ));
+        }
     }
 
     public void initProducts() {

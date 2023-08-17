@@ -21,4 +21,6 @@ public interface CategoryService {
     Collection<Category> findAll();
 
     Category findById(Long categoryID);
+
+    Category findByName(String categoryName);
 }
