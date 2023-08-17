@@ -1,8 +1,16 @@
 <div class="category-list-holder">
-    Categories:<br>
-    <ul>
-        <li *ngFor="let category of categories">
-            {{category.id}} - {{category.name}} - {{category.description}}
-        </li>
-    </ul>
+    <h1 class="category-heading">Equipment categories</h1>
+    <div class="categories">
+        <!-- Repeat for each category -->
+        <div class="category-item" [routerLink]="['/categories', category.id]" *ngFor="let category of categories">
+            <img [src]="category.imageURL ? category.imageURL : 'https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png'" class="category-icon" />
+
+            <div class="text-box">
+                <p class="category-description">
+                    {{ category.description }}
+                </p>
+            </div>
+            <p class="category-name">{{ category.name }}</p>
+        </div>
+    </div>
 </div>

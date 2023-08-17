@@ -3,12 +3,13 @@ import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
 import { Router } from '@angular/router';
 
-    
+
 @Component({
     selector: 'sgh-authentication',
     templateUrl: './authentication.component.html',
+    styleUrls: ['./authentication.scss'],
 })
-    
+
 export class AuthenticationComponent {
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
@@ -24,7 +25,7 @@ export class AuthenticationComponent {
     }
 
     openOffcanvas(content: TemplateRef<string>): void {
-        this.offcanvasService.open(content, { position: 'start', scroll: true });
+        this.offcanvasService.open(content, {position: 'start', scroll: true});
         this.isOffcanvasOpen = true;
     }
 
@@ -41,7 +42,7 @@ export class AuthenticationComponent {
                 next: () => {
                     this.loggedInUserEmail = this.email; // Store the logged-in email
                     this.closeOffcanvas();
-                    this.router.navigate(['/home']);
+                    this.router.navigate(['/']);
                 },
                 error: (error) => {
                     console.error('Login failed', error);
