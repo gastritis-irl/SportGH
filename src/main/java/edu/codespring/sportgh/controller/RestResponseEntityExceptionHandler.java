@@ -18,7 +18,16 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({
-        IllegalArgumentException.class, OptimisticLockingFailureException.class, ServiceException.class
+        Exception.class,
+    })
+    protected ResponseEntity<Object> handleGeneralException(RuntimeException e, WebRequest request) {
+        log.error(e.getMessage());
+        return handleExceptionInternal(e, e.getMessage(),
+            new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
+    @ExceptionHandler({
+        OptimisticLockingFailureException.class,
     })
     protected ResponseEntity<Object> handleServerError(RuntimeException e, WebRequest request) {
         log.error(e.getMessage());
@@ -27,7 +36,26 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler({
-        BadCredentialsException.class, UsernameNotFoundException.class
+        IllegalArgumentException.class,
+    })
+    protected ResponseEntity<Object> handleIllegalArgument(RuntimeException e, WebRequest request) {
+        log.error(e.getMessage());
+        return handleExceptionInternal(e, e.getMessage(),
+            new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler({
+        ServiceException.class,
+    })
+    protected ResponseEntity<Object> handleServiceException(RuntimeException e, WebRequest request) {
+        log.error(e.getMessage());
+        return handleExceptionInternal(e, e.getMessage(),
+            new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler({
+        BadCredentialsException.class,
+        UsernameNotFoundException.class,
     })
     protected ResponseEntity<Object> handleBadRequest(RuntimeException e, WebRequest request) {
         log.info("Bad request: {}", e.getMessage());
