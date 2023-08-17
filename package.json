@@ -20,6 +20,7 @@
     "@angular/router": "^16.1.6",
     "@ng-bootstrap/ng-bootstrap": "^15.1.0",
     "@popperjs/core": "^2.11.6",
+    "@syncfusion/ej2-angular-notifications": "^22.2.5-ngcc",
     "bootstrap": "^5.2.3",
     "firebase": "^10.1.0",
     "firebaseui": "^5.0.0",
