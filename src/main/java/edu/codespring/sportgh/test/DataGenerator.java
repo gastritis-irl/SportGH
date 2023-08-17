@@ -29,7 +29,6 @@ public class DataGenerator {
     @PostConstruct
     public void init() {
         try {
-            log.info("Generating users...");
             initUsers();
             log.info("Generating users: OK");
         } catch (ServiceException e) {
@@ -38,7 +37,6 @@ public class DataGenerator {
         }
 
         try {
-            log.info("Generating categories...");
             initCategories();
             log.info("Generating categories: OK");
         } catch (ServiceException e) {
@@ -47,7 +45,6 @@ public class DataGenerator {
         }
 
         try {
-            log.info("Generating subcategories...");
             initSubCategories();
             log.info("Generating subcategories: OK");
         } catch (ServiceException e) {
@@ -56,7 +53,6 @@ public class DataGenerator {
         }
 
         try {
-            log.info("Generating products...");
             initProducts();
             log.info("Generating products: OK");
         } catch (ServiceException e) {
@@ -147,89 +143,186 @@ public class DataGenerator {
 
         category = categoryService.findByName("Water sports");
         if (category != null) {
-            subCategoryService.save(new SubCategory(
-                    "Swimming",
-                    category,
-                    null
-            ));
-            subCategoryService.save(new SubCategory(
-                    "Surfing",
-                    category,
-                    null
-            ));
+            if (!subCategoryService.existsByName("Swimming")) {
+                subCategoryService.save(new SubCategory(
+                        "Swimming",
+                        category,
+                        null
+                ));
+            }
+            if (!subCategoryService.existsByName("Surfing")) {
+                subCategoryService.save(new SubCategory(
+                        "Surfing",
+                        category,
+                        null
+                ));
+            }
         }
 
         category = categoryService.findByName("Combat sports");
         if (category != null) {
-            subCategoryService.save(new SubCategory(
-                    "Boxing",
-                    category,
-                    null
-            ));
-            subCategoryService.save(new SubCategory(
-                    "Judo",
-                    category,
-                    null
-            ));
+            if (!subCategoryService.existsByName("Boxing")) {
+                subCategoryService.save(new SubCategory(
+                        "Boxing",
+                        category,
+                        null
+                ));
+            }
+            if (!subCategoryService.existsByName("Judo")) {
+                subCategoryService.save(new SubCategory(
+                        "Judo",
+                        category,
+                        null
+                ));
+            }
         }
 
         category = categoryService.findByName("Extreme sports");
         if (category != null) {
-            subCategoryService.save(new SubCategory(
-                    "Rock Climbing",
-                    category,
-                    null
-            ));
-            subCategoryService.save(new SubCategory(
-                    "Skydiving",
-                    category,
-                    null
-            ));
+            if (!subCategoryService.existsByName("Rock Climbing")) {
+                subCategoryService.save(new SubCategory(
+                        "Rock Climbing",
+                        category,
+                        null
+                ));
+            }
+            if (!subCategoryService.existsByName("Skydiving")) {
+                subCategoryService.save(new SubCategory(
+                        "Skydiving",
+                        category,
+                        null
+                ));
+            }
         }
 
         category = categoryService.findByName("Team sports");
         if (category != null) {
-            subCategoryService.save(new SubCategory(
-                    "Soccer (football)",
-                    category,
-                    null
-            ));
-            subCategoryService.save(new SubCategory(
-                    "Basketball",
-                    category,
-                    null
-            ));
+            if (!subCategoryService.existsByName("Soccer (football)")) {
+                subCategoryService.save(new SubCategory(
+                        "Soccer (football)",
+                        category,
+                        null
+                ));
+            }
+            if (!subCategoryService.existsByName("Basketball")) {
+                subCategoryService.save(new SubCategory(
+                        "Basketball",
+                        category,
+                        null
+                ));
+            }
         }
 
         category = categoryService.findByName("Winter sports");
         if (category != null) {
-            subCategoryService.save(new SubCategory(
-                    "Skiing",
-                    category,
-                    null
-            ));
-            subCategoryService.save(new SubCategory(
-                    "Ice Hockey",
-                    category,
-                    null
-            ));
+            if (!subCategoryService.existsByName("Skiing")) {
+                subCategoryService.save(new SubCategory(
+                        "Skiing",
+                        category,
+                        null
+                ));
+            }
+            if (!subCategoryService.existsByName("Ice Hockey")) {
+                subCategoryService.save(new SubCategory(
+                        "Ice Hockey",
+                        category,
+                        null
+                ));
+            }
         }
 
         category = categoryService.findByName("Track & Field");
         if (category != null) {
-            subCategoryService.save(new SubCategory(
-                    "Running",
-                    category,
-                    null
-            ));
-            subCategoryService.save(new SubCategory(
-                    "Cycling",
-                    category,
-                    null
-            ));
+            if (!subCategoryService.existsByName("Running")) {
+                subCategoryService.save(new SubCategory(
+                        "Running",
+                        category,
+                        null
+                ));
+            }
+            if (!subCategoryService.existsByName("Cycling")) {
+                subCategoryService.save(new SubCategory(
+                        "Cycling",
+                        category,
+                        null
+                ));
+            }
         }
     }
 
     public void initProducts() {
+        SubCategory subCategory;
+        User user = userService.findByUsername("akos@test.com");
+        if (user == null) {
+            throw new ServiceException("User doesn't exist.");
+        }
+
+        subCategory = subCategoryService.findByName("Swimming");
+        if (subCategory != null) {
+            if (!productService.existsByNameAndUser("Swimming googles", user)) {
+                productService.save(new Product(
+                        true,
+                        "Swimming googles",
+                        "Googles for swimming",
+                        20.0,
+                        subCategory,
+                        user
+                ));
+            }
+            if (!productService.existsByNameAndUser("Flip flops", user)) {
+                productService.save(new Product(
+                        true,
+                        "Flip flops",
+                        "Flip flops for easier swimming",
+                        35.0,
+                        subCategory,
+                        user
+                ));
+            }
+        }
+
+        subCategory = subCategoryService.findByName("Cycling");
+        if (subCategory != null) {
+            if (!productService.existsByNameAndUser("Bike", user)) {
+                productService.save(new Product(
+                        true,
+                        "Bike",
+                        "Bike for cycling",
+                        100.0,
+                        subCategory,
+                        user
+                ));
+            }
+            if (!productService.existsByNameAndUser("Helmet", user)) {
+                productService.save(new Product(
+                        true,
+                        "Helmet",
+                        "Helmet for your protection",
+                        18.0,
+                        subCategory,
+                        user
+                ));
+            }
+            if (!productService.existsByNameAndUser("Flashlight", user)) {
+                productService.save(new Product(
+                        true,
+                        "Flashlight",
+                        "Flashlight for better visibility",
+                        15.0,
+                        subCategory,
+                        user
+                ));
+            }
+            if (!productService.existsByNameAndUser("Bicycle lock", user)) {
+                productService.save(new Product(
+                        true,
+                        "Bicycle lock",
+                        "Bicycle lock for your bike's protection",
+                        20.0,
+                        subCategory,
+                        user
+                ));
+            }
+        }
     }
 }
