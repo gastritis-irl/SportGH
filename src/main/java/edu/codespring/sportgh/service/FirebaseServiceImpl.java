@@ -83,12 +83,7 @@ public class FirebaseServiceImpl implements FirebaseService {
                 users.add(new User(
                     UserUtil.extractUsernameFromEmail(i.getEmail()),
                     i.getEmail(),
-                    i.getPasswordHash(),    // use their auth method instead of our,
-                                            // so then we won't have to store the password
-                                            // (change signIn/signUp method/controller/service)
-                                            // NOT WORKING PROPERLY!!!
-                                            // NOT WORKING PROPERLY!!!
-                                            // NOT WORKING PROPERLY!!!
+                    "password", // we've set this password for every registered user in firebase
                     i.getUid(),
                     "USER",
                     null)
