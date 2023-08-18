@@ -18,6 +18,8 @@ public interface SubCategoryService {
 
     SubCategory findById(Long subCategoryID);
 
+    SubCategory findByName(String subCategoryName);
+
     Long count();
 
     Collection<SubCategory> findAll();

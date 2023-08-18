@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
+import edu.codespring.sportgh.model.User;
 
 public interface ProductRepository extends BaseRepository<Product> {
 
@@ -15,4 +16,6 @@ public interface ProductRepository extends BaseRepository<Product> {
             " where c.id=:categoryId"
     )
     Collection<Product> findByCategoryId(@Param("categoryId") Long categoryId);
+
+    boolean existsByNameAndUser(String name, User user);
 }

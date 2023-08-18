@@ -49,6 +49,11 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
     @Override
+    public SubCategory findByName(String subCategoryName) {
+        return subCategoryRepository.findByName(subCategoryName);
+    }
+
+    @Override
     public Long count() {
         return subCategoryRepository.count();
     }

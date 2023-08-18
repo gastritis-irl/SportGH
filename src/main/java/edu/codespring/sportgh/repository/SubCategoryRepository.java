@@ -17,4 +17,6 @@ public interface SubCategoryRepository extends BaseRepository<SubCategory> {
     Collection<SubCategory> findByCategoryId(Long categoryId);
 
     boolean existsByName(String name);
+
+    SubCategory findByName(String name);
 }

@@ -11,4 +11,6 @@ public interface CategoryRepository extends BaseRepository<Category> {
     int deleteAllWithCount();
 
     boolean existsByName(String name);
+
+    Category findByName(String name);
 }
