@@ -7,8 +7,9 @@ body {
 .form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
-    max-width: 350px;
+    max-width: auto;
     background-color: white;
     padding: 20px;
     border-radius: 20px;
@@ -73,7 +74,7 @@ body {
             padding: 10px 10px 20px 10px;
             outline: 0;
             border: 1px solid rgba(105, 105, 105, 0.397);
-            border-radius: 10px;
+            border-radius: round($number: 2em);
 
             &:placeholder-shown+span {
                 top: 15px;
@@ -84,7 +85,7 @@ body {
             &:valid+span {
                 top: 30px;
                 font-size: 0.7em;
-                font-weight: 600;
+                font-weight: $font-weight-bold;
             }
 
             &:valid+span {
@@ -96,25 +97,11 @@ body {
             position: absolute;
             left: 10px;
             top: 15px;
+            margin-left: 10px;
             color: grey;
             font-size: 0.9em;
             cursor: text;
             transition: 0.3s ease;
-        }
-    }
-
-    .submit {
-        border: none;
-        outline: none;
-        background-color: $color-main-1;
-        padding: 10px;
-        border-radius: 10px;
-        color: #fff;
-        font-size: 16px;
-        transform: .3s ease;
-
-        &:hover {
-            background-color: rgb(56, 90, 194);
         }
     }
 }
@@ -129,4 +116,8 @@ body {
         transform: scale(1.8);
         opacity: 0;
     }
+}
+
+.button-default{
+    align-items: flex-start;
 }

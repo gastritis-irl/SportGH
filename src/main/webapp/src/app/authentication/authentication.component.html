@@ -26,8 +26,22 @@
             <input class="input" type="password" required [(ngModel)]="password" name="password">
             <span>Password</span>
         </label>
-        <button class="submit" type="submit" value="Sign-up">Sign-up</button>
-        <p class="signin">Already have an acount ? <a (click)="openModal(loginContent)">Signin</a> </p>
+        <div class="buttons">
+            <div>
+                <button class="button-primary button-default" type="submit" value="Sign-up">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20" fill="none"
+                        class="svg-icon">
+                        <g stroke-width="1.5" stroke-linecap="round">
+                            <circle r="7.5" cy="10" cx="10"></circle>
+                            <path d="m9.99998 7.5v5"></path>
+                            <path d="m7.5 9.99998h5"></path>
+                        </g>
+                    </svg>
+                    Sign up
+                </button>
+            </div>
+        </div>
+        <p class="signin">Already have an acount ? <a (click)="openModal(loginContent)">Sign in</a> </p>
     </form>
 </ng-template>
 
@@ -42,15 +56,22 @@
                     <path
                         d="M11.1667 7.61627H2.83333C1.68274 7.61627 0.75 8.54901 0.75 9.69961V15.9496C0.75 17.1002 1.68274 18.0329 2.83333 18.0329H11.1667C12.3173 18.0329 13.25 17.1002 13.25 15.9496V9.69961C13.25 8.54901 12.3173 7.61627 11.1667 7.61627Z"
                         stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                    <path
-                        d="M7.00001 1.36627C5.89494 1.36627 4.83513 1.80526 4.05373 2.58666C3.27233 3.36806 2.83334 4.42787 2.83334 5.53294V7.61627H11.1667V5.53294C11.1667 4.42787 10.7277 3.36806 9.94629 2.58666C9.16489 1.80526 8.10508 1.36627 7.00001 1.36627V1.36627Z"
-                        stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M2.83334 5.53294 A 4.16667 4.16667 0 1 1 11.1667 5.53294" stroke-width="1.4"
+                        stroke-linecap="round" stroke-linejoin="round" class="upper-part" />
                 </svg>
                 Login
             </button>
         </div>
         <div>
-            <button class="button-primary button-default" (click)="openModal(signupContent)">Sign up</button>
+            <button class="button-primary button-default" (click)="openModal(signupContent)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20" fill="none"
+                    class="svg-icon">
+                    <g stroke-width="1.5" stroke-linecap="round">
+                        <circle r="7.5" cy="10" cx="10"></circle>
+                        <path d="m9.99998 7.5v5"></path>
+                        <path d="m7.5 9.99998h5"></path>
+                    </g>
+                </svg>Sign up</button>
         </div>
     </div>
 </ng-template>

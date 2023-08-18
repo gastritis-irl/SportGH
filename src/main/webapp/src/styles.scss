@@ -85,6 +85,7 @@ $gap-buttons: 0.5em;
     .button-default {
         display: flex;
         flex-direction: row;
+        align-items: center;
         text-align: center;
         gap: $gap-buttons;
         padding: $padding-button-text;
@@ -95,13 +96,16 @@ $gap-buttons: 0.5em;
         &.button-secondary {
             height: $height-button;
             background-color: $color-btn-1;
-            color: $color-neutral-2;
-            stroke: $color-neutral-2;
+            color: $color-main-1;
+            stroke: $color-main-1;
 
             &:hover {
                 background-color: $color-btn-2;
                 color: $color-neutral-1;
                 stroke: $color-neutral-1;
+                .upper-part{
+                    animation: openUp 0.5s forwards;
+                }
             }
 
             .sign-in-icon {
@@ -113,11 +117,48 @@ $gap-buttons: 0.5em;
             height: $height-button;
             background-color: $color-btn-2;
             color: $color-neutral-1;
+            stroke: $color-neutral-1;
+            .svg-icon {
+                height: $height-sign-in-icon;
+            }
 
             &:hover {
                 background-color: $color-btn-1;
-                color: $color-neutral-2;
+                color: $color-main-1;
+
+                .svg-icon{
+                    animation: rotate 1.3s linear infinite;
+                    stroke: $color-main-1;
+                }
             }
         }
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(20deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(-20deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes openUp {
+    to {
+        transform: scale(0.9) rotate(-15deg);
     }
 }
