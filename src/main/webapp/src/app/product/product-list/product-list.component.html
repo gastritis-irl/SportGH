@@ -1,8 +1,15 @@
-<ul>
-    <li *ngFor="let product of products">
-        {{product.id}} - {{product.name}} - {{product.rentPrice}}<br>
-        Owner: {{product.userId}}<br>
-        Subcategory: {{product.subCategoryId}}<br>
-        <a routerLink="/products/{{product.id}}">More...</a>
-    </li>
-</ul>
+<div class="product-list-holder">
+    <h1 class="product-heading"></h1>   <!-- categoryName? (path? like: home > products > productName) -->
+    <div class="products">
+        <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
+            <img src="" class="products-icon" alt="IMG"/>
+            <div class="text-box">
+                <p class="product-description">
+                    {{ product.description }}
+                </p>
+            </div>
+            <p class="product-name">{{ product.name }}</p>
+            <p class="product-price">{{product.rentPrice}}</p>
+        </div>
+    </div>
+</div>
