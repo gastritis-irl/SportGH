@@ -58,9 +58,19 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({
         SQLIntegrityConstraintViolationException.class,
     })
-    protected ResponseEntity<Object> handleIntegrityConstraintViolation(RuntimeException e, WebRequest request) {
-        log.warn(e.getMessage());
-        return handleExceptionInternal(e, "Cannot delete item: delete sub items first",
+    protected ResponseEntity<Object> handleIntegrityConstraintViolation(SQLException e, WebRequest request) {
+        int errorCode = e.getErrorCode();
+
+        if (errorCode == 1451) {    // Error code: cannot delete because of a foreign key
+            return handleExceptionInternal(e, "Cannot delete item: delete sub items first",
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        }
+        if (errorCode == 1062) {    // Error code: duplicate entry
+            return handleExceptionInternal(e, "Item with this name already exists",
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        }
+
+        return handleExceptionInternal(e, e.getMessage(),
             new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
