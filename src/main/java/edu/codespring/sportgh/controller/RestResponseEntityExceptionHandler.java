@@ -25,6 +25,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler({
+        ConstraintViolationException.class,
+        IllegalArgumentException.class,
+    })
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
         MethodArgumentNotValidException ex,
@@ -45,46 +49,20 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler({
-        ConstraintViolationException.class,
-    })
-    protected ResponseEntity<Object> handleGeneralException(RuntimeException e, WebRequest request) {
-        log.warn(e.getMessage());
-        return handleExceptionInternal(e, e.getMessage(),
-            new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-    }
-
-    @ExceptionHandler({
         OptimisticLockingFailureException.class,
-    })
-    protected ResponseEntity<Object> handleServerError(RuntimeException e, WebRequest request) {
-        log.error("2:" + e.getMessage());
-        return handleExceptionInternal(e, e.getMessage(),
-            new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
-
-    @ExceptionHandler({
         DataException.class,
     })
-    protected ResponseEntity<Object> handleInvalidData(RuntimeException e, WebRequest request) {
-        log.error("3:" + e.getMessage());
+    protected ResponseEntity<Object> handleServerError(RuntimeException e, WebRequest request) {
+        log.error(e.getMessage());
         return handleExceptionInternal(e, e.getMessage(),
             new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
-
-    @ExceptionHandler({
-        IllegalArgumentException.class,
-    })
-    protected ResponseEntity<Object> handleIllegalArgument(RuntimeException e, WebRequest request) {
-        log.warn("4:" + e.getMessage());
-        return handleExceptionInternal(e, e.getMessage(),
-            new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({
         ServiceException.class,
     })
     protected ResponseEntity<Object> handleServiceException(RuntimeException e, WebRequest request) {
-        log.warn(this.getClass() + e.getMessage());
+        log.warn(e.getMessage());
         return handleExceptionInternal(e, e.getMessage(),
             new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
@@ -94,7 +72,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         UsernameNotFoundException.class,
     })
     protected ResponseEntity<Object> handleBadRequest(RuntimeException e, WebRequest request) {
-        log.warn("Bad request: {}", e.getMessage());
+        log.warn(e.getMessage());
         return handleExceptionInternal(e, e.getMessage(),
             new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
