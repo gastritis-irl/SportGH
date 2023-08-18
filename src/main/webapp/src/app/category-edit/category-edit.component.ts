@@ -21,10 +21,10 @@ export class CategoryEditComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getParam();
+        this.loadDataByParam();
     }
 
-    getParam(): void {
+    loadDataByParam(): void {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
