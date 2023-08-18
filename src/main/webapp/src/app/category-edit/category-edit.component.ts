@@ -72,7 +72,7 @@ export class CategoryEditComponent implements OnInit {
                 next: (resp: Category): void => {
                     this.router.navigate(['/admin/categories'])
                         .then((): void => {
-                            this.toastNotify.success(`Category (ID ${resp.id}) successfully created!`);
+                            this.toastNotify.success(`Category "${resp.name}" successfully created!`);
                         })
                         .catch((): void => {
                             this.toastNotify.error(`Error redirecting to route '/admin/categories`);
@@ -91,14 +91,14 @@ export class CategoryEditComponent implements OnInit {
                 next: (): void => {
                     this.router.navigate(['/admin/categories'])
                         .then((): void => {
-                            this.toastNotify.success(`Category (ID ${this.category.id}) successfully updated!`);
+                            this.toastNotify.success(`Category successfully updated!`);
                         })
                         .catch((): void => {
                             this.toastNotify.error(`Error redirecting to route /admin/categories`);
                         });
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error updating category (ID ${this.category.id}): ${error.error}`);
+                    this.toastNotify.error(`Error updating category: ${error.error}`);
                 }
             }
         );

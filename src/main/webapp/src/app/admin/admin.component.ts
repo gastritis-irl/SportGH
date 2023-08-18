@@ -40,14 +40,14 @@ export class AdminComponent implements OnInit {
                     this.categories.splice(index, 1);
                     this.router.navigate(['/admin/categories'])
                         .then((): void => {
-                            this.toastNotify.success(`Category (ID ${categoryId}) successfully deleted!`);
+                            this.toastNotify.success(`Category successfully deleted!`);
                         })
                         .catch((): void => {
                             this.toastNotify.error('Error redirecting to route /admin/categories');
                         });
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error deleting category (ID ${categoryId}): ${error.error}`);
+                    this.toastNotify.error(`Error deleting category: ${error.error}`);
                 }
             }
         );
