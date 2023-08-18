@@ -60,7 +60,7 @@
 </ng-template>
 
 <ng-container *ngIf="loggedInUserEmail; else notLoggedIn">
-    <div>Welcome {{loggedInUserEmail}}</div>
+    <div class="welcome-message">Welcome {{loggedInUserEmail}}</div>
 </ng-container>
 <ng-template #notLoggedIn>
     <div class="buttons">

@@ -4,6 +4,44 @@ body {
     font-family: $font-default;
 }
 
+$font-size-welconme-message: 20px;
+$padding-left-welcome-message: 2.5em;
+$height-nav-searchbar: 2.15em;
+$width-nav-searchbar: 100%;
+
+.welcome-message{
+    font-size: $font-size-welconme-message;
+    color: $color-main-1;
+    font-weight: $font-weight-bold;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: $padding-left-welcome-message;
+
+    &::before,
+    &::after {
+        position: absolute;
+        content: "";
+        height: $height-nav-searchbar;
+        width: $width-nav-searchbar;
+        border-radius: 50%;
+        left: 0px;
+        background-color: $color-main-1;
+    }
+
+    &::before {
+        width: 18px;
+        height: 18px;
+        background-color: $color-main-1;
+    }
+
+    &::after {
+        width: 18px;
+        height: 18px;
+        animation: pulse 1s linear infinite;
+    }
+}
+
 .form {
     display: flex;
     flex-direction: column;

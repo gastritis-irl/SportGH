@@ -1,29 +1,56 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
 import { Router } from '@angular/router';
-
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'sgh-authentication',
     templateUrl: './authentication.component.html',
     styleUrls: ['./authentication.component.scss']
 })
-
-export class AuthenticationComponent {
+export class AuthenticationComponent implements OnDestroy {
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
 
     loggedInUserEmail: string | null = null;
-
     email: string = '';
     password: string = '';
-    errorMessage: string = ''; // To display error messages
+    errorMessage: string = '';
 
-    constructor(private modalService: NgbModal, private userService: UserService, private router: Router) {}
+    private ngUnsubscribe = new Subject<void>();
+
+    constructor(
+        private modalService: NgbModal,
+        private userService: UserService,
+        private router: Router,
+        private afAuth: AngularFireAuth
+    ) {
+        this.afAuth.authState
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(user => {
+                if (user) {
+                    this.loggedInUserEmail = user.email;
+                } else {
+                    this.loggedInUserEmail = null;
+                }
+            });
+    }
+
+    ngOnDestroy(): void {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
+    }
 
     openModal(content: TemplateRef<string>): void {
+        this.closeModal(); // Close any open modal
         this.modalService.open(content, { centered: true, scrollable: true, animation: true });
+    }
+    
+    closeModal(): void {
+        this.modalService.dismissAll();
     }
 
     login(): void {
@@ -31,6 +58,7 @@ export class AuthenticationComponent {
             userObservable.subscribe({
                 next: () => {
                     this.loggedInUserEmail = this.email; // Store the logged-in email
+                    this.closeModal(); // Close the modal
                     this.router.navigate(['/home']);
                 },
                 error: (error) => {
