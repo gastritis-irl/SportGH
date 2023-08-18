@@ -42,43 +42,47 @@ export class AuthenticationComponent {
     }
 
     login(): void {
-        this.userService.signinWithFirebase(this.email, this.password).then(userObservable => {
-            userObservable.subscribe({
-                next: (): void => {
-                    this.loggedInUserEmail = this.email; // Store the logged-in email
-                    this.closeOffcanvas();
-                    this.router.navigate(['/'])
-                        .then((): void => {
-                            this.toastNotify.success(`Successfully logged in as ${this.email}`);
-                        })
-                        .catch((): void => {
-                            this.toastNotify.error('Error redirecting to home page.');
-                        });
-                },
-                error: (error): void => {
-                    this.toastNotify.warning(`${error}`);
-                }
+        this.userService.signinWithFirebase(this.email, this.password)
+            .then(userObservable => {
+                userObservable.subscribe({
+                    next: (): void => {
+                        this.loggedInUserEmail = this.email; // Store the logged-in email
+                        this.closeOffcanvas();
+                        this.router.navigate(['/'])
+                            .then((): void => {
+                                this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                            })
+                            .catch((): void => {
+                                this.toastNotify.error('Error redirecting to home page.');
+                            });
+                    },
+                    error: (error): void => {
+                        this.toastNotify.warning(`${error}`);
+                    }
+                });
+            })
+            .catch(error => {
+                this.toastNotify.warning(`${error}`);
             });
-        }).catch(error => {
-            this.toastNotify.warning(`${error}`);
-        });
     }
 
     register(): void {
-        this.userService.registerWithFirebase(this.email, this.password).then(userObservable => {
-            userObservable.subscribe({
-                next: (): void => {
-                    this.toastNotify.success('Registration successful');
-                    this.closeOffcanvas();
-                    this.openOffcanvas(this.loginContent);
-                },
-                error: (error): void => {
-                    this.toastNotify.warning(`${error}`);
-                }
+        this.userService.registerWithFirebase(this.email, this.password)
+            .then(userObservable => {
+                userObservable.subscribe({
+                    next: (): void => {
+                        this.toastNotify.success('Registration successful');
+                        this.closeOffcanvas();
+                        this.openOffcanvas(this.loginContent);
+                    },
+                    error: (error): void => {
+                        this.toastNotify.warning(`${error}`);
+                    }
+                });
+            })
+            .catch(error => {
+                this.toastNotify.warning(`${error}`);
             });
-        }).catch(error => {
-            this.toastNotify.warning(`${error}`);
-        });
     }
 
 }
