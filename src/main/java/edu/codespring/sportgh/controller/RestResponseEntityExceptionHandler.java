@@ -2,7 +2,6 @@ package edu.codespring.sportgh.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import edu.codespring.sportgh.service.ServiceException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.DataException;
@@ -42,6 +41,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         @NotNull HttpStatusCode status,
         @NotNull WebRequest request
     ) {
+        log.warn(ex.getMessage());
         ObjectMapper objectMapper = new ObjectMapper();
 
         ArrayNode jsonArray = ex.getFieldErrors().stream()
@@ -51,7 +51,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             .reduce(objectMapper.createArrayNode(), ArrayNode::add, ArrayNode::addAll);
         String jsonString = jsonArray.toString();
 
-        return handleExceptionInternal(ex, jsonString, headers, status, request);
+        return handleExceptionInternal(ex, jsonString, headers, HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({
@@ -77,17 +77,18 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({
         OptimisticLockingFailureException.class,
         DataException.class,
+        UnsupportedOperationException.class,
     })
     protected ResponseEntity<Object> handleServerError(RuntimeException e, WebRequest request) {
         log.error(e.toString());
-        return handleExceptionInternal(e, "There was a database error, please retry" ,
+        return handleExceptionInternal(e, "There was a server error, please retry",
             new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
     @ExceptionHandler({
-        ServiceException.class,
         BadCredentialsException.class,
         UsernameNotFoundException.class,
+        IllegalArgumentException.class,
     })
     protected ResponseEntity<Object> handleBadRequest(RuntimeException e, WebRequest request) {
         log.warn(e.toString());
@@ -100,7 +101,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     })
     protected ResponseEntity<Object> handleException(RuntimeException e, WebRequest request) {
         log.error("Unexpected exception: " + e);
-        return handleExceptionInternal(e, "There was a server error, please retry" ,
+        return handleExceptionInternal(e, "There was a server error, please retry",
             new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }

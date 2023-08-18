@@ -35,7 +35,7 @@ public class FirebaseServiceImpl implements FirebaseService {
             return new FirebaseTokenHolder(token);
         } catch (FirebaseAuthException e) {
             log.error("Invalid firebase token", e);
-            throw new ServiceException("Invalid firebase token", e);
+            throw new IllegalArgumentException("Invalid firebase token", e);
         }
     }
 

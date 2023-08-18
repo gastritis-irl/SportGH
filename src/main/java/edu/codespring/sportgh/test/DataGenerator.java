@@ -34,7 +34,7 @@ public class DataGenerator {
 
         try {
             initUsers(nrOfUsers);
-        } catch (ServiceException e) {
+        } catch (RuntimeException e) {
             log.error(e.getMessage());
         }
 
