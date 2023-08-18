@@ -4,7 +4,6 @@ import com.google.firebase.auth.*;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
 import edu.codespring.sportgh.security.FirebaseTokenHolder;
-import edu.codespring.sportgh.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -81,7 +80,7 @@ public class FirebaseServiceImpl implements FirebaseService {
             ListUsersPage listUsersPage = FirebaseAuth.getInstance().listUsers(null);
             for (ExportedUserRecord i : listUsersPage.getValues()) {
                 users.add(new User(
-                    UserUtil.extractUsernameFromEmail(i.getEmail()),
+                    i.getEmail(),
                     i.getEmail(),
                     "password", // we've set this password for every registered user in firebase
                     i.getUid(),
@@ -90,7 +89,7 @@ public class FirebaseServiceImpl implements FirebaseService {
                 );
             }
         } catch (FirebaseAuthException e) {
-            throw new ServiceException("[FbService] listUsers failed!", e);
+            throw new ServiceRuntimeException("[FbService] listUsers failed!", e);
         }
         return users;
     }
