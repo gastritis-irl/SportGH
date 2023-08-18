@@ -96,8 +96,7 @@ export class CategoryEditComponent implements OnInit {
                         });
                 },
                 error: (error): void => {
-                    console.error(error);
-                    this.toastNotify.error(`Error updating category (ID ${this.category.id}): ${error.message}`);
+                    this.toastNotify.error(`Error updating category (ID ${this.category.id}): ${error.error}`);
                 }
             }
         );

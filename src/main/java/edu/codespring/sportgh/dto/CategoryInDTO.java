@@ -13,7 +13,7 @@ public class CategoryInDTO {
     @NotNull(message = "Category name can't be empty")
     private String name;
 
-    @Size(min = 0, max = 1000, message = "Category description must be between 0-1000 characters")
+    @Size(max = 1000, message = "Category description must be between 0-1000 characters")
     private String description;
 
     private String imageURL;

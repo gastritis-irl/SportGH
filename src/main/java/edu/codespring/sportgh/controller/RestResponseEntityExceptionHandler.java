@@ -1,5 +1,7 @@
 package edu.codespring.sportgh.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import edu.codespring.sportgh.service.ServiceException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+
 @Slf4j
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -29,8 +32,16 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         @NotNull HttpStatusCode status,
         @NotNull WebRequest request
     ) {
-        log.warn(ex.getMessage());
-        return handleExceptionInternal(ex, ex.getMessage(), headers, status, request);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ArrayNode jsonArray = ex.getFieldErrors().stream()
+            .map(e -> objectMapper.createArrayNode()
+                .add(e.getField())
+                .add(e.getDefaultMessage()))
+            .reduce(objectMapper.createArrayNode(), ArrayNode::add, ArrayNode::addAll);
+        String jsonString = jsonArray.toString();
+
+        return handleExceptionInternal(ex, jsonString, headers, status, request);
     }
 
     @ExceptionHandler({
