@@ -16,7 +16,7 @@ export class ProductDetailsComponent implements OnInit {
     constructor(
         private productService: ProductService,
         private route: ActivatedRoute,
-        private toastNotify:ToastrService,
+        private toastNotify: ToastrService,
     ) {
     }
 
@@ -27,7 +27,8 @@ export class ProductDetailsComponent implements OnInit {
                     this.productId = params['productId'];
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error fetching data (productId): ${error}`);
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
                 }
             }
         );
@@ -38,7 +39,8 @@ export class ProductDetailsComponent implements OnInit {
                     this.product = data;
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error fetching data (product): ${error}`);
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
                 }
             }
         );

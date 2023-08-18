@@ -26,7 +26,7 @@ export class CategoryComponent implements OnInit {
                 },
                 error: (error): void => {
                     console.error(error);
-                    this.toastNotify.error('Error fetching data (categories)');
+                    this.toastNotify.error(`Error fetching data`);
                 }
             }
         );
