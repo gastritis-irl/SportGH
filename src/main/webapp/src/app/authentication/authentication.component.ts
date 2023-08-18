@@ -56,13 +56,11 @@ export class AuthenticationComponent {
                         });
                 },
                 error: (error): void => {
-                    console.error(`Login failed: ${error}`);
-                    this.toastNotify.warning(`Login failed ${error.message}`);
+                    this.toastNotify.warning(`${error}`);
                 }
             });
         }).catch(error => {
-            console.error(`Error in Firebase authentication ${error}`);
-            this.toastNotify.warning(`Login failed ${error.message}`);
+            this.toastNotify.warning(`${error}`);
         });
     }
 
@@ -71,16 +69,15 @@ export class AuthenticationComponent {
             userObservable.subscribe({
                 next: (): void => {
                     this.toastNotify.success('Registration successful');
+                    this.closeOffcanvas();
                     this.openOffcanvas(this.loginContent);
                 },
                 error: (error): void => {
-                    console.error(`Registration failed ${error}`);
-                    this.toastNotify.warning(`Registration failed ${error.message}`);
+                    this.toastNotify.warning(`${error}`);
                 }
             });
         }).catch(error => {
-            console.error(`Error in Firebase registration ${error}`);
-            this.toastNotify.warning(`Registration failed.\n${error.message}`);
+            this.toastNotify.warning(`${error}`);
         });
     }
 

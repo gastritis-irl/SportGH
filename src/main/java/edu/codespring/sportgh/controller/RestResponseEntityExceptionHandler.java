@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.DataTruncation;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+
 
 @Slf4j
 @ControllerAdvice
@@ -28,6 +32,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({
         ConstraintViolationException.class,
         IllegalArgumentException.class,
+        DataTruncation.class,
+        SQLException.class,
+
     })
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -46,6 +53,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         String jsonString = jsonArray.toString();
 
         return handleExceptionInternal(ex, jsonString, headers, status, request);
+    }
+
+    @ExceptionHandler({
+        SQLIntegrityConstraintViolationException.class,
+    })
+    protected ResponseEntity<Object> handleIntegrityConstraintViolation(RuntimeException e, WebRequest request) {
+        log.warn(e.getMessage());
+        return handleExceptionInternal(e, "Cannot delete item: delete sub items first",
+            new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({

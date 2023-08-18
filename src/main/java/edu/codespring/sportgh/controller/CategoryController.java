@@ -53,7 +53,7 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private ResponseEntity<CategoryOutDTO> save(CategoryInDTO categoryInDTO) {
+    private ResponseEntity<CategoryOutDTO> save(@Valid CategoryInDTO categoryInDTO) {
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
         categoryService.save(category);
         CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
@@ -74,7 +74,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryOutDTO> create(@RequestBody CategoryInDTO categoryInDTO) {
+    public ResponseEntity<CategoryOutDTO> create(@RequestBody @Valid CategoryInDTO categoryInDTO) {
         log.info("Creating category with name: {}.", categoryInDTO.getName());
         if (categoryInDTO.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

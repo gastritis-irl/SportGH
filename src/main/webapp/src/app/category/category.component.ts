@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from "./category.model";
 import {CategoryService} from "./category.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'sgh-category',
@@ -11,7 +12,10 @@ export class CategoryComponent implements OnInit {
 
     categories: Category[] = [];
 
-    constructor(private categoryService: CategoryService) {
+    constructor(
+        private categoryService: CategoryService,
+        private toastNotify:ToastrService
+    ) {
     }
 
     ngOnInit(): void {
@@ -21,7 +25,8 @@ export class CategoryComponent implements OnInit {
                     this.categories = data;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (categories):', error);
+                    console.error(error);
+                    this.toastNotify.error('Error fetching data (categories)');
                 }
             }
         );

@@ -36,7 +36,8 @@ export class CategoryEditComponent implements OnInit {
                     this.loadData(params['categoryId']);
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error fetching data (categoryId): ${error}`);
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
                 }
             }
         );
@@ -56,7 +57,8 @@ export class CategoryEditComponent implements OnInit {
                             this.category = data;
                         },
                         error: (error): void => {
-                            this.toastNotify.error(`Error fetching data (category with ID ${id}): ${error.message}`);
+                            console.error(error);
+                            this.toastNotify.error(`Error fetching data`);
                         }
                     }
                 );
@@ -77,7 +79,7 @@ export class CategoryEditComponent implements OnInit {
                         });
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error creating category: ${error.message}`);
+                    this.toastNotify.error(`Error creating category: ${error.error}`);
                 }
             }
         );

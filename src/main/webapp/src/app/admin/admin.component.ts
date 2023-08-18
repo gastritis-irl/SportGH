@@ -26,7 +26,8 @@ export class AdminComponent implements OnInit {
                     this.categories = data;
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error fetching data (categories): ${error}`);
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data (categories)`);
                 }
             }
         );
@@ -46,7 +47,7 @@ export class AdminComponent implements OnInit {
                         });
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error deleting category (ID ${categoryId}): ${error}`);
+                    this.toastNotify.error(`Error deleting category (ID ${categoryId}): ${error.error}`);
                 }
             }
         );

@@ -39,7 +39,7 @@ firebase.initializeApp(environment.firebaseConfig);
         NavbarComponent,
         BrowserAnimationsModule,
         ToastrModule.forRoot({
-            timeOut: 250000,
+            timeOut: 10000,
         }),
     ],
     providers: [],
