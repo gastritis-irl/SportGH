@@ -39,6 +39,17 @@ export class AuthenticationComponent implements OnDestroy {
             });
     }
 
+    logout(): void {
+        this.afAuth.signOut().then(() => {
+            this.loggedInUserEmail = null;  // Reset the logged-in email
+            alert('Logged out successfully');
+            this.router.navigate(['/home']);  // Redirect to home after logout
+        }).catch(error => {
+            console.error('Error during logout', error);
+            alert('Error during logout. Please try again.');
+        });
+    }
+
     ngOnDestroy(): void {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();

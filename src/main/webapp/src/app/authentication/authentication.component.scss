@@ -5,9 +5,9 @@ body {
 }
 
 $font-size-welconme-message: 20px;
-$padding-left-welcome-message: 2.5em;
-$height-nav-searchbar: 2.15em;
-$width-nav-searchbar: 100%;
+$padding-left-welcome-message: 1em;
+$padding-right-welcome-message: 2.5em;
+
 
 .welcome-message{
     font-size: $font-size-welconme-message;
@@ -17,29 +17,7 @@ $width-nav-searchbar: 100%;
     display: flex;
     align-items: center;
     padding-left: $padding-left-welcome-message;
-
-    &::before,
-    &::after {
-        position: absolute;
-        content: "";
-        height: $height-nav-searchbar;
-        width: $width-nav-searchbar;
-        border-radius: 50%;
-        left: 0px;
-        background-color: $color-main-1;
-    }
-
-    &::before {
-        width: 18px;
-        height: 18px;
-        background-color: $color-main-1;
-    }
-
-    &::after {
-        width: 18px;
-        height: 18px;
-        animation: pulse 1s linear infinite;
-    }
+    padding-right: $padding-right-welcome-message;
 }
 
 .form {
@@ -147,17 +125,7 @@ $width-nav-searchbar: 100%;
     }
 }
 
-@keyframes pulse {
-    from {
-        transform: scale(0.9);
-        opacity: 1;
-    }
 
-    to {
-        transform: scale(1.8);
-        opacity: 0;
-    }
-}
 
 .button-default{
     align-items: flex-start;

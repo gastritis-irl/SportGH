@@ -1,5 +1,15 @@
 /* Reset some HTML elements to avoid different browser interpretations */
-body, h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li {
     margin: 0;
     padding: 0;
 }
@@ -19,7 +29,12 @@ body {
 }
 
 /* Headers */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: #333;
     margin-bottom: 10px;
 }
@@ -38,7 +53,8 @@ p {
 }
 
 /* Lists */
-ul, ol {
+ul,
+ol {
     margin-bottom: 10px;
     padding-left: 20px;
 }
@@ -66,6 +82,7 @@ $button-text-size: $size-default;
 // Item Size
 $height-button: 100%;
 $height-sign-in-icon: 100%;
+$width-button: 100%;
 
 // Margin/Border/Padding
 $border-radius-button: 2em;
@@ -73,6 +90,18 @@ $padding-button-text: 0.35em 1em;
 
 // Gap
 $gap-buttons: 0.5em;
+
+$btn-width: 30px;
+$btn-height: 30px;
+$btn-border-radius: 50%;
+$btn-border-radius-hover: 40px;
+$btn-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+$btn-bg-color: $color-main-1;
+$btn-width-hover: 125px;
+$sign-svg-width: 17px;
+$btn-text-font-size: $button-text-size;
+$btn-text-font-weight: $font-weight-bold;
+$btn-transition-duration: .3s;
 
 .buttons {
     font-family: $font-default;
@@ -83,8 +112,6 @@ $gap-buttons: 0.5em;
     gap: $gap-buttons;
 
     .button-default {
-        display: flex;
-        flex-direction: row;
         align-items: center;
         text-align: center;
         gap: $gap-buttons;
@@ -103,7 +130,8 @@ $gap-buttons: 0.5em;
                 background-color: $color-btn-2;
                 color: $color-neutral-1;
                 stroke: $color-neutral-1;
-                .upper-part{
+
+                .upper-part {
                     animation: openUp 0.5s forwards;
                 }
             }
@@ -113,11 +141,113 @@ $gap-buttons: 0.5em;
             }
         }
 
+        &.button-logout {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: $btn-width;
+            height: $btn-height;
+            border: none;
+            border-radius: $btn-border-radius;
+            cursor: pointer;
+            position: relative;
+
+            transition-duration: $btn-transition-duration;
+            box-shadow: $btn-shadow;
+            background-color: $btn-bg-color;
+
+            &::before,
+            &::after {
+                position: absolute;
+                height: $height-nav-searchbar;
+                width: $width-nav-searchbar;
+                border-radius: 50%;
+                left: 0px;
+                background-color: $color-main-1;
+            }
+
+            &::before {
+                width: 18px;
+                height: 18px;
+                background-color: $color-main-1;
+                z-index: 1; // Position it above the button's background
+            }
+
+            &::after {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 3px solid $btn-bg-color;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                animation: pulse 1s linear infinite;
+                z-index: 2; // Position it above the icon
+            }
+
+            .sign-leave {
+                height: 100%; 
+                width: 30px;
+                transition-duration: $btn-transition-duration;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute; // Position the icon on top of the pulsating dot
+                top: 0;
+                left: 0;
+                background-color: transparent; // Ensure the SVG's background is transparent
+
+                svg {
+                    width: $sign-svg-width;
+                }
+
+                svg path {
+                    fill: white;
+                    width: $sign-svg-width;
+                    height: $sign-svg-width;
+                }
+            }
+
+            .text {
+                position: relative; // Changed from absolute
+                width: 70%; // Adjust this percentage to your liking
+                opacity: 0;
+                color: white;
+                font-size: $btn-text-font-size;
+                font-weight: $btn-text-font-weight;
+                transition-duration: $btn-transition-duration;
+                flex-grow: 1; // Allow the text to occupy the remaining space
+                padding-left: 10px; // Provide some space between the icon and the text
+            }
+
+            &:hover {
+                width: $btn-width-hover;
+                border-radius: $btn-border-radius-hover;
+                transition-duration: $btn-transition-duration;
+
+                .sign-leave {
+                    width: 30%;
+                    transition-duration: $btn-transition-duration;
+                    padding-left: 3%;
+                }
+
+                .text {
+                    opacity: 1;
+                }
+            }
+
+            &:active {
+                transform: translate(2px, 2px);
+            }
+        }
+
         &.button-primary {
             height: $height-button;
             background-color: $color-btn-2;
             color: $color-neutral-1;
             stroke: $color-neutral-1;
+
             .svg-icon {
                 height: $height-sign-in-icon;
             }
@@ -126,7 +256,7 @@ $gap-buttons: 0.5em;
                 background-color: $color-btn-1;
                 color: $color-main-1;
 
-                .svg-icon{
+                .svg-icon {
                     animation: rotate 1.3s linear infinite;
                     stroke: $color-main-1;
                 }
@@ -160,5 +290,17 @@ $gap-buttons: 0.5em;
 @keyframes openUp {
     to {
         transform: scale(0.9) rotate(-15deg);
+    }
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(0.9);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(1.8);
+        opacity: 0;
     }
 }
