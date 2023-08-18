@@ -242,14 +242,14 @@ public class DataGenerator {
         }
     }
 
-    public void saveProduct(String name, String description, Double rendPrice, String subCategoryName, User user) {
+    public void saveProduct(String name, String description, Double rentPrice, String subCategoryName, User user) {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
         if (subCategory != null && !productService.existsByNameAndUser(name, user)) {
             productService.save(new Product(
                     true,
                     name,
                     description,
-                    rendPrice,
+                    rentPrice,
                     subCategory,
                     user
             ));
