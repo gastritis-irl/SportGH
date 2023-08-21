@@ -1,6 +1,7 @@
 package edu.codespring.sportgh.service;
 
 import edu.codespring.sportgh.model.Product;
+import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Collection<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public boolean existsByNameAndUser(String name, User user) {
+        return productRepository.existsByNameAndUser(name, user);
     }
 
     @Override
