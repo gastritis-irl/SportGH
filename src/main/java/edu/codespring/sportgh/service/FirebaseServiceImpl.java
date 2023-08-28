@@ -1,16 +1,16 @@
 package edu.codespring.sportgh.service;
 
 import com.google.firebase.auth.*;
+import edu.codespring.sportgh.exception.ServiceAuthenticationException;
+import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
 import edu.codespring.sportgh.security.FirebaseTokenHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class FirebaseServiceImpl implements FirebaseService {
             return new FirebaseTokenHolder(token);
         } catch (FirebaseAuthException e) {
             log.error("Invalid firebase token", e);
-            throw new IllegalArgumentException("Invalid firebase token", e);
+            throw new ServiceAuthenticationException("Invalid firebase token", e);
         }
     }
 
@@ -47,7 +47,7 @@ public class FirebaseServiceImpl implements FirebaseService {
         try {
             firebaseToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
         } catch (FirebaseAuthException e) {
-            throw new BadCredentialsException("Failed to verify the Firebase ID token", e);
+            throw new ServiceAuthenticationException("Failed to verify the Firebase ID token", e);
         }
 
         // Extract the UID from the FirebaseToken
@@ -56,7 +56,7 @@ public class FirebaseServiceImpl implements FirebaseService {
         // Look up the user in your own database using the UID
         User user = userRepository.findByFirebaseUid(uid);
         if (user == null) {
-            throw new UsernameNotFoundException("User not found with Firebase UID: " + uid);
+            throw new ServiceAuthenticationException("User not found with Firebase UID: " + uid);
         }
 
         // Create a UserDetails object using Spring Security's User class
@@ -89,7 +89,7 @@ public class FirebaseServiceImpl implements FirebaseService {
                 );
             }
         } catch (FirebaseAuthException e) {
-            throw new ServiceRuntimeException("[FbService] listUsers failed!", e);
+            throw new ServiceException("[FbService] listUsers failed!", e);
         }
         return users;
     }

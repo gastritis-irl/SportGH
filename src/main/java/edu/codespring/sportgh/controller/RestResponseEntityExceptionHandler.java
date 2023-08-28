@@ -2,6 +2,7 @@ package edu.codespring.sportgh.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import edu.codespring.sportgh.exception.ServiceAuthenticationException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.DataException;
@@ -11,8 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -58,18 +57,18 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         SQLIntegrityConstraintViolationException.class,
     })
     protected ResponseEntity<Object> handleIntegrityConstraintViolation(SQLException e, WebRequest request) {
-        log.error(e.toString());
         int errorCode = e.getErrorCode();
 
         if (errorCode == 1451) {    // Error code: cannot delete because of a foreign key
             return handleExceptionInternal(e, "Cannot delete item: delete sub items first",
-                new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
         }
         if (errorCode == 1062) {    // Error code: duplicate entry
             return handleExceptionInternal(e, "Item with this name already exists",
-                new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
         }
 
+        log.error(e.toString());
         return handleExceptionInternal(e, "There was a database error, please retry",
             new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
@@ -86,9 +85,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler({
-        BadCredentialsException.class,
-        UsernameNotFoundException.class,
-        IllegalArgumentException.class,
+        ServiceAuthenticationException.class,
     })
     protected ResponseEntity<Object> handleBadRequest(RuntimeException e, WebRequest request) {
         log.warn(e.toString());
@@ -100,7 +97,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         Exception.class,
     })
     protected ResponseEntity<Object> handleException(RuntimeException e, WebRequest request) {
-        log.error("Unexpected exception: " + e);
+        log.error("Unexpected exception", e);
         return handleExceptionInternal(e, "There was a server error, please retry",
             new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }

@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.test;
 
+import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.Category;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.SubCategory;
@@ -31,7 +32,7 @@ public class DataGenerator {
         try {
             initUsers();
             log.info("Generating users: OK");
-        } catch (ServiceRuntimeException e) {
+        } catch (ServiceException e) {
             log.warn("Generating users: FAILED");
             log.warn(e.getMessage());
         }
@@ -39,7 +40,7 @@ public class DataGenerator {
         try {
             initCategories();
             log.info("Generating categories: OK");
-        } catch (ServiceRuntimeException e) {
+        } catch (ServiceException e) {
             log.warn("Generating categories: FAILED");
             log.warn(e.getMessage());
         }
@@ -47,7 +48,7 @@ public class DataGenerator {
         try {
             initSubCategories();
             log.info("Generating subcategories: OK");
-        } catch (ServiceRuntimeException e) {
+        } catch (ServiceException e) {
             log.warn("Generating subcategories: FAILED");
             log.warn(e.getMessage());
         }
@@ -55,7 +56,7 @@ public class DataGenerator {
         try {
             initProducts();
             log.info("Generating products: OK");
-        } catch (ServiceRuntimeException e) {
+        } catch (ServiceException e) {
             log.warn("Generating products: FAILED");
             log.warn(e.getMessage());
         }
@@ -171,7 +172,7 @@ public class DataGenerator {
     public void initProducts() {
         User user = userService.findByUsername("akos@test.com");
         if (user == null) {
-            throw new ServiceRuntimeException("User doesn't exist.");
+            throw new ServiceException("User doesn't exist.");
         }
 
         saveProduct(
