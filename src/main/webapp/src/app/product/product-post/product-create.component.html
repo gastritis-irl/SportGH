@@ -4,9 +4,9 @@
         <div class="general-data-heading"></div>
         <form class="general-data-form" (ngSubmit)="createProduct()">
             <input class="product-name" type="text" name="name" [(ngModel)]="product.name"><br>
-            <select class="product-category" *ngFor="let category of categories">
+            <select class="product-category">
                 <!--[(ngModel)]="product.subCategoryId"-->
-                <option value="{{category.id}}">{{category.name}}</option>
+                <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
             </select><br>
             <textarea class="product-description" type="text" name="description"
                       [(ngModel)]="product.description"></textarea><br>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+// import { ToastrService } from 'ngx-toastr';
 import { Category } from '../../category/category.model';
 import { CategoryService } from '../../category/category.service';
 
@@ -19,7 +19,7 @@ export class ProductCreateComponent implements OnInit {
         private productService: ProductService,
         private categoryService: CategoryService,
         private router: Router,
-        private toastNotify: ToastrService,
+        // private toastNotify: ToastrService,
     ) {
     }
 
@@ -31,7 +31,7 @@ export class ProductCreateComponent implements OnInit {
                 },
                 error: (error): void => {
                     console.error(error);
-                    this.toastNotify.error(`Error loading categories`);
+                    // this.toastNotify.error(`Error loading categories`);
                 }
             }
         );
@@ -44,11 +44,11 @@ export class ProductCreateComponent implements OnInit {
                     this.router.navigate([`/products/${resp.id}`])
                         .catch((error): void => {
                             console.error(error);
-                            this.toastNotify.info('Error redirecting to page');
+                            // this.toastNotify.info('Error redirecting to page');
                         });
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error creating product: ${error}`);
+                    // this.toastNotify.error(`Error creating product: ${error}`);
                 }
             }
         );
