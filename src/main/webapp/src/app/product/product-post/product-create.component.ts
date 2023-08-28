@@ -48,6 +48,7 @@ export class ProductCreateComponent implements OnInit {
                         });
                 },
                 error: (error): void => {
+                    console.error(error);
                     // this.toastNotify.error(`Error creating product: ${error}`);
                 }
             }
