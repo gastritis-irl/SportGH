@@ -1,15 +1,22 @@
 <div class="product-list-holder">
-    <h1 class="product-heading"></h1>   <!-- categoryName? (path? like: home > products > productName) -->
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
             <img src="" class="product-icon" alt="IMG"/>
-            <div class="text-box2">
-                <p class="product-description">
-                    {{ product.description }}
-                </p>
-            </div>
             <p class="product-name">{{ product.name }}</p>
-            <p class="product-price">{{product.rentPrice}}</p>
+            <div class="product-description">
+                {{ product.description }}
+                {{ product.description }}
+                {{ product.description }}
+                {{ product.description }}
+                {{ product.description }}
+                {{ product.description }}
+                {{ product.description }}
+                {{ product.description }}
+                {{ product.description }}
+            </div>
+            <p class="product-price">
+                Price from {{product.rentPrice}} RON
+            </p>
         </div>
     </div>
 </div>
