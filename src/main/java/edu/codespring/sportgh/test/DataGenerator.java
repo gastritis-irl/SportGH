@@ -37,29 +37,14 @@ public class DataGenerator {
             log.warn(e.getMessage());
         }
 
-        try {
-            initCategories();
-            log.info("Generating categories: OK");
-        } catch (ServiceException e) {
-            log.warn("Generating categories: FAILED");
-            log.warn(e.getMessage());
-        }
+        initCategories();
+        log.info("Generating categories: OK");
 
-        try {
-            initSubCategories();
-            log.info("Generating subcategories: OK");
-        } catch (ServiceException e) {
-            log.warn("Generating subcategories: FAILED");
-            log.warn(e.getMessage());
-        }
+        initSubCategories();
+        log.info("Generating subcategories: OK");
 
-        try {
-            initProducts();
-            log.info("Generating products: OK");
-        } catch (ServiceException e) {
-            log.warn("Generating products: FAILED");
-            log.warn(e.getMessage());
-        }
+        initProducts();
+        log.info("Generating products: OK");
     }
 
     public void initUsers() {

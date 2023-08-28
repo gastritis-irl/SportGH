@@ -57,12 +57,12 @@ export class AuthenticationComponent {
                             });
                     },
                     error: (error): void => {
-                        this.toastNotify.warning(`${error}`);
+                        this.toastNotify.warning(`Error logging in`);
                     }
                 });
             })
             .catch(error => {
-                this.toastNotify.warning(`${error}`);
+                this.toastNotify.warning(`Error logging in`);
             });
     }
 
@@ -76,12 +76,12 @@ export class AuthenticationComponent {
                         this.openOffcanvas(this.loginContent);
                     },
                     error: (error): void => {
-                        this.toastNotify.warning(`${error}`);
+                        this.toastNotify.warning(`Error registering`);
                     }
                 });
             })
             .catch(error => {
-                this.toastNotify.warning(`${error}`);
+                this.toastNotify.warning(`Error registering`);
             });
     }
 
