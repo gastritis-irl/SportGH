@@ -1,0 +1,25 @@
+<div>
+    <div class="heading"></div>
+    <div class="general-data">
+        <div class="general-data-heading"></div>
+        <form class="general-data-form" (ngSubmit)="createProduct()">
+            <input class="product-name" type="text" name="name" [(ngModel)]="product.name"><br>
+            <select class="product-category" *ngFor="let category of categories">
+                <!--[(ngModel)]="product.subCategoryId"-->
+                <option value="{{category.id}}">{{category.name}}</option>
+            </select><br>
+            <textarea class="product-description" type="text" name="description"
+                      [(ngModel)]="product.description"></textarea><br>
+            <div class="product-images">
+                [IMAGE UPLOAD]
+            </div>
+            <div class="product-location">
+                [LOCATION]
+            </div>
+            <div class="product-availability">
+                [AVAILABILITY]
+            </div>
+            <button type="submit">Publish</button>
+        </form>
+    </div>
+</div>
