@@ -83,7 +83,13 @@ export class AuthenticationComponent implements OnDestroy {
         this.userService.signinWithFirebase(this.email, this.password).then(userObservable => {
             userObservable.subscribe({
                 next: () => {
-                    this.loggedInUserEmail = this.email; // Store the logged-in email
+                    // Use the email directly here before clearing the form
+                    this.loggedInUserEmail = this.email;
+
+                    // Clear the form
+                    this.email = '';
+                    this.password = '';
+
                     this.closeModal(); // Close the modal
                     this.router.navigate(['/home']);
                 },
@@ -104,6 +110,13 @@ export class AuthenticationComponent implements OnDestroy {
         this.userService.registerWithFirebase(this.email, this.password).then(userObservable => {
             userObservable.subscribe({
                 next: () => {
+
+                    // Use the email directly here before clearing the form
+                    this.loggedInUserEmail = this.email;
+
+                    // Clear the form
+                    this.email = '';
+                    this.password = '';
                     alert('Registration successful. You are now logged in.');
                     this.loggedInUserEmail = this.email; // Store the logged-in email
                     this.closeModal(); // Close the modal
