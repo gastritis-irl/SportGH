@@ -1,16 +1,17 @@
 @import '../../style-variables.scss';
 
-body {
-    font-family: $font-default;
-}
-
-$font-size-welconme-message: 20px;
+$font-size-welcome-message: 20px;
 $padding-left-welcome-message: 1em;
 $padding-right-welcome-message: 2.5em;
 
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
 
-.welcome-message{
-    font-size: $font-size-welconme-message;
+.welcome-message {
+    font-size: $font-size-welcome-message;
     color: $color-main-1;
     font-weight: $font-weight-bold;
     position: relative;
@@ -18,6 +19,7 @@ $padding-right-welcome-message: 2.5em;
     align-items: center;
     padding-left: $padding-left-welcome-message;
     padding-right: $padding-right-welcome-message;
+    margin-right: auto; // Push it to the left, leaving space for the button
 }
 
 .form {
@@ -127,6 +129,11 @@ $padding-right-welcome-message: 2.5em;
 
 
 
-.button-default{
+.button-default {
     align-items: flex-start;
+    flex-shrink: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
 }

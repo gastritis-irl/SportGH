@@ -1,3 +1,9 @@
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+/* Importing global variables */
+@import './style-variables.scss';
+
 /* Reset some HTML elements to avoid different browser interpretations */
 body,
 h1,
@@ -15,7 +21,7 @@ li {
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: $font-default;
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
@@ -63,12 +69,6 @@ li {
     margin-bottom: 5px;
 }
 
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
-
-/* Importing global variables */
-@import './style-variables.scss';
-
 /*
 Global classes
  */
@@ -87,6 +87,7 @@ $width-button: 100%;
 // Margin/Border/Padding
 $border-radius-button: 2em;
 $padding-button-text: 0.35em 1em;
+$padding-button-icon: 5%;
 
 // Gap
 $gap-buttons: 0.5em;
@@ -156,10 +157,12 @@ $btn-transition-duration: .3s;
             box-shadow: $btn-shadow;
             background-color: $btn-bg-color;
 
+            align-self: center;
+
             &::before,
             &::after {
                 position: absolute;
-                height: $height-nav-searchbar;
+                height: $btn-height;
                 width: $width-nav-searchbar;
                 border-radius: 50%;
                 left: 0px;
@@ -181,9 +184,8 @@ $btn-transition-duration: .3s;
                 border: 3px solid $btn-bg-color;
                 border-radius: 50%;
                 width: 30px;
-                height: 30px;
+                height: $btn-height;
                 animation: pulse 1s linear infinite;
-                z-index: 2; // Position it above the icon
             }
 
             .sign-leave {
@@ -211,7 +213,7 @@ $btn-transition-duration: .3s;
 
             .text {
                 position: relative; // Changed from absolute
-                width: 70%; // Adjust this percentage to your liking
+                width: 70%;
                 opacity: 0;
                 color: white;
                 font-size: $btn-text-font-size;
@@ -243,6 +245,7 @@ $btn-transition-duration: .3s;
         }
 
         &.button-primary {
+            width: $width-button;
             height: $height-button;
             background-color: $color-btn-2;
             color: $color-neutral-1;
@@ -250,6 +253,9 @@ $btn-transition-duration: .3s;
 
             .svg-icon {
                 height: $height-sign-in-icon;
+                padding-left: 0px;
+                justify-content: flex-end;
+                flex-shrink: 0;
             }
 
             &:hover {

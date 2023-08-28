@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'sgh-authentication',
@@ -12,6 +13,15 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./authentication.component.scss']
 })
 export class AuthenticationComponent implements OnDestroy {
+
+    emailControl = new FormControl('', [
+        Validators.required,
+        Validators.email
+    ]);
+    passwordControl = new FormControl('', [
+        Validators.required,
+        Validators.minLength(8)
+    ]);
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
 
@@ -27,18 +37,8 @@ export class AuthenticationComponent implements OnDestroy {
         private userService: UserService,
         private router: Router,
         private afAuth: AngularFireAuth
-    ) {
-        this.afAuth.authState
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe(user => {
-                if (user) {
-                    this.loggedInUserEmail = user.email;
-                } else {
-                    this.loggedInUserEmail = null;
-                }
-            });
-    }
-
+    ) { }
+    
     logout(): void {
         this.afAuth.signOut().then(() => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
@@ -50,9 +50,24 @@ export class AuthenticationComponent implements OnDestroy {
         });
     }
 
+    ngOnInit(): void {
+        this.afAuth.authState
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(user => {
+                if (user) {
+                    this.loggedInUserEmail = user.email;
+                } else {
+                    this.loggedInUserEmail = null;
+                }
+            });
+    }
+
     ngOnDestroy(): void {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
+        // this.ngUnsubscribe.unsubscribe();
+        this.ngUnsubscribe.pipe(takeUntil(this.ngUnsubscribe));
+        this.closeModal(); // Close any open modal
     }
 
     openModal(content: TemplateRef<string>): void {
@@ -89,8 +104,10 @@ export class AuthenticationComponent implements OnDestroy {
         this.userService.registerWithFirebase(this.email, this.password).then(userObservable => {
             userObservable.subscribe({
                 next: () => {
-                    alert('Registration successful');
-                    this.openModal(this.loginContent);
+                    alert('Registration successful. You are now logged in.');
+                    this.loggedInUserEmail = this.email; // Store the logged-in email
+                    this.closeModal(); // Close the modal
+                    this.router.navigate(['/home']); // Navigate to home page
                 },
                 error: (error) => {
                     console.error('Registration failed', error);
@@ -104,5 +121,4 @@ export class AuthenticationComponent implements OnDestroy {
             this.errorMessage = 'An error occurred during registration. Please try again later.';
         });
     }
-
 }
