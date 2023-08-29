@@ -29,9 +29,9 @@ $hover-icon-height: $product-icon-height;
 $card-min-width-small: 90%;
 $card-max-width-small: 100%;
 $card-min-width-medium: 200px;
-$card-max-width-medium: 300px;
+$card-max-width-medium: 250px;
 $card-min-width-large: 250px;
-$card-max-width-large: 400px;
+$card-max-width-large: 280px;
 
 // Define breakpoints
 $breakpoint-small: 480px;
@@ -85,6 +85,8 @@ $breakpoint-large: 1024px;
 
             &:hover {
                 box-shadow: $hover-box-shadow;
+                background-color: $color-main-3;
+                cursor: pointer;
             }
 
             &:hover > .product-icon {
