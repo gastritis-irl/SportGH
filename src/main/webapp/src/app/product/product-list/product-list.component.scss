@@ -1,42 +1,18 @@
 @import '../../../style-variables.scss';
 
-// Colors
-$color-main: $color-main-1;
-$product-background: $color-neutral-1;
-$product-border-color: #D4D2E3;
-
-// Fonts
-$font-weight-bold: 700;
-
 // Sizes
-$heading-font-size: 2.25em;
-$heading-line-height: 2.875em;
-$name-font-size: 1.25em;
-$name-line-height: 1.25em;
 $price-font-size: 1em;
-$product-gap: 5%;
+$product-gap: 15px;
 $product-border-width: 0.03125em;
 $text-box-height: 6em;
 $product-item-width: 20%;
-$product-icon-height: 10em;
+$product-icon-height: $hover-icon-height;
 $product-name-padding: 5%;
 $price-padding: 2%;
-$text-box-padding: 5%;
-$hover-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-$hover-icon-height: $product-icon-height;
 
-// Min and Max width for cards
-$card-min-width-small: 90%;
-$card-max-width-small: 100%;
-$card-min-width-medium: 200px;
+// Min-max card sizes
 $card-max-width-medium: 250px;
-$card-min-width-large: 250px;
 $card-max-width-large: 280px;
-
-// Define breakpoints
-$breakpoint-small: 480px;
-$breakpoint-medium: 768px;
-$breakpoint-large: 1024px;
 
 // Classes
 .product-list-holder {
@@ -62,9 +38,9 @@ $breakpoint-large: 1024px;
             justify-content: center;
             gap: $product-gap;
             width: $product-item-width;
-            background: $product-background;
+            background: $color-neutral-1;
             border-radius: 10px;
-            border: $product-border-width solid $product-border-color;
+            border: $product-border-width solid $border-color;
             overflow: hidden;
             transition: 0.2s ease-in-out;
             margin-bottom: $product-gap;
@@ -140,7 +116,7 @@ $breakpoint-large: 1024px;
             }
 
             .product-name {
-                color: $color-main;
+                color: $color-main-1;
                 font-size: $name-font-size;
                 font-family: $font-default;
                 font-weight: $font-weight-bold;
