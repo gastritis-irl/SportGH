@@ -5,6 +5,7 @@ import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductOutDTO> save(@RequestBody ProductInDTO productInDTO) {
+    public ResponseEntity<ProductOutDTO> save(@RequestBody @Valid ProductInDTO productInDTO) {
         Product product = productMapper.dtoToProduct(productInDTO);
         productService.save(product);
         ProductOutDTO productOutDTO = productMapper.productToOut(product);

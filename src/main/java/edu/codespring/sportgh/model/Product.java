@@ -12,7 +12,7 @@ import lombok.*;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    private boolean available;
+    private boolean available = true;
 
     @Column(length = 50)
     private String name;

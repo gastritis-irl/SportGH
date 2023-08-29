@@ -50,12 +50,37 @@ li {
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 
+/* Toast notification default style */
+@import 'ngx-toastr/toastr';
+
 /* Importing global variables */
 @import './style-variables.scss';
 
 /*
 Global classes
  */
+
+
+/* ----------Toast---------- */
+.toast-success {
+    border-radius: 15px;
+    background-color: green;
+}
+
+.toast-info {
+    border-radius: 15px;
+    background-color: cornflowerblue;
+}
+
+.toast-warning {
+    border-radius: 15px;
+    background-color: orange;
+}
+
+.toast-error {
+    border-radius: 15px;
+    background-color: red;
+}
 
 
 /* ----------Sign in/Sign up button---------- */
