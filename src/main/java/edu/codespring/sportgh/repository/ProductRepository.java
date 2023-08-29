@@ -10,12 +10,7 @@ import edu.codespring.sportgh.model.User;
 
 public interface ProductRepository extends BaseRepository<Product> {
 
-    @Query(
-            "select p from Product p"
-                    + " join SubCategory sc on sc=p.subCategory"
-                    + " join Category c on c=sc.category"
-                    + " where c.id=:categoryId"
-    )
+    @Query("select p from Product p where p.subCategory.category.id = :categoryId")
     Collection<Product> findByCategoryId(@Param("categoryId") Long categoryId);
 
     boolean existsByNameAndUser(String name, User user);
