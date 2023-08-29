@@ -6,7 +6,9 @@ $product-gap: 15px;
 $product-border-width: 0.03125em;
 $text-box-height: 6em;
 $product-item-width: 20%;
+$product-item-border-radius: 10px;
 $product-icon-height: $hover-icon-height;
+$product-icon-padding: 15px;
 
 // Min-max card sizes
 $card-max-width-medium: 250px;
@@ -35,7 +37,7 @@ $card-max-width-large: 280px;
             gap: $product-gap;
             width: $product-item-width;
             background: $color-neutral-1;
-            border-radius: 10px;
+            border-radius: $product-item-border-radius;
             border: $product-border-width solid $border-color;
             overflow: hidden;
             transition: 0.2s ease-in-out;
@@ -61,18 +63,9 @@ $card-max-width-large: 280px;
                 cursor: pointer;
             }
 
-            &:hover > .product-icon {
-                height: $hover-icon-height;
-            }
-
             @media (max-width: $breakpoint-small) {
                 width: 100%;
                 margin-bottom: 1.5em;
-
-                .product-name,
-                .product-heading {
-                    font-size: 0.75em;
-                }
             }
 
             @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
@@ -82,7 +75,7 @@ $card-max-width-large: 280px;
             .product-icon {
                 width: 100%;
                 height: $product-icon-height;
-                border-radius: 10px 10px 0 0;
+                padding: $product-icon-padding;
                 object-fit: contain;
             }
 
