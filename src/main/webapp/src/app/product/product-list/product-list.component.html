@@ -1,14 +1,23 @@
 <div class="product-list-holder">
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
-            <img src="https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg" class="product-icon" alt="IMG"/>
+            <img src="https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg" class="product-icon"
+                 alt="IMG"/>
             <p class="product-name">{{ product.name }}</p>
             <div class="product-description">
-                {{ product.description }}
+                {{ product.description }}{{ product.description }}{{ product.description }}{{ product.description }}{{ product.description }}{{ product.description }}
             </div>
-            <p class="product-price">
-                Price from {{product.rentPrice}} RON
-            </p>
+            <div class="product-price">
+<!--                <p class="product-price-h">-->
+<!--                    Price from {{product.rentPrice}} RON / HOUR-->
+<!--                </p>-->
+                <p class="product-price-d">
+                    Price from {{product.rentPrice}} RON / DAY
+                </p>
+<!--                <p class="product-price-w">-->
+<!--                    Price from {{product.rentPrice}} RON / WEEK-->
+<!--                </p>-->
+            </div>
         </div>
     </div>
 </div>
