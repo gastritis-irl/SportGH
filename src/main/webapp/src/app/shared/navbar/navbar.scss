@@ -157,5 +157,12 @@ body {
                 text-decoration: none;
             }
         }
+
+        .nav-link-item {
+            a {
+                color: $color-neutral-2;
+                text-decoration: none;
+            }
+        }
     }
 }
