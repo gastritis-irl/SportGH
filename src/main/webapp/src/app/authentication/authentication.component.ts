@@ -45,11 +45,15 @@ export class AuthenticationComponent implements OnDestroy {
     logout(): void {
         this.afAuth.signOut().then(() => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
-            alert('Logged out successfully');
-            this.router.navigate(['/home']);  // Redirect to home after logout
+            this.toastNotify.success('Successfully logged out');
+            //Reload the component
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                this.router.navigate(['/']);
+            }
+            );
         }).catch(error => {
             console.error('Error during logout', error);
-            alert('Error during logout. Please try again.');
+            this.toastNotify.warning('Error logging out');
         });
     }
 
