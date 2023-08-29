@@ -2,11 +2,6 @@
 Global variables
  */
 
-// Breakpoints
-$breakpoint-small: 480px;
-$breakpoint-medium: 768px;
-$breakpoint-large: 1024px;
-
 // Img URLs
 $nav-header-logo-icon: url("Info.svg");
 
@@ -19,6 +14,13 @@ $color-main-3: #F2F1FA;
 $color-main-4: #b8b8be;
 $color-btn-1: $color-neutral-1;
 $color-btn-2: $color-main-1;
+$border-color: #D4D2E3;
+$font-color-1: $color-main-1;
+$font-color-2: $color-neutral-1;
+$toast-success-bg-color: rgb(156, 171, 199);
+$toast-info-bg-color: cornflowerblue;
+$toast-warning-bg-color: rgb(180, 107, 48);
+$toast-error-bg-color: rgb(133, 55, 55);
 
 // Fonts
 $font-default: 'DM Sans', sans-serif;
@@ -29,6 +31,14 @@ $size-h1: 175%;
 $size-h2: 130%;
 $size-h3: 115%;
 $size-default: 100%;
+
+// Define breakpoints
+$breakpoint-small: 480px;
+$breakpoint-medium: 768px;
+$breakpoint-large: 1024px;
+
+$height-nav-searchbar: 2.15em;
+$width-nav-searchbar: 100%;
 
 /* ----------Card variables---------- */
 

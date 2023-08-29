@@ -8,18 +8,15 @@ import { AppComponent } from "./app.component";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from "./home/home.module";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
-import { ProductModule } from './product/product.module'
+import { ProductModule } from './product/product.module';
 import { FormsModule } from '@angular/forms';
-
-import * as firebase from 'firebase/app';
-import {environment} from "./environment";
+import { environment } from "./environment";
 import { CategoryModule } from './category/category.module';
 import { AdminModule } from './admin/admin.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-firebase.initializeApp(environment.firebaseConfig);
-
 
 @NgModule({
     declarations: [
@@ -27,6 +24,9 @@ firebase.initializeApp(environment.firebaseConfig);
         UserComponent,
     ],
     imports: [
+        NavbarComponent,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireAuthModule,
         FormsModule,
         BrowserModule,
         AppRoutingModule,
@@ -43,9 +43,7 @@ firebase.initializeApp(environment.firebaseConfig);
         }),
     ],
     providers: [],
-    bootstrap: [
-        AppComponent
-    ]
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

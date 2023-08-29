@@ -1,20 +1,34 @@
-@import "../../style-variables.scss";
+@import '../../style-variables.scss';
+
+// Colors
+$category-background: $color-neutral-1;
 
 // Sizes
+$heading-font-size: 2.25em;
+$heading-line-height: 2.875em;
+$name-font-size: 1.25em;
+$name-line-height: 1.25em;
 $category-gap: 5%;
 $category-border-width: 0.03125em;
 $text-box-height: 40%;
 $category-item-width: 20%;
-$category-icon-height: $hover-icon-height;
+$category-icon-height: 10em;
 $category-name-padding: 5%;
+$text-box-padding: 5%;
 $hover-transform: scale(1.04) rotate(-1deg);
+$hover-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 $hover-bg-color: $border-color;
+$hover-icon-height: $category-icon-height;
 $hover-icon-filter: blur(1px);
 $hover-icon-opacity: 0.4;
 
 // Min and Max width for cards
-$card-max-width-medium: 300px;
-$card-max-width-large: 400px;
+$card-min-width-small: 90%; // 90% of the viewport for mobile screens
+$card-max-width-small: 100%; // 100% for mobile screens to take the full width
+$card-min-width-medium: 200px; // 200px for tablet screens
+$card-max-width-medium: 300px; // 300px for tablet screens
+$card-min-width-large: 250px; // 250px for desktop screens
+$card-max-width-large: 400px; // 400px for desktop screens
 
 // Animation
 $animation-duration: 3s;
@@ -29,7 +43,7 @@ $animation-translation: -20px;
         font-family: $font-default;
         font-weight: $font-weight-bold;
         line-height: $heading-line-height;
-        text-align: start;
+        text-align: flex-start;
         margin-bottom: $category-gap;
         padding-top: $category-name-padding;
     }
@@ -55,7 +69,7 @@ $animation-translation: -20px;
         justify-content: center;
         gap: $category-gap;
         width: $category-item-width;
-        background: $color-neutral-1;
+        background: $category-background;
         border-radius: 10px; // Adjusting the bottom border-radius to 0
         border: $category-border-width solid $border-color;
         overflow: hidden;
@@ -108,12 +122,13 @@ $animation-translation: -20px;
             left: 0;
             right: 0;
             opacity: 0;
+            display: bottom;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             transition: 0.2s ease-in-out;
             z-index: 2;
-            padding: $item-padding;
+            padding: $text-box-padding;
             width: 100%;
             height: $text-box-height;
             overflow-y: scroll;
@@ -136,7 +151,7 @@ $animation-translation: -20px;
             }
         }
 
-        &:hover > .category-icon {
+        &:hover>.category-icon {
             height: $hover-icon-height;
             filter: $hover-icon-filter;
             opacity: $hover-icon-opacity;
