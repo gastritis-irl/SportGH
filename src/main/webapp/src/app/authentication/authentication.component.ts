@@ -81,8 +81,8 @@ export class AuthenticationComponent implements OnDestroy {
                     // Use the email directly here before clearing the form
                     this.loggedInUserEmail = this.email;
 
-                    this.closeModal(); // Close the modal
                     this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                    this.closeModal(); // Close the modal
                     },
                 error: (error): void => {
                     console.log(error);
