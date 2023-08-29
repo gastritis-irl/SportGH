@@ -2,6 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -18,10 +19,14 @@ export class AuthenticationComponent {
 
     email: string = '';
     password: string = '';
-    errorMessage: string = ''; // To display error messages
     isOffcanvasOpen: boolean = false;
 
-    constructor(private offcanvasService: NgbOffcanvas, private userService: UserService, private router: Router) {
+    constructor(
+        private offcanvasService: NgbOffcanvas,
+        private userService: UserService,
+        private router: Router,
+        private toastNotify: ToastrService,
+    ) {
     }
 
     openOffcanvas(content: TemplateRef<string>): void {
@@ -37,44 +42,51 @@ export class AuthenticationComponent {
     }
 
     login(): void {
-        this.userService.signinWithFirebase(this.email, this.password).then(userObservable => {
-            userObservable.subscribe({
-                next: () => {
-                    this.loggedInUserEmail = this.email; // Store the logged-in email
-                    this.closeOffcanvas();
-                    this.router.navigate(['/']);
-                },
-                error: (error) => {
-                    console.error('Login failed', error);
-                    alert('Login failed' + error.message);
-                    this.errorMessage = 'Login failed. Please try again.';
-                }
+        this.userService.signinWithFirebase(this.email, this.password)
+            .then(userObservable => {
+                userObservable.subscribe({
+                    next: (): void => {
+                        this.loggedInUserEmail = this.email; // Store the logged-in email
+                        this.closeOffcanvas();
+                        this.router.navigate(['/'])
+                            .then((): void => {
+                                this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                            })
+                            .catch((): void => {
+                                this.toastNotify.error('Error redirecting to home page.');
+                            });
+                    },
+                    error: (error): void => {
+                        console.log(error);
+                        this.toastNotify.warning(`Error logging in`);
+                    }
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                this.toastNotify.warning(`Error logging in`);
             });
-        }).catch(error => {
-            console.error('Error in Firebase authentication', error);
-            alert('Login failed' + error.message);
-            this.errorMessage = 'An error occurred during login. Please try again later.';
-        });
     }
 
     register(): void {
-        this.userService.registerWithFirebase(this.email, this.password).then(userObservable => {
-            userObservable.subscribe({
-                next: () => {
-                    alert('Registration successful');
-                    this.openOffcanvas(this.loginContent);
-                },
-                error: (error) => {
-                    console.error('Registration failed', error);
-                    alert('Registration failed' + error.message);
-                    this.errorMessage = 'Registration failed. Please try again.';
-                }
+        this.userService.registerWithFirebase(this.email, this.password)
+            .then(userObservable => {
+                userObservable.subscribe({
+                    next: (): void => {
+                        this.toastNotify.success('Registration successful');
+                        this.closeOffcanvas();
+                        this.openOffcanvas(this.loginContent);
+                    },
+                    error: (error): void => {
+                        console.log(error);
+                        this.toastNotify.warning(`Error registering`);
+                    }
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                this.toastNotify.warning(`Error registering`);
             });
-        }).catch(error => {
-            console.error('Error in Firebase registration', error);
-            alert('Registration failed.\n' + error.message);
-            this.errorMessage = 'An error occurred during registration. Please try again later.';
-        });
     }
 
 }

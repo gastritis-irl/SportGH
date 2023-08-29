@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from './user.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'sgh-user',
@@ -10,7 +11,10 @@ export class UserComponent implements OnInit {
 
     users: User[] = [];
 
-    constructor(private userService: UserService) {
+    constructor(
+        private userService: UserService,
+        private toastNotify: ToastrService,
+    ) {
     }
 
     ngOnInit(): void {
@@ -24,7 +28,8 @@ export class UserComponent implements OnInit {
                     this.users = response;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (users):', error);
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
                 },
             }
         );

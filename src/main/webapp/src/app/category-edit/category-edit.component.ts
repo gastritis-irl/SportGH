@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../category/category.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Category } from '../category/category.model';
+import { ToastrService } from 'ngx-toastr';
 
 type ClickHandlerFunction = () => void;
 
@@ -12,12 +13,16 @@ type ClickHandlerFunction = () => void;
 })
 export class CategoryEditComponent implements OnInit {
 
-    id: number = 0;
     category: Category = {};
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
 
-    constructor(private categoryService: CategoryService, private router: Router, private route: ActivatedRoute) {
+    constructor(
+        private categoryService: CategoryService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private toastNotify: ToastrService,
+    ) {
     }
 
     ngOnInit(): void {
@@ -31,7 +36,8 @@ export class CategoryEditComponent implements OnInit {
                     this.loadData(params['categoryId']);
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (categoryId):', error);
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
                 }
             }
         );
@@ -42,16 +48,17 @@ export class CategoryEditComponent implements OnInit {
             if (param === 'new') {
                 this.clickHandlerFunction = this.createCategory;
             }
-            this.id = parseInt(param);
-            if (!isNaN(this.id)) {
+            const id: number = parseInt(param);
+            if (!isNaN(id)) {
                 this.clickHandlerFunction = this.updateCategory;
-                this.categoryService.getById(this.id).subscribe(
+                this.categoryService.getById(id).subscribe(
                     {
                         next: (data: Category): void => {
                             this.category = data;
                         },
                         error: (error): void => {
-                            alert(`Error fetching data (category with ID ${this.id}): ` + error);
+                            console.error(error);
+                            this.toastNotify.error(`Error fetching data`);
                         }
                     }
                 );
@@ -64,10 +71,15 @@ export class CategoryEditComponent implements OnInit {
             {
                 next: (resp: Category): void => {
                     this.router.navigate(['/admin/categories'])
-                        .then(() => alert(`Category (ID ${resp.id}) successfully created!`));
+                        .then((): void => {
+                            this.toastNotify.success(`Category "${resp.name}" successfully created!`);
+                        })
+                        .catch((): void => {
+                            this.toastNotify.error(`Error redirecting to route '/admin/categories`);
+                        });
                 },
                 error: (error): void => {
-                    alert('Error creating category: status code:' + error.status);
+                    this.toastNotify.error(`Error creating category: ${error.error}`);
                 }
             }
         );
@@ -78,10 +90,15 @@ export class CategoryEditComponent implements OnInit {
             {
                 next: (): void => {
                     this.router.navigate(['/admin/categories'])
-                        .then(() => alert(`Category (ID ${this.category.id}) successfully updated!`));
+                        .then((): void => {
+                            this.toastNotify.success(`Category successfully updated!`);
+                        })
+                        .catch((): void => {
+                            this.toastNotify.error(`Error redirecting to route /admin/categories`);
+                        });
                 },
                 error: (error): void => {
-                    alert(`Error updating category (ID ${this.category.id}): status code:` + error.status);
+                    this.toastNotify.error(`Error updating category: ${error.error}`);
                 }
             }
         );

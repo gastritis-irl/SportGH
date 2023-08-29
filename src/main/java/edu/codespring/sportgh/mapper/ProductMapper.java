@@ -32,7 +32,6 @@ public abstract class ProductMapper {
     @Mapping(source = "subCategoryId", target = "subCategory.id")
     @Mapping(source = "subCategoryName", target = "subCategory.name")
     @Mapping(source = "userId", target = "user.id")
-    @Mapping(source = "username", target = "user.username")
     public abstract Product dtoToProduct(ProductInDTO productInDTO);
 
     @AfterMapping

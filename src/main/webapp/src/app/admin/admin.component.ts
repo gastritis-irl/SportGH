@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../category/category.service';
 import { Category } from '../category/category.model';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'sgh-admin',
@@ -11,7 +12,11 @@ export class AdminComponent implements OnInit {
 
     categories: Category[] = [];
 
-    constructor(private categoryService: CategoryService, private router: Router) {
+    constructor(
+        private categoryService: CategoryService,
+        private router: Router,
+        private toastNotify: ToastrService,
+    ) {
     }
 
     ngOnInit(): void {
@@ -21,7 +26,8 @@ export class AdminComponent implements OnInit {
                     this.categories = data;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (categories):', error);
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
                 }
             }
         );
@@ -33,10 +39,15 @@ export class AdminComponent implements OnInit {
                 next: (): void => {
                     this.categories.splice(index, 1);
                     this.router.navigate(['/admin/categories'])
-                        .then(() => alert(`Category (ID ${categoryId}) successfully deleted!`));
+                        .then((): void => {
+                            this.toastNotify.success(`Category successfully deleted!`);
+                        })
+                        .catch((): void => {
+                            this.toastNotify.error('Error redirecting to route /admin/categories');
+                        });
                 },
                 error: (error): void => {
-                    alert(`Error deleting category (ID ${categoryId}): ` + error);
+                    this.toastNotify.error(`Error deleting category: ${error.error}`);
                 }
             }
         );
