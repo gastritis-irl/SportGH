@@ -20,6 +20,7 @@ export class ProductCreateComponent implements OnInit {
     categoryId: number = 0;
     subcategories: Subcategory[] = [];
     subcategoryDropdownDisabled: boolean = true;
+    formBtnDisabled: boolean = true;
 
     constructor(
         private productService: ProductService,
@@ -42,6 +43,14 @@ export class ProductCreateComponent implements OnInit {
                 }
             }
         );
+    }
+
+    checkForm(): void {
+        let filled: boolean = true;
+        let inputIsCorrect: boolean = true;
+        if (filled && inputIsCorrect) {
+            this.formBtnDisabled = false;
+        }
     }
 
     getSubcategoriesByCategoryId(): void {

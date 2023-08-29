@@ -49,7 +49,9 @@
                 </div>
             </div>
             <div class="publish-btn-holder buttons">
-                <button class="button-primary button-default publish-btn" type="submit">Publish</button>
+                <button [disabled]="formBtnDisabled" class="button-primary button-default publish-btn" type="submit">
+                    Publish
+                </button>
             </div>
         </form>
     </div>
