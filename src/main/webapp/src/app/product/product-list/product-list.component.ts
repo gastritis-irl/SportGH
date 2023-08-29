@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 
@@ -10,7 +11,9 @@ export class ProductListComponent implements OnInit {
 
     @Input() products: Product[] = [];
 
-    constructor() {
+    constructor(
+        private toastNotify: ToastrService,
+    ) {
     }
 
     ngOnInit(): void {
