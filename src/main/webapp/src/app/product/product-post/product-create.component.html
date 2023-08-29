@@ -1,34 +1,56 @@
-<div>
-    <div class="heading"></div>
+<div class="product-create-div">
+    <div class="heading">Upload product</div>
     <div class="general-data">
         <div class="general-data-heading"></div>
         <form class="general-data-form" (ngSubmit)="createProduct()">
-            <label class="product-name-lbl">Product name</label><br>
-            <input class="product-name" type="text" name="name" [(ngModel)]="product.name"><br>
-            <label class="product-category-lbl">Category</label><br>
-            <select class="product-category" [(ngModel)]="categoryId" name="categoryId">
-                <option *ngFor="let category of categories" value="{{category.id}}"
-                        (click)="getSubcategoriesByCategoryId()">{{category.name}}</option>
-            </select><br>
-            <label class="product-subcategory-lbl">Subcategory</label><br>
-            <select class="product-subcategory" [disabled]="subcategoryDropdownDisabled"
-                    [(ngModel)]="product.subCategoryId" name="subcategoryId">
-                <option *ngFor="let subcategory of subcategories"
-                        value="{{subcategory.id}}">{{subcategory.name}}</option>
-            </select>
-            <label class="product-description-lbl">Product description</label><br>
-            <textarea class="product-description" type="text" name="description"
-                      [(ngModel)]="product.description"></textarea><br>
-            <div class="product-images">
-                [IMAGE UPLOAD]
+            <div class="details form-part">
+                <div class="heading">Details</div>
+                <div>
+                    <label class="form-part-label">Product name</label><br>
+                    <input class="product-name form-part-input" type="text" name="name" [(ngModel)]="product.name"><br>
+                </div>
+                <div>
+                    <label class="form-part-label">Category</label><br>
+                    <select class="product-category form-part-input" [(ngModel)]="categoryId" name="categoryId">
+                        <option *ngFor="let category of categories" value="{{category.id}}"
+                                (click)="getSubcategoriesByCategoryId()">{{category.name}}</option>
+                    </select><br>
+                </div>
+                <div>
+                    <label class="form-part-label">Subcategory</label><br>
+                    <select class="product-subcategory form-part-input" [disabled]="subcategoryDropdownDisabled"
+                            [(ngModel)]="product.subCategoryId" name="subcategoryId">
+                        <option *ngFor="let subcategory of subcategories"
+                                value="{{subcategory.id}}">{{subcategory.name}}</option>
+                    </select><br>
+                </div>
+                <div>
+                    <label class="form-part-label">Product description</label><br>
+                    <textarea class="product-description form-part-input" type="text" name="description"
+                              [(ngModel)]="product.description"></textarea><br>
+                </div>
             </div>
-            <div class="product-location">
-                [LOCATION]
+            <div class="images form-part">
+                <div class="heading">Images</div>
+                <div class="product-images">
+                    [IMAGE UPLOAD]
+                </div>
             </div>
-            <div class="product-availability">
-                [AVAILABILITY]
+            <div class="location form-part">
+                <div class="heading">Location</div>
+                <div class="product-location">
+                    [LOCATION]
+                </div>
             </div>
-            <button type="submit">Publish</button>
+            <div class="availability form-part">
+                <div class="heading">Availability</div>
+                <div class="product-availability">
+                    [AVAILABILITY]
+                </div>
+            </div>
+            <div>
+                <button class="publish-btn" type="submit">Publish</button>
+            </div>
         </form>
     </div>
 </div>

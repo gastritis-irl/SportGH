@@ -11,6 +11,7 @@ import { SubcategoryService } from '../../subcategory/subcategory.service';
 @Component({
     selector: 'sgh-product-post',
     templateUrl: './product-create.component.html',
+    styleUrls: [ './product-create.component.scss' ],
 })
 export class ProductCreateComponent implements OnInit {
 
