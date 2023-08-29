@@ -72,7 +72,6 @@ export class AuthenticationComponent implements OnDestroy {
     ngOnDestroy(): void {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
-        // this.ngUnsubscribe.unsubscribe();
         this.ngUnsubscribe.pipe(takeUntil(this.ngUnsubscribe));
         this.closeModal(); // Close any open modal
     }
