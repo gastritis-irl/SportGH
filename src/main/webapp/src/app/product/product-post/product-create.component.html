@@ -3,11 +3,20 @@
     <div class="general-data">
         <div class="general-data-heading"></div>
         <form class="general-data-form" (ngSubmit)="createProduct()">
+            <label class="product-name-lbl">Product name</label><br>
             <input class="product-name" type="text" name="name" [(ngModel)]="product.name"><br>
-            <select class="product-category">
-                <!--[(ngModel)]="product.subCategoryId"-->
-                <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+            <label class="product-category-lbl">Category</label><br>
+            <select class="product-category" [(ngModel)]="categoryId" name="categoryId">
+                <option *ngFor="let category of categories" value="{{category.id}}"
+                        (click)="getSubcategoriesByCategoryId()">{{category.name}}</option>
             </select><br>
+            <label class="product-subcategory-lbl">Subcategory</label><br>
+            <select class="product-subcategory" [disabled]="subcategoryDropdownDisabled"
+                    [(ngModel)]="product.subCategoryId" name="subcategoryId">
+                <option *ngFor="let subcategory of subcategories"
+                        value="{{subcategory.id}}">{{subcategory.name}}</option>
+            </select>
+            <label class="product-description-lbl">Product description</label><br>
             <textarea class="product-description" type="text" name="description"
                       [(ngModel)]="product.description"></textarea><br>
             <div class="product-images">

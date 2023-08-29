@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
-// import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { Category } from '../../category/category.model';
 import { CategoryService } from '../../category/category.service';
+import { Subcategory } from '../../subcategory/subcategory.model';
+import { SubcategoryService } from '../../subcategory/subcategory.service';
 
 @Component({
     selector: 'sgh-product-post',
@@ -14,12 +16,16 @@ export class ProductCreateComponent implements OnInit {
 
     product: Product = {};
     categories: Category[] = [];
+    categoryId: number = 0;
+    subcategories: Subcategory[] = [];
+    subcategoryDropdownDisabled: boolean = true;
 
     constructor(
         private productService: ProductService,
         private categoryService: CategoryService,
+        private subcategoryService: SubcategoryService,
         private router: Router,
-        // private toastNotify: ToastrService,
+        private toastNotify: ToastrService,
     ) {
     }
 
@@ -31,7 +37,23 @@ export class ProductCreateComponent implements OnInit {
                 },
                 error: (error): void => {
                     console.error(error);
-                    // this.toastNotify.error(`Error loading categories`);
+                    this.toastNotify.error(`Error loading categories`);
+                }
+            }
+        );
+    }
+
+    getSubcategoriesByCategoryId(): void {
+        this.subcategoryService.getByCategoryId(this.categoryId).subscribe(
+            {
+                next: (data: Subcategory[]): void => {
+                    this.subcategories = data;
+                    console.log(data, this.categoryId);
+                    this.subcategoryDropdownDisabled = false;
+                },
+                error: (error): void => {
+                    console.error(error);
+                    this.toastNotify.error(`Error loading subcategories`);
                 }
             }
         );
@@ -41,15 +63,15 @@ export class ProductCreateComponent implements OnInit {
         this.productService.create(this.product).subscribe(
             {
                 next: (resp: Product): void => {
-                    this.router.navigate([`/products/${resp.id}`])
-                        .catch((error): void => {
+                    this.router.navigate([ `/products/${resp.id}` ])
+                        .catch((error: string): void => {
                             console.error(error);
-                            // this.toastNotify.info('Error redirecting to page');
+                            this.toastNotify.info('Error redirecting to page');
                         });
                 },
                 error: (error): void => {
                     console.error(error);
-                    // this.toastNotify.error(`Error creating product: ${error}`);
+                    this.toastNotify.error(`Error creating product: ${error}`);
                 }
             }
         );
