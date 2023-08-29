@@ -117,17 +117,17 @@ $padding-button-icon: 5%;
 // Gap
 $gap-buttons: 0.5em;
 
-$btn-width: 30px;
-$btn-height: 30px;
-$btn-border-radius: 50%;
-$btn-border-radius-hover: 40px;
-$btn-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-$btn-bg-color: $color-main-1;
-$btn-width-hover: 125px;
+$logout-btn-width: 30px;
+$logout-btn-height: 30px;
+$logout-btn-border-radius: 50%;
+$logout-btn-border-radius-hover: 40px;
+$logout-btn-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+$logout-btn-bg-color: $color-main-1;
+$logout-btn-width-hover: 125px;
 $sign-svg-width: 17px;
-$btn-text-font-size: $button-text-size;
-$btn-text-font-weight: $font-weight-bold;
-$btn-transition-duration: .3s;
+$logout-btn-text-font-size: $button-text-size;
+$logout-btn-text-font-weight: $font-weight-bold;
+$logout-btn-transition-duration: .3s;
 
 .buttons {
     font-family: $font-default;
@@ -171,23 +171,23 @@ $btn-transition-duration: .3s;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            width: $btn-width;
-            height: $btn-height;
+            width: $logout-btn-width;
+            height: $logout-btn-height;
             border: none;
-            border-radius: $btn-border-radius;
+            border-radius: $logout-btn-border-radius;
             cursor: pointer;
             position: relative;
 
-            transition-duration: $btn-transition-duration;
-            box-shadow: $btn-shadow;
-            background-color: $btn-bg-color;
+            transition-duration: $logout-btn-transition-duration;
+            box-shadow: $logout-btn-shadow;
+            background-color: $logout-btn-bg-color;
 
             align-self: center;
 
             &::before,
             &::after {
                 position: absolute;
-                height: $btn-height;
+                height: $logout-btn-height;
                 width: $width-nav-searchbar;
                 border-radius: 50%;
                 left: 0px;
@@ -206,17 +206,17 @@ $btn-transition-duration: .3s;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                border: 3px solid $btn-bg-color;
+                border: 3px solid $logout-btn-bg-color;
                 border-radius: 50%;
                 width: 30px;
-                height: $btn-height;
+                height: $logout-btn-height;
                 animation: pulse 1s linear infinite;
             }
 
             .sign-leave {
                 height: 100%;
                 width: 30px;
-                transition-duration: $btn-transition-duration;
+                transition-duration: $logout-btn-transition-duration;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -241,21 +241,21 @@ $btn-transition-duration: .3s;
                 width: 70%;
                 opacity: 0;
                 color: white;
-                font-size: $btn-text-font-size;
-                font-weight: $btn-text-font-weight;
-                transition-duration: $btn-transition-duration;
+                font-size: $logout-btn-text-font-size;
+                font-weight: $logout-btn-text-font-weight;
+                transition-duration: $logout-btn-transition-duration;
                 flex-grow: 1; // Allow the text to occupy the remaining space
                 padding-left: 10px; // Provide some space between the icon and the text
             }
 
             &:hover {
-                width: $btn-width-hover;
-                border-radius: $btn-border-radius-hover;
-                transition-duration: $btn-transition-duration;
+                width: $logout-btn-width-hover;
+                border-radius: $logout-btn-border-radius-hover;
+                transition-duration: $logout-btn-transition-duration;
 
                 .sign-leave {
                     width: 30%;
-                    transition-duration: $btn-transition-duration;
+                    transition-duration: $logout-btn-transition-duration;
                     padding-left: 3%;
                 }
 

@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -15,15 +14,6 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./authentication.component.scss']
 })
 export class AuthenticationComponent implements OnDestroy {
-
-    emailControl = new FormControl('', [
-        Validators.required,
-        Validators.email
-    ]);
-    passwordControl = new FormControl('', [
-        Validators.required,
-        Validators.minLength(8)
-    ]);
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
 
@@ -46,11 +36,6 @@ export class AuthenticationComponent implements OnDestroy {
         this.afAuth.signOut().then(() => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
             this.toastNotify.success('Successfully logged out');
-            //Reload the component
-            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-                this.router.navigate(['/']);
-            }
-            );
         }).catch(error => {
             console.error('Error during logout', error);
             this.toastNotify.warning('Error logging out');
@@ -83,6 +68,10 @@ export class AuthenticationComponent implements OnDestroy {
 
     closeModal(): void {
         this.modalService.dismissAll();
+
+        // Clear the form
+        this.email = '';
+        this.password = '';
     }
 
     login(): void {
@@ -92,9 +81,6 @@ export class AuthenticationComponent implements OnDestroy {
                     // Use the email directly here before clearing the form
                     this.loggedInUserEmail = this.email;
 
-                    // Clear the form
-                    this.email = '';
-                    this.password = '';
                     this.closeModal(); // Close the modal
                     this.toastNotify.success(`Successfully logged in as ${this.email}`);
                     },
@@ -117,11 +103,8 @@ export class AuthenticationComponent implements OnDestroy {
                     // Use the email directly here before clearing the form
                     this.loggedInUserEmail = this.email;
 
-                    // Clear the form
-                    this.email = '';
-                    this.password = '';
+                    
                     this.toastNotify.success('Registration successful');
-                    this.loggedInUserEmail = this.email; // Store the logged-in email
                     this.closeModal(); // Close the modal
                 },
                 error: (error): void => {

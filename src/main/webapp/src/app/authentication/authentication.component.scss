@@ -3,11 +3,13 @@
 $font-size-welcome-message: 20px;
 $padding-left-welcome-message: 1em;
 $padding-right-welcome-message: 2.5em;
+$btn-height: 100%;
 
 .buttons {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    height: $btn-height;
 }
 
 .welcome-message {
