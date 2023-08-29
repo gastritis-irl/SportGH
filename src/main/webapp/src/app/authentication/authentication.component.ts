@@ -6,6 +6,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
     selector: 'sgh-authentication',
@@ -26,9 +28,9 @@ export class AuthenticationComponent implements OnDestroy {
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
 
     loggedInUserEmail: string | null = null;
+
     email: string = '';
     password: string = '';
-    errorMessage: string = '';
 
     private ngUnsubscribe = new Subject<void>();
 
@@ -36,9 +38,10 @@ export class AuthenticationComponent implements OnDestroy {
         private modalService: NgbModal,
         private userService: UserService,
         private router: Router,
-        private afAuth: AngularFireAuth
+        private afAuth: AngularFireAuth,
+        private toastNotify: ToastrService,
     ) { }
-    
+
     logout(): void {
         this.afAuth.signOut().then(() => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
@@ -74,7 +77,7 @@ export class AuthenticationComponent implements OnDestroy {
         this.closeModal(); // Close any open modal
         this.modalService.open(content, { centered: true, scrollable: true, animation: true });
     }
-    
+
     closeModal(): void {
         this.modalService.dismissAll();
     }
@@ -89,20 +92,17 @@ export class AuthenticationComponent implements OnDestroy {
                     // Clear the form
                     this.email = '';
                     this.password = '';
-
                     this.closeModal(); // Close the modal
-                    this.router.navigate(['/home']);
-                },
-                error: (error) => {
-                    console.error('Login failed', error);
-                    alert('Login failed' + error.message);
-                    this.errorMessage = 'Login failed. Please try again.';
+                    this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                    },
+                error: (error): void => {
+                    console.log(error);
+                    this.toastNotify.warning(`Error logging in`);
                 }
             });
         }).catch(error => {
-            console.error('Error in Firebase authentication', error);
-            alert('Login failed' + error.message);
-            this.errorMessage = 'An error occurred during login. Please try again later.';
+            console.log(error);
+            this.toastNotify.warning(`Error logging in`);
         });
     }
 
@@ -117,21 +117,19 @@ export class AuthenticationComponent implements OnDestroy {
                     // Clear the form
                     this.email = '';
                     this.password = '';
-                    alert('Registration successful. You are now logged in.');
+                    this.toastNotify.success('Registration successful');
                     this.loggedInUserEmail = this.email; // Store the logged-in email
                     this.closeModal(); // Close the modal
-                    this.router.navigate(['/home']); // Navigate to home page
                 },
-                error: (error) => {
-                    console.error('Registration failed', error);
-                    alert('Registration failed' + error.message);
-                    this.errorMessage = 'Registration failed. Please try again.';
+                error: (error): void => {
+                    console.log(error);
+                    this.toastNotify.warning(`Error registering`);
                 }
             });
         }).catch(error => {
-            console.error('Error in Firebase registration', error);
-            alert('Registration failed.\n' + error.message);
-            this.errorMessage = 'An error occurred during registration. Please try again later.';
+            console.log(error);
+            this.toastNotify.warning(`Error registering`);
         });
     }
+
 }

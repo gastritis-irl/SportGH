@@ -1,10 +1,6 @@
-package edu.codespring.sportgh.service;
+package edu.codespring.sportgh.exception;
 
 public class ServiceException extends RuntimeException {
-
-    public ServiceException() {
-        super();
-    }
 
     public ServiceException(String message) {
         super(message);

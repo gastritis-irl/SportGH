@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.test;
 
+import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.Category;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.SubCategory;
@@ -36,29 +37,14 @@ public class DataGenerator {
             log.warn(e.getMessage());
         }
 
-        try {
-            initCategories();
-            log.info("Generating categories: OK");
-        } catch (ServiceException e) {
-            log.warn("Generating categories: FAILED");
-            log.warn(e.getMessage());
-        }
+        initCategories();
+        log.info("Generating categories: OK");
 
-        try {
-            initSubCategories();
-            log.info("Generating subcategories: OK");
-        } catch (ServiceException e) {
-            log.warn("Generating subcategories: FAILED");
-            log.warn(e.getMessage());
-        }
+        initSubCategories();
+        log.info("Generating subcategories: OK");
 
-        try {
-            initProducts();
-            log.info("Generating products: OK");
-        } catch (ServiceException e) {
-            log.warn("Generating products: FAILED");
-            log.warn(e.getMessage());
-        }
+        initProducts();
+        log.info("Generating products: OK");
     }
 
     public void initUsers() {
@@ -73,98 +59,98 @@ public class DataGenerator {
 
     public void initCategories() {
         saveCategory(
-                "Water sports",
-                "...",
-                "https://img.freepik.com/premium-vector/rafling-water-sport-cartoon_18591-19936.jpg?"
-                        + "w=2000"
+            "Water sports",
+            "...",
+            "https://img.freepik.com/premium-vector/rafling-water-sport-cartoon_18591-19936.jpg?"
+                + "w=2000"
         );
         saveCategory(
-                "Combat sports",
-                "...",
-                "https://media.istockphoto.com/id/1142510634/vector/two-sport-karate-man-character"
-                        + "s-fight-sport-training-concept-vector-flat-cartoon-graphic.jpg?"
-                        + "s=170667a&w=0&k=20&c=mgj8QGQairRtGwnBUcJWcGwNyBwq-FIWCTWMyNJxBnc="
+            "Combat sports",
+            "...",
+            "https://media.istockphoto.com/id/1142510634/vector/two-sport-karate-man-character"
+                + "s-fight-sport-training-concept-vector-flat-cartoon-graphic.jpg?"
+                + "s=170667a&w=0&k=20&c=mgj8QGQairRtGwnBUcJWcGwNyBwq-FIWCTWMyNJxBnc="
         );
         saveCategory(
-                "Extreme sports",
-                "...",
-                "https://graphicriver.img.customer.envatousercontent.com/files/350625383/preview.jpg?"
-                        + "auto=compress%2Cformat&fit=crop&crop=top&w=590&h=590&s=8333982ebd8d4088c241978b83ca98c4"
+            "Extreme sports",
+            "...",
+            "https://graphicriver.img.customer.envatousercontent.com/files/350625383/preview.jpg?"
+                + "auto=compress%2Cformat&fit=crop&crop=top&w=590&h=590&s=8333982ebd8d4088c241978b83ca98c4"
         );
         saveCategory(
-                "Team sports",
-                "...",
-                "https://img.freepik.com/premium-vector/soccer-players-team-groupt-cartoon-"
-                        + "illustration_9026-23.jpg?w=2000"
+            "Team sports",
+            "...",
+            "https://img.freepik.com/premium-vector/soccer-players-team-groupt-cartoon-"
+                + "illustration_9026-23.jpg?w=2000"
         );
         saveCategory(
-                "Winter sports",
-                "...",
-                "https://encrypted-tbn0.gstatic.com/images?"
-                        + "q=tbn:ANd9GcQZTKlVUnqUD-Z_GERKB7NtyH_2wpBHt_ZH2Q&usqp=CAU"
+            "Winter sports",
+            "...",
+            "https://encrypted-tbn0.gstatic.com/images?"
+                + "q=tbn:ANd9GcQZTKlVUnqUD-Z_GERKB7NtyH_2wpBHt_ZH2Q&usqp=CAU"
         );
         saveCategory(
-                "Track & Field",
-                "...",
-                "https://static.vecteezy.com/system/resources/previews/002/471/108/original/"
-                        + "running-young-men-sport-in-the-race-track-free-vector.jpg"
+            "Track & Field",
+            "...",
+            "https://static.vecteezy.com/system/resources/previews/002/471/108/original/"
+                + "running-young-men-sport-in-the-race-track-free-vector.jpg"
         );
         saveCategory(
-                "Other",
-                "Other sports",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3TN373IJFyFN4sjMCItC"
-                        + "ugy7f1P9RqVdX4gRkApSZSgRLpUYCIcFfcUS5YCZEkL-JUBE&usqp=CAU"
+            "Other",
+            "Other sports",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3TN373IJFyFN4sjMCItC"
+                + "ugy7f1P9RqVdX4gRkApSZSgRLpUYCIcFfcUS5YCZEkL-JUBE&usqp=CAU"
         );
     }
 
     public void initSubCategories() {
         saveSubcategory(
-                "Swimming",
-                "Water sports"
+            "Swimming",
+            "Water sports"
         );
         saveSubcategory(
-                "Surfing",
-                "Water sports"
+            "Surfing",
+            "Water sports"
         );
         saveSubcategory(
-                "Boxing",
-                "Combat sports"
+            "Boxing",
+            "Combat sports"
         );
         saveSubcategory(
-                "Judo",
-                "Combat sports"
+            "Judo",
+            "Combat sports"
         );
         saveSubcategory(
-                "Rock Climbing",
-                "Extreme sports"
+            "Rock Climbing",
+            "Extreme sports"
         );
         saveSubcategory(
-                "Skydiving",
-                "Extreme sports"
+            "Skydiving",
+            "Extreme sports"
         );
         saveSubcategory(
-                "Soccer (football)",
-                "Team sports"
+            "Soccer (football)",
+            "Team sports"
         );
         saveSubcategory(
-                "Basketball",
-                "Team sports"
+            "Basketball",
+            "Team sports"
         );
         saveSubcategory(
-                "Skiing",
-                "Winter sports"
+            "Skiing",
+            "Winter sports"
         );
         saveSubcategory(
-                "Ice Hockey",
-                "Winter sports"
+            "Ice Hockey",
+            "Winter sports"
         );
         saveSubcategory(
-                "Running",
-                "Track & Field"
+            "Running",
+            "Track & Field"
         );
         saveSubcategory(
-                "Cycling",
-                "Track & Field"
+            "Cycling",
+            "Track & Field"
         );
     }
 
@@ -175,58 +161,58 @@ public class DataGenerator {
         }
 
         saveProduct(
-                "Swimming googles",
-                "Googles for swimming",
-                20.0,
-                "Swimming",
-                user
+            "Swimming googles",
+            "Googles for swimming",
+            20.0,
+            "Swimming",
+            user
         );
         saveProduct(
-                "Flip flops",
-                "Flip flops for easier swimming",
-                35.0,
-                "Swimming",
-                user
+            "Flip flops",
+            "Flip flops for easier swimming",
+            35.0,
+            "Swimming",
+            user
         );
         saveProduct(
-                "Bike",
-                "Bike for cycling",
-                100.0,
-                "Cycling",
-                user
+            "Bike",
+            "Bike for cycling",
+            100.0,
+            "Cycling",
+            user
         );
         saveProduct(
-                "Helmet",
-                "Helmet for your protection",
-                18.0,
-                "Cycling",
-                user
+            "Helmet",
+            "Helmet for your protection",
+            18.0,
+            "Cycling",
+            user
 
         );
         saveProduct(
-                "Flashlight",
-                "Flashlight for better visibility",
-                15.0,
-                "Cycling",
-                user
+            "Flashlight",
+            "Flashlight for better visibility",
+            15.0,
+            "Cycling",
+            user
 
         );
         saveProduct(
-                "Bicycle lock",
-                "Bicycle lock for your bike's protection",
-                20.0,
-                "Cycling",
-                user
+            "Bicycle lock",
+            "Bicycle lock for your bike's protection",
+            20.0,
+            "Cycling",
+            user
         );
     }
 
     public void saveCategory(String name, String description, String imageURL) {
         if (!categoryService.existsByName(name)) {
             categoryService.save(new Category(
-                    name,
-                    description,
-                    imageURL,
-                    null
+                name,
+                description,
+                imageURL,
+                null
             ));
         }
     }
@@ -235,9 +221,9 @@ public class DataGenerator {
         Category category = categoryService.findByName(categoryName);
         if (category != null && !subCategoryService.existsByName(name)) {
             subCategoryService.save(new SubCategory(
-                    name,
-                    category,
-                    null
+                name,
+                category,
+                null
             ));
         }
     }
@@ -246,12 +232,12 @@ public class DataGenerator {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
         if (subCategory != null && !productService.existsByNameAndUser(name, user)) {
             productService.save(new Product(
-                    true,
-                    name,
-                    description,
-                    rentPrice,
-                    subCategory,
-                    user
+                true,
+                name,
+                description,
+                rentPrice,
+                subCategory,
+                user
             ));
         }
     }

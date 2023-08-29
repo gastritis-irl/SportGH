@@ -4,6 +4,9 @@
 /* Importing global variables */
 @import './style-variables.scss';
 
+/* Toast notification default style */
+@import 'ngx-toastr/toastr';
+
 /* Reset some HTML elements to avoid different browser interpretations */
 body,
 h1,
@@ -72,6 +75,28 @@ li {
 /*
 Global classes
  */
+
+
+/* ----------Toast---------- */
+.toast-success {
+    border-radius: 15px;
+    background-color: green;
+}
+
+.toast-info {
+    border-radius: 15px;
+    background-color: cornflowerblue;
+}
+
+.toast-warning {
+    border-radius: 15px;
+    background-color: orange;
+}
+
+.toast-error {
+    border-radius: 15px;
+    background-color: red;
+}
 
 
 /* ----------Sign in/Sign up button---------- */
@@ -189,7 +214,7 @@ $btn-transition-duration: .3s;
             }
 
             .sign-leave {
-                height: 100%; 
+                height: 100%;
                 width: 30px;
                 transition-duration: $btn-transition-duration;
                 display: flex;
