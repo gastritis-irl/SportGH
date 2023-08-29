@@ -159,6 +159,11 @@ body {
         }
 
         .nav-link-item {
+
+            &:hover {
+                background-color: $color-main-3;
+            }
+
             a {
                 color: $color-neutral-2;
                 text-decoration: none;
