@@ -1,11 +1,30 @@
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+/* Importing global variables */
+@import './style-variables.scss';
+
+/* Toast notification default style */
+@import 'ngx-toastr/toastr';
+
 /* Reset some HTML elements to avoid different browser interpretations */
-body, h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li {
     margin: 0;
     padding: 0;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: $font-default;
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
@@ -19,7 +38,12 @@ body {
 }
 
 /* Headers */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: #333;
     margin-bottom: 10px;
 }
@@ -38,7 +62,8 @@ p {
 }
 
 /* Lists */
-ul, ol {
+ul,
+ol {
     margin-bottom: 10px;
     padding-left: 20px;
 }
@@ -46,15 +71,6 @@ ul, ol {
 li {
     margin-bottom: 5px;
 }
-
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
-
-/* Toast notification default style */
-@import 'ngx-toastr/toastr';
-
-/* Importing global variables */
-@import './style-variables.scss';
 
 /*
 Global classes
@@ -64,22 +80,22 @@ Global classes
 /* ----------Toast---------- */
 .toast-success {
     border-radius: 15px;
-    background-color: green;
+    background-color: $toast-success-bg-color;
 }
 
 .toast-info {
     border-radius: 15px;
-    background-color: cornflowerblue;
+    background-color: $toast-info-bg-color;
 }
 
 .toast-warning {
     border-radius: 15px;
-    background-color: orange;
+    background-color: $toast-warning-bg-color;
 }
 
 .toast-error {
     border-radius: 15px;
-    background-color: red;
+    background-color: $toast-error-bg-color;
 }
 
 
@@ -91,13 +107,27 @@ $button-text-size: $size-default;
 // Item Size
 $height-button: 100%;
 $height-sign-in-icon: 100%;
+$width-button: 100%;
 
 // Margin/Border/Padding
 $border-radius-button: 2em;
 $padding-button-text: 0.35em 1em;
+$padding-button-icon: 5%;
 
 // Gap
 $gap-buttons: 0.5em;
+
+$logout-btn-width: 40px;
+$logout-btn-height: 40px;
+$logout-btn-border-radius: 50%;
+$logout-btn-border-radius-hover: 40px;
+$logout-btn-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+$logout-btn-bg-color: $color-main-1;
+$logout-btn-width-hover: 125px;
+$sign-svg-width: 20px;
+$logout-btn-text-font-size: $button-text-size;
+$logout-btn-text-font-weight: $font-weight-bold;
+$logout-btn-transition-duration: .3s;
 
 .buttons {
     font-family: $font-default;
@@ -108,8 +138,7 @@ $gap-buttons: 0.5em;
     gap: $gap-buttons;
 
     .button-default {
-        display: flex;
-        flex-direction: row;
+        align-items: center;
         text-align: center;
         gap: $gap-buttons;
         padding: $padding-button-text;
@@ -120,13 +149,17 @@ $gap-buttons: 0.5em;
         &.button-secondary {
             height: $height-button;
             background-color: $color-btn-1;
-            color: $color-neutral-2;
-            stroke: $color-neutral-2;
+            color: $color-main-1;
+            stroke: $color-main-1;
 
             &:hover {
                 background-color: $color-btn-2;
                 color: $color-neutral-1;
                 stroke: $color-neutral-1;
+
+                .upper-part {
+                    animation: openUp 0.5s forwards;
+                }
             }
 
             .sign-in-icon {
@@ -134,15 +167,172 @@ $gap-buttons: 0.5em;
             }
         }
 
+        &.button-logout {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: $logout-btn-width;
+            height: $logout-btn-height;
+            border: none;
+            border-radius: $logout-btn-border-radius;
+            cursor: pointer;
+            position: relative;
+
+            transition-duration: $logout-btn-transition-duration;
+            box-shadow: $logout-btn-shadow;
+            background-color: $logout-btn-bg-color;
+
+            align-self: center;
+
+            &::before,
+            &::after {
+                position: absolute;
+                height: $logout-btn-height;
+                width: $width-nav-searchbar;
+                border-radius: 50%;
+                left: 0px;
+                background-color: $color-main-1;
+            }
+
+            &::before {
+                width: 18px;
+                height: 18px;
+                background-color: $color-main-1;
+                z-index: 1; // Position it above the button's background
+            }
+
+            &::after {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 3px solid $logout-btn-bg-color;
+                border-radius: 50%;
+                width: 30px;
+                height: $logout-btn-height;
+                animation: pulse 1s linear infinite;
+            }
+
+            .sign-leave {
+                height: 100%;
+                width: 30px;
+                transition-duration: $logout-btn-transition-duration;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute; // Position the icon on top of the pulsating dot
+                top: 0;
+                left: 0;
+                background-color: transparent; // Ensure the SVG's background is transparent
+
+                svg {
+                    width: $sign-svg-width;
+                    margin-left: 8px;
+                }
+
+                svg path {
+                    fill: white;
+                    width: $sign-svg-width;
+                    height: $sign-svg-width;
+                }
+            }
+
+            .text {
+                position: relative; // Changed from absolute
+                width: 70%;
+                opacity: 0;
+                color: white;
+                font-size: $logout-btn-text-font-size;
+                font-weight: $logout-btn-text-font-weight;
+                transition-duration: $logout-btn-transition-duration;
+                flex-grow: 1; // Allow the text to occupy the remaining space
+                padding-left: 10px; // Provide some space between the icon and the text
+            }
+
+            &:hover {
+                width: $logout-btn-width-hover;
+                border-radius: $logout-btn-border-radius-hover;
+                transition-duration: $logout-btn-transition-duration;
+
+                .sign-leave {
+                    width: 30%;
+                    transition-duration: $logout-btn-transition-duration;
+                    padding-left: 3%;
+                }
+
+                .text {
+                    opacity: 1;
+                }
+            }
+
+            &:active {
+                transform: translate(2px, 2px);
+            }
+        }
+
         &.button-primary {
+            width: $width-button;
             height: $height-button;
             background-color: $color-btn-2;
             color: $color-neutral-1;
+            stroke: $color-neutral-1;
+
+            .svg-icon {
+                height: $height-sign-in-icon;
+                padding-left: 0px;
+                justify-content: flex-end;
+                flex-shrink: 0;
+            }
 
             &:hover {
                 background-color: $color-btn-1;
-                color: $color-neutral-2;
+                color: $color-main-1;
+
+                .svg-icon {
+                    animation: rotate 1.3s linear infinite;
+                    stroke: $color-main-1;
+                }
             }
         }
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(20deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(-20deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes openUp {
+    to {
+        transform: scale(0.9) rotate(-15deg);
+    }
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(0.9);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(1.8);
+        opacity: 0;
     }
 }

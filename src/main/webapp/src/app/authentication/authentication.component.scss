@@ -1,0 +1,140 @@
+@import '../../style-variables.scss';
+
+$font-size-welcome-message: 20px;
+$padding-left-welcome-message: 1em;
+$padding-right-welcome-message: 2.5em;
+$btn-height: 100%;
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.welcome-message {
+    font-size: $font-size-welcome-message;
+    color: $color-main-1;
+    font-weight: $font-weight-bold;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: $padding-left-welcome-message;
+    padding-right: $padding-right-welcome-message;
+    margin-right: auto; // Push it to the left, leaving space for the button
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+
+    .title {
+        font-size: 28px;
+        color: $color-main-1;
+        font-weight: $font-weight-bold;
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding-left: 30px;
+
+        &::before,
+        &::after {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 0px;
+            background-color: $color-main-1;
+        }
+
+        &::before {
+            width: 18px;
+            height: 18px;
+            background-color: $color-main-1;
+        }
+
+        &::after {
+            width: 18px;
+            height: 18px;
+            animation: pulse 1s linear infinite;
+        }
+    }
+
+    .message,
+    .signin {
+        color: rgba(88, 87, 87, 0.822);
+        font-size: 14px;
+    }
+
+    .account-yet {
+        text-align: center;
+
+        a {
+            color: $color-main-1;
+
+            &:hover {
+                text-decoration: underline $color-main-1;
+            }
+        }
+    }
+
+    label {
+        position: relative;
+        display: flex;
+        width: 70%;
+
+        .input {
+            width: 100%;
+            padding: 10px 10px 20px 10px;
+            outline: 0;
+            border: 1px solid rgba(105, 105, 105, 0.397);
+            border-radius: round($number: 2em);
+
+            &:placeholder-shown+span {
+                top: 15px;
+                font-size: 0.9em;
+            }
+
+            &:focus+span,
+            &:valid+span {
+                top: 30px;
+                font-size: 0.7em;
+                font-weight: $font-weight-bold;
+            }
+
+            &:valid+span {
+                color: green;
+            }
+        }
+
+        span {
+            position: absolute;
+            left: 10px;
+            top: 15px;
+            margin-left: 10px;
+            color: grey;
+            font-size: 0.9em;
+            cursor: text;
+            transition: 0.3s ease;
+        }
+    }
+}
+
+
+
+.button-default {
+    align-items: flex-start;
+    flex-shrink: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}

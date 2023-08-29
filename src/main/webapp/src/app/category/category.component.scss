@@ -1,11 +1,7 @@
-// Colors
-$color-main: #5D5A88;
-$category-background: white;
-$category-border-color: #D4D2E3;
+@import '../../style-variables.scss';
 
-// Fonts
-$font-default: 'DM Sans', sans-serif;
-$font-weight-bold: 700;
+// Colors
+$category-background: $color-neutral-1;
 
 // Sizes
 $heading-font-size: 2.25em;
@@ -21,7 +17,7 @@ $category-name-padding: 5%;
 $text-box-padding: 5%;
 $hover-transform: scale(1.04) rotate(-1deg);
 $hover-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-$hover-bg-color: $category-border-color;
+$hover-bg-color: $border-color;
 $hover-icon-height: $category-icon-height;
 $hover-icon-filter: blur(1px);
 $hover-icon-opacity: 0.4;
@@ -37,16 +33,11 @@ $card-max-width-large: 400px; // 400px for desktop screens
 $animation-duration: 3s;
 $animation-translation: -20px;
 
-// Define breakpoints
-$breakpoint-small: 480px;
-$breakpoint-medium: 768px;
-$breakpoint-large: 1024px;
-
 .category-list-holder {
     margin-left: 10%;
 
     .category-heading {
-        color: $color-main;
+        color: $color-main-1;
         font-size: $heading-font-size;
         font-family: $font-default;
         font-weight: $font-weight-bold;
@@ -79,7 +70,7 @@ $breakpoint-large: 1024px;
         width: $category-item-width;
         background: $category-background;
         border-radius: 10px; // Adjusting the bottom border-radius to 0
-        border: $category-border-width solid $category-border-color;
+        border: $category-border-width solid $border-color;
         overflow: hidden;
         transition: 0.2s ease-in-out;
         margin-bottom: $category-gap;
@@ -113,7 +104,7 @@ $breakpoint-large: 1024px;
         }
 
         .category-name {
-            color: $color-main;
+            color: $color-main-1;
             font-size: $name-font-size;
             font-family: $font-default;
             font-weight: $font-weight-bold;
