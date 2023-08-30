@@ -3,7 +3,7 @@ Global variables
  */
 
 // Img URLs
-$nav-header-logo-icon: url("Info.svg");
+$nav-header-logo-icon: url("assets/sportgh.png");
 
 // Colors
 $color-neutral-1: #FFFFFF;
@@ -18,8 +18,8 @@ $font-color-1: $color-main-1;
 $font-color-2: $color-neutral-1;
 $toast-success-bg-color: rgb(156, 171, 199);
 $toast-info-bg-color: cornflowerblue;
-$toast-warning-bg-color: rgb(180, 107, 48); 
-$toast-error-bg-color: rgb(133, 55, 55);   
+$toast-warning-bg-color: rgb(180, 107, 48);
+$toast-error-bg-color: rgb(133, 55, 55);
 
 // Fonts
 $font-default: 'DM Sans', sans-serif;
