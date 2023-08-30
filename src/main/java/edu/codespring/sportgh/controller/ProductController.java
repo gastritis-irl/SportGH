@@ -39,6 +39,12 @@ public class ProductController {
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/category/{categoryId}")
+    public ResponseEntity<Collection<ProductOutDTO>> findByCategoryId(@PathVariable Long categoryId) {
+        Collection<Product> products = productService.findByCategoryId(categoryId);
+        return new ResponseEntity<>(productMapper.productsToOuts(products), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<ProductOutDTO> save(@RequestBody @Valid ProductInDTO productInDTO) {
         Product product = productMapper.dtoToProduct(productInDTO);
