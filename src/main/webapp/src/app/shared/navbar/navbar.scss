@@ -71,6 +71,9 @@ body {
 
             .nav-header-logo-icon {
                 content: $nav-header-logo-icon;
+                width: $height-nav-header;
+                height: $height-nav-header;
+                padding: 2%;
             }
 
             .nav-header-logo-title {
