@@ -51,6 +51,7 @@ $border: 2px solid $color-main-3;
                 .add-to-favorite-icon {
                     color: $color-main-2;
                     font-size: 50px;
+                    padding-right: $item-padding;
 
                     &:hover {
                         cursor: pointer;
@@ -69,10 +70,14 @@ $border: 2px solid $color-main-3;
         .images-and-pricing {
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
             gap: $item-gap;
 
+            @media (max-width: $breakpoint-large) {
+                flex-direction: column;
+            }
+
             .images {
-                width: 70%;
             }
 
             .pricing {

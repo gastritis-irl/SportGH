@@ -14,14 +14,6 @@
         </div>
 
         <div class="ad-info-and-location">
-            <div class="rating">
-                [Rating]
-            </div>
-            -
-            <div class="reviews">
-                [NrOfReviews]
-            </div>
-            -
             <div class="location">
                 {{product.location}}
             </div>
@@ -67,7 +59,6 @@
             <div (click)="scrollToPagePart('prod-desc')" class="button-default button-secondary">Description</div>
             <div (click)="scrollToPagePart('prod-lend-desc')" class="button-default button-secondary">About renter</div>
             <div (click)="scrollToPagePart('prod-loc')" class="button-default button-secondary">Location</div>
-            <div (click)="scrollToPagePart('prod-rev')" class="button-default button-secondary">Reviews</div>
         </div>
 
         <div class="product-description" id="prod-desc">
@@ -88,13 +79,6 @@
             <div class="heading">Location</div>
             <div class="product-location-content">
                 {{product.location}}
-            </div>
-        </div>
-
-        <div class="product-reviews" id="prod-rev">
-            <div class="heading">Reviews</div>
-            <div class="product-reviews-content">
-                [Reviews]
             </div>
         </div>
     </div>
