@@ -20,7 +20,7 @@ export class ProductCreateComponent implements OnInit {
     categoryId: number = 0;
     subcategories: Subcategory[] = [];
     subcategoryDropdownDisabled: boolean = true;
-    formBtnDisabled: boolean = true;
+    formBtnDisabled: boolean = false;
 
     constructor(
         private productService: ProductService,
@@ -68,6 +68,7 @@ export class ProductCreateComponent implements OnInit {
     }
 
     createProduct(): void {
+        this.product.userId = 1;
         this.productService.create(this.product).subscribe(
             {
                 next: (resp: Product): void => {
