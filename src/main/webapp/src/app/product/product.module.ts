@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductComponent } from './product.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
         ProductRoute,
         NgFor,
         FormsModule,
+        NgIf,
     ],
     providers: [
         ProductComponent,

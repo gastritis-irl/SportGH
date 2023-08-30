@@ -22,4 +22,10 @@ export class ProductService extends AppService {
         const url: string = `${this.baseUrl}/products`;
         return this.http.post(url, product);
     }
+
+    rent(productId: number): Observable<Product> {
+        const url: string = `${this.baseUrl}/products/${productId}/rent`;
+        console.log('Renting products feature is not yet ready.');
+        return this.http.put(url, {});  // body: renter?
+    }
 }

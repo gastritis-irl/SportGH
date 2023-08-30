@@ -31,12 +31,23 @@ $border: 2px solid $color-main-3;
             flex-direction: row;
             justify-content: space-between;
 
-            .product-name {
-                font-size: $size-h1;
+            .product-name-and-avail {
+
+                .product-name {
+                    font-size: $size-h1;
+                }
+
+                .product-avail-1 {
+                    color: darkgreen;
+                }
+
+                .product-avail-0 {
+                    color: darkred;
+                }
             }
 
             .add-to-favorite-btn {
-                background-color: red;
+                background-color: darkred;
                 color: wheat;
             }
         }

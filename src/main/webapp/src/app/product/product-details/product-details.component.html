@@ -2,8 +2,11 @@
 <div class="product-details">
     <div class="product-details-primary">
         <div class="heading-items">
-            <div class="product-name heading">{{product.name}}</div>
-
+            <div class="product-name-and-avail">
+                <div class="product-name heading">{{product.name}}</div>
+                <div *ngIf="product.available" class="product-avail-1 heading">Available</div>
+                <div *ngIf="!product.available" class="product-avail-0 heading">Currently unavailable</div>
+            </div>
             <div class="add-to-favorites">
                 <button class="add-to-favorite-btn">[HeartBtn]</button>
             </div>
@@ -51,7 +54,7 @@
                     </div>
 
                     <div class="rent-button-holder buttons">
-                        <button class="rent-button button-default button-primary">Rent</button>
+                        <button class="rent-button button-default button-primary" (click)="rentProduct()">Rent</button>
                     </div>
                 </div>
             </div>
