@@ -3,14 +3,18 @@
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
             <img src="https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg" class="product-icon"
                  alt="IMG"/>
-            <p class="product-name">{{ product.name }}</p>
+            <div class="product-name">{{ product.name }}</div>
             <div class="product-description">
+                {{ product.description }}
+                {{ product.description }}
+                {{ product.description }}
+                {{ product.description }}
                 {{ product.description }}
             </div>
             <div class="product-price">
-                <p class="product-price-d">
+                <div class="product-price-d">
                     Price from {{product.rentPrice}} RON / DAY
-                </p>
+                </div>
             </div>
         </div>
     </div>

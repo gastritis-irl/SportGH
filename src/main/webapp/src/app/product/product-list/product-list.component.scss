@@ -4,11 +4,13 @@
 $price-font-size: 1em;
 $product-gap: 15px;
 $product-border-width: 0.03125em;
-$text-box-height: 6em;
+$text-box-height: 3em;
 $product-item-width: 20%;
 $product-item-border-radius: 10px;
 $product-icon-height: $hover-icon-height;
-$product-icon-padding: 15px;
+$product-item-padding: 5px;
+$main-page-padding: 10%;
+$card-padding: 10px;
 
 // Min-max card sizes
 $card-max-width-medium: 250px;
@@ -16,7 +18,7 @@ $card-max-width-large: 280px;
 
 // Classes
 .product-list-holder {
-    margin-left: 10%;
+    padding-left: $main-page-padding;
 
     .products {
         display: flex;
@@ -44,6 +46,7 @@ $card-max-width-large: 280px;
             margin-bottom: $product-gap;
             min-width: $card-min-width-large;
             max-width: $card-max-width-large;
+            padding: $card-padding;
 
             // Tablet screens
             @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
@@ -72,10 +75,18 @@ $card-max-width-large: 280px;
                 width: 45%;
             }
 
+            .product-name {
+                color: $color-main-1;
+                font-size: $size-h2;
+                font-family: $font-default;
+                font-weight: $font-weight-bold;
+                text-align: center;
+                word-wrap: break-word;
+            }
+
             .product-icon {
                 width: 100%;
                 height: $product-icon-height;
-                padding: $product-icon-padding;
                 object-fit: contain;
             }
 
@@ -85,7 +96,6 @@ $card-max-width-large: 280px;
                 align-items: center;
                 transition: 0.2s ease-in-out;
                 z-index: 2;
-                padding: $item-padding;
                 width: 100%;
                 height: $text-box-height;
                 overflow-y: scroll;
@@ -100,21 +110,9 @@ $card-max-width-large: 280px;
                 }
             }
 
-            .product-name {
-                color: $color-main-1;
-                font-size: $size-h2;
-                font-family: $font-default;
-                font-weight: $font-weight-bold;
-                text-align: center;
-                word-wrap: break-word;
-                padding: $item-padding;
-                flex-grow: 1;
-            }
-
             .product-price {
                 color: $color-main-4;
                 font-size: $price-font-size;
-                padding: $item-padding;
             }
         }
     }
