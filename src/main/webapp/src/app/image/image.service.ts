@@ -16,7 +16,11 @@ export class ImageService {
         return this.http.post<Image>(environment.baseURL + '/api/images', formData);
     }
 
-    getImage(id: number): Observable<Image> {
+    getImageModel(id: number): Observable<Image> {
         return this.http.get<Image>(environment.baseURL + `/api/images/${id}`);
+    }
+
+    getImageFile(id: number): Observable<Blob> {
+        return this.http.get(environment.baseURL + `/api/images/file/${id}`, { responseType: 'blob' });
     }
 }

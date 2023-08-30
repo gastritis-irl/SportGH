@@ -29,10 +29,15 @@ export class ImageComponent {
         );
     }
 
-
-    loadImage(id: number) {
-        this.imageService.getImage(id).subscribe((image: Image) => {
-            this.imageData = image;
+    loadImageFile(id: number) {
+        this.imageService.getImageFile(id).subscribe(blob => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.imageData.url = reader.result as string;
+            };
+            if (blob) {
+                reader.readAsDataURL(blob);
+            }
         });
     }
 }
