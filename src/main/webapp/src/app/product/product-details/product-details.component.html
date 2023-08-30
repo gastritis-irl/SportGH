@@ -1,5 +1,6 @@
-<a routerLink="/products">Go back &larr;</a>
 <div class="product-details">
+    <a routerLink="/products">&larr;Go back</a>
+
     <div class="product-details-primary">
         <div class="heading-items">
             <div class="product-name-and-avail">
@@ -7,8 +8,10 @@
                 <div *ngIf="product.available" class="product-avail-1 heading">Available</div>
                 <div *ngIf="!product.available" class="product-avail-0 heading">Currently unavailable</div>
             </div>
-            <div class="add-to-favorites">
-                <button class="add-to-favorite-btn">[HeartBtn]</button>
+            <div class="add-to-favorite">
+                <div class="add-to-favorite-icon">
+                    &hearts;
+                </div>
             </div>
         </div>
 

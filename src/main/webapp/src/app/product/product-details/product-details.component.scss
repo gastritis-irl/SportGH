@@ -11,6 +11,7 @@ $border-radius: 20px;
 $border: 2px solid $color-main-3;
 
 .product-details {
+    background-color: $color-main-3;
     padding-left: $main-page-padding;
     padding-right: $main-page-padding;
 
@@ -46,9 +47,17 @@ $border: 2px solid $color-main-3;
                 }
             }
 
-            .add-to-favorite-btn {
-                background-color: darkred;
-                color: wheat;
+            .add-to-favorite {
+
+                .add-to-favorite-icon {
+                    color: $color-main-2;
+                    font-size: 50px;
+
+                    &:hover {
+                        cursor: pointer;
+                        color: $color-main-1;
+                    }
+                }
             }
         }
 
