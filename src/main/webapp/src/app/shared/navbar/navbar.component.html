@@ -23,16 +23,16 @@
     </div>
     <div class="nav-frame">
         <div class="nav-content">
+            <div class="nav-content-link">
+                <a routerLink="/">Home</a>
+            </div>
             <div ngbDropdown class="">
                 <button type="button" class="nav-link" ngbDropdownToggle>Sports</button>
                 <div ngbDropdownMenu>
-                    <button *ngFor="let category of categories" ngbDropdownItem>
-                        <a><!--routerLink="categories/id/sub" -->{{category.name}}</a>
+                    <button class="nav-link-item" *ngFor="let category of categories" ngbDropdownItem>
+                        <a routerLink="categories/{{category.id}}">{{category.name}}</a>
                     </button>
                 </div>
-            </div>
-            <div class="nav-content-link">
-                <a routerLink="/">Home</a>
             </div>
             <div class="nav-content-link">
                 <a routerLink="">About</a>

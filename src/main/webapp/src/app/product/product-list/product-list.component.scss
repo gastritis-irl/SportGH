@@ -1,0 +1,119 @@
+@import '../../../style-variables.scss';
+
+// Sizes
+$price-font-size: 1em;
+$product-gap: 15px;
+$product-border-width: 0.03125em;
+$text-box-height: 3em;
+$product-item-width: 20%;
+$product-item-border-radius: 10px;
+$product-icon-height: $hover-icon-height;
+$product-item-padding: 5px;
+$main-page-padding: 10%;
+$card-padding: 10px;
+
+// Min-max card sizes
+$card-max-width-medium: 250px;
+$card-max-width-large: 280px;
+
+// Classes
+.product-list-holder {
+    padding-left: $main-page-padding;
+
+    .products {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: $product-gap;
+        justify-content: flex-start;
+
+        @media (max-width: $breakpoint-small) {
+            flex-direction: column;
+            gap: 1.5%;
+        }
+
+        .product-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: $product-gap;
+            width: $product-item-width;
+            background: $color-neutral-1;
+            border-radius: $product-item-border-radius;
+            border: $product-border-width solid $border-color;
+            overflow: hidden;
+            transition: 0.2s ease-in-out;
+            margin-bottom: $product-gap;
+            min-width: $card-min-width-large;
+            max-width: $card-max-width-large;
+            padding: $card-padding;
+
+            // Tablet screens
+            @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
+                min-width: $card-min-width-medium;
+                max-width: $card-max-width-medium;
+            }
+
+            // Desktop screens
+            @media (min-width: $breakpoint-large) {
+                min-width: $card-min-width-large;
+                max-width: $card-max-width-large;
+            }
+
+            &:hover {
+                box-shadow: $hover-box-shadow;
+                background-color: $color-main-3;
+                cursor: pointer;
+            }
+
+            @media (max-width: $breakpoint-small) {
+                width: 100%;
+                margin-bottom: 1.5em;
+            }
+
+            @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
+                width: 45%;
+            }
+
+            .product-name {
+                color: $color-main-1;
+                font-size: $size-h2;
+                font-family: $font-default;
+                font-weight: $font-weight-bold;
+                text-align: center;
+                word-wrap: break-word;
+            }
+
+            .product-icon {
+                width: 100%;
+                height: $product-icon-height;
+                object-fit: contain;
+            }
+
+            .product-description {
+                display: -webkit-box;
+                flex-direction: column;
+                align-items: center;
+                transition: 0.2s ease-in-out;
+                z-index: 2;
+                width: 100%;
+                height: $text-box-height;
+                overflow-y: scroll;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                text-size-adjust: 100%;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+
+            .product-price {
+                color: $color-main-4;
+                font-size: $price-font-size;
+            }
+        }
+    }
+}
