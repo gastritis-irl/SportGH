@@ -1,12 +1,12 @@
 @import '../../../style-variables.scss';
 
 $main-page-padding: 10%;
-$bottom-padding: 2%;
-$row-padding: 3%;
 $item-gap: 15px;
-$form-part-padding: 5px;
+$form-part-padding: 25px;
+$input-padding-left: 10px;
 $font-weight-1: 700;
 $font-weight-2: 600;
+$description-textarea-height: 200px;
 
 .product-create-div {
     background-color: $color-main-3;
@@ -19,25 +19,24 @@ $font-weight-2: 600;
         font-family: $font-default;
         font-weight: $font-weight-1;
         text-align: start;
-        margin-bottom: $item-gap;
-        padding-top: $item-gap;
+    }
+
+    .main-title {
+        padding: $form-part-padding;
     }
 
     .general-data {
 
         .general-data-form {
+            gap: $item-gap;
             display: flex;
             flex-direction: column;
-            gap: $item-gap;
 
             .form-part {
                 display: flex;
                 flex-direction: column;
-                gap: $form-part-padding;
                 width: 100%;
-                padding-left: $row-padding;
-                padding-right: $row-padding;
-                padding-bottom: $bottom-padding;
+                padding: $form-part-padding;
                 background-color: $color-neutral-1;
                 border-radius: 20px;
 
@@ -49,6 +48,17 @@ $font-weight-2: 600;
 
                 .form-part-input {
                     width: 100%;
+                    border-radius: 20px;
+                    border-style: solid;
+                    padding-left: $input-padding-left;
+
+                    &:disabled {
+                        background-color: $color-main-3;
+                    }
+
+                    &:enabled {
+                        background-color: $color-neutral-1;
+                    }
                 }
 
                 .product-pricing {
@@ -61,10 +71,21 @@ $font-weight-2: 600;
                         flex-direction: column;
                     }
                 }
+
+                // Custom inputs
+                .product-description {
+                    height: $description-textarea-height;
+                    resize: none;
+                }
             }
 
             .publish-btn-holder {
-                padding-bottom: $bottom-padding;
+                padding-bottom: $form-part-padding;
+
+                .publish-btn {
+                    width: 50%;
+                    justify-content: center;
+                }
             }
         }
     }

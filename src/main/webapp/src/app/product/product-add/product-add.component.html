@@ -1,5 +1,5 @@
 <div class="product-create-div">
-    <div class="heading">Upload product</div>
+    <div class="heading main-title">Upload product</div>
     <div class="general-data">
         <div class="general-data-heading"></div>
         <form class="general-data-form" (ngSubmit)="createProduct()">
@@ -57,15 +57,11 @@
                 <div class="product-availability">
                     <div>
                         <label class="form-part-label">From</label>
-                        <div class="form-part-input">
-                            <input class="form-part-datepicker" type="date">
-                        </div>
+                        <input class="form-part-input" type="date">
                     </div>
                     <div>
                         <label class="form-part-label">To</label>
-                        <div class="form-part-input">
-                            <input class="form-part-datepicker" type="date">
-                        </div>
+                        <input class="form-part-input" type="date">
                     </div>
                 </div>
             </div>
@@ -74,21 +70,17 @@
                 <div class="product-pricing">
                     <div>
                         <label class="form-part-label">Hourly rent price</label>
-                        <div class="form-part-input">
-                            <input class="product-price-h" type="number" disabled>
-                        </div>
+                        <input class="form-part-input product-price-h" type="number" disabled>
+
                     </div>
                     <div>
                         <label class="form-part-label">Daily rent price</label>
-                        <div class="form-part-input">
-                            <input class="product-price-d" type="number" name="price" [(ngModel)]="product.rentPrice">
-                        </div>
+                        <input class=" form-part-input product-price-d" type="number" name="price"
+                               [(ngModel)]="product.rentPrice">
                     </div>
                     <div>
                         <label class="form-part-label">Weekly rent price</label>
-                        <div class="form-part-input">
-                            <input class="product-price-w" type="number" disabled>
-                        </div>
+                        <input class="form-part-input product-price-w" type="number" disabled>
                     </div>
                 </div>
             </div>
