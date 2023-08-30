@@ -212,6 +212,7 @@ public class DataGenerator {
                 name,
                 description,
                 imageURL,
+                null,
                 null
             ));
         }
@@ -237,7 +238,8 @@ public class DataGenerator {
                 description,
                 rentPrice,
                 subCategory,
-                user
+                user,
+                null
             ));
         }
     }

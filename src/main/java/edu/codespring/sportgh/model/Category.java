@@ -24,10 +24,6 @@ public class Category extends BaseEntity {
     private String description;
 
     @ToString.Exclude
-    @Column(name = "imageURL", length = 1000)
-    private String imageURL;
-
-    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<SubCategory> subcategories;
 

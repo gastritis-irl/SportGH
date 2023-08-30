@@ -30,6 +30,6 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private java.util.List<Image> images;
 }
