@@ -29,4 +29,7 @@ public class Product extends BaseEntity {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REFRESH)
+    private java.util.List<Image> images;
 }

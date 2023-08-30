@@ -30,4 +30,8 @@ public class Category extends BaseEntity {
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<SubCategory> subcategories;
+
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
 }
