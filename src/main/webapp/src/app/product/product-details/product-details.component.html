@@ -3,10 +3,12 @@
     <div class="product-details-primary">
         <div class="heading-items">
             <div class="product-name heading">{{product.name}}</div>
+
             <div class="add-to-favorites">
                 <button class="add-to-favorite-btn">[HeartBtn]</button>
             </div>
         </div>
+
         <div class="ad-info-and-location">
             <div class="rating">
                 [Rating]
@@ -32,17 +34,22 @@
                     <div class="rent-dates">
                         <div>
                             <label class="rent-date-label">From</label>
-                            <input class="rent-date-picker" type="date">
+                            <input class="rent-date-picker" type="date" name="dateFrom" [(ngModel)]="dateFrom">
                         </div>
+
                         <div>
                             <label class="rent-date-label">To</label>
-                            <input class="rent-date-picker" type="date">
+                            <input class="rent-date-picker" type="date" name="dateTo" [(ngModel)]="dateTo">
                         </div>
                     </div>
+
                     <div class="rent-price">
                         <label class="rent-price-label heading">Total</label>
-                        <div class="rent-price-total heading">{{product.rentPrice}} RON</div>
+                        <div class="rent-price-total heading">
+                            {{showTotalPrice(dateFrom, dateTo, 'd')}} RON
+                        </div>
                     </div>
+
                     <div class="rent-button-holder buttons">
                         <button class="rent-button button-default button-primary">Rent</button>
                     </div>
@@ -50,6 +57,7 @@
             </div>
         </div>
     </div>
+
     <div class="product-details-secondary">
         <div class="product-details-navigation-btn buttons">
             <button class="button-default button-secondary">Description</button>

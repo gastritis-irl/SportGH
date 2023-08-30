@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 export class ProductDetailsComponent implements OnInit {
 
     product: Product = {};
+    dateFrom: Date | string = new Date();
+    dateTo: Date | string = new Date();
 
     constructor(
         private productService: ProductService,
@@ -46,5 +48,37 @@ export class ProductDetailsComponent implements OnInit {
                 }
             }
         );
+    }
+
+    getTimeIn(date: number, format: string): number {
+        switch (format) {
+            case 'h': {
+                return date / 3600000;
+            }
+            case 'd': {
+                return date / 86400000;
+            }
+            case 'w': {
+                return date / 604800000;
+            }
+            default: {
+                return date / 86400000;
+            }
+        }
+    }
+
+    showTotalPrice(date1: string | Date, date2: string | Date, format: string): number {
+        date1 = new Date(date1);
+        date2 = new Date(date2);
+
+        if (date2 < date1) {
+            return 0;
+        }
+
+        const date: number = date2.getTime() - date1.getTime();
+        const timeIn: number = this.getTimeIn(date, format);
+        const totalPrice: number = timeIn * (this.product.rentPrice ? this.product.rentPrice : 0);
+
+        return totalPrice < 0 ? 0 : totalPrice;
     }
 }
