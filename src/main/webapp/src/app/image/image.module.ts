@@ -12,7 +12,7 @@ import { ImageComponent } from './image.component';
         FormsModule
     ],
     exports: [
-        ImageComponent // If you want to use it in other modules
+        ImageComponent
     ]
 })
 export class ImageModule { }
