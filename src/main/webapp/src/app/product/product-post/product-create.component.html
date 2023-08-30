@@ -39,7 +39,17 @@
             <div class="location form-part">
                 <div class="heading">Location</div>
                 <div class="product-location">
-                    [LOCATION]
+                    <div>
+                        <label class="form-part-label">Type address</label>
+                        <input class="product-address-text form-part-input" type="text">
+                    </div>
+                    or
+                    <div>
+                        <label class="form-part-label">Choose on map</label>
+                        <div class="product-address-map">
+                            [MAP LOCATION PICKER]
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="availability form-part">
@@ -47,11 +57,15 @@
                 <div class="product-availability">
                     <div>
                         <label class="form-part-label">From</label><br>
-                        <input type="date">
+                        <div class="form-part-input">
+                            <input class="form-part-datepicker" type="date">
+                        </div>
                     </div>
                     <div>
                         <label class="form-part-label">To</label><br>
-                        <input type="date">
+                        <div class="form-part-input">
+                            <input class="form-part-datepicker" type="date">
+                        </div>
                     </div>
                 </div>
             </div>
