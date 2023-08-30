@@ -10,22 +10,21 @@ $font-weight-2: 600;
 $border-radius: 20px;
 $border: 2px solid $color-main-3;
 
+.heading {
+    color: $color-main-1;
+    font-family: $font-default;
+    font-weight: $font-weight-1;
+    font-size: $size-h2;
+}
+
 .product-details {
-    background-color: $color-main-3;
     padding-left: $main-page-padding;
     padding-right: $main-page-padding;
 
-    .product-details-primary {
+    .product-main-area {
         border-bottom: solid;
-        border-color: $color-main-3;
+        border-color: $color-main-2;
         padding-bottom: $row-padding;
-
-        .heading {
-            color: $color-main-1;
-            font-family: $font-default;
-            font-weight: $font-weight-1;
-            font-size: $size-h2;
-        }
 
         .heading-items {
             display: flex;
@@ -136,13 +135,18 @@ $border: 2px solid $color-main-3;
         }
     }
 
-    .product-details-secondary {
+    .product-details-area {
+        gap: $item-gap;
 
-        .product-details-navigation-btn {
-            padding-top: $row-padding;
+        .product-details-nav-btn {
+            padding-top: $item-padding;
 
             .button-secondary {
-                border-color: $color-main-2;
+                border-color: $color-main-3;
+
+                &:hover {
+                    cursor: pointer;
+                }
             }
 
         }

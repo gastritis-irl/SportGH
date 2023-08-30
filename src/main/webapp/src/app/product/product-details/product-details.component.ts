@@ -3,6 +3,9 @@ import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../../user/user.model';
+import { UserService } from '../../user/user.service';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
     selector: 'sgh-product-details',
@@ -12,12 +15,15 @@ import { ToastrService } from 'ngx-toastr';
 export class ProductDetailsComponent implements OnInit {
 
     product: Product = {};
+    productLender: User = {};
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
 
     constructor(
         private productService: ProductService,
+        private userService: UserService,
         private route: ActivatedRoute,
+        private viewPortScroller: ViewportScroller,
         private toastNotify: ToastrService,
     ) {
     }
@@ -41,10 +47,26 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (data: Product): void => {
                     this.product = data;
+                    console.log(data);
+                    this.loadProductLender(this.product.userId ? this.product.userId : 0);
                 },
                 error: (error): void => {
                     console.error(error);
                     this.toastNotify.error(`Error fetching data`);
+                }
+            }
+        );
+    }
+
+    loadProductLender(userId: number): void {
+        this.userService.getById(userId).subscribe(
+            {
+                next: (resp: User): void => {
+                    this.productLender = resp;
+                    console.log(resp);
+                },
+                error: (): void => {
+                    this.toastNotify.error(`Error loading lender info`);
                 }
             }
         );
@@ -80,6 +102,10 @@ export class ProductDetailsComponent implements OnInit {
         const totalPrice: number = timeIn * (this.product.rentPrice ? this.product.rentPrice : 0);
 
         return totalPrice < 0 ? 0 : totalPrice;
+    }
+
+    scrollToPagePart(elementId: string): void {
+        this.viewPortScroller.scrollToAnchor(elementId);
     }
 
     rentProduct(): void {

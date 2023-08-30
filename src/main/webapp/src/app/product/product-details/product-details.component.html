@@ -1,5 +1,5 @@
 <div class="product-details">
-    <div class="product-details-primary">
+    <div class="product-main-area">
         <div class="heading-items">
             <div class="product-name-and-avail">
                 <div class="product-name heading">{{product.name}}</div>
@@ -62,12 +62,40 @@
         </div>
     </div>
 
-    <div class="product-details-secondary">
-        <div class="product-details-navigation-btn buttons">
-            <button class="button-default button-secondary">Description</button>
-            <button class="button-default button-secondary">About renter</button>
-            <button class="button-default button-secondary">Location</button>
-            <button class="button-default button-secondary">Reviews</button>
+    <div class="product-details-area">
+        <div class="product-details-nav-btn buttons">
+            <div (click)="scrollToPagePart('prod-desc')" class="button-default button-secondary">Description</div>
+            <div (click)="scrollToPagePart('prod-lend-desc')" class="button-default button-secondary">About renter</div>
+            <div (click)="scrollToPagePart('prod-loc')" class="button-default button-secondary">Location</div>
+            <div (click)="scrollToPagePart('prod-rev')" class="button-default button-secondary">Reviews</div>
+        </div>
+
+        <div class="product-description" id="prod-desc">
+            <div class="heading">Description</div>
+            <div class="product-description-content">
+                {{product.description}}
+            </div>
+        </div>
+
+        <div class="product-lender-description" id="prod-lend-desc">
+            <div class="heading">About lender</div>
+            <div class="product-lender-description-content">
+                {{productLender.username}}
+            </div>
+        </div>
+
+        <div class="product-location" id="prod-loc">
+            <div class="heading">Location</div>
+            <div class="product-location-content">
+                {{product.location}}
+            </div>
+        </div>
+
+        <div class="product-reviews" id="prod-rev">
+            <div class="heading">Reviews</div>
+            <div class="product-reviews-content">
+                [Reviews]
+            </div>
         </div>
     </div>
 </div>
