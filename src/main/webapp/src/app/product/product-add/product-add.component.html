@@ -6,28 +6,28 @@
             <div class="details form-part">
                 <div class="heading">Details</div>
                 <div>
-                    <label class="form-part-label">Product name</label><br>
-                    <input class="product-name form-part-input" type="text" name="name" [(ngModel)]="product.name"><br>
+                    <label class="form-part-label">Product name</label>
+                    <input class="product-name form-part-input" type="text" name="name" [(ngModel)]="product.name">
                 </div>
                 <div>
-                    <label class="form-part-label">Category</label><br>
+                    <label class="form-part-label">Category</label>
                     <select class="product-category form-part-input" [(ngModel)]="categoryId" name="categoryId">
                         <option *ngFor="let category of categories" value="{{category.id}}"
                                 (click)="getSubcategoriesByCategoryId()">{{category.name}}</option>
-                    </select><br>
+                    </select>
                 </div>
                 <div>
-                    <label class="form-part-label">Subcategory</label><br>
+                    <label class="form-part-label">Subcategory</label>
                     <select class="product-subcategory form-part-input" [disabled]="subcategoryDropdownDisabled"
                             [(ngModel)]="product.subCategoryId" name="subcategoryId">
                         <option *ngFor="let subcategory of subcategories"
                                 value="{{subcategory.id}}">{{subcategory.name}}</option>
-                    </select><br>
+                    </select>
                 </div>
                 <div>
-                    <label class="form-part-label">Product description</label><br>
+                    <label class="form-part-label">Product description</label>
                     <textarea class="product-description form-part-input" type="text" name="description"
-                              [(ngModel)]="product.description"></textarea><br>
+                              [(ngModel)]="product.description"></textarea>
                 </div>
             </div>
             <div class="images form-part">
@@ -40,12 +40,12 @@
                 <div class="heading">Location</div>
                 <div class="product-location">
                     <div>
-                        <label class="form-part-label">Type address</label><br>
+                        <label class="form-part-label">Type address</label>
                         <input class="product-address-text form-part-input" type="text">
                     </div>
                     or<br>
                     <div>
-                        <label class="form-part-label">Choose on map</label><br>
+                        <label class="form-part-label">Choose on map</label>
                         <div class="product-address-map">
                             [MAP LOCATION PICKER]
                         </div>
@@ -56,13 +56,13 @@
                 <div class="heading">Availability</div>
                 <div class="product-availability">
                     <div>
-                        <label class="form-part-label">From</label><br>
+                        <label class="form-part-label">From</label>
                         <div class="form-part-input">
                             <input class="form-part-datepicker" type="date">
                         </div>
                     </div>
                     <div>
-                        <label class="form-part-label">To</label><br>
+                        <label class="form-part-label">To</label>
                         <div class="form-part-input">
                             <input class="form-part-datepicker" type="date">
                         </div>

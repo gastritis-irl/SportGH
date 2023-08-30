@@ -1,8 +1,61 @@
 <a routerLink="/products">Go back &larr;</a>
-<div>
-    {{this.product.id}} - {{this.product.name}}<br>
-    {{this.product.description}}<br>
-    {{this.product.rentPrice}}<br>
-    {{this.product.subCategoryId}} - {{this.product.subCategoryName}}<br>
-    {{this.product.userId}}- {{this.product.username}}<br>
+<div class="product-details">
+    <div class="product-details-primary">
+        <div class="heading-items">
+            <div class="product-name heading">{{product.name}}</div>
+            <div class="add-to-favorites">
+                <button class="add-to-favorite-btn">[HeartBtn]</button>
+            </div>
+        </div>
+        <div class="ad-info-and-location">
+            <div class="rating">
+                [Rating]
+            </div>
+            -
+            <div class="reviews">
+                [NrOfReviews]
+            </div>
+            -
+            <div class="location">
+                [ProductLocation]
+            </div>
+        </div>
+
+        <div class="images-and-pricing">
+            <div class="images">
+                <img src="" alt="[Images]">
+            </div>
+            <div class="pricing">
+                <div class="heading">{{product.rentPrice}} RON / day</div>
+
+                <div class="rent-options">
+                    <div class="rent-dates">
+                        <div>
+                            <label class="rent-date-label">From</label>
+                            <input class="rent-date-picker" type="date">
+                        </div>
+                        <div>
+                            <label class="rent-date-label">To</label>
+                            <input class="rent-date-picker" type="date">
+                        </div>
+                    </div>
+                    <div class="rent-price">
+                        <label class="rent-price-label heading">Total</label>
+                        <div class="rent-price-total heading">{{product.rentPrice}} RON</div>
+                    </div>
+                    <div class="rent-button-holder buttons">
+                        <button class="rent-button button-default button-primary">Rent</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-details-secondary">
+        <div class="product-details-navigation-btn buttons">
+            <button class="button-default button-secondary">Description</button>
+            <button class="button-default button-secondary">About renter</button>
+            <button class="button-default button-secondary">Location</button>
+            <button class="button-default button-secondary">Reviews</button>
+        </div>
+    </div>
 </div>

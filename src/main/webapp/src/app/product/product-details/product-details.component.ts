@@ -7,11 +7,11 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'sgh-product-details',
     templateUrl: './product-details.component.html',
+    styleUrls: [ './product-details.component.scss' ],
 })
 export class ProductDetailsComponent implements OnInit {
 
     product: Product = {};
-    productId: number = 0;
 
     constructor(
         private productService: ProductService,
@@ -24,7 +24,7 @@ export class ProductDetailsComponent implements OnInit {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
-                    this.productId = params['productId'];
+                    this.loadProduct(params['productId']);
                 },
                 error: (error): void => {
                     console.error(error);
@@ -32,8 +32,10 @@ export class ProductDetailsComponent implements OnInit {
                 }
             }
         );
+    }
 
-        this.productService.getById(this.productId).subscribe(
+    loadProduct(productId: number): void {
+        this.productService.getById(productId).subscribe(
             {
                 next: (data: Product): void => {
                     this.product = data;

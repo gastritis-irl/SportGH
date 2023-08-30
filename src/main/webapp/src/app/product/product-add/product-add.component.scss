@@ -1,6 +1,6 @@
 @import '../../../style-variables.scss';
 
-$main-padding-left: 10%;
+$main-page-padding: 10%;
 $bottom-padding: 2%;
 $row-padding: 3%;
 $item-gap: 15px;
@@ -10,7 +10,8 @@ $font-weight-2: 600;
 
 .product-create-div {
     background-color: $color-main-3;
-    padding-left: $main-padding-left;
+    padding-left: $main-page-padding;
+    padding-right: $main-page-padding;
 
     .heading {
         color: $color-main-1;
@@ -33,7 +34,7 @@ $font-weight-2: 600;
                 display: flex;
                 flex-direction: column;
                 gap: $form-part-padding;
-                width: 80%;
+                width: 100%;
                 padding-left: $row-padding;
                 padding-right: $row-padding;
                 padding-bottom: $bottom-padding;
