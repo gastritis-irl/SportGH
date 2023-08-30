@@ -5,6 +5,7 @@ import edu.codespring.sportgh.dto.SubCategoryOutDTO;
 import edu.codespring.sportgh.mapper.SubCategoryMapper;
 import edu.codespring.sportgh.model.SubCategory;
 import edu.codespring.sportgh.service.SubCategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ public class SubCategoryController {
 
     @PostMapping(path = "/{subCategoryId}")
     @PutMapping(path = "/{subCategoryId}")
-    public ResponseEntity<SubCategoryOutDTO> save(@RequestBody SubCategoryInDTO subCategoryInDTO,
+    public ResponseEntity<SubCategoryOutDTO> save(@RequestBody @Valid SubCategoryInDTO subCategoryInDTO,
                                                   @PathVariable(required = false) Long subCategoryId) {
         SubCategory subCategory;
         subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);

@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { Product } from "../product.model";
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../product.model';
 import { ProductService } from '../product.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'sgh-product-list',
@@ -10,7 +11,10 @@ export class ProductListComponent implements OnInit {
 
     products: Product[] = [];
 
-    constructor(private productService: ProductService) {
+    constructor(
+        private productService: ProductService,
+        private toastNotify: ToastrService,
+    ) {
     }
 
     ngOnInit(): void {
@@ -20,7 +24,8 @@ export class ProductListComponent implements OnInit {
                     this.products = data;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (products):', error);
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
                 }
             }
         );
