@@ -56,7 +56,6 @@ export class ProductAddComponent implements OnInit {
             {
                 next: (data: Subcategory[]): void => {
                     this.subcategories = data;
-                    console.log(data, this.categoryId);
                     this.subcategoryDropdownDisabled = false;
                 },
                 error: (error): void => {
@@ -69,6 +68,8 @@ export class ProductAddComponent implements OnInit {
 
     createProduct(): void {
         this.product.userId = 1;
+        this.product.available = true;
+
         this.productService.create(this.product).subscribe(
             {
                 next: (resp: Product): void => {

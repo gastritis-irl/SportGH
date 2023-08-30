@@ -4,6 +4,7 @@ export interface Product {
     available?: boolean,
     name?: string,
     description?: string,
+    location?: string,
     rentPrice?: number,
     subCategoryId?: number,
     subCategoryName?: string,

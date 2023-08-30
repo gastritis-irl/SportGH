@@ -22,6 +22,9 @@ public class ProductInDTO {
     @Size(max = 1000, message = "Product description must be between 0-1000 characters")
     private String description;
 
+    @Size(max = 100, message = "Product location must be between 0-100 characters")
+    private String location;
+
     @Min(value = 0, message = "Rent price must be a positive value")
     @NotNull(message = "Rend price can't be empty")
     private Double rentPrice;

@@ -163,6 +163,7 @@ public class DataGenerator {
         saveProduct(
             "Swimming googles",
             "Googles for swimming",
+            "Cluj-Napoca, Romania",
             20.0,
             "Swimming",
             user
@@ -170,6 +171,7 @@ public class DataGenerator {
         saveProduct(
             "Flip flops",
             "Flip flops for easier swimming",
+            "Cluj-Napoca, Romania",
             35.0,
             "Swimming",
             user
@@ -177,6 +179,7 @@ public class DataGenerator {
         saveProduct(
             "Bike",
             "Bike for cycling",
+            "Cluj-Napoca, Romania",
             100.0,
             "Cycling",
             user
@@ -184,6 +187,7 @@ public class DataGenerator {
         saveProduct(
             "Helmet",
             "Helmet for your protection",
+            "Cluj-Napoca, Romania",
             18.0,
             "Cycling",
             user
@@ -192,6 +196,7 @@ public class DataGenerator {
         saveProduct(
             "Flashlight",
             "Flashlight for better visibility",
+            "Cluj-Napoca, Romania",
             15.0,
             "Cycling",
             user
@@ -200,6 +205,7 @@ public class DataGenerator {
         saveProduct(
             "Bicycle lock",
             "Bicycle lock for your bike's protection",
+            "Cluj-Napoca, Romania",
             20.0,
             "Cycling",
             user
@@ -228,13 +234,15 @@ public class DataGenerator {
         }
     }
 
-    public void saveProduct(String name, String description, Double rentPrice, String subCategoryName, User user) {
+    public void saveProduct(String name, String description, String location,
+                            Double rentPrice, String subCategoryName, User user) {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
         if (subCategory != null && !productService.existsByNameAndUser(name, user)) {
             productService.save(new Product(
                 true,
                 name,
                 description,
+                location,
                 rentPrice,
                 subCategory,
                 user
