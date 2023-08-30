@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "images")
-public class Image extends BaseEntity{
+public class Image extends BaseEntity {
 
     private String name;
 
