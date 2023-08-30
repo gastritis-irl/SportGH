@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.config;
 
+import edu.codespring.sportgh.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +28,7 @@ public class FileStorageConfig {
             }
         } catch (IOException e) {
             log.error("Could not initialize storage directory", e);
-            throw new RuntimeException("Could not initialize storage directory", e);
+            throw new ServiceException("Could not initialize storage directory", e);
         }
     }
 }

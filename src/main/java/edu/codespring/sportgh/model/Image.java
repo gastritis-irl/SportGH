@@ -1,7 +1,6 @@
 package edu.codespring.sportgh.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.*;
 
