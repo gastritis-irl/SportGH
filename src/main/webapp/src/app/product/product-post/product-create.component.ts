@@ -45,9 +45,7 @@ export class ProductCreateComponent implements OnInit {
         );
     }
 
-    checkForm(): void {
-        let filled: boolean = true;
-        let inputIsCorrect: boolean = true;
+    checkForm(filled: boolean = true, inputIsCorrect: boolean = true): void {
         if (filled && inputIsCorrect) {
             this.formBtnDisabled = false;
         }
