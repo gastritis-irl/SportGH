@@ -16,6 +16,5 @@ public class Image extends BaseEntity {
 
     private String name;
 
-    @Lob
-    private byte[] data;
+    private String url;
 }
