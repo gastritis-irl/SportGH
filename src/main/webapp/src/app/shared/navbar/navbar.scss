@@ -71,6 +71,9 @@ body {
 
             .nav-header-logo-icon {
                 content: $nav-header-logo-icon;
+                width: $height-nav-header;
+                height: $height-nav-header;
+                padding: 2%;
             }
 
             .nav-header-logo-title {
@@ -154,6 +157,18 @@ body {
 
             a {
                 color: $color-neutral-1;
+                text-decoration: none;
+            }
+        }
+
+        .nav-link-item {
+
+            &:hover {
+                background-color: $color-main-3;
+            }
+
+            a {
+                color: $color-neutral-2;
                 text-decoration: none;
             }
         }

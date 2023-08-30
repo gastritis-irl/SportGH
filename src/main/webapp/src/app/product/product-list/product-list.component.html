@@ -1,8 +1,17 @@
-<ul>
-    <li *ngFor="let product of products">
-        {{product.id}} - {{product.name}} - {{product.rentPrice}}<br>
-        Owner: {{product.userId}}<br>
-        Subcategory: {{product.subCategoryId}}<br>
-        <a routerLink="/products/{{product.id}}">More...</a>
-    </li>
-</ul>
+<div class="product-list-holder">
+    <div class="products">
+        <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
+            <img src="https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg" class="product-icon"
+                 alt="IMG"/>
+            <div class="product-name">{{ product.name }}</div>
+            <div class="product-description">
+                {{ product.description }}
+            </div>
+            <div class="product-price">
+                <div class="product-price-d">
+                    Price from {{product.rentPrice}} RON / DAY
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

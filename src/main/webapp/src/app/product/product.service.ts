@@ -18,6 +18,11 @@ export class ProductService extends AppService {
         return this.http.get<Product>(url);
     }
 
+    getByCategoryId(categoryId: number): Observable<Product[]> {
+        const url: string = `${this.baseUrl}/products/category/${categoryId}`;
+        return this.http.get<Product[]>(url);
+    }
+
     create(product: Product): Observable<Product> {
         const url: string = `${this.baseUrl}/products`;
         return this.http.post(url, product);

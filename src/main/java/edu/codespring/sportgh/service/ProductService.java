@@ -9,6 +9,8 @@ public interface ProductService {
 
     Product findById(Long productId);
 
+    Collection<Product> findByCategoryId(Long categoryId);
+
     Collection<Product> findAll();
 
     boolean existsByNameAndUser(String name, User user);

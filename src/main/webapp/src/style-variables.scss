@@ -2,9 +2,8 @@
 Global variables
  */
 
-
 // Img URLs
-$nav-header-logo-icon: url("Info.svg");
+$nav-header-logo-icon: url("assets/sportgh.png");
 
 // Colors
 $color-neutral-1: #FFFFFF;
@@ -12,14 +11,51 @@ $color-neutral-2: #000000;
 $color-main-1: #5D5A88;
 $color-main-2: #8D8BA7;
 $color-main-3: #F2F1FA;
+$color-main-4: #b8b8be;
 $color-btn-1: $color-neutral-1;
 $color-btn-2: $color-main-1;
+$border-color: #D4D2E3;
+$font-color-1: $color-main-1;
+$font-color-2: $color-neutral-1;
+$toast-success-bg-color: rgb(156, 171, 199);
+$toast-info-bg-color: cornflowerblue;
+$toast-warning-bg-color: rgb(180, 107, 48);
+$toast-error-bg-color: rgb(133, 55, 55);
 
 // Fonts
 $font-default: 'DM Sans', sans-serif;
+$font-weight-bold: 700;
 
 // Text Size
 $size-h1: 175%;
 $size-h2: 130%;
 $size-h3: 115%;
 $size-default: 100%;
+
+// Define breakpoints
+$breakpoint-small: 480px;
+$breakpoint-medium: 768px;
+$breakpoint-large: 1024px;
+
+$height-nav-searchbar: 2.15em;
+$width-nav-searchbar: 100%;
+
+/* ----------Card variables---------- */
+
+// Color
+$border-color: #D4D2E3;
+
+// Sizes
+$item-padding: 0 5% 0 5%;
+$heading-font-size: 2.25em;
+$heading-line-height: 2.875em;
+$name-font-size: 1.25em;
+$name-line-height: 1.25em;
+$hover-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+$hover-icon-height: 10em;
+
+// Min-max card sizes
+$card-min-width-small: 90%;
+$card-max-width-small: 100%;
+$card-min-width-medium: 200px;
+$card-min-width-large: 250px;
