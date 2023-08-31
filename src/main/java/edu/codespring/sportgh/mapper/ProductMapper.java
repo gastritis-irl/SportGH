@@ -41,12 +41,13 @@ public abstract class ProductMapper {
     // Custom method to map List<Image> to Long[]
     public Long[] mapImagesToIds(List<Image> images) {
         if (images == null || images.isEmpty()) {
-            return null;
+            return new Long[0];
         }
         return images.stream()
             .map(Image::getId)
             .toArray(Long[]::new);
     }
+
     @AfterMapping
     protected void handleDtoToEntityMapping(ProductInDTO dto, @MappingTarget Product entity) {
         if (dto.getSubCategoryId() == null) {

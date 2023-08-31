@@ -60,49 +60,42 @@ public class DataGenerator {
         saveCategory(
             "Water sports",
             "...",
-            "waterSports.png",
             "src/main/resources/imageStorage/testImages/waterSports.png"
 
         );
         saveCategory(
             "Combat sports",
             "...",
-            "combatSports.png",
             "src/main/resources/imageStorage/testImages/combatSports.png"
 
         );
         saveCategory(
             "Extreme sports",
             "...",
-            "extremeSports.png",
             "src/main/resources/imageStorage/testImages/extremeSports.png"
 
         );
         saveCategory(
             "Team sports",
             "...",
-            "teamSports.png",
             "src/main/resources/imageStorage/testImages/teamSports.png"
 
         );
         saveCategory(
             "Winter sports",
             "...",
-            "winterSports.png",
             "src/main/resources/imageStorage/testImages/winterSports.png"
 
         );
         saveCategory(
             "Track & Field",
             "...",
-            "trackAndField.png",
             "src/main/resources/imageStorage/testImages/trackAndField.png"
 
         );
         saveCategory(
             "Other",
             "Other sports",
-            "otherSports.png",
             "src/main/resources/imageStorage/testImages/otherSports.png"
 
         );
@@ -211,8 +204,11 @@ public class DataGenerator {
         );
     }
 
-    public void saveCategory(String name, String description, String imageName, String imageUrl) {
+    public void saveCategory(String name, String description, String imageUrl) {
         if (!categoryService.existsByName(name)) {
+            // Extract the image name from the URL
+            String imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+
             // Create a new Image instance with the given name and URL
             Image image = new Image(imageName, imageUrl, null, null);
 
