@@ -63,7 +63,8 @@ public class ProductController {
     }
 
     @PutMapping(path = "/{productId}")
-    public ResponseEntity<ProductOutDTO> update(@RequestBody @Valid ProductInDTO productInDTO, @PathVariable Long productId) {
+    public ResponseEntity<ProductOutDTO> update(@RequestBody @Valid ProductInDTO productInDTO,
+                                                @PathVariable Long productId) {
         log.info("Updating product with ID {}.", productId);
         if (!Objects.equals(productId, productInDTO.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
