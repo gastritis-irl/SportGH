@@ -15,6 +15,8 @@ public interface ProductService {
 
     boolean existsByNameAndUser(String name, User user);
 
+    boolean existsById(Long productId);
+
     void save(Product product);
 
     void rent(Product product);

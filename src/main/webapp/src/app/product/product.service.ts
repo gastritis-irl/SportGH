@@ -28,6 +28,16 @@ export class ProductService extends AppService {
         return this.http.post(url, product);
     }
 
+    edit(product: Product): Observable<Product> {
+        const url: string = `${this.baseUrl}/products/${product.id}`;
+        return this.http.put(url, product);
+    }
+
+    delete(productId: number): Observable<any> {
+        const url: string = `${this.baseUrl}/products/${productId}`;
+        return this.http.delete(url);
+    }
+
     rent(productId: number): Observable<Product> {
         const url: string = `${this.baseUrl}/products/${productId}/rent`;
         return this.http.put(url, {});  // body: renter?

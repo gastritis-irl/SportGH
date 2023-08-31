@@ -4,14 +4,14 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductComponent } from './product.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductRoute } from './product.route';
-import { ProductAddComponent } from './product-add/product-add.component';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
         ProductDetailsComponent,
         ProductListComponent,
-        ProductAddComponent,
+        ProductEditComponent,
         ProductComponent,
     ],
     imports: [

@@ -1,32 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from '../../category/category.model';
 import { CategoryService } from '../../category/category.service';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { SubcategoryService } from '../../subcategory/subcategory.service';
 
+type ClickHandlerFunction = () => void;
+
 @Component({
     selector: 'sgh-product-post',
-    templateUrl: './product-add.component.html',
-    styleUrls: [ './product-add.component.scss' ],
+    templateUrl: './product-edit.component.html',
+    styleUrls: [ './product-edit.component.scss' ],
 })
-export class ProductAddComponent implements OnInit {
+export class ProductEditComponent implements OnInit {
 
     product: Product = {};
     categories: Category[] = [];
-    categoryId: number = 0;
     subcategories: Subcategory[] = [];
     subcategoryDropdownDisabled: boolean = true;
     formBtnDisabled: boolean = false;
+    clickHandlerFunction: ClickHandlerFunction = (): void => {
+    };
 
     constructor(
         private productService: ProductService,
         private categoryService: CategoryService,
         private subcategoryService: SubcategoryService,
         private router: Router,
+        private route: ActivatedRoute,
         private toastNotify: ToastrService,
     ) {
     }
@@ -43,6 +47,45 @@ export class ProductAddComponent implements OnInit {
                 }
             }
         );
+        this.loadDataByParam();
+    }
+
+    loadDataByParam(): void {
+        this.route.params.subscribe(
+            {
+                next: (params: Params): void => {
+                    this.loadData(params['productId']);
+                },
+                error: (error): void => {
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
+                }
+            }
+        );
+    }
+
+    loadData(param: string | undefined): void {
+        if (!param) {
+            this.clickHandlerFunction = this.createProduct;
+        } else {
+            const id: number = parseInt(param);
+            if (!isNaN(id)) {
+                this.clickHandlerFunction = this.editProduct;
+                this.productService.getById(id).subscribe(
+                    {
+                        next: (data: Product): void => {
+                            this.product = data;
+                            this.subcategoryDropdownDisabled = false;
+                            this.getSubcategoriesByCategoryId();
+                        },
+                        error: (error): void => {
+                            console.error(error);
+                            this.toastNotify.error(`Error fetching data`);
+                        }
+                    }
+                );
+            }
+        }
     }
 
     checkForm(filled: boolean = true, inputIsCorrect: boolean = true): void {
@@ -52,7 +95,7 @@ export class ProductAddComponent implements OnInit {
     }
 
     getSubcategoriesByCategoryId(): void {
-        this.subcategoryService.getByCategoryId(this.categoryId).subscribe(
+        this.subcategoryService.getByCategoryId(this.product.categoryId ? this.product.categoryId : 0).subscribe(
             {
                 next: (data: Subcategory[]): void => {
                     this.subcategories = data;
@@ -80,8 +123,24 @@ export class ProductAddComponent implements OnInit {
                         });
                 },
                 error: (error): void => {
-                    console.error(error);
-                    this.toastNotify.error(`Error creating product: ${error}`);
+                    this.toastNotify.error(`Error creating product: ${error.error}`);
+                }
+            }
+        );
+    }
+
+    editProduct(): void {
+        this.productService.edit(this.product).subscribe(
+            {
+                next: (resp: Product): void => {
+                    this.router.navigate([ `/products/${resp.id}` ])
+                        .catch((error: string): void => {
+                            console.error(error);
+                            this.toastNotify.info('Error redirecting to page');
+                        });
+                },
+                error: (error): void => {
+                    this.toastNotify.error(`Error creating product: ${error.error}`);
                 }
             }
         );

@@ -38,6 +38,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public boolean existsById(Long productId) {
+        return productRepository.existsById(productId);
+    }
+
+    @Override
     public void save(Product product) {
         productRepository.save(product);
         log.info("Product saved successfully ({}) with ID: {}", product.getName(), product.getId());

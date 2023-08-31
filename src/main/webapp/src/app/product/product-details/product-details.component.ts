@@ -119,4 +119,8 @@ export class ProductDetailsComponent implements OnInit {
             }
         );
     }
+
+    deleteProduct():void {
+        this.productService;
+    }
 }

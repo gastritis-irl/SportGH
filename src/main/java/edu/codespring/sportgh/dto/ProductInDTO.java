@@ -29,7 +29,7 @@ public class ProductInDTO {
     @NotNull(message = "Rend price can't be empty")
     private Double rentPrice;
 
-    @Min(value = 1, message = "SubCategoryId must be greater than 1")
+    @Min(value = 1, message = "SubCategoryId must be greater than 0")
     @NotNull(message = "Subcategory must be given")
     private Long subCategoryId;
 

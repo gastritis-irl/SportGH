@@ -2,7 +2,7 @@
     <div class="heading main-title">Upload product</div>
     <div class="general-data">
         <div class="general-data-heading"></div>
-        <form class="general-data-form" (ngSubmit)="createProduct()">
+        <form class="general-data-form" (ngSubmit)="clickHandlerFunction()">
             <div class="details form-part">
                 <div class="heading">Details</div>
                 <div>
@@ -11,7 +11,7 @@
                 </div>
                 <div>
                     <label class="form-part-label">Category</label>
-                    <select class="product-category form-part-input" [(ngModel)]="categoryId" name="categoryId">
+                    <select class="product-category form-part-input" [(ngModel)]="product.categoryId" name="categoryId">
                         <option *ngFor="let category of categories" value="{{category.id}}"
                                 (click)="getSubcategoriesByCategoryId()">{{category.name}}</option>
                     </select>
@@ -86,8 +86,13 @@
                 </div>
             </div>
             <div class="publish-btn-holder buttons">
-                <button [disabled]="formBtnDisabled" class="button-primary button-default publish-btn" type="submit">
+                <button *ngIf="clickHandlerFunction==createProduct" [disabled]="formBtnDisabled"
+                        class="button-primary button-default publish-btn" type="submit">
                     Publish
+                </button>
+                <button *ngIf="clickHandlerFunction==editProduct" [disabled]="formBtnDisabled"
+                        class="button-primary button-default publish-btn" type="submit">
+                    Save
                 </button>
             </div>
         </form>

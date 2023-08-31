@@ -6,6 +6,7 @@ export interface Product {
     description?: string,
     location?: string,
     rentPrice?: number,
+    categoryId?: number,
     subCategoryId?: number,
     subCategoryName?: string,
     userId?: number,

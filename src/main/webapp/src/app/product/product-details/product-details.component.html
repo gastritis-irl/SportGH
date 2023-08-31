@@ -2,7 +2,19 @@
     <div class="product-main-area">
         <div class="heading-items">
             <div class="product-name-and-avail">
-                <div class="product-name heading">{{product.name}}</div>
+                <div class="heading product-name product-heading">
+                    {{product.name}}
+
+                    <!--                    check if owner-->
+                    <div *ngIf="product.userId==product.userId" class="product-edit-link"
+                         routerLink="/products/{{product.id}}/edit">
+                        &#9998;
+                    </div>
+                    <div *ngIf="product.userId==product.userId" class="product-edit-link"
+                         (click)="deleteProduct()">
+                        &#128465;
+                    </div>
+                </div>
                 <div *ngIf="product.available" class="product-avail-1 heading">Available</div>
                 <div *ngIf="!product.available" class="product-avail-0 heading">Currently unavailable</div>
             </div>
