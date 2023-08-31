@@ -97,13 +97,23 @@ $border: 2px solid $color-main-3;
                         flex-direction: row;
                         gap: $item-gap;
 
-                        .rent-date-label {
-                            padding-left: $column-padding;
+                        @media (max-width: $breakpoint-small) {
+                            display: flex;
+                            flex-direction: column;
                         }
 
-                        .rent-date-picker {
-                            color: $color-main-1;
-                            border-radius: $border-radius;
+                        .rend-date-picker-div {
+                            display: flex;
+                            flex-direction: column;
+
+                            .rent-date-label {
+                                padding-left: $column-padding;
+                            }
+
+                            .rent-date-picker {
+                                color: $color-main-1;
+                                border-radius: $border-radius;
+                            }
                         }
                     }
 
