@@ -12,7 +12,8 @@
                 <div>
                     <label class="form-part-label">Category</label>
                     <select class="product-category form-part-input" [(ngModel)]="product.categoryId" name="categoryId">
-                        <option *ngFor="let category of categories" value="{{category.id}}"
+                        <option class="product-category form-part-input" *ngFor="let category of categories"
+                                value="{{category.id}}"
                                 (click)="getSubcategoriesByCategoryId()">{{category.name}}</option>
                     </select>
                 </div>
@@ -20,7 +21,7 @@
                     <label class="form-part-label">Subcategory</label>
                     <select class="product-subcategory form-part-input" [disabled]="subcategoryDropdownDisabled"
                             [(ngModel)]="product.subCategoryId" name="subcategoryId">
-                        <option *ngFor="let subcategory of subcategories"
+                        <option class="product-category form-part-input" *ngFor="let subcategory of subcategories"
                                 value="{{subcategory.id}}">{{subcategory.name}}</option>
                     </select>
                 </div>
@@ -71,17 +72,17 @@
                 <div class="product-pricing">
                     <div>
                         <label class="form-part-label">Hourly rent price</label>
-                        <input class="form-part-input product-price-h" type="number" disabled>
+                        <input class="form-part-input product-price-h" type="number" min="0" disabled>
 
                     </div>
                     <div>
                         <label class="form-part-label">Daily rent price</label>
-                        <input class=" form-part-input product-price-d" type="number" name="price"
+                        <input class=" form-part-input product-price-d" type="number" min="0" name="price"
                                [(ngModel)]="product.rentPrice">
                     </div>
                     <div>
                         <label class="form-part-label">Weekly rent price</label>
-                        <input class="form-part-input product-price-w" type="number" disabled>
+                        <input class="form-part-input product-price-w" type="number" min="0" disabled>
                     </div>
                 </div>
             </div>

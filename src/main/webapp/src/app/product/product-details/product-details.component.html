@@ -4,15 +4,15 @@
             <div class="product-name-and-avail">
                 <div class="heading product-name product-heading">
                     {{product.name}}
-
-                    <!--                    check if owner-->
-                    <div *ngIf="product.userId==product.userId" class="product-edit-link product-edit-icon"
-                         routerLink="/products/{{product.id}}/edit">
-                        &#9998;
-                    </div>
-                    <div *ngIf="product.userId==product.userId" class="product-edit-link product-delete-icon"
-                         (click)="deleteProduct()">
-                        &#x2716;
+                    <div class="product-links">
+                        <div *ngIf="product.userId==product.userId" class="product-edit-link product-edit-icon"
+                             routerLink="/products/{{product.id}}/edit">
+                            &#9998;
+                        </div>
+                        <div *ngIf="product.userId==product.userId" class="product-edit-link product-delete-icon"
+                             (click)="deleteProduct()">
+                            &#x2716;
+                        </div>
                     </div>
                 </div>
                 <div *ngIf="product.available" class="product-avail-1 heading">Available</div>

@@ -7,7 +7,9 @@ $item-gap: 15px;
 $item-padding: 15px;
 $font-weight-1: 700;
 $font-weight-2: 600;
+$date-picker-size: 140px;
 $border: 2px solid $color-main-3;
+$icon-size: 50px;
 
 .heading {
     color: $color-main-1;
@@ -36,22 +38,35 @@ $border: 2px solid $color-main-3;
                     display: flex;
                     flex-direction: row;
                     font-size: $size-h1;
-                    gap: $item-gap;
 
-                    .product-edit-link {
-                        cursor: pointer;
+                    @media (min-width: $breakpoint-small) {
+                        row-gap: $item-gap;
+                    }
 
-                        &:hover {
-                            color: $color-main-2;
+                    @media (max-width: $breakpoint-small) {
+                        display: flex;
+                        flex-direction: column;
+                        column-gap: $item-gap;
+                    }
+
+                    .product-links {
+                        display: flex;
+                        flex-direction: row;
+                        column-gap: $item-gap;
+
+                        .product-edit-link {
+                            cursor: pointer;
+
+                            &:hover {
+                                color: $color-main-2;
+                            }
+
+                            &.product-edit-icon {
+                            }
+
+                            &.product-delete-icon {
+                            }
                         }
-                    }
-
-                    .product-edit-icon {
-                        rotate: 90deg;
-                    }
-
-                    .product-delete-icon {
-
                     }
                 }
 
@@ -68,7 +83,7 @@ $border: 2px solid $color-main-3;
 
                 .add-to-favorite-icon {
                     color: $color-main-2;
-                    font-size: 50px;
+                    font-size: $icon-size;
                     padding-right: $item-padding;
 
                     &:hover {
@@ -132,6 +147,13 @@ $border: 2px solid $color-main-3;
                             .rent-date-picker {
                                 color: $color-main-1;
                                 border-radius: $border-radius;
+                                border-color: $color-main-3;
+                                width: $date-picker-size;
+                                border-style: solid;
+
+                                &:focus {
+                                    font-family: $font-default;
+                                }
                             }
                         }
                     }
