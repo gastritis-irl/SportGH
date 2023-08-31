@@ -27,7 +27,6 @@ public class FileStorageConfig {
                 log.info("Directory created at: " + path.toAbsolutePath());
             }
         } catch (IOException e) {
-            log.error("Could not initialize storage directory", e);
             throw new ServiceException("Could not initialize storage directory", e);
         }
     }

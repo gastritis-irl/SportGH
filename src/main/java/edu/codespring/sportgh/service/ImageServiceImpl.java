@@ -3,7 +3,6 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.repository.ImageRepository;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,7 +62,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void delete(Long imageID) {
         // Delete from the file system
-        Image image = get(imageID);
+        Image image = findById(imageID);
         if (image != null) {
             Path filePath = Paths.get(image.getUrl());
             try {
@@ -79,7 +78,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image get(Long imageID) {
+    public Image findById(Long imageID) {
         return imageRepository.findById(imageID).orElse(null);
     }
 

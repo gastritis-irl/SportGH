@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
     templateUrl: './image.component.html',
 })
 export class ImageComponent {
+    
     imageFile: File;
     imageData: Image;
 

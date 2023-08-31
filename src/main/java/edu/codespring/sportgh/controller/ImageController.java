@@ -30,7 +30,7 @@ public class ImageController {
 
     @GetMapping(path = "/{imageId}")
     public ResponseEntity<Image> findById(@PathVariable Long imageId) {
-        Image image = imageService.get(imageId);
+        Image image = imageService.findById(imageId);
         if (image == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -39,7 +39,7 @@ public class ImageController {
 
     @GetMapping(path = "/file/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getImageFile(@PathVariable Long imageId) {
-        Image image = imageService.get(imageId);
+        Image image = imageService.findById(imageId);
         if (image == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

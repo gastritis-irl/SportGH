@@ -11,7 +11,7 @@ public interface ImageService {
 
     void delete(Long imageID);
 
-    Image get(Long imageID);
+    Image findById(Long imageID);
 
     boolean existsByName(String name);
 }

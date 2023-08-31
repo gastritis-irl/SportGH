@@ -1,14 +1,11 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { environment } from "../environment";
+import { environment } from "../../environment";
 import { Image } from "./image.model";
+import { AppService } from "../../app.service";
 
 @Injectable()
-export class ImageService {
-
-    constructor(private http: HttpClient) {
-    }
+export class ImageService extends AppService {
 
     uploadImage(image: File): Observable<Image> {
         const formData = new FormData();

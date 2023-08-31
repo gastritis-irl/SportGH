@@ -3,6 +3,8 @@ package edu.codespring.sportgh.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -32,5 +34,5 @@ public class Product extends BaseEntity {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private java.util.List<Image> images;
+    private List<Image> images;
 }
