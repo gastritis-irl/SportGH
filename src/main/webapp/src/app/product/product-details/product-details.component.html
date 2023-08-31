@@ -6,13 +6,13 @@
                     {{product.name}}
 
                     <!--                    check if owner-->
-                    <div *ngIf="product.userId==product.userId" class="product-edit-link"
+                    <div *ngIf="product.userId==product.userId" class="product-edit-link product-edit-icon"
                          routerLink="/products/{{product.id}}/edit">
                         &#9998;
                     </div>
-                    <div *ngIf="product.userId==product.userId" class="product-edit-link"
+                    <div *ngIf="product.userId==product.userId" class="product-edit-link product-delete-icon"
                          (click)="deleteProduct()">
-                        &#128465;
+                        &#x2716;
                     </div>
                 </div>
                 <div *ngIf="product.available" class="product-avail-1 heading">Available</div>

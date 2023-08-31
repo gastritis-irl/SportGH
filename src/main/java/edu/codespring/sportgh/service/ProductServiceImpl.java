@@ -57,4 +57,9 @@ public class ProductServiceImpl implements ProductService {
             throw new ServiceAuthenticationException("This product is currently unavailable.");
         }
     }
+
+    @Override
+    public void delete(Product product) {
+        productRepository.delete(product);
+    }
 }

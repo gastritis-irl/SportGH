@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../user/user.model';
 import { UserService } from '../../user/user.service';
@@ -23,6 +23,7 @@ export class ProductDetailsComponent implements OnInit {
         private productService: ProductService,
         private userService: UserService,
         private route: ActivatedRoute,
+        private router: Router,
         private viewPortScroller: ViewportScroller,
         private toastNotify: ToastrService,
     ) {
@@ -120,7 +121,21 @@ export class ProductDetailsComponent implements OnInit {
         );
     }
 
-    deleteProduct():void {
-        this.productService;
+    deleteProduct(): void {
+        this.productService.delete(this.product.id ? this.product.id : 0).subscribe(
+            {
+                next: (): void => {
+                    this.toastNotify.success(`Product ${this.product.name} successfully deleted!`);
+                    this.router.navigate([ `/categories/${this.product.categoryId}` ])
+                        .catch((error): void => {
+                            console.error(error);
+                            this.toastNotify.error('Error redirecting to page');
+                        });
+                },
+                error: (error): void => {
+                    this.toastNotify.error(`Error deleting product: ${error.error}`);
+                }
+            }
+        );
     }
 }

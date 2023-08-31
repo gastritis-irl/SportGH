@@ -80,4 +80,11 @@ public class ProductController {
         productService.rent(product);
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
+
+    @DeleteMapping(path = "/{productId}")
+    public ResponseEntity<?> delete(@PathVariable Long productId) {
+        Product product = productService.findById(productId);
+        productService.delete(product);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
