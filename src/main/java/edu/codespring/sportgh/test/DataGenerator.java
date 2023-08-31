@@ -6,6 +6,7 @@ import edu.codespring.sportgh.service.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,9 @@ public class DataGenerator {
     private final ProductService productService;
     private final FirebaseService firebaseService;
     private final ImageService imageService;
+
+    @Value("${file.storage.location}")
+    private String fileStorageLocation;
 
     @PostConstruct
     public void init() {
@@ -60,43 +64,43 @@ public class DataGenerator {
         saveCategory(
             "Water sports",
             "...",
-            "src/main/resources/imageStorage/testImages/waterSports.png"
+            fileStorageLocation + "/testImages/waterSports.png"
 
         );
         saveCategory(
             "Combat sports",
             "...",
-            "src/main/resources/imageStorage/testImages/combatSports.png"
+            fileStorageLocation + "/testImages/combatSports.png"
 
         );
         saveCategory(
             "Extreme sports",
             "...",
-            "src/main/resources/imageStorage/testImages/extremeSports.png"
+            fileStorageLocation + "/testImages/extremeSports.png"
 
         );
         saveCategory(
             "Team sports",
             "...",
-            "src/main/resources/imageStorage/testImages/teamSports.png"
+            fileStorageLocation + "/testImages/teamSports.png"
 
         );
         saveCategory(
             "Winter sports",
             "...",
-            "src/main/resources/imageStorage/testImages/winterSports.png"
+            fileStorageLocation + "/testImages/winterSports.png"
 
         );
         saveCategory(
             "Track & Field",
             "...",
-            "src/main/resources/imageStorage/testImages/trackAndField.png"
+            fileStorageLocation + "/testImages/trackAndField.png"
 
         );
         saveCategory(
             "Other",
             "Other sports",
-            "src/main/resources/imageStorage/testImages/otherSports.png"
+            fileStorageLocation + "/testImages/otherSports.png"
 
         );
     }
