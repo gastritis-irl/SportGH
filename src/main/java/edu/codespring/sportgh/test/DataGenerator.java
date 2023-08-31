@@ -161,52 +161,82 @@ public class DataGenerator {
         }
 
         saveProduct(
-            "Swimming googles",
-            "Googles for swimming",
-            "Cluj-Napoca, Romania",
-            20.0,
+            new Product(
+                true,
+                "Swimming googles",
+                "Googles for swimming",
+                "Cluj-Napoca, Romania",
+                20.0,
+                null,
+                null
+            ),
             "Swimming",
             user
         );
         saveProduct(
-            "Flip flops",
-            "Flip flops for easier swimming",
-            "Cluj-Napoca, Romania",
-            35.0,
+            new Product(
+                true,
+                "Flip flops",
+                "Flip flops for easier swimming",
+                "Cluj-Napoca, Romania",
+                35.0,
+                null,
+                null
+            ),
             "Swimming",
             user
         );
         saveProduct(
-            "Bike",
-            "Bike for cycling",
-            "Cluj-Napoca, Romania",
-            100.0,
+            new Product(
+                true,
+                "Bike",
+                "Bike for cycling",
+                "Cluj-Napoca, Romania",
+                100.0,
+                null,
+                null
+            ),
             "Cycling",
             user
         );
         saveProduct(
-            "Helmet",
-            "Helmet for your protection",
-            "Cluj-Napoca, Romania",
-            18.0,
+            new Product(
+                true,
+                "Helmet",
+                "Helmet for your protection",
+                "Cluj-Napoca, Romania",
+                18.0,
+                null,
+                null
+            ),
             "Cycling",
             user
 
         );
         saveProduct(
-            "Flashlight",
-            "Flashlight for better visibility",
-            "Cluj-Napoca, Romania",
-            15.0,
+            new Product(
+                true,
+                "Flashlight",
+                "Flashlight for better visibility",
+                "Cluj-Napoca, Romania",
+                15.0,
+                null,
+                null
+            ),
             "Cycling",
             user
 
         );
         saveProduct(
-            "Bicycle lock",
-            "Bicycle lock for your bike's protection",
-            "Cluj-Napoca, Romania",
-            20.0,
+            new Product(
+                true,
+                "Bicycle lock",
+                "Bicycle lock for your bike's protection",
+                "Cluj-Napoca, Romania",
+                20.0,
+                null,
+                null
+            ),
             "Cycling",
             user
         );
@@ -234,16 +264,15 @@ public class DataGenerator {
         }
     }
 
-    public void saveProduct(String name, String description, String location,
-                            Double rentPrice, String subCategoryName, User user) {
+    public void saveProduct(Product product, String subCategoryName, User user) {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
-        if (subCategory != null && !productService.existsByNameAndUser(name, user)) {
+        if (subCategory != null && !productService.existsByNameAndUser(product.getName(), user)) {
             productService.save(new Product(
                 true,
-                name,
-                description,
-                location,
-                rentPrice,
+                product.getName(),
+                product.getDescription(),
+                product.getLocation(),
+                product.getRentPrice(),
                 subCategory,
                 user
             ));
