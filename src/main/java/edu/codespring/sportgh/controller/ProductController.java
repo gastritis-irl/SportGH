@@ -53,4 +53,11 @@ public class ProductController {
 
         return new ResponseEntity<>(productOutDTO, HttpStatus.CREATED);
     }
+
+    @PutMapping(path = "/{productId}/rent")
+    public ResponseEntity<ProductOutDTO> rent(@PathVariable Long productId) {
+        Product product = productService.findById(productId);
+        productService.rent(product);
+        return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
+    }
 }

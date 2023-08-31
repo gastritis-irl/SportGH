@@ -47,7 +47,6 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (data: Product): void => {
                     this.product = data;
-                    console.log(data);
                     this.loadProductLender(this.product.userId ? this.product.userId : 0);
                 },
                 error: (error): void => {
@@ -63,7 +62,6 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (resp: User): void => {
                     this.productLender = resp;
-                    console.log(resp);
                 },
                 error: (): void => {
                     this.toastNotify.error(`Error loading lender info`);
@@ -111,11 +109,11 @@ export class ProductDetailsComponent implements OnInit {
     rentProduct(): void {
         this.productService.rent(this.product.id ? this.product.id : 0).subscribe(
             {
-                next: (): void => {
+                next: (data: Product): void => {
+                    this.product = data;
                     this.toastNotify.success(`Product successfully rented`);
                 },
                 error: (error): void => {
-                    console.error(error);
                     this.toastNotify.error(`Error renting product: ${error.error}`);
                 }
             }

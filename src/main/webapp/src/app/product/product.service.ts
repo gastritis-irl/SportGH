@@ -30,7 +30,6 @@ export class ProductService extends AppService {
 
     rent(productId: number): Observable<Product> {
         const url: string = `${this.baseUrl}/products/${productId}/rent`;
-        console.log('Renting products feature is not yet ready.');
         return this.http.put(url, {});  // body: renter?
     }
 }
