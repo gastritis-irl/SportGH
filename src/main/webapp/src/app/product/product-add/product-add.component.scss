@@ -4,6 +4,7 @@ $main-page-padding: 10%;
 $item-gap: 15px;
 $form-part-padding: 25px;
 $input-padding-left: 10px;
+$input-height: 30px;
 $font-weight-1: 700;
 $font-weight-2: 600;
 $description-textarea-height: 200px;
@@ -38,7 +39,7 @@ $description-textarea-height: 200px;
                 width: 100%;
                 padding: $form-part-padding;
                 background-color: $color-neutral-1;
-                border-radius: 20px;
+                border-radius: $border-radius;
 
                 .form-part-label {
                     color: $color-main-1;
@@ -48,7 +49,8 @@ $description-textarea-height: 200px;
 
                 .form-part-input {
                     width: 100%;
-                    border-radius: 20px;
+                    height: $input-height;
+                    border-radius: $border-radius;
                     border-style: solid;
                     padding-left: $input-padding-left;
 
@@ -58,6 +60,10 @@ $description-textarea-height: 200px;
 
                     &:enabled {
                         background-color: $color-neutral-1;
+                    }
+
+                    &:focus {
+                        border-color: $color-main-1;
                     }
                 }
 
