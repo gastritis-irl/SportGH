@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 
@@ -56,44 +55,55 @@ public class DataGenerator {
         }
     }
 
-    public void initImages() {
-
-    }
 
     public void initCategories() {
         saveCategory(
             "Water sports",
-            "..."
+            "...",
+            "waterSports.png",
+            "src/main/resources/imageStorage/testImages/waterSports.png"
 
         );
         saveCategory(
             "Combat sports",
-            "..."
+            "...",
+            "combatSports.png",
+            "src/main/resources/imageStorage/testImages/combatSports.png"
 
         );
         saveCategory(
             "Extreme sports",
-            "..."
+            "...",
+            "extremeSports.png",
+            "src/main/resources/imageStorage/testImages/extremeSports.png"
 
         );
         saveCategory(
             "Team sports",
-            "..."
+            "...",
+            "teamSports.png",
+            "src/main/resources/imageStorage/testImages/teamSports.png"
 
         );
         saveCategory(
             "Winter sports",
-            "..."
+            "...",
+            "winterSports.png",
+            "src/main/resources/imageStorage/testImages/winterSports.png"
 
         );
         saveCategory(
             "Track & Field",
-            "..."
+            "...",
+            "trackAndField.png",
+            "src/main/resources/imageStorage/testImages/trackAndField.png"
 
         );
         saveCategory(
             "Other",
-            "Other sports"
+            "Other sports",
+            "otherSports.png",
+            "src/main/resources/imageStorage/testImages/otherSports.png"
 
         );
     }
