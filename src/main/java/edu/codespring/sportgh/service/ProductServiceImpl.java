@@ -5,6 +5,7 @@ import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,6 +16,10 @@ import java.util.Collection;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+
+    private Page<Product> getPage() {
+        return productRepository.findAll(productRepository.pageable);
+    }
 
     @Override
     public Product findById(Long productId) {
@@ -28,7 +33,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Collection<Product> findAll() {
-        return productRepository.findAll();
+        log.info(getPage().toString());
+        return getPage().getContent();
+    }
+
+    @Override
+    public int getNrOfPages() {
+        return getPage().getTotalPages();
+    }
+
+    @Override
+    public long getNrOfElements() {
+        return getPage().getTotalElements();
     }
 
     @Override

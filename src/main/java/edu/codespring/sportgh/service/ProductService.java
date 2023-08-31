@@ -13,6 +13,10 @@ public interface ProductService {
 
     Collection<Product> findAll();
 
+    int getNrOfPages();
+
+    long getNrOfElements();
+
     boolean existsByNameAndUser(String name, User user);
 
     void save(Product product);
