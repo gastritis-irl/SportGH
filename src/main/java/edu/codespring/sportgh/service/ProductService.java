@@ -9,13 +9,13 @@ public interface ProductService {
 
     Product findById(Long productId);
 
-    Collection<Product> findByCategoryId(Long categoryId);
+    Collection<Product> findByCategoryId(Long categoryId, int pageNumber);
 
     Collection<Product> findAll();
 
-    int getNrOfPages();
+    int getNrOfPagesByCategoryId(Long categoryId);
 
-    long getNrOfElements();
+    long getNrOfElementsByCategoryId(Long categoryId);
 
     boolean existsByNameAndUser(String name, User user);
 

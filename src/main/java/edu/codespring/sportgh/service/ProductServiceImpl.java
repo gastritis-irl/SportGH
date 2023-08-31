@@ -6,6 +6,7 @@ import edu.codespring.sportgh.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -16,9 +17,26 @@ import java.util.Collection;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    int pageNr = 0;
+    int pageSize = 24;
 
-    private Page<Product> getPage() {
-        return productRepository.findAll(productRepository.pageable);
+    private Page<Product> getByCategoryIdPage(Long categoryId, int pageNumber) {
+        return productRepository.findByCategoryId(categoryId, PageRequest.of(pageNumber, pageSize));
+    }
+
+    @Override
+    public Collection<Product> findByCategoryId(Long categoryId, int pageNumber) {
+        return getByCategoryIdPage(categoryId, pageNumber).getContent();
+    }
+
+    @Override
+    public int getNrOfPagesByCategoryId(Long categoryId) {
+        return getByCategoryIdPage(categoryId, pageNr).getTotalPages();
+    }
+
+    @Override
+    public long getNrOfElementsByCategoryId(Long categoryId) {
+        return getByCategoryIdPage(categoryId, pageNr).getTotalElements();
     }
 
     @Override
@@ -27,24 +45,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Collection<Product> findByCategoryId(Long categoryId) {
-        return productRepository.findByCategoryId(categoryId);
-    }
-
-    @Override
     public Collection<Product> findAll() {
-        log.info(getPage().toString());
-        return getPage().getContent();
-    }
-
-    @Override
-    public int getNrOfPages() {
-        return getPage().getTotalPages();
-    }
-
-    @Override
-    public long getNrOfElements() {
-        return getPage().getTotalElements();
+        return productRepository.findAll();
     }
 
     @Override

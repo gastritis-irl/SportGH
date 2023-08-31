@@ -39,9 +39,10 @@ public class ProductController {
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/category/{categoryId}")
-    public ResponseEntity<Collection<ProductOutDTO>> findByCategoryId(@PathVariable Long categoryId) {
-        Collection<Product> products = productService.findByCategoryId(categoryId);
+    @GetMapping(path = "/category/{categoryId}?pageNumber={pageNumber}")
+    public ResponseEntity<Collection<ProductOutDTO>> findByCategoryId(@PathVariable Long categoryId,
+                                                                      @PathVariable int pageNumber) {
+        Collection<Product> products = productService.findByCategoryId(categoryId, pageNumber - 1);
         return new ResponseEntity<>(productMapper.productsToOuts(products), HttpStatus.OK);
     }
 

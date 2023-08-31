@@ -19,7 +19,7 @@ export class ProductService extends AppService {
     }
 
     getByCategoryId(categoryId: number): Observable<Product[]> {
-        const url: string = `${this.baseUrl}/products/category/${categoryId}`;
+        const url: string = `${this.baseUrl}/products/category/${categoryId}?pageNumber=1`;
         return this.http.get<Product[]>(url);
     }
 }

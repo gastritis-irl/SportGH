@@ -14,4 +14,14 @@
             </div>
         </div>
     </div>
+    <div class="pagination-item">
+        <div class="button-default button-primary" *ngFor="let currentPageNumber of [1,2,3,4,5,6,7,8,9,10]">
+            <div *ngIf="false" class="button-default button-primary">
+                {{currentPageNumber}}
+            </div>
+            <div *ngIf="true" class="button-default button-secondary">
+                {{currentPageNumber}}
+            </div>
+        </div>
+    </div>
 </div>
