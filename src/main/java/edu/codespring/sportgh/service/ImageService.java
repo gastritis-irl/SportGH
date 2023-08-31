@@ -7,7 +7,11 @@ public interface ImageService {
 
     Image save(MultipartFile file);
 
+    Image saveData(Image image);
+
     void delete(Long imageID);
 
     Image get(Long imageID);
+
+    boolean existsByName(String name);
 }

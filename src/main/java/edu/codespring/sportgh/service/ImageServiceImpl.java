@@ -3,6 +3,7 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.repository.ImageRepository;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,8 @@ import java.time.format.DateTimeFormatter;
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
+    private final ProductService productService;
+    private final CategoryService categoryService;
 
     @Value("${file.storage.location}")
     private String storageLocation;
@@ -53,6 +56,11 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    public Image saveData(Image image) {
+        return imageRepository.save(image);
+    }
+
+    @Override
     public void delete(Long imageID) {
         // Delete from the file system
         Image image = get(imageID);
@@ -73,6 +81,11 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image get(Long imageID) {
         return imageRepository.findById(imageID).orElse(null);
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        return imageRepository.existsByName(name);
     }
 }
 
