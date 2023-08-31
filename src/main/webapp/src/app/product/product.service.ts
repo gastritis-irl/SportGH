@@ -33,7 +33,7 @@ export class ProductService extends AppService {
         return this.http.put(url, product);
     }
 
-    delete(productId: number): Observable<any> {
+    delete(productId: number): Observable<Product> {
         const url: string = `${this.baseUrl}/products/${productId}`;
         return this.http.delete(url);
     }
