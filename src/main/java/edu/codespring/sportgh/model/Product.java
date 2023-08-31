@@ -30,6 +30,7 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private java.util.List<Image> images;
 }
