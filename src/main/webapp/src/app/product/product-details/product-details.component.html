@@ -12,13 +12,13 @@
             <div class="product-name-and-avail">
                 <div class="heading product-heading">
                     {{product.name}}
-                    <div *ngIf="product.userId==product.userId" class="product-links">
-                        <div class="product-edit-link product-edit-icon"
+                    <div *ngIf="product.userId==product.userId" class="product-links buttons">
+                        <button class="product-edit-link button-default button-secondary"
                              routerLink="/products/{{product.id}}/edit">
-                            &#9998;
-                        </div>
-                        <div
-                            class="product-edit-link product-delete-icon"
+                            Edit
+                        </button>
+                        <button
+                            class="product-edit-link button-default button-primary"
                             placement="bottom"
                             [ngbPopover]="deletePopoverContent"
                             popoverTitle="Are you sure?"
@@ -27,8 +27,8 @@
                             #p="ngbPopover"
                             (click)="p.open()"
                         >
-                            &#x2716;
-                        </div>
+                            Delete
+                        </button>
                     </div>
                 </div>
                 <div *ngIf="product.available" class="product-avail-1 heading">Available</div>

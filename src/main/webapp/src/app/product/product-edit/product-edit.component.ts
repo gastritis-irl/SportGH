@@ -23,6 +23,7 @@ export class ProductEditComponent implements OnInit {
     subcategoryDropdownDisabled: boolean = true;
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
+    editMode: boolean = false;
 
     constructor(
         private productService: ProductService,
@@ -66,10 +67,12 @@ export class ProductEditComponent implements OnInit {
     loadData(param: string | undefined): void {
         if (!param) {
             this.clickHandlerFunction = this.createProduct;
+            this.editMode = false;
         } else {
             const id: number = parseInt(param);
             if (!isNaN(id)) {
                 this.clickHandlerFunction = this.editProduct;
+                this.editMode = true;
                 this.productService.getById(id).subscribe(
                     {
                         next: (data: Product): void => {
@@ -143,8 +146,8 @@ export class ProductEditComponent implements OnInit {
         );
     }
 
-    cancelEdit(): void {
-        this.router.navigate([ `/products/${this.product.id}` ])
+    cancelEdit(route: string): void {
+        this.router.navigate([ route ])
             .catch((error): void => {
                 console.error(error);
                 this.toastNotify.error('Error redirecting to page');
