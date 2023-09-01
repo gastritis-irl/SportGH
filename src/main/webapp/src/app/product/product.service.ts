@@ -18,8 +18,8 @@ export class ProductService extends AppService {
         return this.http.get<Product>(url);
     }
 
-    getByCategoryId(categoryId: number): Observable<Product[]> {
-        const url: string = `${this.baseUrl}/products/category/${categoryId}?pageNumber=1`;
+    getByCategoryId(categoryId: number, pageNumber: number): Observable<Product[]> {
+        const url: string = `${this.baseUrl}/products/category/${categoryId}?pageNumber=${pageNumber}`;
         return this.http.get<Product[]>(url);
     }
 }

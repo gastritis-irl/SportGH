@@ -1,4 +1,5 @@
 @import '../../../style-variables.scss';
+@import '../../../styles.scss';
 
 // Sizes
 $price-font-size: 1em;
@@ -19,6 +20,7 @@ $card-max-width-large: 280px;
 // Classes
 .product-list-holder {
     padding-left: $main-page-padding;
+    padding-bottom: $card-padding;
 
     .products {
         display: flex;
@@ -115,5 +117,13 @@ $card-max-width-large: 280px;
                 font-size: $price-font-size;
             }
         }
+    }
+
+    .pagination-item-holder {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: $product-gap;
     }
 }

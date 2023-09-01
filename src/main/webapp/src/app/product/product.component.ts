@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -9,7 +9,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
 
-    @Input() products: Product[] = [];
+    products: Product[] = [];
+    pageNumber: number = 1;
+    categoryId: number = 0;
 
     constructor(private productService: ProductService, private route: ActivatedRoute) {
     }
@@ -22,7 +24,8 @@ export class ProductComponent implements OnInit {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
-                    this.loadData(params['categoryId']);
+                    this.categoryId = params['categoryId'];
+                    this.loadData();
                 },
                 error: (error): void => {
                     console.error('Error fetching data (categoryId):', error);
@@ -31,8 +34,8 @@ export class ProductComponent implements OnInit {
         );
     }
 
-    loadData(categoryId: number): void {
-        this.productService.getByCategoryId(categoryId).subscribe(
+    loadData(): void {
+        this.productService.getByCategoryId(this.categoryId, this.pageNumber).subscribe(
             {
                 next: (data: Product[]): void => {
                     this.products = data;
@@ -42,5 +45,10 @@ export class ProductComponent implements OnInit {
                 }
             }
         );
+    }
+
+    setPageNumber(pageNumber: number): void {
+        this.pageNumber = pageNumber;
+        this.loadData();
     }
 }
