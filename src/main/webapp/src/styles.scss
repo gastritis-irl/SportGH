@@ -175,7 +175,7 @@ $logout-btn-transition-duration: .3s;
                 height: $logout-btn-height;
                 width: $width-nav-searchbar;
                 border-radius: 50%;
-                left: 0px;
+                left: 0;
                 background-color: $color-main-1;
             }
 
@@ -264,7 +264,7 @@ $logout-btn-transition-duration: .3s;
 
             .svg-icon {
                 height: $height-sign-in-icon;
-                padding-left: 0px;
+                padding-left: 0;
                 justify-content: flex-end;
                 flex-shrink: 0;
             }
