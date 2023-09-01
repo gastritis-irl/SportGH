@@ -15,7 +15,7 @@ public class ProductInDTO {
 
     private boolean available;
 
-    @Size(min = 5, max = 50, message = "Product name must be between 5-50 characters")
+    @Size(min = 4, max = 50, message = "Product name must be between 4-50 characters")
     @NotNull(message = "Product name can't be empty.")
     private String name;
 
