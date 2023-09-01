@@ -30,14 +30,17 @@ $icon-size: 50px;
         .heading-items {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
 
             .product-name-and-avail {
+                width: 100%;
 
                 .product-heading {
                     display: flex;
                     flex-direction: row;
+                    justify-content: space-between;
                     font-size: $size-h1;
+                    flex-wrap: wrap;
+                    overflow: clip;
 
                     @media (min-width: $breakpoint-small) {
                         row-gap: $item-gap;
@@ -56,7 +59,6 @@ $icon-size: 50px;
 
                         .product-edit-link {
                             cursor: pointer;
-                            max-width: 20px;
 
                             &:hover {
                                 color: $color-main-2;
@@ -77,20 +79,6 @@ $icon-size: 50px;
 
                 .product-avail-0 {
                     color: darkred;
-                }
-            }
-
-            .add-to-favorite {
-
-                .add-to-favorite-icon {
-                    color: $color-main-2;
-                    font-size: $icon-size;
-                    padding-right: $item-padding;
-
-                    &:hover {
-                        cursor: pointer;
-                        color: $color-main-1;
-                    }
                 }
             }
         }
