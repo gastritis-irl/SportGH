@@ -86,10 +86,23 @@ $description-textarea-height: 200px;
 
             .publish-btn-holder {
                 padding-bottom: $form-part-padding;
+                justify-content: center;
 
                 .publish-btn {
                     width: 50%;
-                    justify-content: center;
+                }
+            }
+
+            .edit-btn-holder {
+                padding-bottom: $form-part-padding;
+                justify-content: space-between;
+
+                .save-btn {
+                    width: 50%;
+                }
+
+                .cancel-btn {
+                    width: 50%;
                 }
             }
         }

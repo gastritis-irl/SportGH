@@ -145,4 +145,12 @@ export class ProductEditComponent implements OnInit {
             }
         );
     }
+
+    cancelEdit(): void {
+        this.router.navigate([ `/products/${this.product.id}` ])
+            .catch((error): void => {
+                console.error(error);
+                this.toastNotify.error('Error redirecting to page');
+            });
+    }
 }
