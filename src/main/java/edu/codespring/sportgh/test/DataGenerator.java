@@ -214,7 +214,7 @@ public class DataGenerator {
             String imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
 
             // Create a new Image instance with the given name and URL
-            Image image = new Image(imageName, imageUrl, null, null);
+            Image image = new Image(imageName, imageUrl, null);
 
             // Create a new Category instance and associate it with the Image
             Category category = new Category(
@@ -256,8 +256,7 @@ public class DataGenerator {
                 description,
                 rentPrice,
                 subCategory,
-                user,
-                null
+                user
             ));
         }
     }

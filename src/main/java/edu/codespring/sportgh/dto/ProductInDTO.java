@@ -35,7 +35,4 @@ public class ProductInDTO {
     @Min(value = 1, message = "UserId must be greater than 1")
     @NotNull(message = "Owner must be given")
     private Long userId;
-
-    @Size(max = 10, message = "At most 10 image may be given")
-    private Long[] imageIds;
 }

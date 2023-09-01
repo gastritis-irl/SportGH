@@ -29,5 +29,6 @@ public class Category extends BaseEntity {
 
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id")
     private Image image;
 }
