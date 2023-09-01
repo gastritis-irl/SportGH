@@ -120,10 +120,27 @@ $card-max-width-large: 280px;
     }
 
     .pagination-item-holder {
+        padding-right: $main-page-padding;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
         gap: $product-gap;
+
+        .pagination-item {
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            .pagination-item-current-page {
+                background-color: $color-main-2;
+                color: $color-neutral-1;
+
+                &:hover {
+                    cursor: default;
+                }
+            }
+        }
     }
 }

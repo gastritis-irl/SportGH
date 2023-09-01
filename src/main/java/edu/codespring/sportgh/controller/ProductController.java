@@ -2,6 +2,7 @@ package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
+import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.service.ProductService;
@@ -40,10 +41,13 @@ public class ProductController {
     }
 
     @GetMapping(path = "/category/{categoryId}")
-    public ResponseEntity<Collection<ProductOutDTO>> findByCategoryId(@PathVariable Long categoryId,
-                                                                      @RequestParam int pageNumber) {
+    public ResponseEntity<ProductPageOutDTO> findByCategoryId(@PathVariable Long categoryId,
+                                                              @RequestParam int pageNumber) {
         Collection<Product> products = productService.findByCategoryId(categoryId, pageNumber - 1);
-        return new ResponseEntity<>(productMapper.productsToOuts(products), HttpStatus.OK);
+        int nrOfPages = productService.getNrOfPagesByCategoryId(categoryId);
+        long nrOfItems = productService.getNrOfElementsByCategoryId(categoryId);
+
+        return new ResponseEntity<>(productMapper.productPageToOut(products, nrOfPages, nrOfItems), HttpStatus.OK);
     }
 
     @PostMapping

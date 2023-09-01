@@ -10,6 +10,9 @@ export class ProductListComponent implements OnInit {
 
     @Input() products: Product[] = [];
     @Output() newPageEvent: EventEmitter<number> = new EventEmitter<number>();
+    currentPage: number = 1;
+    @Input() nrOfPages: number = 1;
+    @Input() nrOfItems: number = 0;
 
     constructor() {
     }
@@ -17,7 +20,33 @@ export class ProductListComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    navToPage(pageNumber: number): void {
-        this.newPageEvent.emit(pageNumber);
+    navToPage(): void {
+        this.newPageEvent.emit(this.currentPage);
+    }
+
+    selectPage(currentPage: number): void {
+        this.currentPage = currentPage;
+        this.navToPage();
+    }
+
+    nextPage(): void {
+        this.currentPage++;
+        this.navToPage();
+    }
+
+    previousPage(): void {
+        this.currentPage--;
+        this.navToPage();
+    }
+
+    range(from: number, to: number): number[] {
+        if (from > to) {
+            return [];
+        }
+        let result: number[] = [];
+        for (let i: number = from; i <= to; i++) {
+            result.push(i);
+        }
+        return result;
     }
 }
