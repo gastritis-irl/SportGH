@@ -17,7 +17,7 @@ import java.util.Collection;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    int pageNr = 0;
+    int pageNr;
     int pageSize = 24;
 
     private Page<Product> getByCategoryIdPage(Long categoryId, int pageNumber) {

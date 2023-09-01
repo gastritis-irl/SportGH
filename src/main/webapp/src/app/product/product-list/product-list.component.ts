@@ -43,7 +43,7 @@ export class ProductListComponent implements OnInit {
         if (from > to) {
             return [];
         }
-        let result: number[] = [];
+        const result: number[] = [];
         for (let i: number = from; i <= to; i++) {
             result.push(i);
         }
