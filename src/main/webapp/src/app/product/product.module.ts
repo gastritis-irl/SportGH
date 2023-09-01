@@ -6,6 +6,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { ProductRoute } from './product.route';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { FormsModule } from '@angular/forms';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
         NgFor,
         FormsModule,
         NgIf,
+        NgbPopover,
     ],
     providers: [
         ProductComponent,
