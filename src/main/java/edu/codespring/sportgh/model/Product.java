@@ -29,5 +29,4 @@ public class Product extends BaseEntity {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id")
     private User user;
-
 }
