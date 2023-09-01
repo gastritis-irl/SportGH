@@ -21,7 +21,6 @@ export class ProductEditComponent implements OnInit {
     categories: Category[] = [];
     subcategories: Subcategory[] = [];
     subcategoryDropdownDisabled: boolean = true;
-    formBtnDisabled: boolean = false;
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
 
@@ -88,10 +87,8 @@ export class ProductEditComponent implements OnInit {
         }
     }
 
-    checkForm(filled: boolean = true, inputIsCorrect: boolean = true): void {
-        if (filled && inputIsCorrect) {
-            this.formBtnDisabled = false;
-        }
+    checkForm(filled: boolean = true, inputIsCorrect: boolean = true): boolean {
+        return !(filled && inputIsCorrect);
     }
 
     getSubcategoriesByCategoryId(): void {

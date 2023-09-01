@@ -86,15 +86,17 @@
                     </div>
                 </div>
             </div>
-            <div class="publish-btn-holder buttons">
-                <button *ngIf="clickHandlerFunction==createProduct" [disabled]="formBtnDisabled"
-                        class="button-primary button-default publish-btn" type="submit">
+            <div *ngIf="clickHandlerFunction==createProduct" class="publish-btn-holder buttons">
+                <button class="button-primary button-default publish-btn"
+                        [disabled]="checkForm(true,true)"
+                        type="submit">
                     Publish
                 </button>
             </div>
             <div *ngIf="clickHandlerFunction==editProduct" class="edit-btn-holder buttons">
-                <button [disabled]="formBtnDisabled"
-                        class="button-primary button-default save-btn" type="submit">
+                <button [disabled]="checkForm(true,true)"
+                        class="button-primary button-default save-btn"
+                        type="submit">
                     Save
                 </button>
                 <button class="button-secondary button-default cancel-btn"
