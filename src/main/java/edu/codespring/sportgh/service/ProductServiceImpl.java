@@ -1,6 +1,6 @@
 package edu.codespring.sportgh.service;
 
-import edu.codespring.sportgh.exception.ServiceAuthenticationException;
+import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
             product.setAvailable(false);
             save(product);
         } else {
-            throw new ServiceAuthenticationException("This product is currently unavailable.");
+            throw new BadRequestException("This product is currently unavailable.");
         }
     }
 
