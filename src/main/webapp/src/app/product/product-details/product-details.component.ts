@@ -138,4 +138,6 @@ export class ProductDetailsComponent implements OnInit {
             }
         );
     }
+
+    protected readonly sessionStorage = sessionStorage;
 }

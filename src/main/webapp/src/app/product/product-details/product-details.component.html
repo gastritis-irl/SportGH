@@ -12,20 +12,20 @@
             <div class="product-name-and-avail">
                 <div class="heading product-heading">
                     {{product.name}}
-                    <div class="product-links">
-                        <div *ngIf="product.userId==product.userId" class="product-edit-link product-edit-icon"
+                    <div *ngIf="product.userId==product.userId" class="product-links">
+                        <div class="product-edit-link product-edit-icon"
                              routerLink="/products/{{product.id}}/edit">
                             &#9998;
                         </div>
-                        <div *ngIf="product.userId==product.userId"
-                             class="product-edit-link product-delete-icon"
-                             placement="bottom"
-                             [ngbPopover]="deletePopoverContent"
-                             popoverTitle="Are you sure?"
-                             [autoClose]="'outside'"
-                             triggers="manual"
-                             #p="ngbPopover"
-                             (click)="p.open()"
+                        <div
+                            class="product-edit-link product-delete-icon"
+                            placement="bottom"
+                            [ngbPopover]="deletePopoverContent"
+                            popoverTitle="Are you sure?"
+                            [autoClose]="'outside'"
+                            triggers="manual"
+                            #p="ngbPopover"
+                            (click)="p.open()"
                         >
                             &#x2716;
                         </div>
@@ -84,21 +84,21 @@
             <div (click)="scrollToPagePart('prod-loc')" class="button-default button-secondary">Location</div>
         </div>
 
-        <div class="product-description" id="prod-desc">
+        <div class="product-description product-details-item" id="prod-desc">
             <div class="heading">Description</div>
             <div class="product-description-content">
                 {{product.description}}
             </div>
         </div>
 
-        <div class="product-lender-description" id="prod-lend-desc">
+        <div class="product-lender-description product-details-item" id="prod-lend-desc">
             <div class="heading">About lender</div>
             <div class="product-lender-description-content">
                 {{productLender.username}}
             </div>
         </div>
 
-        <div class="product-location" id="prod-loc">
+        <div class="product-location product-details-item" id="prod-loc">
             <div class="heading">Location</div>
             <div class="product-location-content">
                 {{product.location}}
