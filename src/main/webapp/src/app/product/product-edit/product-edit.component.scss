@@ -52,6 +52,7 @@ $description-textarea-height: 200px;
                     height: $input-height;
                     border-radius: $border-radius;
                     border-style: solid;
+                    border-color: $color-main-3;
                     padding-left: $input-padding-left;
                     color: $color-main-1;
 
@@ -64,7 +65,8 @@ $description-textarea-height: 200px;
                     }
 
                     &:focus {
-                        border-color: $color-main-1;
+                        outline: none;
+                        border-color: $color-main-2;
                     }
                 }
 

@@ -3,7 +3,7 @@
     <div class="general-data">
         <div class="general-data-heading"></div>
         <form class="general-data-form" (ngSubmit)="clickHandlerFunction()">
-            <div class="details form-part">
+            <div class="form-part">
                 <div class="heading">Details</div>
                 <div>
                     <label class="form-part-label">Listing name</label>
@@ -11,10 +11,12 @@
                 </div>
                 <div>
                     <label class="form-part-label">Category</label>
-                    <select class="product-category form-part-input" [(ngModel)]="product.categoryId" name="categoryId">
+                    <select class="product-category form-part-input"
+                            [(ngModel)]="product.categoryId" name="categoryId"
+                            (change)="getSubcategoriesByCategoryId()"
+                    >
                         <option class="product-category form-part-input" *ngFor="let category of categories"
-                                value="{{category.id}}"
-                                (click)="getSubcategoriesByCategoryId()">{{category.name}}</option>
+                                [ngValue]="category.id">{{category.name}}</option>
                     </select>
                 </div>
                 <div>
