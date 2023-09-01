@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Image } from './image.model';
 import { ImageService } from './image.service';
 import { Component } from '@angular/core';
@@ -8,16 +9,25 @@ import { Component } from '@angular/core';
 })
 export class ImageComponent {
     
-    imageFile: File;
-    imageData: Image;
+    imageFile?: File;
+    imageData?: Image;
 
-    constructor(private imageService: ImageService) { }
+    constructor(private imageService: ImageService, private toastNotify: ToastrService) { }
 
-    onFileChange(event: { target: { files: File[]; }; }) {
-        this.imageFile = event.target.files[0];
+    onFileChange(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (input.files && input.files.length) {
+            this.imageFile = input.files[0];
+        }
     }
 
+
     upload() {
+        if (!this.imageFile) {
+            
+            return;
+        }
+
         this.imageService.uploadImage(this.imageFile).subscribe(
             (response: Image) => {
                 // Successfully uploaded and received the Image object
@@ -25,7 +35,7 @@ export class ImageComponent {
             },
             error => {
                 // Handle the error appropriately
-                console.error('Upload failed', error);
+                this.toastNotify.error(`Error uploading image`, error);
             }
         );
     }
@@ -34,7 +44,11 @@ export class ImageComponent {
         this.imageService.getImageFile(id).subscribe(blob => {
             const reader = new FileReader();
             reader.onload = () => {
-                this.imageData.url = reader.result as string;
+                if (this.imageData) {
+                    this.imageData.url = reader.result as string;
+                } else {
+                    this.toastNotify.error(`Error fetching data`);
+                }
             };
             if (blob) {
                 reader.readAsDataURL(blob);

@@ -3,8 +3,8 @@
     <div class="categories">
         <!-- Repeat for each category -->
         <div class="category-item" [routerLink]="['/categories', category.id]" *ngFor="let category of categories">
-            <img [src]="category.imageURL ? category.imageURL : 'https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png'" class="category-icon" />
-
+            <img [src]="category.imageDataUrl ? category.imageDataUrl : 'https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png'"
+                class="category-icon" />
             <div class="text-box">
                 <p class="category-description">
                     {{ category.description }}

@@ -14,8 +14,8 @@
         ImageURL("upload image"):
         <sgh-image></sgh-image>
         <img width="100px" height="auto"
-             src="{{category.imageURL}}"
-             alt="Error loading img">
+            [src]="category.imageDataUrl ? category.imageDataUrl : 'https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png'"
+            alt="Error loading img">
         <button type="submit">Save</button>
-    </form>
+        </form>
 </div>

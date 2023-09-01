@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Category } from '../category/category.model';
 import { ToastrService } from 'ngx-toastr';
 import { Image } from '../shared/image/image.model';
+import { ImageService } from '../shared/image/image.service';
 
 type ClickHandlerFunction = () => void;
 
@@ -24,6 +25,7 @@ export class CategoryEditComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private toastNotify: ToastrService,
+        private imageService: ImageService,
     ) {
     }
 
@@ -55,10 +57,13 @@ export class CategoryEditComponent implements OnInit {
                 this.clickHandlerFunction = this.updateCategory;
                 this.categoryService.getById(id).subscribe(
                     {
-                        next: (data: Category): void => {
+                        next: (data: Category) => {
                             this.category = data;
+                            if (data.imageId !== undefined) {
+                                this.loadCategoryImage(data.imageId);
+                            }
                         },
-                        error: (error): void => {
+                        error: (error) => {
                             console.error(error);
                             this.toastNotify.error(`Error fetching data`);
                         }
@@ -66,6 +71,18 @@ export class CategoryEditComponent implements OnInit {
                 );
             }
         }
+    }
+
+    loadCategoryImage(imageId: number) {
+        this.imageService.getImageFile(imageId).subscribe(blob => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.category.imageDataUrl = reader.result as string;
+            };
+            if (blob) {
+                reader.readAsDataURL(blob);
+            }
+        });
     }
 
     createCategory(): void {
