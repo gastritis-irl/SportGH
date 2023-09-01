@@ -13,7 +13,7 @@ export class ImageComponent {
 
     constructor(private imageService: ImageService) { }
 
-    onFileChange(event) {
+    onFileChange(event: { target: { files: File[]; }; }) {
         this.imageFile = event.target.files[0];
     }
 

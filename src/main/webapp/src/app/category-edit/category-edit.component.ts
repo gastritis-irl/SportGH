@@ -3,6 +3,7 @@ import { CategoryService } from '../category/category.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Category } from '../category/category.model';
 import { ToastrService } from 'ngx-toastr';
+import { Image } from '../shared/image/image.model';
 
 type ClickHandlerFunction = () => void;
 
@@ -14,6 +15,7 @@ type ClickHandlerFunction = () => void;
 export class CategoryEditComponent implements OnInit {
 
     category: Category = {};
+    categoryImage: Image = {};
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
 

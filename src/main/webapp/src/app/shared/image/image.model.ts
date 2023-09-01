@@ -1,6 +1,6 @@
 export interface Image {
 
-    id: number;
-    name: string;
-    url: string;  // URL for the image
+    id?: number;
+    name?: string;
+    url?: string;  // URL for the image
 }
