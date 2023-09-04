@@ -49,7 +49,6 @@ public class ImageServiceImpl implements ImageService {
             log.info("Image saved successfully ({}) with ID: ({}).", file.getOriginalFilename(), image.getId());
             return image;
         } catch (IOException e) {
-            log.error("Failed to save image", e);
             throw new ServiceException("Failed to save image", e);
         }
     }
@@ -68,7 +67,7 @@ public class ImageServiceImpl implements ImageService {
             try {
                 Files.delete(filePath);
             } catch (IOException e) {
-                log.error("Failed to delete image file", e);
+                throw new ServiceException("Failed to delete image", e);
             }
         }
 
