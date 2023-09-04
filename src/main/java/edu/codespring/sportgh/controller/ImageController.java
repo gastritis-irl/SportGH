@@ -4,6 +4,8 @@ import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -34,20 +34,20 @@ public class ImageController {
     }
 
     @GetMapping(path = "/file/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getImageFile(@PathVariable Long imageId) {
+    public ResponseEntity<Resource> getImageFile(@PathVariable Long imageId) {
         Image image = imageService.findById(imageId);
         if (image == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         Path imagePath = Paths.get(image.getUrl(), image.getName());
+        Resource resource = new FileSystemResource(imagePath);
 
-        try {
-            return Files.readAllBytes(imagePath);
-        } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image file not found", e);
-        }
+        return ResponseEntity.ok()
+            .contentType(MediaType.IMAGE_JPEG)
+            .body(resource);
     }
+
 
     @PostMapping
     public ResponseEntity<Image> save(@RequestParam("image") MultipartFile file) {

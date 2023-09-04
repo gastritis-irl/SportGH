@@ -1,3 +1,2 @@
-<input type="file" (change)="onFileChange($event)">
-<button (click)="upload()">Upload</button>
+<input type="file" (change)="onFileChange($event)" name="imageFile">
 <img *ngIf="imageData?.url" [src]="imageData?.url" alt="Uploaded Image">
