@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.service;
 
+import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
@@ -37,8 +38,28 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public boolean existsById(Long productId) {
+        return productRepository.existsById(productId);
+    }
+
+    @Override
     public void save(Product product) {
         productRepository.save(product);
         log.info("Product saved successfully ({}) with ID: {}", product.getName(), product.getId());
+    }
+
+    @Override
+    public void rent(Product product) {
+        if (product.isAvailable()) {
+            product.setAvailable(false);
+            save(product);
+        } else {
+            throw new BadRequestException("This product is currently unavailable.");
+        }
+    }
+
+    @Override
+    public void delete(Product product) {
+        productRepository.delete(product);
     }
 }

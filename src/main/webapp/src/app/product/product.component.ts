@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -9,7 +9,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
 
-    @Input() products: Product[] = [];
+    products: Product[] = [];
 
     constructor(private productService: ProductService, private route: ActivatedRoute) {
     }

@@ -25,6 +25,7 @@ public abstract class ProductMapper {
     @Mapping(source = "subCategory.name", target = "subCategoryName")
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "subCategory.category.id", target = "categoryId")
     public abstract ProductOutDTO productToOut(Product product);
 
     public abstract Collection<ProductOutDTO> productsToOuts(Collection<Product> products);
