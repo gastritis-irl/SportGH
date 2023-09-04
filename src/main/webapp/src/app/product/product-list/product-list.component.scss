@@ -25,6 +25,10 @@ $card-max-width-large: 280px;
     padding-bottom: $card-padding;
     gap: $product-gap;
 
+    .product-list-info {
+        color: $color-main-1;
+    }
+
     .products {
         display: flex;
         flex-direction: row;
