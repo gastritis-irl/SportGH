@@ -41,13 +41,9 @@ public class ProductController {
     }
 
     @GetMapping(path = "/category/{categoryId}")
-    public ResponseEntity<ProductPageOutDTO> findByCategoryId(@PathVariable Long categoryId,
-                                                              @RequestParam int pageNumber) {
-        Collection<Product> products = productService.findByCategoryId(categoryId, pageNumber - 1);
-        int nrOfPages = productService.getNrOfPagesByCategoryId(categoryId);
-        long nrOfItems = productService.getNrOfElementsByCategoryId(categoryId);
-
-        return new ResponseEntity<>(productMapper.productPageToOut(products, nrOfPages, nrOfItems), HttpStatus.OK);
+    public ResponseEntity<ProductPageOutDTO> findPageByCategoryId(@PathVariable Long categoryId,
+                                                                  @RequestParam int pageNumber) {
+        return new ResponseEntity<>(productService.findPageByCategoryId(categoryId, pageNumber - 1), HttpStatus.OK);
     }
 
     @PostMapping

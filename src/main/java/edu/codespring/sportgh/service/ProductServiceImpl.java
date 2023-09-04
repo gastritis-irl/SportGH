@@ -1,5 +1,7 @@
 package edu.codespring.sportgh.service;
 
+import edu.codespring.sportgh.dto.ProductPageOutDTO;
+import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
@@ -17,26 +19,18 @@ import java.util.Collection;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    int pageNr;
-    int pageSize = 24;
-
-    private Page<Product> getByCategoryIdPage(Long categoryId, int pageNumber) {
-        return productRepository.findByCategoryId(categoryId, PageRequest.of(pageNumber, pageSize));
-    }
+    private final ProductMapper productMapper;
+    static final int pageSize = 24;
 
     @Override
-    public Collection<Product> findByCategoryId(Long categoryId, int pageNumber) {
-        return getByCategoryIdPage(categoryId, pageNumber).getContent();
-    }
+    public ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber) {
+        Page<Product> page = productRepository.findByCategoryId(categoryId, PageRequest.of(pageNumber, pageSize));
 
-    @Override
-    public int getNrOfPagesByCategoryId(Long categoryId) {
-        return getByCategoryIdPage(categoryId, pageNr).getTotalPages();
-    }
+        Collection<Product> products = page.getContent();
+        long nrOfElements = page.getTotalElements();
+        int nrOfPages = page.getTotalPages();
 
-    @Override
-    public long getNrOfElementsByCategoryId(Long categoryId) {
-        return getByCategoryIdPage(categoryId, pageNr).getTotalElements();
+        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
     }
 
     @Override

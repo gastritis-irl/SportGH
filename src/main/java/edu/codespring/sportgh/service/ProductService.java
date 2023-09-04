@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.service;
 
+import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 
@@ -9,13 +10,9 @@ public interface ProductService {
 
     Product findById(Long productId);
 
-    Collection<Product> findByCategoryId(Long categoryId, int pageNumber);
+    ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber);
 
     Collection<Product> findAll();
-
-    int getNrOfPagesByCategoryId(Long categoryId);
-
-    long getNrOfElementsByCategoryId(Long categoryId);
 
     boolean existsByNameAndUser(String name, User user);
 
