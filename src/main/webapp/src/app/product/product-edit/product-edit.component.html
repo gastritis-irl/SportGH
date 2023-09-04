@@ -14,7 +14,7 @@
                     >
                     <div class="form-check-label">
                         <sgh-form-ch-lbl
-                            *ngIf="name.dirty || name.touched"
+                            *ngIf="name.dirty || name.touched || buttonPushed"
                             [fieldName]="'Listing name'"
                             [required]="true"
                             [length]="product.name?.length"
@@ -35,11 +35,10 @@
                     </select>
                     <div class="form-check-label">
                         <sgh-form-ch-lbl
-                            *ngIf="category.dirty || category.touched"
+                            *ngIf="category.dirty || category.touched || buttonPushed"
                             [fieldName]="'Category'"
                             [required]="true"
-                            [value]="product.categoryId"
-                            [min]="1"
+                            [length]="product.categoryId"
                         ></sgh-form-ch-lbl>
                     </div>
                 </div>
@@ -55,11 +54,10 @@
                     </select>
                     <div class="form-check-label">
                         <sgh-form-ch-lbl
-                            *ngIf="subcategory.dirty || subcategory.touched"
+                            *ngIf="subcategory.dirty || subcategory.touched || buttonPushed"
                             [fieldName]="'Subcategory'"
                             [required]="true"
-                            [value]="product.subCategoryId"
-                            [min]="1"
+                            [length]="product.subCategoryId"
                         ></sgh-form-ch-lbl>
                     </div>
                 </div>
@@ -72,7 +70,7 @@
                     ></textarea>
                     <div class="form-check-label">
                         <sgh-form-ch-lbl
-                            *ngIf="description.dirty || description.touched"
+                            *ngIf="description.dirty || description.touched || buttonPushed"
                             [fieldName]="'Description'"
                             [length]="product.description?.length"
                             [maxlength]="1000"
@@ -98,7 +96,7 @@
                         >
                         <div class="form-check-label">
                             <sgh-form-ch-lbl
-                                *ngIf="location.dirty || location.touched"
+                                *ngIf="location.dirty || location.touched || buttonPushed"
                                 [fieldName]="'Location'"
                                 [length]="product.location?.length"
                                 [maxlength]="100"
@@ -145,7 +143,7 @@
                         >
                         <div class="form-check-label">
                             <sgh-form-ch-lbl
-                                *ngIf="daily.dirty || daily.touched"
+                                *ngIf="daily.dirty || daily.touched || buttonPushed"
                                 [fieldName]="'Daily rent price'"
                                 [fieldType]="'number'"
                                 [required]="true"
@@ -164,8 +162,8 @@
 
             <div class="edit-btn-holder buttons">
                 <button
-                        class="button-primary button-default save-btn"
-                        type="submit">
+                    class="button-primary button-default save-btn"
+                    type="submit">
                     {{editMode ? "Save" : "Publish"}}
                 </button>
                 <button class="button-secondary button-default cancel-btn"

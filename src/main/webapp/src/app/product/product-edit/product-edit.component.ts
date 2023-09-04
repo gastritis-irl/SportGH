@@ -24,6 +24,7 @@ export class ProductEditComponent implements OnInit {
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
     editMode: boolean = false;
+    buttonPushed: boolean = false;
 
     constructor(
         private productService: ProductService,
@@ -106,6 +107,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     createProduct(): void {
+        this.buttonPushed = true;
         this.product.userId = 1;
         this.product.available = true;
 
@@ -118,14 +120,15 @@ export class ProductEditComponent implements OnInit {
                             this.toastNotify.info('Error redirecting to page');
                         });
                 },
-                error: (error): void => {
-                    this.toastNotify.error(`Error creating product: ${error.error}`);
+                error: (): void => {
+                    this.toastNotify.warning('Error creating product');
                 }
             }
         );
     }
 
     editProduct(): void {
+        this.buttonPushed = true;
         this.productService.edit(this.product).subscribe(
             {
                 next: (resp: Product): void => {
@@ -135,8 +138,8 @@ export class ProductEditComponent implements OnInit {
                             this.toastNotify.info('Error redirecting to page');
                         });
                 },
-                error: (error): void => {
-                    this.toastNotify.error(`Error creating product: ${error.error}`);
+                error: (): void => {
+                    this.toastNotify.warning('Error editing product');
                 }
             }
         );
