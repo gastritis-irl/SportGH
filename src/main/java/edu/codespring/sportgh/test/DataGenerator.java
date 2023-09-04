@@ -26,7 +26,7 @@ public class DataGenerator {
     private final FirebaseService firebaseService;
     private final ImageService imageService;
 
-    @Value("${file.storage.location}")
+    @Value("${test.file.storage.location}")
     private String fileStorageLocation;
 
     @PostConstruct
@@ -220,7 +220,6 @@ public class DataGenerator {
             Category category = new Category(
                 name,
                 description,
-                null,
                 image
             );
 

@@ -17,6 +17,5 @@ public class Image extends BaseEntity {
     private String url;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 }

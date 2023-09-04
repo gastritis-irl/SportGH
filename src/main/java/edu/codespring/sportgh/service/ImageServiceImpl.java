@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -23,8 +24,6 @@ import java.time.format.DateTimeFormatter;
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
-    private final ProductService productService;
-    private final CategoryService categoryService;
 
     @Value("${file.storage.location}")
     private String storageLocation;
@@ -34,16 +33,17 @@ public class ImageServiceImpl implements ImageService {
         // Generate a unique name for the file
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
         String dateStr = LocalDateTime.now().format(formatter);
-        String uniqueFilename = dateStr + "_" + file.getOriginalFilename();
+        String uniqueFilename = dateStr + "_" + UUID.randomUUID();
         try {
             // Save the file to the file system
-            Path filePath = Paths.get(storageLocation, uniqueFilename);
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            Path filePathWithFile = Paths.get(storageLocation, uniqueFilename);
+            Path filePath = Paths.get(storageLocation);
+            Files.copy(file.getInputStream(), filePathWithFile, StandardCopyOption.REPLACE_EXISTING);
 
             // Save the file metadata to the database
             Image image = new Image();
-            image.setName(file.getOriginalFilename());
-            image.setUrl(filePath.toString());  // or a URL that can be used to retrieve the image
+            image.setName(uniqueFilename);
+            image.setUrl(filePath.toString());
             image = imageRepository.save(image);
 
             log.info("Image saved successfully ({}) with ID: ({}).", file.getOriginalFilename(), image.getId());
@@ -64,7 +64,7 @@ public class ImageServiceImpl implements ImageService {
         // Delete from the file system
         Image image = findById(imageID);
         if (image != null) {
-            Path filePath = Paths.get(image.getUrl());
+            Path filePath = Paths.get(image.getUrl(), image.getName());
             try {
                 Files.delete(filePath);
             } catch (IOException e) {
