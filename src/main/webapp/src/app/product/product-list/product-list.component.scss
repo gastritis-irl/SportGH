@@ -19,8 +19,11 @@ $card-max-width-large: 280px;
 
 // Classes
 .product-list-holder {
+    display: flex;
+    flex-direction: column;
     padding-left: $main-page-padding;
     padding-bottom: $card-padding;
+    gap: $product-gap;
 
     .products {
         display: flex;
@@ -125,7 +128,6 @@ $card-max-width-large: 280px;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: $product-gap;
 
         .pagination-item {
 
