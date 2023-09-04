@@ -73,4 +73,4 @@ Thumbs.db
 
 ### Image Storage ###
 /src/main/resources/imageStorage
-!/src/main/resources/imageStorage/testImages
+!/src/main/resources/imageStorage/testImages/
