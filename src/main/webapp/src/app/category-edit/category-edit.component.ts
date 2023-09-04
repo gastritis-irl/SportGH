@@ -85,24 +85,39 @@ export class CategoryEditComponent implements OnInit {
         });
     }
 
-    onFileChange(file: File) {
-        this.categoryImage.file = file;
+    onFileChange(file: File): void {
+        if (file) {
+            this.imageService.uploadImage(file).subscribe(
+                {
+                    next: (image: Image) => {
+                        this.category.imageId = image.id;
+                        if (image.id) {
+                            this.loadCategoryImage(image.id);
+                        }
+                        else {
+                            this.toastNotify.error(`Error uploading image`);
+                        }
+                    },
+                    error: (error) => {
+                        console.error(error);
+                        this.toastNotify.error(`Error uploading image`);
+                    }
+                }
+            );
+        }
     }
 
     createCategory(): void {
         this.categoryService.create(this.category).subscribe(
             {
                 next: (resp: Category): void => {
-                    this.toastNotify.success(`Category "${resp.name}" successfully created!`);
-                    this.category = resp;  // Update the category with the response data
-
-                    // Check if an image file is available to upload
-                    if (this.categoryImage.file) {
-                        this.uploadImageAndUpdateCategory();
-                    } else {
-                        // No image to upload, so navigate to the categories list
-                        this.navigateToCategoriesList();
-                    }
+                    this.router.navigate(['/admin/categories'])
+                        .then((): void => {
+                            this.toastNotify.success(`Category "${resp.name}" successfully created!`);
+                        })
+                        .catch((): void => {
+                            this.toastNotify.error(`Error redirecting to route '/admin/categories`);
+                        });
                 },
                 error: (error): void => {
                     this.toastNotify.error(`Error creating category: ${error.error}`);
@@ -110,48 +125,6 @@ export class CategoryEditComponent implements OnInit {
             }
         );
     }
-
-    uploadImageAndUpdateCategory(): void {
-        if (this.categoryImage.file) {
-            this.imageService.uploadImage(this.categoryImage.file as File).subscribe(
-                {
-                    next: (image: Image): void => {
-                        this.category.imageId = image.id;  // Update the category with the uploaded image ID
-                        this.toastNotify.success(`Image successfully uploaded with id ${image.id}`);
-
-                        // Now update the category with the image ID
-                        this.categoryService.update(this.category.id, this.category).subscribe(
-                            {
-                                next: (): void => {
-                                    this.toastNotify.success(`Category successfully updated with image information!`);
-                                    this.navigateToCategoriesList();
-                                },
-                                error: (error): void => {
-                                    this.toastNotify.error(`Error updating category with image information: ${error.error}`);
-                                }
-                            }
-                        );
-                    },
-                    error: (error): void => {
-                        this.toastNotify.error(`Error uploading image: ${error.error}`);
-                    }
-                }
-            );
-        } else {
-            this.toastNotify.error(`No image file to upload.`);
-        }
-    }
-
-    navigateToCategoriesList(): void {
-        this.router.navigate(['/admin/categories'])
-            .then((): void => {
-                this.toastNotify.success(`Navigation successful!`);
-            })
-            .catch((): void => {
-                this.toastNotify.error(`Error redirecting to route '/admin/categories`);
-            });
-    }
-
 
     updateCategory(): void {
         this.categoryService.update(this.category.id, this.category).subscribe(
