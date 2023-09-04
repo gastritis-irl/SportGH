@@ -34,6 +34,7 @@ public class Category extends BaseEntity {
     private Set<SubCategory> subCategories;
 
     public Category(String name, String description, Image image) {
+        super();
         this.name = name;
         this.description = description;
         this.image = image;
