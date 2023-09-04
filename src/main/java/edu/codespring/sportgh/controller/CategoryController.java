@@ -5,6 +5,7 @@ import edu.codespring.sportgh.dto.CategoryOutDTO;
 import edu.codespring.sportgh.mapper.CategoryMapper;
 import edu.codespring.sportgh.model.Category;
 import edu.codespring.sportgh.service.CategoryService;
+import edu.codespring.sportgh.service.ImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
+    private final ImageService imageService;
 
     @GetMapping
     public ResponseEntity<Collection<CategoryOutDTO>> findAll() {
@@ -55,6 +57,7 @@ public class CategoryController {
 
     private ResponseEntity<CategoryOutDTO> save(@Valid CategoryInDTO categoryInDTO) {
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
+        category.setImage(imageService.findById(categoryInDTO.getImageId()));
         categoryService.save(category);
         CategoryOutDTO categoryOutDTO = categoryMapper.categoryToOut(category);
         return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);

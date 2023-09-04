@@ -15,7 +15,4 @@ public class Image extends BaseEntity {
     private String name;
 
     private String url;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Category category;
 }
