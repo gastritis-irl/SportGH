@@ -71,6 +71,11 @@ $description-textarea-height: 200px;
                     }
                 }
 
+                .form-check-label {
+                    font-size: $font-default;
+                    color: $toast-error-bg-color;
+                }
+
                 .product-pricing {
                     display: flex;
                     flex-direction: row;

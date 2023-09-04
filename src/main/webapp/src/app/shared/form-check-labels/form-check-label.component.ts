@@ -11,19 +11,24 @@ import { NgIf } from '@angular/common';
 export class FormCheckLabelComponent implements OnInit {
 
     @Input() fieldName: string = '';
+    @Input() fieldType: string = '';
     @Input() required: boolean = false;
     // for strings
-    @Input() length?: number;
-    @Input() minlength?: number;
-    @Input() maxlength?: number;
+    @Input() length: number = 0;
+    @Input() minlength: number = 0;
+    @Input() maxlength: number = 0;
     // for numbers/dates
-    @Input() value?: number;
-    @Input() min?: number;
-    @Input() max?: number;
+    @Input() value: number = 0;
+    @Input() min: number = 0;
+    @Input() max: number = 0;
 
     constructor() {
     }
 
     ngOnInit(): void {
+    }
+
+    isNumber(): boolean {
+        return this.fieldType === 'number';
     }
 }
