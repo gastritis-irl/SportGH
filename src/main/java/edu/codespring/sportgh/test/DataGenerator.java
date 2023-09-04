@@ -27,7 +27,7 @@ public class DataGenerator {
     private final ImageService imageService;
 
     @Value("${test.file.storage.location}")
-    private String fileStorageLocation;
+    private String testFileStorageLocation;
 
     @PostConstruct
     public void init() {
@@ -64,43 +64,43 @@ public class DataGenerator {
         saveCategory(
             "Water sports",
             "...",
-            fileStorageLocation + "/testImages/waterSports.png"
+            testFileStorageLocation + "/waterSports.png"
 
         );
         saveCategory(
             "Combat sports",
             "...",
-            fileStorageLocation + "/testImages/combatSports.png"
+            testFileStorageLocation + "/combatSports.png"
 
         );
         saveCategory(
             "Extreme sports",
             "...",
-            fileStorageLocation + "/testImages/extremeSports.png"
+            testFileStorageLocation + "/extremeSports.png"
 
         );
         saveCategory(
             "Team sports",
             "...",
-            fileStorageLocation + "/testImages/teamSports.png"
+            testFileStorageLocation + "/teamSports.png"
 
         );
         saveCategory(
             "Winter sports",
             "...",
-            fileStorageLocation + "/testImages/winterSports.png"
+            testFileStorageLocation + "/winterSports.png"
 
         );
         saveCategory(
             "Track & Field",
             "...",
-            fileStorageLocation + "/testImages/trackAndField.png"
+            testFileStorageLocation + "/trackAndField.png"
 
         );
         saveCategory(
             "Other",
             "Other sports",
-            fileStorageLocation + "/testImages/otherSports.png"
+            testFileStorageLocation + "/otherSports.png"
 
         );
     }
@@ -213,8 +213,11 @@ public class DataGenerator {
             // Extract the image name from the URL
             String imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
 
+            // Extract the URL without the image name
+            String urlWithoutImageName = imageUrl.substring(0, imageUrl.lastIndexOf('/'));
+
             // Create a new Image instance with the given name and URL
-            Image image = new Image(imageName, imageUrl, null);
+            Image image = new Image(imageName, urlWithoutImageName, null);
 
             // Create a new Category instance and associate it with the Image
             Category category = new Category(

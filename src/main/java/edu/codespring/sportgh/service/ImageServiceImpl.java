@@ -33,7 +33,7 @@ public class ImageServiceImpl implements ImageService {
         // Generate a unique name for the file
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
         String dateStr = LocalDateTime.now().format(formatter);
-        String uniqueFilename = dateStr + "_" + UUID.randomUUID() + "_" + ".jpeg";
+        String uniqueFilename = dateStr + "_" + UUID.randomUUID() + ".jpeg";
         try {
             // Save the file to the file system
             Path filePathWithFile = Paths.get(storageLocation, uniqueFilename);
