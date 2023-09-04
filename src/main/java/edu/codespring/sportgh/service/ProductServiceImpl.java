@@ -28,8 +28,19 @@ public class ProductServiceImpl implements ProductService {
         Page<Product> page = productRepository.findByCategoryId(categoryId, PageRequest.of(pageNumber, pageSize));
 
         Collection<Product> products = page.getContent();
-        long nrOfElements = page.getTotalElements();
         int nrOfPages = page.getTotalPages();
+        long nrOfElements = page.getTotalElements();
+
+        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
+    }
+
+    @Override
+    public ProductPageOutDTO findPageAll(int pageNumber) {
+        Page<Product> page = productRepository.findPageAll(PageRequest.of(pageNumber, pageSize));
+
+        Collection<Product> products = page.getContent();
+        int nrOfPages = page.getTotalPages();
+        long nrOfElements = page.getTotalElements();
 
         return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
     }
@@ -37,11 +48,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findById(Long productId) {
         return productRepository.findById(productId).orElse(null);
-    }
-
-    @Override
-    public Collection<Product> findAll() {
-        return productRepository.findAll();
     }
 
     @Override

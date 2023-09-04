@@ -31,7 +31,7 @@ public abstract class ProductMapper {
 
     public abstract Collection<ProductOutDTO> productsToOuts(Collection<Product> products);
 
-    public abstract ProductPageOutDTO productPageToOut(Collection<Product> products, int nrOfPages, long nrOfItems);
+    public abstract ProductPageOutDTO productPageToOut(Collection<Product> products, int nrOfPages, long nrOfElements);
 
     @Mapping(source = "subCategoryId", target = "subCategory.id")
     @Mapping(source = "subCategoryName", target = "subCategory.name")

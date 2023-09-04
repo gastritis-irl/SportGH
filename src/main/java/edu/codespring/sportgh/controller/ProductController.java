@@ -2,7 +2,6 @@ package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
-import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.service.ProductService;
@@ -14,8 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/products")
@@ -27,9 +26,33 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public ResponseEntity<Collection<ProductOutDTO>> findAll() {
-        Collection<Product> products = productService.findAll();
-        return new ResponseEntity<>(productMapper.productsToOuts(products), HttpStatus.OK);
+    public ResponseEntity<?> findPageByCategoryId(@RequestParam("categoryId") Optional<Long> categoryId,
+                                                  @RequestParam("pageNumber") Optional<Integer> pageNumber) {
+        if (pageNumber.isPresent()) {
+            if (categoryId.isPresent()) {
+                log.info("findPageByCategoryId");
+                return new ResponseEntity<>(
+                    productService.findPageByCategoryId(
+                        categoryId.get(),
+                        pageNumber.get() - 1
+                    ),
+                    HttpStatus.OK
+                );
+            } else {
+                log.info("findPageAll");
+                return new ResponseEntity<>(
+                    productService.findPageAll(
+                        pageNumber.get()
+                    ),
+                    HttpStatus.OK
+                );
+            }
+        } else {
+            return new ResponseEntity<>(
+                "'pageNumber' query parameter was not given",
+                HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
     @GetMapping(path = "/{productId}")
@@ -39,12 +62,6 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/category/{categoryId}")
-    public ResponseEntity<ProductPageOutDTO> findPageByCategoryId(@PathVariable Long categoryId,
-                                                                  @RequestParam int pageNumber) {
-        return new ResponseEntity<>(productService.findPageByCategoryId(categoryId, pageNumber - 1), HttpStatus.OK);
     }
 
     private ResponseEntity<ProductOutDTO> save(@Valid ProductInDTO productInDTO) {

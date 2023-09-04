@@ -14,7 +14,6 @@ export class ProductComponent implements OnInit {
     currentPage: number = 1;
     nrOfPages: number = 5;
     nrOfItems: number = 0;
-    categoryId: number = 0;
 
     constructor(private productService: ProductService, private route: ActivatedRoute) {
     }
@@ -24,11 +23,14 @@ export class ProductComponent implements OnInit {
     }
 
     loadDataByParam(): void {
-        this.route.params.subscribe(
+        this.route.queryParams.subscribe(
             {
                 next: (params: Params): void => {
-                    this.categoryId = params['categoryId'];
-                    this.loadData();
+                    if (params['categoryId']) {
+                        this.loadDataByCategoryId(params['categoryId']);
+                    } else {
+                        this.loadData();
+                    }
                 },
                 error: (error): void => {
                     console.error('Error fetching data (categoryId):', error);
@@ -38,12 +40,28 @@ export class ProductComponent implements OnInit {
     }
 
     loadData(): void {
-        this.productService.getByCategoryId(this.categoryId, this.currentPage).subscribe(
+        this.productService.getAll(this.currentPage).subscribe(
             {
                 next: (data: ProductPage): void => {
                     this.products = data.products;
                     this.nrOfPages = data.nrOfPages;
-                    this.nrOfItems = data.nrOfItems;
+                    this.nrOfItems = data.nrOfElements;
+                },
+                error: (error): void => {
+                    console.error('Error fetching data (products):', error);
+                }
+            }
+        );
+    }
+
+    loadDataByCategoryId(categoryId: number): void {
+        this.productService.getByCategoryId(categoryId, this.currentPage).subscribe(
+            {
+                next: (data: ProductPage): void => {
+                    this.products = data.products;
+                    this.nrOfPages = data.nrOfPages;
+                    this.nrOfItems = data.nrOfElements;
+                    console.log(data);
                 },
                 error: (error): void => {
                     console.error('Error fetching data (products):', error);
@@ -54,6 +72,6 @@ export class ProductComponent implements OnInit {
 
     setPageNumber(pageNumber: number): void {
         this.currentPage = pageNumber;
-        this.loadData();
+        this.loadDataByParam();
     }
 }

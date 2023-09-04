@@ -12,5 +12,8 @@ public interface ProductRepository extends BaseRepository<Product> {
     @Query("select p from Product p where p.subCategory.category.id = :categoryId")
     Page<Product> findByCategoryId(@Param("categoryId") Long categoryId, Pageable pageable);
 
+    @Query("select p from Product p")
+    Page<Product> findPageAll(Pageable pageable);
+
     boolean existsByNameAndUser(String name, User user);
 }

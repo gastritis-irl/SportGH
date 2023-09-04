@@ -4,5 +4,5 @@ export interface ProductPage {
 
     products: Product[],
     nrOfPages: number,
-    nrOfItems: number,
+    nrOfElements: number,
 }

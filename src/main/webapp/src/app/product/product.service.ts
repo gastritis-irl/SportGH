@@ -9,9 +9,9 @@ import { ProductPage } from './product-page.model';
 })
 export class ProductService extends AppService {
 
-    getAll(): Observable<Product[]> {
-        const url: string = `${this.baseUrl}/products`;
-        return this.http.get<Product[]>(url);
+    getAll(pageNumber: number): Observable<ProductPage> {
+        const url: string = `${this.baseUrl}/products?pageNumber=${pageNumber}`;
+        return this.http.get<ProductPage>(url);
     }
 
     getById(id: number): Observable<Product> {
@@ -20,7 +20,7 @@ export class ProductService extends AppService {
     }
 
     getByCategoryId(categoryId: number, pageNumber: number): Observable<ProductPage> {
-        const url: string = `${this.baseUrl}/products/category/${categoryId}?pageNumber=${pageNumber}`;
+        const url: string = `${this.baseUrl}/products?categoryId=${categoryId}&pageNumber=${pageNumber}`;
         return this.http.get<ProductPage>(url);
     }
 

@@ -6,7 +6,7 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 
 const routes: Routes = [
     {
-        path: 'categories/:categoryId',
+        path: 'products',
         component: ProductComponent,
     },
     {

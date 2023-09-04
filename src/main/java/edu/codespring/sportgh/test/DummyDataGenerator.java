@@ -51,7 +51,8 @@ public class DummyDataGenerator {
         Collection<User> userList = firebaseService.getUsers();
         log.info("Users: {}", userList);
         for (User user : userList) {
-            if (userService.findByFirebaseUid(user.getFirebaseUid()) == null && userService.findByUsername(user.getEmail()) == null) {
+            if (userService.findByFirebaseUid(user.getFirebaseUid()) == null
+                && userService.findByUsername(user.getEmail()) == null) {
                 userService.signup(user.getEmail(), user.getFirebaseUid(), user.getPassword());
             }
         }
