@@ -72,6 +72,10 @@ export class ProductComponent implements OnInit {
 
     setPageNumber(pageNumber: number): void {
         this.currentPage = pageNumber;
+        window.scroll({
+            top: 0,
+            behavior: 'smooth'
+        });
         this.loadDataByParam();
     }
 }
