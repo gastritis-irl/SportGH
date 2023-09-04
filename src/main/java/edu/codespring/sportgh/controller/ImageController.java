@@ -4,7 +4,6 @@ import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +24,6 @@ public class ImageController {
 
     private final ImageService imageService;
 
-    @Value("${file.storage.location}")
-    private String storageLocation;
-
     @GetMapping(path = "/{imageId}")
     public ResponseEntity<Image> findById(@PathVariable Long imageId) {
         Image image = imageService.findById(imageId);
@@ -44,7 +40,8 @@ public class ImageController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        Path imagePath = Paths.get(storageLocation, image.getName());
+        Path imagePath = Paths.get(image.getUrl(), image.getName());
+
         try {
             return Files.readAllBytes(imagePath);
         } catch (IOException e) {
