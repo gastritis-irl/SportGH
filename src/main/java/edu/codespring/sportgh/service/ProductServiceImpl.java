@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-    static final int pageSize = 24;
+    static final int pageSize = 60;
 
     @Override
     public ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber) {
