@@ -1,9 +1,10 @@
-<div class="form-check-label">
-    <label *ngIf="!isNumber(value) && !value">
-        &#9888; {{fieldName}} should be a number.
-    </label>
-    <label *ngIf="required && ">
+<div>
+    <label
+        *ngIf="required && fieldType!=='number' && (length===0 || !length)">
         &#9888; {{fieldName}} is required.
+    </label>
+    <label *ngIf="required && fieldType==='number' && !isNumber(value)">
+        &#9888; {{fieldName}} should be a number.
     </label>
     <label *ngIf="minlength && length && minlength>length">
         &#9888; {{fieldName}} must be at least {{minlength}} characters long.

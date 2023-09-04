@@ -16,7 +16,6 @@
                         <sgh-form-ch-lbl
                             *ngIf="name.dirty || name.touched"
                             [fieldName]="'Listing name'"
-                            [fieldType]="'string'"
                             [required]="true"
                             [length]="product.name?.length"
                             [minlength]="4"
@@ -38,7 +37,6 @@
                         <sgh-form-ch-lbl
                             *ngIf="category.dirty || category.touched"
                             [fieldName]="'Category'"
-                            [fieldType]="'number'"
                             [required]="true"
                             [value]="product.categoryId"
                             [min]="1"
@@ -59,7 +57,6 @@
                         <sgh-form-ch-lbl
                             *ngIf="subcategory.dirty || subcategory.touched"
                             [fieldName]="'Subcategory'"
-                            [fieldType]="'number'"
                             [required]="true"
                             [value]="product.subCategoryId"
                             [min]="1"
@@ -77,7 +74,6 @@
                         <sgh-form-ch-lbl
                             *ngIf="description.dirty || description.touched"
                             [fieldName]="'Description'"
-                            [fieldType]="'string'"
                             [length]="product.description?.length"
                             [maxlength]="1000"
                         ></sgh-form-ch-lbl>
@@ -104,7 +100,6 @@
                             <sgh-form-ch-lbl
                                 *ngIf="location.dirty || location.touched"
                                 [fieldName]="'Location'"
-                                [fieldType]="'string'"
                                 [length]="product.location?.length"
                                 [maxlength]="100"
                             ></sgh-form-ch-lbl>
@@ -168,7 +163,7 @@
             </div>
 
             <div class="edit-btn-holder buttons">
-                <button [disabled]="!product.rentPrice"
+                <button
                         class="button-primary button-default save-btn"
                         type="submit">
                     {{editMode ? "Save" : "Publish"}}

@@ -6,21 +6,20 @@ import { NgIf } from '@angular/common';
     standalone: true,
     imports: [ NgIf ],
     templateUrl: './form-check-label.component.html',
-    styleUrls: [ './form-check-label.component.scss' ],
 })
 export class FormCheckLabelComponent implements OnInit {
 
     @Input() fieldName: string = '';
-    @Input() fieldType: string = '';
+    @Input() fieldType?: string;
     @Input() required: boolean = false;
     // for strings
-    @Input() length: number = 0;
-    @Input() minlength: number = 0;
-    @Input() maxlength: number = 0;
+    @Input() length?: number;
+    @Input() minlength?: number;
+    @Input() maxlength?: number;
     // for numbers/dates
-    @Input() value: number = 0;
-    @Input() min: number = 0;
-    @Input() max: number = 0;
+    @Input() value?: number;
+    @Input() min?: number;
+    @Input() max?: number;
 
     constructor() {
     }
@@ -28,7 +27,7 @@ export class FormCheckLabelComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    isNumber(): boolean {
-        return this.fieldType === 'number';
+    isNumber(value: number | string | undefined): boolean {
+        return typeof value === 'number';
     }
 }
