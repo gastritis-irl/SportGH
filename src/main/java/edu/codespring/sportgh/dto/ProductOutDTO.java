@@ -9,7 +9,9 @@ public class ProductOutDTO {
     private boolean available;
     private String name;
     private String description;
+    private String location;
     private Double rentPrice;
+    private Long categoryId;
     private Long subCategoryId;
     private String subCategoryName;
     private Long userId;

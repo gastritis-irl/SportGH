@@ -1,0 +1,21 @@
+<div>
+    <label
+        *ngIf="required && fieldType!=='number' && (length===0 || !length)">
+        &#9888; {{fieldName}} is required.
+    </label>
+    <label *ngIf="required && fieldType==='number' && !isNumber(value)">
+        &#9888; {{fieldName}} should be a number.
+    </label>
+    <label *ngIf="minlength && length && minlength>length">
+        &#9888; {{fieldName}} must be at least {{minlength}} characters long.
+    </label>
+    <label *ngIf="maxlength && length && maxlength<length">
+        &#9888; {{fieldName}} must be less than {{maxlength}} characters long.
+    </label>
+    <label *ngIf="(min || min===0) && value && min>value">
+        &#9888; {{fieldName}} should be more than or equal to {{min}}.
+    </label>
+    <label *ngIf="(max || max===0) && value && max<value">
+        &#9888; {{fieldName}} should be less than or equal to {{max}}.
+    </label>
+</div>

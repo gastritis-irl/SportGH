@@ -3,7 +3,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
 import { AuthModule } from '../../authentication/authentication.module';
 
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { CategoryService } from '../../category/category.service';
 import { Category } from '../../category/category.model';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'sgh-navbar',
     standalone: true,
-    imports: [NgbDropdownModule, RouterLink, AuthModule, NgForOf],
+    imports: [ NgbDropdownModule, RouterLink, AuthModule, NgForOf, NgIf ],
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.scss'],
 })
@@ -38,4 +38,6 @@ export class NavbarComponent implements OnInit {
             }
         );
     }
+
+    protected readonly sessionStorage = sessionStorage;
 }

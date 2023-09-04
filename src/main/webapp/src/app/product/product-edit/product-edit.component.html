@@ -1,0 +1,176 @@
+<div class="product-add-div">
+    <div class="heading main-title">{{editMode ? "Edit" : "Add"}} listing</div>
+    <div class="general-data">
+        <div class="general-data-heading"></div>
+        <form class="general-data-form" (ngSubmit)="clickHandlerFunction()">
+            <div class="form-part">
+                <div class="heading">Details</div>
+                <div>
+                    <label class="form-part-label">Listing name</label>
+                    <input class="product-name form-part-input"
+                           type="text" name="name"
+                           [(ngModel)]="product.name"
+                           #name="ngModel"
+                    >
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                            *ngIf="name.dirty || name.touched || buttonPushed"
+                            [fieldName]="'Listing name'"
+                            [required]="true"
+                            [length]="product.name?.length"
+                            [minlength]="4"
+                            [maxlength]="50"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-part-label">Category</label>
+                    <select class="product-category form-part-input"
+                            [(ngModel)]="product.categoryId" name="categoryId"
+                            #category="ngModel"
+                            (change)="getSubcategoriesByCategoryId()"
+                    >
+                        <option class="product-category form-part-input" *ngFor="let category of categories"
+                                [ngValue]="category.id">{{category.name}}</option>
+                    </select>
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                            *ngIf="category.dirty || category.touched || buttonPushed"
+                            [fieldName]="'Category'"
+                            [required]="true"
+                            [length]="product.categoryId"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-part-label">Subcategory</label>
+                    <select class="product-subcategory form-part-input"
+                            [disabled]="subcategoryDropdownDisabled"
+                            [(ngModel)]="product.subCategoryId" name="subcategoryId"
+                            #subcategory="ngModel"
+                    >
+                        <option class="product-category form-part-input" *ngFor="let subcategory of subcategories"
+                                value="{{subcategory.id}}">{{subcategory.name}}</option>
+                    </select>
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                            *ngIf="subcategory.dirty || subcategory.touched || buttonPushed"
+                            [fieldName]="'Subcategory'"
+                            [required]="true"
+                            [length]="product.subCategoryId"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-part-label">Description</label>
+                    <textarea class="product-description form-part-input"
+                              type="text" name="description"
+                              [(ngModel)]="product.description"
+                              #description="ngModel"
+                    ></textarea>
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                            *ngIf="description.dirty || description.touched || buttonPushed"
+                            [fieldName]="'Description'"
+                            [length]="product.description?.length"
+                            [maxlength]="1000"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+            </div>
+            <div class="images form-part">
+                <div class="heading">Images</div>
+                <div class="product-images">
+                    [IMAGE UPLOAD]
+                </div>
+            </div>
+            <div class="location form-part">
+                <div class="heading">Location</div>
+                <div class="product-location">
+                    <div>
+                        <label class="form-part-label">Type address</label>
+                        <input class="product-address-text form-part-input"
+                               type="text" name="location"
+                               [(ngModel)]="product.location"
+                               #location="ngModel"
+                        >
+                        <div class="form-check-label">
+                            <sgh-form-ch-lbl
+                                *ngIf="location.dirty || location.touched || buttonPushed"
+                                [fieldName]="'Location'"
+                                [length]="product.location?.length"
+                                [maxlength]="100"
+                            ></sgh-form-ch-lbl>
+                        </div>
+                    </div>
+                    or<br>
+                    <div>
+                        <label class="form-part-label">Choose on map</label>
+                        <div class="product-address-map">
+                            [MAP LOCATION PICKER]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="availability form-part">
+                <div class="heading">Availability</div>
+                <div class="product-availability">
+                    <div>
+                        <label class="form-part-label">From</label>
+                        <input class="form-part-input" type="date">
+                    </div>
+                    <div>
+                        <label class="form-part-label">To</label>
+                        <input class="form-part-input" type="date">
+                    </div>
+                </div>
+            </div>
+            <div class="pricing form-part">
+                <div class="heading">Pricing</div>
+                <div class="product-pricing">
+                    <div>
+                        <label class="form-part-label">Hourly rent price</label>
+                        <input class="form-part-input product-price-h"
+                               type="number" disabled>
+
+                    </div>
+                    <div>
+                        <label class="form-part-label">Daily rent price</label>
+                        <input class="form-part-input product-price-d"
+                               type="number" name="price"
+                               [(ngModel)]="product.rentPrice"
+                               #daily="ngModel"
+                        >
+                        <div class="form-check-label">
+                            <sgh-form-ch-lbl
+                                *ngIf="daily.dirty || daily.touched || buttonPushed"
+                                [fieldName]="'Daily rent price'"
+                                [fieldType]="'number'"
+                                [required]="true"
+                                [value]="product.rentPrice"
+                                [min]="0"
+                            ></sgh-form-ch-lbl>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-part-label">Weekly rent price</label>
+                        <input class="form-part-input product-price-w"
+                               type="number" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit-btn-holder buttons">
+                <button
+                    class="button-primary button-default save-btn"
+                    type="submit">
+                    {{editMode ? "Save" : "Publish"}}
+                </button>
+                <button class="button-secondary button-default cancel-btn"
+                        (click)="cancelEdit(editMode ? '/products/' + product.id : '/')">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

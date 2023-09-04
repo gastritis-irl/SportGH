@@ -2,7 +2,7 @@ package edu.codespring.sportgh.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import edu.codespring.sportgh.exception.ServiceAuthenticationException;
+import edu.codespring.sportgh.exception.BadRequestException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.DataException;
@@ -85,7 +85,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler({
-        ServiceAuthenticationException.class,
+        BadRequestException.class,
     })
     protected ResponseEntity<Object> handleBadRequest(RuntimeException e, WebRequest request) {
         log.warn(e.toString());
