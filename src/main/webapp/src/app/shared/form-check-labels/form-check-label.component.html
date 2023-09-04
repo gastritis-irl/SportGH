@@ -1,0 +1,17 @@
+<div class="form-check-label">
+    <div *ngIf="required && (length===0 || !length) && (value===0 || !value)">
+        {{fieldName}} is required.
+    </div>
+    <div *ngIf="minlength && length && minlength>length">
+        {{fieldName}} must be at least {{minlength}} characters long.
+    </div>
+    <div *ngIf="maxlength && length && maxlength<length">
+        {{fieldName}} must be less than {{maxlength}} characters long.
+    </div>
+    <div *ngIf="(min || min===0) && value && min>value">
+        {{fieldName}} should be more than or equal to {{min}}.
+    </div>
+    <div *ngIf="(max || max===0) && value && max<value">
+        {{fieldName}} should be less than or equal to {{max}}.
+    </div>
+</div>

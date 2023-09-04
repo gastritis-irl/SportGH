@@ -7,6 +7,7 @@ import { ProductRoute } from './product.route';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { FormsModule } from '@angular/forms';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
         FormsModule,
         NgIf,
         NgbPopover,
+        FormCheckLabelComponent,
     ],
     providers: [
         ProductComponent,

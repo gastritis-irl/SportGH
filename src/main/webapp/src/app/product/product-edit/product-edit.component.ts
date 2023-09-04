@@ -90,10 +90,6 @@ export class ProductEditComponent implements OnInit {
         }
     }
 
-    checkForm(filled: boolean = true, inputIsCorrect: boolean = true): boolean {
-        return !(filled && inputIsCorrect);
-    }
-
     getSubcategoriesByCategoryId(): void {
         this.subcategoryService.getByCategoryId(this.product.categoryId ? this.product.categoryId : 0).subscribe(
             {
