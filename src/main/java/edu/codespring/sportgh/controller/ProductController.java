@@ -2,6 +2,7 @@ package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
+import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.service.ProductService;
@@ -29,24 +30,18 @@ public class ProductController {
     public ResponseEntity<?> findPageByCategoryId(@RequestParam("categoryId") Optional<Long> categoryId,
                                                   @RequestParam("pageNumber") Optional<Integer> pageNumber) {
         if (pageNumber.isPresent()) {
+            ProductPageOutDTO productPageOutDTO;
             if (categoryId.isPresent()) {
-                log.info("findPageByCategoryId");
-                return new ResponseEntity<>(
-                    productService.findPageByCategoryId(
-                        categoryId.get(),
-                        pageNumber.get() - 1
-                    ),
-                    HttpStatus.OK
+                productPageOutDTO = productService.findPageByCategoryId(
+                    categoryId.get(),
+                    pageNumber.get()
                 );
             } else {
-                log.info("findPageAll");
-                return new ResponseEntity<>(
-                    productService.findPageAll(
-                        pageNumber.get()
-                    ),
-                    HttpStatus.OK
+                productPageOutDTO = productService.findPageAll(
+                    pageNumber.get()
                 );
             }
+            return new ResponseEntity<>(productPageOutDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(
                 "'pageNumber' query parameter was not given",

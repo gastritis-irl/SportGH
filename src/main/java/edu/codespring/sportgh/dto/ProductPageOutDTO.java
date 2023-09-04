@@ -9,5 +9,5 @@ public class ProductPageOutDTO {
 
     Collection<ProductOutDTO> products;
     int nrOfPages;
-    long nrOfItems;
+    long nrOfElements;
 }
