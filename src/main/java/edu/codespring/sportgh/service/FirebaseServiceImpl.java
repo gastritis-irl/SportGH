@@ -1,7 +1,7 @@
 package edu.codespring.sportgh.service;
 
 import com.google.firebase.auth.*;
-import edu.codespring.sportgh.exception.ServiceAuthenticationException;
+import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
@@ -36,7 +36,7 @@ public class FirebaseServiceImpl implements FirebaseService {
             return new FirebaseTokenHolder(token);
         } catch (FirebaseAuthException e) {
             log.error("Invalid firebase token", e);
-            throw new ServiceAuthenticationException("Invalid firebase token", e);
+            throw new BadRequestException("Invalid firebase token", e);
         }
     }
 
@@ -47,7 +47,7 @@ public class FirebaseServiceImpl implements FirebaseService {
         try {
             firebaseToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
         } catch (FirebaseAuthException e) {
-            throw new ServiceAuthenticationException("Failed to verify the Firebase ID token", e);
+            throw new BadRequestException("Failed to verify the Firebase ID token", e);
         }
 
         // Extract the UID from the FirebaseToken
@@ -56,7 +56,7 @@ public class FirebaseServiceImpl implements FirebaseService {
         // Look up the user in your own database using the UID
         User user = userRepository.findByFirebaseUid(uid);
         if (user == null) {
-            throw new ServiceAuthenticationException("User not found with Firebase UID: " + uid);
+            throw new BadRequestException("User not found with Firebase UID: " + uid);
         }
 
         // Create a UserDetails object using Spring Security's User class

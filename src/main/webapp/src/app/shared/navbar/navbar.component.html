@@ -34,11 +34,8 @@
                     </button>
                 </div>
             </div>
-            <div class="nav-content-link">
-                <a routerLink="">About</a>
-            </div>
-            <div class="nav-content-link">
-                <a routerLink="">Contact</a>
+            <div *ngIf="sessionStorage.getItem('firebaseIdToken')" class="nav-content-link">
+                <a routerLink="/products/new">Add new listing</a>
             </div>
         </div>
     </div>

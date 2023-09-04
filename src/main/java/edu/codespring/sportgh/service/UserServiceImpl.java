@@ -1,11 +1,11 @@
 package edu.codespring.sportgh.service;
 
+import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
 import edu.codespring.sportgh.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
             log.info("Login successful ({}).", user);
         } else {
             log.warn("Invalid credentials for ({})!", user);
-            throw new BadCredentialsException("Invalid credentials");
+            throw new BadRequestException("Invalid credentials");
         }
     }
 

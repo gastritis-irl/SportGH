@@ -13,7 +13,7 @@ public class SubCategoryInDTO {
     @Min(value = 1, message = "SubCategoryId must be greater than 1")
     private Long id;
 
-    @Size(min = 5, max = 50, message = "Subcategory name must be between 5-50 characters")
+    @Size(min = 4, max = 50, message = "Subcategory name must be between 4-50 characters")
     @NotNull(message = "Subcategory name can't be empty")
     private String name;
 

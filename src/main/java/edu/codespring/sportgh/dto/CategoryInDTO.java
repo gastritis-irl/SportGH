@@ -11,7 +11,7 @@ public class CategoryInDTO {
     @Min(value = 1, message = "CategoryId must be greater than 1")
     private Long id;
 
-    @Size(min = 5, max = 25, message = "Category name must be between 5-25 characters")
+    @Size(min = 4, max = 25, message = "Category name must be between 4-25 characters")
     @NotNull(message = "Category name can't be empty")
     private String name;
 

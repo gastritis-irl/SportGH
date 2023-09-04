@@ -1,8 +1,108 @@
-<a routerLink="/products">Go back &larr;</a>
-<div>
-    {{this.product.id}} - {{this.product.name}}<br>
-    {{this.product.description}}<br>
-    {{this.product.rentPrice}}<br>
-    {{this.product.subCategoryId}} - {{this.product.subCategoryName}}<br>
-    {{this.product.userId}}- {{this.product.username}}<br>
+<ng-template #deletePopoverContent>
+    <div class="buttons">
+        <div (click)="deleteProduct()" class="button-default button-primary">
+            Delete
+        </div>
+    </div>
+</ng-template>
+
+<div class="product-details">
+    <div class="product-main-area">
+        <div class="heading-items">
+            <div class="product-name-and-avail">
+                <div class="heading product-heading">
+                    {{product.name}}
+                    <div *ngIf="product.userId==product.userId" class="product-links buttons">
+                        <button class="product-edit-link button-default button-secondary"
+                             routerLink="/products/{{product.id}}/edit">
+                            Edit
+                        </button>
+                        <button
+                            class="product-edit-link button-default button-primary"
+                            placement="bottom"
+                            [ngbPopover]="deletePopoverContent"
+                            popoverTitle="Are you sure?"
+                            [autoClose]="'outside'"
+                            triggers="manual"
+                            #p="ngbPopover"
+                            (click)="p.open()"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="product.available" class="product-avail-1 heading">Available</div>
+                <div *ngIf="!product.available" class="product-avail-0 heading">Currently unavailable</div>
+            </div>
+        </div>
+
+        <div class="ad-info-and-location">
+            <div class="location">
+                {{product.location}}
+            </div>
+        </div>
+
+        <div class="images-and-pricing">
+            <div class="images">
+                <img src="" alt="[Images]">
+            </div>
+            <div class="pricing">
+                <div class="heading">{{product.rentPrice}} RON / day</div>
+
+                <div class="rent-options">
+                    <div class="rent-dates">
+                        <div class="rend-date-picker-div">
+                            <label class="rent-date-label">From</label>
+                            <input class="rent-date-picker" type="date" name="dateFrom" [(ngModel)]="dateFrom">
+                        </div>
+
+                        <div class="rend-date-picker-div">
+                            <label class="rent-date-label">To</label>
+                            <input class="rent-date-picker" type="date" name="dateTo" [(ngModel)]="dateTo">
+                        </div>
+                    </div>
+
+                    <div class="rent-price">
+                        <label class="rent-price-label heading">Total</label>
+                        <div class="rent-price-total heading">
+                            {{showTotalPrice(dateFrom, dateTo, 'd')}} RON
+                        </div>
+                    </div>
+
+                    <div class="rent-button-holder buttons">
+                        <button class="rent-button button-default button-primary" (click)="rentProduct()">Rent</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-details-area">
+        <div class="product-details-nav-btn buttons">
+            <div (click)="scrollToPagePart('prod-desc')" class="button-default button-secondary">Description</div>
+            <div (click)="scrollToPagePart('prod-lend-desc')" class="button-default button-secondary">About renter</div>
+            <div (click)="scrollToPagePart('prod-loc')" class="button-default button-secondary">Location</div>
+        </div>
+
+        <div class="product-description product-details-item" id="prod-desc">
+            <div class="heading">Description</div>
+            <div class="product-description-content">
+                {{product.description}}
+            </div>
+        </div>
+
+        <div class="product-lender-description product-details-item" id="prod-lend-desc">
+            <div class="heading">About lender</div>
+            <div class="product-lender-description-content">
+                {{productLender.username}}
+            </div>
+        </div>
+
+        <div class="product-location product-details-item" id="prod-loc">
+            <div class="heading">Location</div>
+            <div class="product-location-content">
+                {{product.location}}
+            </div>
+        </div>
+    </div>
 </div>
