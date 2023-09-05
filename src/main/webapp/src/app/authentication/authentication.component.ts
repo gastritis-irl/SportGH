@@ -18,6 +18,9 @@ export class AuthenticationComponent implements OnDestroy {
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
 
     loggedInUserEmail: string | null = null;
+    loggedInUserName: string | null = null;
+    showDropdown: boolean = false;
+
 
     email: string = '';
     password: string = '';
@@ -42,14 +45,20 @@ export class AuthenticationComponent implements OnDestroy {
         });
     }
 
+    toggleDropdown(): void {
+        this.showDropdown = !this.showDropdown;
+    }
+
     ngOnInit(): void {
         this.afAuth.authState
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe(user => {
                 if (user) {
                     this.loggedInUserEmail = user.email;
+                    this.loggedInUserName = user.displayName; 
                 } else {
                     this.loggedInUserEmail = null;
+                    this.loggedInUserName = null;
                 }
             });
     }
