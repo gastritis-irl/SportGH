@@ -72,6 +72,7 @@ public class ImageController {
     }
 
 
+    @Transactional
     @DeleteMapping(path = "/{imageId}")
     public ResponseEntity<?> deleteById(@PathVariable Long imageId) {
         log.info("Deleting image with ID {}.", imageId);
