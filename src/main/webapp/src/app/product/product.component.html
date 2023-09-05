@@ -1,5 +1,8 @@
 <button routerLink="/">&larr;Go back</button>
 <div class="product-holder">
     <sgh-product-filter class="product-filter"></sgh-product-filter>
-    <sgh-product-list class="product-list" [products]="products"></sgh-product-list>
+    <sgh-product-list [products]="products"
+                      [nrOfPages]="nrOfPages"
+                      [nrOfItems]="nrOfItems"
+                      (newPageEvent)="setPageNumber($event)"></sgh-product-list>
 </div>

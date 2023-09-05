@@ -17,6 +17,14 @@ $card-max-width-large: 280px;
 
 // Classes
 .product-list-holder {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: $card-padding;
+    gap: $product-gap;
+
+    .product-list-info {
+        color: $color-main-1;
+    }
 
     .products {
         display: flex;
@@ -111,6 +119,26 @@ $card-max-width-large: 280px;
             .product-price {
                 color: $color-main-4;
                 font-size: $price-font-size;
+            }
+        }
+    }
+
+    .pagination-item-holder {
+        padding-right: $main-page-padding;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .pagination-item {
+
+            .pagination-item-current-page {
+                background-color: $color-main-1;
+                color: $color-neutral-1;
+
+                &:hover {
+                    cursor: default;
+                }
             }
         }
     }

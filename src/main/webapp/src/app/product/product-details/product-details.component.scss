@@ -63,6 +63,7 @@ $icon-size: 50px;
 
                         .product-edit-link {
                             cursor: pointer;
+                            width: auto;
                         }
                     }
                 }
@@ -193,10 +194,6 @@ $icon-size: 50px;
 
             .button-secondary {
                 border-color: $color-main-3;
-
-                &:hover {
-                    cursor: pointer;
-                }
             }
         }
     }
