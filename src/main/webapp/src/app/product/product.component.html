@@ -1,3 +1,5 @@
 <button routerLink="/">&larr;Go back</button>
-<sgh-product-list [products]="products"></sgh-product-list>
-<!--sgh-product-filter-->
+<div class="product-holder">
+    <sgh-product-filter class="product-filter"></sgh-product-filter>
+    <sgh-product-list class="product-list" [products]="products"></sgh-product-list>
+</div>

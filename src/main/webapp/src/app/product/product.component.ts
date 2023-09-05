@@ -6,6 +6,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 @Component({
     selector: 'sgh-product',
     templateUrl: './product.component.html',
+    styleUrls: [ './product.component.scss' ],
 })
 export class ProductComponent implements OnInit {
 

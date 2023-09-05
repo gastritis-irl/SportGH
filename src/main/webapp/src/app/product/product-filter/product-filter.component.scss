@@ -1,0 +1,24 @@
+@use '../../../style-variables.scss' as *;
+
+$filter-gap: 10px;
+
+.product-filter-holder {
+    display: flex;
+    flex-direction: column;
+    gap: $filter-gap;
+
+    .button-content {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+
+        .button-text {
+
+        }
+
+        .button-arrow {
+
+        }
+    }
+}

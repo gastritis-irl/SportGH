@@ -1,4 +1,4 @@
-@import '../../../style-variables.scss';
+@use '../../../style-variables.scss' as *;
 
 // Sizes
 $price-font-size: 1em;
@@ -9,7 +9,6 @@ $product-item-width: 20%;
 $product-item-border-radius: 10px;
 $product-icon-height: $hover-icon-height;
 $product-item-padding: 5px;
-$main-page-padding: 10%;
 $card-padding: 10px;
 
 // Min-max card sizes
@@ -18,7 +17,6 @@ $card-max-width-large: 280px;
 
 // Classes
 .product-list-holder {
-    padding-left: $main-page-padding;
 
     .products {
         display: flex;
@@ -114,6 +112,17 @@ $card-max-width-large: 280px;
                 color: $color-main-4;
                 font-size: $price-font-size;
             }
+        }
+    }
+
+    .no-item-found-img-holder {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .no-item-found-img {
+            width: 50%;
         }
     }
 }

@@ -1,0 +1,36 @@
+@use "../../style-variables.scss" as *;
+
+$product-filter-width: 15%;
+$product-filter-min-width: 130px;
+$product-filter-max-width: 150px;
+$item-gap: 15px;
+$product-list-width: 85%;
+
+.product-holder {
+    padding-left: $main-page-padding;
+    display: flex;
+    flex-direction: row;
+    gap: $item-gap;
+
+    .product-filter {
+        width: $product-filter-width;
+        min-width: $product-filter-min-width;
+        max-width: $product-filter-max-width;
+    }
+
+    .product-list {
+        width: $product-list-width;
+    }
+
+    @media (max-width: $breakpoint-small) {
+        flex-direction: column;
+
+        .product-filter {
+            width: 100%;
+        }
+
+        .product-list {
+            width: 100%;
+        }
+    }
+}

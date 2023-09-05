@@ -1,0 +1,21 @@
+<div class="product-filter-holder">
+    <div *ngFor="let i of [1,2,3,4,5]">
+        <div class="buttons">
+            <div
+                class="button-default button-secondary button-content"
+                (click)="isCollapsed[i] = ! isCollapsed[i]"
+                [attr.aria-expanded]="!isCollapsed"
+                aria-controls="collapseExample"
+            >
+                <div class="button-text">
+                    Filter{{i}}
+                </div>
+                <div class="button-arrow" *ngIf="isCollapsed[i]">&darr;</div>
+                <div class="button-arrow" *ngIf="!isCollapsed[i]">&uarr;</div>
+            </div>
+        </div>
+        <div #collapse{{i}}="ngbCollapse" [(ngbCollapse)]="isCollapsed[i]">
+            <div class="filter-item">This is collapse nr {{i}}</div>
+        </div>
+    </div>
+</div>

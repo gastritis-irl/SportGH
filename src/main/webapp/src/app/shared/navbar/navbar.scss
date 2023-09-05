@@ -1,4 +1,4 @@
-@import '../../../style-variables.scss';
+@use '../../../style-variables.scss' as *;
 
 // Media size
 $media-width-limit: 660px;
@@ -10,7 +10,6 @@ $width-nav-searchbar: 100%;
 $height-nav-searchbar: 2.15em;
 
 // Margin/Border/Padding
-$padding-nav-horiz: 10%;
 $padding-nav-vert: 15px;
 $padding-left-searchbar: 2.5em;
 $border-input: 0.1em solid transparent;
@@ -37,8 +36,8 @@ body {
 /* ----------Nav (header, title, searchbar, login)---------- */
 .nav-header-frame {
     background-color: $color-neutral-1;
-    padding-left: $padding-nav-horiz;
-    padding-right: $padding-nav-horiz;
+    padding-left: $main-page-padding;
+    padding-right: $main-page-padding;
 
     .nav-header-content {
         display: flex;
@@ -127,7 +126,7 @@ body {
     position: relative;
     display: flex;
     justify-content: flex-start;
-    padding-left: $padding-nav-horiz;
+    padding-left: $main-page-padding;
     background-color: $color-main-1;
 
     @media(min-width: $media-width-limit) {
