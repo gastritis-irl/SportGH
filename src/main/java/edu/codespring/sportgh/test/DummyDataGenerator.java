@@ -1,10 +1,7 @@
 package edu.codespring.sportgh.test;
 
 import edu.codespring.sportgh.exception.ServiceException;
-import edu.codespring.sportgh.model.Category;
-import edu.codespring.sportgh.model.Product;
-import edu.codespring.sportgh.model.SubCategory;
-import edu.codespring.sportgh.model.User;
+import edu.codespring.sportgh.model.*;
 import edu.codespring.sportgh.service.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +23,7 @@ public class DummyDataGenerator {
     private final SubCategoryService subCategoryService;
     private final ProductService productService;
     private final FirebaseService firebaseService;
+    private final ImageService imageService;
 
     @PostConstruct
     public void init() {
@@ -96,14 +94,33 @@ public class DummyDataGenerator {
         }
     }
 
-    public void saveCategory(String name, String description, String imageURL) {
+    public void saveCategory(String name, String description, String imageUrl) {
+        save(name, description, imageUrl, categoryService, imageService);
+    }
+
+    static void save(String name, String description, String imageUrl, CategoryService categoryService, ImageService imageService) {
         if (!categoryService.existsByName(name)) {
-            categoryService.save(new Category(
+            // Extract the image name from the URL
+            String imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+
+            // Extract the URL without the image name
+            String urlWithoutImageName = imageUrl.substring(0, imageUrl.lastIndexOf('/'));
+
+            // Create a new Image instance with the given name and URL
+            Image image = new Image(imageName, urlWithoutImageName);
+
+            // Create a new Category instance and associate it with the Image
+            Category category = new Category(
                 name,
                 description,
-                imageURL,
-                null
-            ));
+                image
+            );
+
+            // Save the category with the associated image
+            categoryService.save(category);
+
+            // Depending on your JPA settings, you might need to explicitly save the image again
+            imageService.saveData(image);  // Uncomment if needed
         }
     }
 

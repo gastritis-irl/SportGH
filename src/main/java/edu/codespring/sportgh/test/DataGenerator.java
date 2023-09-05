@@ -245,29 +245,7 @@ public class DataGenerator {
     }
 
     public void saveCategory(String name, String description, String imageUrl) {
-        if (!categoryService.existsByName(name)) {
-            // Extract the image name from the URL
-            String imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
-
-            // Extract the URL without the image name
-            String urlWithoutImageName = imageUrl.substring(0, imageUrl.lastIndexOf('/'));
-
-            // Create a new Image instance with the given name and URL
-            Image image = new Image(imageName, urlWithoutImageName);
-
-            // Create a new Category instance and associate it with the Image
-            Category category = new Category(
-                name,
-                description,
-                image
-            );
-
-            // Save the category with the associated image
-            categoryService.save(category);
-
-            // Depending on your JPA settings, you might need to explicitly save the image again
-            imageService.saveData(image);  // Uncomment if needed
-        }
+        DummyDataGenerator.save(name, description, imageUrl, categoryService, imageService);
     }
 
     public void saveSubcategory(String name, String categoryName) {
