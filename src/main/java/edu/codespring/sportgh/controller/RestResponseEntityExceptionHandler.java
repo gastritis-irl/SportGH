@@ -7,6 +7,7 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.DataException;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.sql.DataTruncation;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 
 @Slf4j
@@ -54,7 +54,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler({
-        SQLIntegrityConstraintViolationException.class,
+        DataIntegrityViolationException.class
     })
     protected ResponseEntity<Object> handleIntegrityConstraintViolation(SQLException e, WebRequest request) {
         int errorCode = e.getErrorCode();
