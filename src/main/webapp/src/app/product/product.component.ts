@@ -21,7 +21,7 @@ export class ProductComponent implements OnInit, OnChanges {
     nrOfPages: number = 0;
     nrOfItems: number = 0;
     orderByElement: string = 'name';
-    filterParams: [ string, string ] = [ '', '' ];
+    filterParams: string[] = [];
     paramNames: string[] = [
         'Category',
         'Subcategory',
@@ -46,6 +46,7 @@ export class ProductComponent implements OnInit, OnChanges {
     }
 
     loadData(): void {
+        this.filterParams = this.filterParams.filter((e: string): boolean => e !== '');
         this.scrollToTop();
         this.productService.getAllByParams(this.currentPage, this.orderByElement, this.filterParams).subscribe(
             {

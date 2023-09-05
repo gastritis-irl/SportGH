@@ -27,7 +27,7 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public ResponseEntity<?> findPageByCategoryId(@RequestParam("categoryId") Optional<Long> categoryId,
+    public ResponseEntity<?> findPageByCategoryId(@RequestParam("Category") Optional<Long> categoryId,
                                                   @RequestParam("pageNumber") Optional<Integer> pageNumber) {
         if (pageNumber.isPresent()) {
             ProductPageOutDTO productPageOutDTO;
