@@ -9,6 +9,7 @@ export class ProductFilterComponent implements OnInit {
 
     nrOfFilters: number = 0;
     isCollapsed: boolean[] = [];
+    orderByElement: string = 'name';
 
     constructor() {
     }
@@ -27,6 +28,9 @@ export class ProductFilterComponent implements OnInit {
         for (let i: number = 0; i < this.nrOfFilters; i++) {
             this.isCollapsed[i] = true;
         }
+    }
+
+    orderBy(): void {
     }
 
     range(from: number, to: number): number[] {

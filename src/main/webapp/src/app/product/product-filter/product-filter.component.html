@@ -17,4 +17,20 @@
             <div class="filter-item">This is collapse nr {{i}}</div>
         </div>
     </div>
+
+<!--    Test only-->
+    <div class="order-by-holder">
+        Order by
+        <select class="order-by"
+            [(ngModel)]="orderByElement" name="orderByElement"
+            #orderByElem="ngModel"
+            (change)="orderBy()"
+        >
+            <option [ngValue]="'name'">Name</option>
+            <option [ngValue]="'price-lowest'">Lowest price first</option>
+            <option [ngValue]="'price-highest'">Highest price first</option>
+            <option [ngValue]="'newest'" selected>Newest (by upload date)</option>
+<!--            'selected' doesn't work-->
+        </select>
+    </div>
 </div>

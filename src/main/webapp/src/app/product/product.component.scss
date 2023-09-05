@@ -8,6 +8,7 @@ $product-list-width: 85%;
 
 .product-holder {
     padding-left: $main-page-padding;
+    padding-right: $main-page-padding;
     display: flex;
     flex-direction: row;
     gap: $item-gap;
