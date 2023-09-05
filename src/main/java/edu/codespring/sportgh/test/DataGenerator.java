@@ -63,37 +63,37 @@ public class DataGenerator {
     public void initCategories() {
         saveCategory(
             "Water sports",
-            "...",
+            "Water sports are sports which are played in water.",
             testFileStorageLocation + "/waterSports.png"
 
         );
         saveCategory(
             "Combat sports",
-            "...",
-            testFileStorageLocation + "/combatSports.png"
+                "Combat sports, or fighting sports, are competitive sports in which two people engage in combat.",
+                testFileStorageLocation + "/combatSports.png"
 
         );
         saveCategory(
             "Extreme sports",
-            "...",
+            "Extreme sports are recreational activities perceived as involving a high degree of risk.",
             testFileStorageLocation + "/extremeSports.png"
 
         );
         saveCategory(
             "Team sports",
-            "...",
+            "Team sports are sports played by teams with some members not participating directly with the opponents.    ",
             testFileStorageLocation + "/teamSports.png"
 
         );
         saveCategory(
             "Winter sports",
-            "...",
+            "Winter sports or winter activities are competitive sports or non-competitive recreational activities which are played on snow or ice.",
             testFileStorageLocation + "/winterSports.png"
 
         );
         saveCategory(
             "Track & Field",
-            "...",
+            "Track and field is a sport which includes athletic contests established on the skills of running, jumping, and throwing.",
             testFileStorageLocation + "/trackAndField.png"
 
         );
@@ -165,8 +165,8 @@ public class DataGenerator {
         saveProduct(
             new Product(
                 true,
-                "Swimming googles",
-                "Googles for swimming",
+                "Swimming goggles",
+                "Goggles for swimming",
                 "Cluj-Napoca, Romania",
                 20.0,
                 null,
