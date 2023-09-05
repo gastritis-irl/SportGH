@@ -1,5 +1,5 @@
 <div class="product-filter-holder">
-    <div *ngFor="let i of range(0,nrOfFilters)">
+    <div *ngFor="let filter of paramNames; let i = index">
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
@@ -7,19 +7,23 @@
                 [attr.aria-expanded]="!isCollapsed"
             >
                 <div class="button-text">
-                    Filter {{i}}
+                    {{filter}}
                 </div>
                 <div class="button-arrow" *ngIf="isCollapsed[i]">&darr;</div>
                 <div class="button-arrow" *ngIf="!isCollapsed[i]">&uarr;</div>
             </div>
         </div>
-        <div #collapse{{i}}="ngbCollapse" [(ngbCollapse)]="isCollapsed[i]">
+        <div [(ngbCollapse)]="isCollapsed[i]">
             <div class="filter-item">
-                This is collapse nr {{i}}
-                Set filterParams in this part.
+                <select class="filter-select"
+                        [(ngModel)]="paramOptions[filter]"
+                >
+                    <option *ngFor="let data of getParamData(filter)" [ngValue]="data.id">{{data.name}}</option>
+                </select>
             </div>
         </div>
     </div>
+
     <div class="buttons">
         <div class="button-default button-primary" (click)="filterBy()">
             Search

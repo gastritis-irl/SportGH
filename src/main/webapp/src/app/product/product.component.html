@@ -1,6 +1,8 @@
 <button routerLink="/">&larr;Go back</button>
 <div class="product-holder">
     <sgh-product-filter class="product-filter"
+                        [paramData]="paramData"
+                        [paramNames]="paramNames"
                         (newFilterEvent)="filterBy($event)"
     ></sgh-product-filter>
     <sgh-product-list [products]="products"

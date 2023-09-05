@@ -1,8 +1,13 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
-import { ActivatedRoute, Params } from '@angular/router';
 import { ProductPage } from './product-page.model';
+import { Category } from '../category/category.model';
+import { Subcategory } from '../subcategory/subcategory.model';
+import { CategoryService } from '../category/category.service';
+import { SubcategoryService } from '../subcategory/subcategory.service';
+import { ToastrService } from 'ngx-toastr';
+import { Params } from '@angular/router';
 
 @Component({
     selector: 'sgh-product',
@@ -13,35 +18,35 @@ export class ProductComponent implements OnInit, OnChanges {
 
     products: Product[] = [];
     currentPage: number = 1;
-    nrOfPages: number = 5;
+    nrOfPages: number = 0;
     nrOfItems: number = 0;
     orderByElement: string = 'name';
     filterParams: [ string, string ] = [ '', '' ];
+    paramNames: string[] = [
+        'Category',
+        'Subcategory',
+        'Price',
+    ];
+    paramData: Params = [];
 
-    constructor(private productService: ProductService, private route: ActivatedRoute) {
+    constructor(
+        private productService: ProductService,
+        private categoryService: CategoryService,
+        private subcategoryService: SubcategoryService,
+        private toastNotify: ToastrService,
+    ) {
     }
 
     ngOnInit(): void {
-        this.loadDataByParam();
+        this.loadData();
     }
 
     ngOnChanges(): void {
-        this.loadDataByParam();
-    }
-
-    loadParams(params: Params, param: string[]): void {
-        // delete first element: '',''
-        this.filterParams.splice(0, 2);
-        param.forEach(
-            (p: string): void => {
-                if (params[p]) {
-                    this.filterParams.push(p, params[p]);
-                }
-            }
-        );
+        this.loadData();
     }
 
     loadData(): void {
+        this.scrollToTop();
         this.productService.getAllByParams(this.currentPage, this.orderByElement, this.filterParams).subscribe(
             {
                 next: (data: ProductPage): void => {
@@ -51,26 +56,29 @@ export class ProductComponent implements OnInit, OnChanges {
                 },
                 error: (error): void => {
                     console.error('Error fetching data (products):', error);
+                    this.toastNotify.error('Error loading products');
                 }
             }
         );
-    }
-
-    loadDataByParam(): void {
-        this.scrollToTop();
-        this.route.queryParams.subscribe(
+        this.categoryService.getAll().subscribe(
             {
-                next: (params: Params): void => {
-                    this.loadParams(params, [
-                        'categoryId',
-                        'name',
-                        'priceMin',
-                        'priceMax',
-                    ]);
-                    this.loadData();
+                next: (data: Category[]): void => {
+                    this.paramData['Category'] = data;
                 },
                 error: (error): void => {
-                    console.error('Error fetching data (categoryId):', error);
+                    console.error('Error fetching data(categories):', error);
+                    this.toastNotify.error('Error loading filters');
+                }
+            }
+        );
+        this.subcategoryService.getAll().subscribe(
+            {
+                next: (data: Subcategory[]): void => {
+                    this.paramData['Subcategory'] = data;
+                },
+                error: (error): void => {
+                    console.error('Error fetching data(subcategories):', error);
+                    this.toastNotify.error('Error loading filters');
                 }
             }
         );

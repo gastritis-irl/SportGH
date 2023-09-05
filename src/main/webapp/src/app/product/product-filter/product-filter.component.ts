@@ -1,4 +1,7 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
+import { Params } from '@angular/router';
+import { Category } from '../../category/category.model';
+import { Subcategory } from '../../subcategory/subcategory.model';
 
 @Component({
     selector: 'sgh-product-filter',
@@ -7,43 +10,37 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 })
 export class ProductFilterComponent implements OnInit {
 
-    nrOfFilters: number = 0;
-    @Input() filterNames: string[] = [];
     isCollapsed: boolean[] = [];
     @Output() newFilterEvent: EventEmitter<[ string, string ]> = new EventEmitter<[ string, string ]>();
     filterParams: [ string, string ] = [ '', '' ];
+    paramOptions: Params = [];
+    @Input() paramNames: string[] = [];
+    @Input() paramData: Params = [];
 
     constructor() {
     }
 
     ngOnInit(): void {
-        this.getDefaultValues();
-        this.setDefaultValues();
     }
 
     filterBy(): void {
+        this.loadParams();
         this.newFilterEvent.emit(this.filterParams);
     }
 
-    getDefaultValues(): void {
-        this.nrOfFilters = 5;
+    loadParams(): void {
+        // delete first element: '',''
+        this.filterParams.splice(0, 2);
+        this.paramNames.forEach(
+            (param: string): void => {
+                if (this.paramOptions[param]) {
+                    this.filterParams.push(param, this.paramOptions[param]);
+                }
+            }
+        );
     }
 
-    setDefaultValues(): void {
-        // collapse all filters
-        for (let i: number = 0; i < this.nrOfFilters; i++) {
-            this.isCollapsed[i] = true;
-        }
-    }
-
-    range(from: number, to: number): number[] {
-        if (from >= to) {
-            return [];
-        }
-        const result: number[] = [];
-        for (let i: number = from; i < to; i++) {
-            result.push(i);
-        }
-        return result;
+    getParamData(param: string): Category[] | Subcategory[] {
+        return this.paramData[param];
     }
 }
