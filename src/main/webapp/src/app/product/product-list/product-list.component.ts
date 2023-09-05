@@ -11,6 +11,8 @@ export class ProductListComponent implements OnInit {
     @Input() products: Product[] = [];
     @Output() newPageEvent: EventEmitter<number> = new EventEmitter<number>();
     currentPage: number = 1;
+    @Output() orderByEvent: EventEmitter<string> = new EventEmitter<string>();
+    orderByElement: string = 'name';
     @Input() nrOfPages: number = 1;
     @Input() nrOfItems: number = 0;
 
@@ -18,6 +20,10 @@ export class ProductListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+    orderBy(): void {
+        this.orderByEvent.emit(this.orderByElement);
     }
 
     navToPage(): void {

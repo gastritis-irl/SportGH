@@ -1,5 +1,7 @@
 @use "../../style-variables.scss" as *;
 
+$breakpoint-custom-increase: 30px;
+
 $product-filter-width: 15%;
 $product-filter-min-width: 200px;
 $product-filter-max-width: 250px;
@@ -27,7 +29,7 @@ $product-list-width: 85%;
         width: $product-list-width;
     }
 
-    @media (max-width: $breakpoint-small) {
+    @media (max-width: $breakpoint-small + $breakpoint-custom-increase) {
         flex-direction: column;
         justify-content: center;
 

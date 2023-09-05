@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'sgh-product-filter',
@@ -8,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class ProductFilterComponent implements OnInit {
 
     nrOfFilters: number = 0;
+    @Input() filterNames: string[] = [];
     isCollapsed: boolean[] = [];
-    orderByElement: string = 'name';
+    @Output() newFilterEvent: EventEmitter<[ string, string ]> = new EventEmitter<[ string, string ]>();
+    filterParams: [ string, string ] = [ '', '' ];
 
     constructor() {
     }
@@ -17,6 +19,10 @@ export class ProductFilterComponent implements OnInit {
     ngOnInit(): void {
         this.getDefaultValues();
         this.setDefaultValues();
+    }
+
+    filterBy(): void {
+        this.newFilterEvent.emit(this.filterParams);
     }
 
     getDefaultValues(): void {
@@ -28,9 +34,6 @@ export class ProductFilterComponent implements OnInit {
         for (let i: number = 0; i < this.nrOfFilters; i++) {
             this.isCollapsed[i] = true;
         }
-    }
-
-    orderBy(): void {
     }
 
     range(from: number, to: number): number[] {

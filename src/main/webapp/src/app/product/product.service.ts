@@ -9,8 +9,18 @@ import { ProductPage } from './product-page.model';
 })
 export class ProductService extends AppService {
 
-    getAll(pageNumber: number): Observable<ProductPage> {
-        const url: string = `${this.baseUrl}/products?pageNumber=${pageNumber}`;
+    getAll(pageNumber: number = 1, orderBy: string = 'name'): Observable<ProductPage> {
+        let url: string = `${this.baseUrl}/products?pageNumber=${pageNumber}&orderBy=${orderBy}`;
+        return this.http.get<ProductPage>(url);
+    }
+
+    getAllByParams(pageNumber: number, orderBy: string, filterParams: [ string, string ]): Observable<ProductPage> {
+        let url: string = `${this.baseUrl}/products?pageNumber=${pageNumber}&orderBy=${orderBy}`;
+
+        for (let i: number = 0; i < filterParams.length; i += 2) {
+            url += '&' + filterParams[i] + '=' + filterParams[i + 1];
+        }
+
         return this.http.get<ProductPage>(url);
     }
 

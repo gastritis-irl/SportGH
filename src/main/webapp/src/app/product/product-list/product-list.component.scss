@@ -1,6 +1,10 @@
 @use '../../../style-variables.scss' as *;
 
 // Sizes
+$order-by-gap: 10px;
+$order-by-select-padding: 5px;
+$order-by-select-width: 150px;
+$order-by-width: 235px;
 $price-font-size: 1em;
 $product-gap: 15px;
 $product-border-width: 0.03125em;
@@ -22,8 +26,40 @@ $card-max-width-large: 280px;
     padding-bottom: $card-padding;
     gap: $product-gap;
 
-    .product-list-info {
+    .product-list-info-holder {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         color: $color-main-1;
+
+        @media (max-width: $breakpoint-medium) {
+            flex-direction: column;
+        }
+
+        .order-by-holder {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: $order-by-gap;
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
+            padding: $order-by-select-padding;
+            width: $order-by-width;
+
+            .order-by-select {
+                width: $order-by-select-width;
+                border-radius: $border-radius;
+                border-style: solid;
+                border-color: $color-main-3;
+                background-color: $color-neutral-1;
+                padding: $order-by-select-padding;
+                color: $color-main-1;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
     }
 
     .products {
