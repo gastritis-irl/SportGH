@@ -9,7 +9,11 @@ public interface ImageService {
 
     Image saveData(Image image);
 
+    Image update(MultipartFile file, Long imageId);
+
     void delete(Long imageID);
+
+    void deleteFile(Long imageID);
 
     Image findById(Long imageID);
 

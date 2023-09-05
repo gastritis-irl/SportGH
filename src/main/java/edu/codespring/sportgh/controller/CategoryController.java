@@ -78,7 +78,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryOutDTO> create(@RequestBody @Valid CategoryInDTO categoryInDTO) {
-        log.info("Creating category with name: {}.", categoryInDTO.getName());
+        log.info("Creating category from {}.", categoryInDTO);
         if (categoryInDTO.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

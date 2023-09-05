@@ -11,7 +11,6 @@ import { Output, EventEmitter } from '@angular/core';
 export class ImageComponent {
 
     @Output() fileChange = new EventEmitter<File>();
-
     imageFile?: File;
     imageData?: Image;
 
@@ -22,6 +21,11 @@ export class ImageComponent {
         if (input.files && input.files.length) {
             this.imageFile = input.files[0];
             this.fileChange.emit(this.imageFile);  // Emit the file whenever it changes
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.imageData = { url: reader.result as string }; // Load image data for preview
+            };
+            reader.readAsDataURL(this.imageFile);
         }
     }
 
@@ -33,15 +37,36 @@ export class ImageComponent {
         }
 
         this.imageService.uploadImage(this.imageFile).subscribe(
-            (response: Image) => {
-                // Successfully uploaded and received the Image object
-                this.imageData = response;
-            },
-            error => {
-                // Handle the error appropriately
-                this.toastNotify.error(`Error uploading image`, error);
+            {
+                next: (response: Image) => {
+                    // Successfully uploaded and received the Image object
+                    this.imageData = response;
+                },
+                error: (error) => {
+                    this.toastNotify.error(`Error uploading image`, error);
+                }
             }
         );
+    }
+
+    uploadImage(): Image | undefined {
+        if (this.imageFile) {
+            this.imageService.uploadImage(this.imageFile).subscribe(
+                {
+                    next: (response: Image) => {
+                        // Successfully uploaded and received the Image object
+                        this.imageData = response;
+                        this.toastNotify.success('Image uploaded successfully');
+                        return response;
+                    },
+                    error: (error) => {
+                        this.toastNotify.error('Error uploading image', error);
+                        return undefined;
+                    }
+                }
+            );
+        }
+        return undefined;
     }
 
     loadImageFile(id: number) {
@@ -59,4 +84,21 @@ export class ImageComponent {
             }
         });
     }
+
+    deleteFile(id: number) {
+        this.imageService.deleteImage(id).subscribe(
+            {
+                next: (): void => {
+                    // Successfully deleted the image
+                    this.imageData = undefined;
+                    this.imageFile = undefined;
+                    this.toastNotify.success(`Image deleted successfully`);
+                },
+                error: (error): void => {
+                    this.toastNotify.error(`Error deleting image`, error);
+                }
+            }
+        );
+    }
+
 }

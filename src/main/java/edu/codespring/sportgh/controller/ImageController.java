@@ -55,6 +55,22 @@ public class ImageController {
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
+    //update with file, create new Image instance, unlink old instance
+    @PutMapping(path = "/file/{imageId}")
+    public ResponseEntity<Image> update(@PathVariable Long imageId, @RequestParam("image") MultipartFile file) {
+        Image image = imageService.findById(imageId);
+        if (image == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        // Update the image with the new file (this will update the database record and replace the old file)
+        imageService.deleteFile(imageId);
+        image = imageService.update(file, imageId);
+
+        return new ResponseEntity<>(image, HttpStatus.OK);
+    }
+
+
     @DeleteMapping(path = "/{imageId}")
     public ResponseEntity<?> deleteById(@PathVariable Long imageId) {
         log.info("Deleting image with ID {}.", imageId);

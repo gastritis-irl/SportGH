@@ -44,7 +44,7 @@ public class ImageServiceImpl implements ImageService {
             Image image = new Image();
             image.setName(uniqueFilename);
             image.setUrl(filePath.toString());
-            image = imageRepository.save(image);
+            image = saveData(image);
 
             log.info("Image saved successfully ({}) with ID: ({}).", file.getOriginalFilename(), image.getId());
             return image;
@@ -54,6 +54,32 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    public Image update(MultipartFile file, Long imageId) {
+        // Generate a unique name for the file
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+        String dateStr = LocalDateTime.now().format(formatter);
+        String uniqueFilename = dateStr + "_" + UUID.randomUUID() + ".jpeg";
+        try {
+            // Save the file to the file system
+            Path filePathWithFile = Paths.get(storageLocation, uniqueFilename);
+            Path filePath = Paths.get(storageLocation);
+            Files.copy(file.getInputStream(), filePathWithFile, StandardCopyOption.REPLACE_EXISTING);
+
+            // Save the file metadata to the database
+            Image image = findById(imageId);
+            image.setName(uniqueFilename);
+            image.setUrl(filePath.toString());
+            image = saveData(image);
+
+            log.info("Image saved successfully ({}) with ID: ({}).", file.getOriginalFilename(), image.getId());
+            return image;
+        } catch (IOException e) {
+            throw new ServiceException("Failed to save image", e);
+        }
+    }
+
+
+    @Override
     public Image saveData(Image image) {
         return imageRepository.save(image);
     }
@@ -61,6 +87,15 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void delete(Long imageID) {
         // Delete from the file system
+        deleteFile(imageID);
+
+        // Delete from the database
+        imageRepository.deleteById(imageID);
+        log.info("Image with ID {} deleted successfully.", imageID);
+    }
+
+    @Override
+    public void deleteFile(Long imageID) {
         Image image = findById(imageID);
         if (image != null) {
             Path filePath = Paths.get(image.getUrl(), image.getName());
@@ -70,10 +105,6 @@ public class ImageServiceImpl implements ImageService {
                 throw new ServiceException("Failed to delete image", e);
             }
         }
-
-        // Delete from the database
-        imageRepository.deleteById(imageID);
-        log.info("Image with ID {} deleted successfully.", imageID);
     }
 
     @Override

@@ -5,6 +5,8 @@ import { Category } from '../category/category.model';
 import { ToastrService } from 'ngx-toastr';
 import { Image } from '../shared/image/image.model';
 import { ImageService } from '../shared/image/image.service';
+import { ViewChild } from '@angular/core';
+import { ImageComponent } from '../shared/image/image.component';
 
 type ClickHandlerFunction = () => void;
 
@@ -15,8 +17,11 @@ type ClickHandlerFunction = () => void;
 })
 export class CategoryEditComponent implements OnInit {
 
+    @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
+
     category: Category = {};
-    categoryImage: Image = {};
+    newImageFile?: File; 
+    imageData?: Image;
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
 
@@ -86,28 +91,53 @@ export class CategoryEditComponent implements OnInit {
     }
 
     onFileChange(file: File): void {
-        if (file) {
-            this.imageService.uploadImage(file).subscribe(
+        this.newImageFile = file;
+    }
+
+    updateCategory(): void {
+        if (this.newImageFile) {
+            // If a new image file has been selected, upload it first
+            this.imageService.uploadImage(this.newImageFile).subscribe(
                 {
                     next: (image: Image) => {
+                        // Update the category with the new image ID
                         this.category.imageId = image.id;
-                        if (image.id) {
-                            this.loadCategoryImage(image.id);
-                        }
-                        else {
-                            this.toastNotify.error(`Error uploading image`);
-                        }
+                        this.updateCategoryData();
                     },
                     error: (error) => {
                         console.error(error);
-                        this.toastNotify.error(`Error uploading image`);
+                        this.toastNotify.error('Error uploading new image');
                     }
                 }
             );
+        } else {
+            // If no new image file has been selected, just update the category data
+            this.updateCategoryData();
         }
     }
 
     createCategory(): void {
+        if (this.newImageFile) {
+            this.imageService.uploadImage(this.newImageFile).subscribe(
+                {
+                    next: (image: Image) => {
+                        // Set the image ID on the category object
+                        this.category.imageId = image.id;
+                        this.createCategoryData();
+                    },
+                    error: (error) => {
+                        console.error(error);
+                        this.toastNotify.error('Error uploading new image');
+                    }
+                }
+            );
+        } else {
+            // If no new image file has been selected, just create the category data
+            this.createCategoryData();
+        }
+    }
+
+    createCategoryData(): void {
         this.categoryService.create(this.category).subscribe(
             {
                 next: (resp: Category): void => {
@@ -121,12 +151,18 @@ export class CategoryEditComponent implements OnInit {
                 },
                 error: (error): void => {
                     this.toastNotify.error(`Error creating category: ${error.error}`);
+
+                    // Delete the image if it was created
+                    if (this.category.imageId) {
+                        this.imageService.deleteImage(this.category.imageId);
+                    }
                 }
             }
         );
     }
 
-    updateCategory(): void {
+
+    updateCategoryData(): void {
         this.categoryService.update(this.category.id, this.category).subscribe(
             {
                 next: (): void => {
