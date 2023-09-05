@@ -96,20 +96,38 @@ export class CategoryEditComponent implements OnInit {
 
     updateCategory(): void {
         if (this.newImageFile) {
-            // If a new image file has been selected, upload it first
-            this.imageService.uploadImage(this.newImageFile).subscribe(
-                {
-                    next: (image: Image) => {
-                        // Update the category with the new image ID
-                        this.category.imageId = image.id;
-                        this.updateCategoryData();
-                    },
-                    error: (error) => {
-                        console.error(error);
-                        this.toastNotify.error('Error uploading new image');
+            // If a new image file has been selected
+            if (this.category.imageId !== undefined) {
+                // If the category already has an associated image, update the existing image
+                this.imageService.updateFile(this.category.imageId, this.newImageFile).subscribe(
+                    {
+                        next: (image: Image) => {
+                            // Update the category with the new image ID
+                            this.category.imageId = image.id;
+                            this.updateCategoryData();
+                        },
+                        error: (error) => {
+                            console.error(error);
+                            this.toastNotify.error('Error updating image');
+                        }
                     }
-                }
-            );
+                );
+            } else {
+                // If the category does not already have an associated image, upload the new image
+                this.imageService.uploadImage(this.newImageFile).subscribe(
+                    {
+                        next: (image: Image) => {
+                            // Update the category with the new image ID
+                            this.category.imageId = image.id;
+                            this.updateCategoryData();
+                        },
+                        error: (error) => {
+                            console.error(error);
+                            this.toastNotify.error('Error uploading new image');
+                        }
+                    }
+                );
+            }
         } else {
             // If no new image file has been selected, just update the category data
             this.updateCategoryData();

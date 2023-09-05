@@ -42,8 +42,17 @@ public class CategoryController {
         return new ResponseEntity<>(categoryMapper.categoryToOut(category), HttpStatus.OK);
     }
 
+    public void deleteImageFileByCategoryId(Long categoryId) {
+        Category category = categoryService.findById(categoryId);
+        if (category == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        imageService.deleteFile(category.getImage().getId());
+    }
+
     @DeleteMapping(path = "/{categoryId}")
     public ResponseEntity<?> deleteById(@PathVariable Long categoryId) {
+        deleteImageFileByCategoryId(categoryId);
         log.info("Deleting category with ID {}.", categoryId);
         categoryService.delete(categoryId);
         return new ResponseEntity<>(HttpStatus.OK);

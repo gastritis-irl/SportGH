@@ -2,6 +2,7 @@ package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.service.ImageService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
@@ -55,7 +56,7 @@ public class ImageController {
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
-    //update with file, create new Image instance, unlink old instance
+    @Transactional
     @PutMapping(path = "/file/{imageId}")
     public ResponseEntity<Image> update(@PathVariable Long imageId, @RequestParam("image") MultipartFile file) {
         Image image = imageService.findById(imageId);
