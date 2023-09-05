@@ -20,7 +20,7 @@
     <div class="pagination-item-holder">
         <div *ngIf="currentPage>1" class="buttons">
             <div class="button-default button-primary" (click)="previousPage()">
-                &larr;
+                <
             </div>
         </div>
         <div class="pagination-item buttons" *ngFor="let currentPageNumber of range(1,nrOfPages)">
@@ -34,7 +34,7 @@
         </div>
         <div *ngIf="currentPage<nrOfPages" class="buttons">
             <div class="button-default button-primary" (click)="nextPage()">
-                &rarr;
+                >
             </div>
         </div>
     </div>

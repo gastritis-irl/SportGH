@@ -135,12 +135,8 @@ $card-max-width-large: 280px;
 
         .pagination-item {
 
-            &:hover {
-                cursor: pointer;
-            }
-
             .pagination-item-current-page {
-                background-color: $color-main-2;
+                background-color: $color-main-1;
                 color: $color-neutral-1;
 
                 &:hover {
