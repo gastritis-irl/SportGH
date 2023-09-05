@@ -52,6 +52,9 @@ public class ImageController {
 
     @PostMapping
     public ResponseEntity<Image> save(@RequestParam("image") MultipartFile file) {
+        if (!file.getContentType().startsWith("image/")) {
+            throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
+        }
         Image image = imageService.save(file);
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
@@ -59,6 +62,9 @@ public class ImageController {
     @Transactional
     @PutMapping(path = "/file/{imageId}")
     public ResponseEntity<Image> update(@PathVariable Long imageId, @RequestParam("image") MultipartFile file) {
+        if (!file.getContentType().startsWith("image/")) {
+            throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
+        }
         Image image = imageService.findById(imageId);
         if (image == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -70,7 +76,6 @@ public class ImageController {
 
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
-
 
     @Transactional
     @DeleteMapping(path = "/{imageId}")

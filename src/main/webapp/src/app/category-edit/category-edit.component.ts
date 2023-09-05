@@ -20,7 +20,7 @@ export class CategoryEditComponent implements OnInit {
     @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
 
     category: Category = {};
-    newImageFile?: File; 
+    newImageFile?: File;
     imageData?: Image;
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
