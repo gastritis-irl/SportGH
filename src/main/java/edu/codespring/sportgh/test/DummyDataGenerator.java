@@ -98,7 +98,8 @@ public class DummyDataGenerator {
         save(name, description, imageUrl, categoryService, imageService);
     }
 
-    static void save(String name, String description, String imageUrl, CategoryService categoryService, ImageService imageService) {
+    static void save(String name, String description, String imageUrl,
+                     CategoryService categoryService, ImageService imageService) {
         if (!categoryService.existsByName(name)) {
             // Extract the image name from the URL
             String imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
