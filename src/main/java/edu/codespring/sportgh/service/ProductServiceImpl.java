@@ -1,11 +1,15 @@
 package edu.codespring.sportgh.service;
 
 import edu.codespring.sportgh.exception.BadRequestException;
+import edu.codespring.sportgh.dto.ProductPageOutDTO;
+import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -16,20 +20,34 @@ import java.util.Collection;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
+    static final int pageSize = 60;
+
+    @Override
+    public ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber) {
+        Page<Product> page = productRepository.findByCategoryId(categoryId, PageRequest.of(pageNumber - 1, pageSize));
+
+        Collection<Product> products = page.getContent();
+        int nrOfPages = page.getTotalPages();
+        long nrOfElements = page.getTotalElements();
+
+        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
+    }
+
+    @Override
+    public ProductPageOutDTO findPageAll(int pageNumber) {
+        Page<Product> page = productRepository.findPageAll(PageRequest.of(pageNumber - 1, pageSize));
+
+        Collection<Product> products = page.getContent();
+        int nrOfPages = page.getTotalPages();
+        long nrOfElements = page.getTotalElements();
+
+        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
+    }
 
     @Override
     public Product findById(Long productId) {
         return productRepository.findById(productId).orElse(null);
-    }
-
-    @Override
-    public Collection<Product> findByCategoryId(Long categoryId) {
-        return productRepository.findByCategoryId(categoryId);
-    }
-
-    @Override
-    public Collection<Product> findAll() {
-        return productRepository.findAll();
     }
 
     @Override

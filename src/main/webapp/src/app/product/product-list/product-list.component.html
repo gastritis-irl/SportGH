@@ -1,4 +1,7 @@
 <div class="product-list-holder">
+    <div class="product-list-info">
+        Number of results: {{nrOfItems}}
+    </div>
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
             <img src="https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg" class="product-icon"
@@ -11,6 +14,27 @@
                 <div class="product-price-d">
                     Price from {{product.rentPrice}} RON / DAY
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination-item-holder">
+        <div *ngIf="currentPage>1" class="buttons">
+            <div class="button-default button-primary" (click)="previousPage()">
+                <
+            </div>
+        </div>
+        <div class="pagination-item buttons" *ngFor="let currentPageNumber of range(1,nrOfPages)">
+            <div *ngIf="currentPageNumber==currentPage" class="button-default button-primary pagination-item-current-page" disabled>
+                {{currentPageNumber}}
+            </div>
+            <div *ngIf="currentPageNumber!=currentPage" class="button-default button-secondary"
+                 (click)="selectPage(currentPageNumber)">
+                {{currentPageNumber}}
+            </div>
+        </div>
+        <div *ngIf="currentPage<nrOfPages" class="buttons">
+            <div class="button-default button-primary" (click)="nextPage()">
+                >
             </div>
         </div>
     </div>

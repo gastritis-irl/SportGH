@@ -2,6 +2,7 @@ package edu.codespring.sportgh.mapper;
 
 import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
+import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.service.SubCategoryService;
 import edu.codespring.sportgh.service.UserService;
@@ -29,6 +30,8 @@ public abstract class ProductMapper {
     public abstract ProductOutDTO productToOut(Product product);
 
     public abstract Collection<ProductOutDTO> productsToOuts(Collection<Product> products);
+
+    public abstract ProductPageOutDTO productPageToOut(Collection<Product> products, int nrOfPages, long nrOfElements);
 
     @Mapping(source = "subCategoryId", target = "subCategory.id")
     @Mapping(source = "subCategoryName", target = "subCategory.name")

@@ -131,6 +131,10 @@ $logout-btn-transition-duration: .3s;
         border-style: solid;
         border-color: white;
 
+        &:hover {
+            cursor: pointer;
+        }
+
         &.button-secondary {
             height: $height-button;
             background-color: $color-btn-1;
