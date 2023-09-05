@@ -61,7 +61,6 @@ export class ProductComponent implements OnInit {
                     this.products = data.products;
                     this.nrOfPages = data.nrOfPages;
                     this.nrOfItems = data.nrOfElements;
-                    console.log(data);
                 },
                 error: (error): void => {
                     console.error('Error fetching data (products):', error);
