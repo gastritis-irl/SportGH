@@ -1,14 +1,13 @@
 <div class="product-filter-holder">
-    <div *ngFor="let i of [1,2,3,4,5]">
+    <div *ngFor="let i of range(0,nrOfFilters)">
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
                 (click)="isCollapsed[i] = ! isCollapsed[i]"
                 [attr.aria-expanded]="!isCollapsed"
-                aria-controls="collapseExample"
             >
                 <div class="button-text">
-                    Filter{{i}}
+                    Filter {{i}}
                 </div>
                 <div class="button-arrow" *ngIf="isCollapsed[i]">&darr;</div>
                 <div class="button-arrow" *ngIf="!isCollapsed[i]">&uarr;</div>

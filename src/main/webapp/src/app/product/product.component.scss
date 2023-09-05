@@ -1,8 +1,8 @@
 @use "../../style-variables.scss" as *;
 
 $product-filter-width: 15%;
-$product-filter-min-width: 130px;
-$product-filter-max-width: 150px;
+$product-filter-min-width: 200px;
+$product-filter-max-width: 250px;
 $item-gap: 15px;
 $product-list-width: 85%;
 
@@ -16,6 +16,10 @@ $product-list-width: 85%;
         width: $product-filter-width;
         min-width: $product-filter-min-width;
         max-width: $product-filter-max-width;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     .product-list {
@@ -24,9 +28,10 @@ $product-list-width: 85%;
 
     @media (max-width: $breakpoint-small) {
         flex-direction: column;
+        justify-content: center;
 
         .product-filter {
-            width: 100%;
+            width: 80%;
         }
 
         .product-list {
