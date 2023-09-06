@@ -1,16 +1,18 @@
-<input type="file" (change)="onFileChange($event)" name="imageFile" accept=".jpg, .jpeg, .png">
-<img *ngIf="imageData?.url" [src]="imageData?.url" alt="Uploaded Image">
-<div class="frame39475">
-    <div class="card-heading">Images</div>
-    <div class="frame39474">
-        <div class="heading">The images will be displayed in the following order. Feel free to change this. You can
-            upload a maximum of 8 images.</div>
-    </div>
-    <div class="gallery">
-        <div class="image-placeholder">
-            <div class="container"></div>
-            <div class="plus-sign">+</div>
+<div class="gallery">
+    <div class="image-placeholder">
+        <div class="container" (click)="fileInput.click()">
+            <!-- Hidden file input to trigger file selection dialog -->
+            <input type="file" (change)="onFileChange($event)" name="imageFiles" accept=".jpg, .jpeg, .png"
+                style="display: none;" #fileInput multiple>
+
+            <!-- Visible image and plus sign, clicking on them will trigger the hidden file input -->
+            <ng-container *ngIf="imageDataArray.length > 0; else plusIcon">
+                <img *ngFor="let imageData of imageDataArray" [src]="imageData?.url" alt="Uploaded Image"
+                    class="uploaded-image">
+            </ng-container>
+            <ng-template #plusIcon>
+                <div class="plus-sign">+</div>
+            </ng-template>
         </div>
     </div>
 </div>
-

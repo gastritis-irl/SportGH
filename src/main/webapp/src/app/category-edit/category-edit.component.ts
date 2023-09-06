@@ -90,13 +90,15 @@ export class CategoryEditComponent implements OnInit {
         });
     }
 
-    onFileChange(file: File): void {
-        this.newImageFile = file;
+    onFileChange(files: File[]): void {
+        if (files.length > 0) {
+            this.newImageFile = files[0];
+        }
     }
+
 
     updateCategory(): void {
         if (this.newImageFile) {
-            // If a new image file has been selected
             if (this.category.imageId !== undefined) {
                 // If the category already has an associated image, update the existing image
                 this.imageService.updateFile(this.category.imageId, this.newImageFile).subscribe(
@@ -136,23 +138,27 @@ export class CategoryEditComponent implements OnInit {
 
     createCategory(): void {
         if (this.newImageFile) {
-            this.imageService.uploadImage(this.newImageFile).subscribe(
-                {
-                    next: (image: Image): void => {
-                        // Set the image ID on the category object
-                        this.category.imageId = image.id;
-                        this.createCategoryData();
-                    },
-                    error: (error): void => {
-                        console.error(error);
-                        this.toastNotify.error(`Error uploading new image${error.error}`);
-                    }
-                }
-            );
+            this.uploadImageAndCreateCategory(this.newImageFile);
         } else {
             // If no new image file has been selected, just create the category data
             this.createCategoryData();
         }
+    }
+
+    uploadImageAndCreateCategory(file: File): void {
+        this.imageService.uploadImage(file).subscribe(
+            {
+                next: (image: Image): void => {
+                    // Set the image ID on the category object
+                    this.category.imageId = image.id;
+                    this.createCategoryData();
+                },
+                error: (error): void => {
+                    console.error(error);
+                    this.toastNotify.error(`Error uploading new image${error.error}`);
+                }
+            }
+        );
     }
 
     createCategoryData(): void {
