@@ -10,12 +10,13 @@
             <select class="order-by-select"
                     [(ngModel)]="orderByElement" name="orderByElement"
                     #orderByElem="ngModel"
-                    (click)="orderBy()"
+                    (ngModelChange)="orderBy()"
             >
-                <option [ngValue]="'name'">Name</option>
-                <option [ngValue]="'price-lowest'">Lowest price first</option>
-                <option [ngValue]="'price-highest'">Highest price first</option>
-                <option [ngValue]="'newest'" selected>Newest (by upload date)</option>
+                <option [ngValue]="'name#ASC'">Name A-Z</option>
+                <option [ngValue]="'name#DESC'">Name Z-A</option>
+                <option [ngValue]="'rentPrice#ASC'">Lowest price first</option>
+                <option [ngValue]="'rentPrice#DESC'">Highest price first</option>
+                <option [ngValue]="'newest'" disabled>Newest (by upload date)</option>
             </select>
         </div>
     </div>

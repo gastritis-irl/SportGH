@@ -12,7 +12,7 @@ public interface ProductService {
 
     Collection<Product> findAll(String orderBy, String direction);
 
-    ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber);
+    ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber, String orderBy, String direction);
 
     ProductPageOutDTO findPageAll(int pageNumber);
 

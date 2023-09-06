@@ -120,8 +120,9 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
-    orderBy(orderByElement: string): void {
-        this.filterParams['orderBy'] = orderByElement;
+    orderBy(orderBy: string): void {
+        this.filterParams['orderBy'] = orderBy.split('#')[0];
+        this.filterParams['direction'] = orderBy.split('#')[1];
         this.loadData();
     }
 

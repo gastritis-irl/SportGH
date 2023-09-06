@@ -25,10 +25,17 @@ public class ProductServiceImpl implements ProductService {
     static final int pageSize = 60;
 
     @Override
-    public ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber) {
+    public ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber, String orderBy, String direction) {
         Page<Product> page = productRepository.findByCategoryId(
             categoryId,
-            PageRequest.of(pageNumber - 1, pageSize)
+            PageRequest.of(
+                pageNumber - 1,
+                pageSize,
+                Sort.by(
+                    Sort.Direction.fromString(direction),
+                    orderBy != null ? orderBy : "name"
+                )
+            )
         );
 
         Collection<Product> products = page.getContent();
