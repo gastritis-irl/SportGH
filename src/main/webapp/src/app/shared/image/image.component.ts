@@ -3,10 +3,15 @@ import { Image } from './image.model';
 import { ImageService } from './image.service';
 import { Component } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'sgh-image',
+    standalone: true,
+    imports: [NgIf],
+    styleUrls: ['./image.component.scss'],
     templateUrl: './image.component.html',
+
 })
 export class ImageComponent {
 

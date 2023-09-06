@@ -5,22 +5,22 @@ import { CategoryEditComponent } from '../category-edit/category-edit.component'
 import { AdminComponent } from './admin.component';
 import { HomeModule } from '../home/home.module';
 import { NgForOf } from '@angular/common';
-import { ImageModule } from '../shared/image/image.module';
+import { ImageComponent } from "../shared/image/image.component";
 
 @NgModule({
     declarations: [
         AdminComponent,
         CategoryEditComponent,
     ],
+    providers: [],
+    bootstrap: [],
     imports: [
         AdminRoute,
         FormsModule,
         HomeModule,
         NgForOf,
-        ImageModule,
-    ],
-    providers: [],
-    bootstrap: []
+        ImageComponent
+    ]
 })
 export class AdminModule {
 }
