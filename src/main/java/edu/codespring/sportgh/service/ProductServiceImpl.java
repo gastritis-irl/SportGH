@@ -65,12 +65,12 @@ public class ProductServiceImpl implements ProductService {
 
         if (minPrice != null) {
             specification = specification.and(((root, query, criteriaBuilder) ->
-                criteriaBuilder.greaterThan(root.get("rentPrice"), minPrice)));
+                criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice)));
         }
 
         if (maxPrice != null) {
             specification = specification.and(((root, query, criteriaBuilder) ->
-                criteriaBuilder.lessThan(root.get("rentPrice"), maxPrice)));
+                criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice)));
         }
 
         Page<Product> page = productRepository.findAll(specification, pageable);
