@@ -23,9 +23,7 @@ public interface ProductService {
         String textSearch
     );
 
-    ProductPageOutDTO findPageAll(int pageNumber);
-
-    boolean existsByNameAndUser(String name, User user);
+    boolean notExistsByNameAndUser(String name, User user);
 
     boolean existsById(Long productId);
 

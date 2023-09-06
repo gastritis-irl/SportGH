@@ -56,45 +56,26 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (categoryId != null) {
-            specification = specification.and(((root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("subCategory").get("category").get("id"), categoryId)));
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("subCategory").get("category").get("id"), categoryId));
         }
 
         if (subcategoryId != null) {
-            specification = specification.and(((root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("subCategory").get("id"), subcategoryId)));
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("subCategory").get("id"), subcategoryId));
         }
 
         if (minPrice != null) {
-            specification = specification.and(((root, query, criteriaBuilder) ->
-                criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice)));
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
         }
 
         if (maxPrice != null) {
-            specification = specification.and(((root, query, criteriaBuilder) ->
-                criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice)));
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
         }
 
         Page<Product> page = productRepository.findAll(specification, pageable);
-
-        Collection<Product> products = page.getContent();
-        int nrOfPages = page.getTotalPages();
-        long nrOfElements = page.getTotalElements();
-
-        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
-    }
-
-    @Override
-    public ProductPageOutDTO findPageAll(int pageNumber) {
-        Page<Product> page = productRepository.findPageAll(
-            PageRequest.of(
-                pageNumber - 1,
-                pageSize,
-                Sort.by(
-                    Sort.DEFAULT_DIRECTION,
-                    "name"
-                )
-            ));
 
         Collection<Product> products = page.getContent();
         int nrOfPages = page.getTotalPages();
@@ -118,8 +99,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean existsByNameAndUser(String name, User user) {
-        return productRepository.existsByNameAndUser(name, user);
+    public boolean notExistsByNameAndUser(String name, User user) {
+        return !productRepository.existsByNameAndUser(name, user);
     }
 
     @Override

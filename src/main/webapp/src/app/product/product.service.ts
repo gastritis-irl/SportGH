@@ -18,7 +18,6 @@ export class ProductService extends AppService {
                 url += '&' + paramName + '=' + filterParams[paramName];
             }
         }
-        console.log(url);
 
         return this.http.get<ProductPage>(url);
     }

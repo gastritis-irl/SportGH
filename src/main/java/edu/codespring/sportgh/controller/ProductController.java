@@ -27,7 +27,7 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public ResponseEntity<?> findPageByParams(
+    public ResponseEntity<ProductPageOutDTO> findPageByParams(
         @RequestParam("orderBy") Optional<String> orderBy,
         @RequestParam("direction") Optional<String> direction,
         @RequestParam("pageNumber") Optional<Integer> pageNumber,
@@ -38,9 +38,8 @@ public class ProductController {
         @RequestParam("TextSearch") Optional<String> textSearch
     ) {
         if (pageNumber.isPresent()) {
-            ProductPageOutDTO productPageOutDTO;
-            if (categoryId.isPresent()) {
-                productPageOutDTO = productService.findPageByParams(
+            return new ResponseEntity<>(
+                productService.findPageByParams(
                     orderBy.orElse(null),
                     direction.orElse(null),
                     pageNumber.orElse(null),
@@ -49,13 +48,9 @@ public class ProductController {
                     minPrice.orElse(null),
                     maxPrice.orElse(null),
                     textSearch.orElse(null)
-                );
-            } else {
-                productPageOutDTO = productService.findPageAll(
-                    pageNumber.get()
-                );
-            }
-            return new ResponseEntity<>(productPageOutDTO, HttpStatus.OK);
+                ),
+                HttpStatus.OK
+            );
         } else {
             return new ResponseEntity<>(
                 productMapper.productPageToOut(

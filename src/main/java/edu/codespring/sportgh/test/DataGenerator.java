@@ -266,7 +266,7 @@ public class DataGenerator {
 
     public void saveProduct(Product product, String subCategoryName, User user) {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
-        if (subCategory != null && !productService.existsByNameAndUser(product.getName(), user)) {
+        if (subCategory != null && productService.notExistsByNameAndUser(product.getName(), user)) {
             productService.save(new Product(
                 true,
                 product.getName(),
