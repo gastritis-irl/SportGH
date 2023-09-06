@@ -71,7 +71,6 @@ public class ImageController {
         }
 
         // Update the image with the new file (this will update the database record and replace the old file)
-        imageService.deleteFile(imageId);
         image = imageService.update(file, imageId);
 
         return new ResponseEntity<>(image, HttpStatus.OK);
