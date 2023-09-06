@@ -76,12 +76,12 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (textSearch != null) {
-            specification = specification.and(
-                (root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%")).or(
-                (root, query, criteriaBuilder) ->
+            specification = specification
+                .and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"))
+                .or((root, query, criteriaBuilder) ->
                     criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
-            );
+                );
         }
 
         Page<Product> page = productRepository.findAll(specification, pageable);
