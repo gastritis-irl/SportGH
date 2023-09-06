@@ -7,7 +7,7 @@ import { Subcategory } from '../subcategory/subcategory.model';
 import { CategoryService } from '../category/category.service';
 import { SubcategoryService } from '../subcategory/subcategory.service';
 import { ToastrService } from 'ngx-toastr';
-import { Params } from '@angular/router';
+import { ParamMap, Params } from '@angular/router';
 
 @Component({
     selector: 'sgh-product',
@@ -17,17 +17,13 @@ import { Params } from '@angular/router';
 export class ProductComponent implements OnInit, OnChanges {
 
     products: Product[] = [];
+    categories: Category[] = [];
+    subcategories: Subcategory[] = [];
     currentPage: number = 1;
     nrOfPages: number = 0;
     nrOfItems: number = 0;
     orderByElement: string = 'name';
     filterParams: string[] = [];
-    paramNames: string[] = [
-        'Category',
-        'Subcategory',
-        'Price',
-    ];
-    paramData: Params = [];
 
     constructor(
         private productService: ProductService,
@@ -46,7 +42,6 @@ export class ProductComponent implements OnInit, OnChanges {
     }
 
     loadData(): void {
-        this.filterParams = this.filterParams.filter((e: string): boolean => e !== '');
         this.scrollToTop();
         this.productService.getAllByParams(this.currentPage, this.orderByElement, this.filterParams).subscribe(
             {
@@ -64,7 +59,7 @@ export class ProductComponent implements OnInit, OnChanges {
         this.categoryService.getAll().subscribe(
             {
                 next: (data: Category[]): void => {
-                    this.paramData['Category'] = data;
+                    this.categories = data;
                 },
                 error: (error): void => {
                     console.error('Error fetching data(categories):', error);
@@ -75,7 +70,7 @@ export class ProductComponent implements OnInit, OnChanges {
         this.subcategoryService.getAll().subscribe(
             {
                 next: (data: Subcategory[]): void => {
-                    this.paramData['Subcategory'] = data;
+                    this.subcategories = data;
                 },
                 error: (error): void => {
                     console.error('Error fetching data(subcategories):', error);
@@ -100,7 +95,7 @@ export class ProductComponent implements OnInit, OnChanges {
         this.orderByElement = orderByElement;
     }
 
-    filterBy(filterParams: [ string, string ]): void {
+    filterBy(filterParams: string[]): void {
         this.filterParams = filterParams;
     }
 }

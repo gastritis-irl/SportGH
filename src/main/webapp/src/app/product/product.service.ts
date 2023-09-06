@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AppService } from '../app.service';
 import { Product } from './product.model';
 import { ProductPage } from './product-page.model';
+import { Params } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,7 @@ import { ProductPage } from './product-page.model';
 export class ProductService extends AppService {
 
     getAll(pageNumber: number = 1, orderBy: string = 'name'): Observable<ProductPage> {
-        let url: string = `${this.baseUrl}/products?pageNumber=${pageNumber}&orderBy=${orderBy}`;
+        const url: string = `${this.baseUrl}/products?pageNumber=${pageNumber}&orderBy=${orderBy}`;
         return this.http.get<ProductPage>(url);
     }
 
@@ -28,11 +29,6 @@ export class ProductService extends AppService {
     getById(id: number): Observable<Product> {
         const url: string = `${this.baseUrl}/products/${id}`;
         return this.http.get<Product>(url);
-    }
-
-    getByCategoryId(categoryId: number, pageNumber: number): Observable<ProductPage> {
-        const url: string = `${this.baseUrl}/products?categoryId=${categoryId}&pageNumber=${pageNumber}`;
-        return this.http.get<ProductPage>(url);
     }
 
     create(product: Product): Observable<Product> {

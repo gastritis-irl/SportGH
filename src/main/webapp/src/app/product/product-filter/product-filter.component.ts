@@ -11,11 +11,18 @@ import { Subcategory } from '../../subcategory/subcategory.model';
 export class ProductFilterComponent implements OnInit {
 
     isCollapsed: boolean[] = [];
-    @Output() newFilterEvent: EventEmitter<[ string, string ]> = new EventEmitter<[ string, string ]>();
-    filterParams: [ string, string ] = [ '', '' ];
-    paramOptions: Params = [];
-    @Input() paramNames: string[] = [];
-    @Input() paramData: Params = [];
+    @Output() newFilterEvent: EventEmitter<string[]> = new EventEmitter<string[]>();
+    categoryFilter: string[] = [];
+    subcategoryFilter: string[] = [];
+    priceFilter: number[] = [];
+    filterParams: string[] = [
+        'Category', '',
+        'Subcategory', '',
+        'Min Price', '',
+        'Max Price', '',
+    ];
+    @Input() categories: Category[] = [];
+    @Input() subcategories: Subcategory[] = [];
 
     constructor() {
     }
@@ -24,23 +31,6 @@ export class ProductFilterComponent implements OnInit {
     }
 
     filterBy(): void {
-        this.loadParams();
         this.newFilterEvent.emit(this.filterParams);
-    }
-
-    loadParams(): void {
-        // delete first element: '',''
-        this.filterParams.splice(0, 2);
-        this.paramNames.forEach(
-            (param: string): void => {
-                if (this.paramOptions[param]) {
-                    this.filterParams.push(param, this.paramOptions[param]);
-                }
-            }
-        );
-    }
-
-    getParamData(param: string): Category[] | Subcategory[] {
-        return this.paramData[param];
     }
 }

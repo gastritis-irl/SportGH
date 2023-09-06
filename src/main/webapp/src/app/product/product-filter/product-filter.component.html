@@ -1,5 +1,5 @@
 <div class="product-filter-holder">
-    <div *ngFor="let filter of paramNames; let i = index">
+    <div *ngFor="let i of [0]">
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
@@ -7,7 +7,7 @@
                 [attr.aria-expanded]="!isCollapsed"
             >
                 <div class="button-text">
-                    {{filter}}
+                    Category
                 </div>
                 <div class="button-arrow" *ngIf="isCollapsed[i]">&darr;</div>
                 <div class="button-arrow" *ngIf="!isCollapsed[i]">&uarr;</div>
@@ -16,9 +16,34 @@
         <div [(ngbCollapse)]="isCollapsed[i]">
             <div class="filter-item">
                 <select class="filter-select"
-                        [(ngModel)]="paramOptions[filter]"
+                        [(ngModel)]="filterParams['Category']"
                 >
-                    <option *ngFor="let data of getParamData(filter)" [ngValue]="data.id">{{data.name}}</option>
+                    <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div *ngFor="let i of [1]">
+        <div class="buttons">
+            <div
+                class="button-default button-secondary button-content"
+                (click)="isCollapsed[i] = ! isCollapsed[i]"
+                [attr.aria-expanded]="!isCollapsed"
+            >
+                <div class="button-text">
+                    Subcategory
+                </div>
+                <div class="button-arrow" *ngIf="isCollapsed[i]">&darr;</div>
+                <div class="button-arrow" *ngIf="!isCollapsed[i]">&uarr;</div>
+            </div>
+        </div>
+        <div [(ngbCollapse)]="isCollapsed[i]">
+            <div class="filter-item">
+                <select class="filter-select"
+                        [(ngModel)]="filterParams['Subcategory']"
+                >
+                    <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.id">{{subcategory.name}}</option>
                 </select>
             </div>
         </div>
