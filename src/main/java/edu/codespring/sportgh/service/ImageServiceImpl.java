@@ -99,6 +99,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void deleteFile(Long imageID) {
         Image image = findById(imageID);
+        log.info("Deleting image file with ID {}.", imageID);
         if (image != null) {
             Path filePath = Paths.get(image.getUrl(), image.getName());
             try {

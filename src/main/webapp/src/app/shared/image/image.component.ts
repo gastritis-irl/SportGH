@@ -2,10 +2,11 @@ import { ToastrService } from 'ngx-toastr';
 import { Image } from './image.model';
 import { ImageService } from './image.service';
 import { Component } from '@angular/core';
-import { Output, EventEmitter } from '@angular/core';
+import { Input, Output, EventEmitter } from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
 import { of, forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { OnInit } from '@angular/core';
 
 @Component({
     selector: 'sgh-image',
@@ -14,14 +15,22 @@ import { tap } from 'rxjs/operators';
     styleUrls: ['./image.component.scss'],
     templateUrl: './image.component.html',
 })
-export class ImageComponent {
+export class ImageComponent implements OnInit {
 
+    @Input() imageIds: number[] = [];
+    @Input() allowMultiple: boolean = false;
     @Output() fileChange = new EventEmitter<File[]>();
     imageFiles: File[] = [];
     imageDataArray: Image[] = [];
     isMultiple: boolean = false;
 
     constructor(private imageService: ImageService, private toastNotify: ToastrService) { }
+
+    ngOnInit(): void {
+        if (this.imageIds && this.imageIds.length > 0) {
+            this.loadImageFiles(this.imageIds);
+        }
+    }
 
     onFileChange(event: Event) {
         const input = event.target as HTMLInputElement;

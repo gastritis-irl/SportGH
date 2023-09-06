@@ -19,7 +19,8 @@ export class CategoryEditComponent implements OnInit {
 
     @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
 
-    category: Category = {};
+    category: Category
+        = { id: undefined, name: '', description: '', imageId: 0, imageDataUrl: undefined };
     newImageFile?: File;
     imageData?: Image;
     clickHandlerFunction: ClickHandlerFunction = (): void => {
@@ -105,7 +106,9 @@ export class CategoryEditComponent implements OnInit {
                     {
                         next: (image: Image) => {
                             // Update the category with the new image ID
-                            this.category.imageId = image.id;
+                            if (image.id) {
+                                this.category.imageId = image.id;
+                            }
                             this.updateCategoryData();
                         },
                         error: (error) => {
@@ -120,7 +123,9 @@ export class CategoryEditComponent implements OnInit {
                     {
                         next: (image: Image) => {
                             // Update the category with the new image ID
-                            this.category.imageId = image.id;
+                            if (image.id) {
+                                this.category.imageId = image.id;
+                            }
                             this.updateCategoryData();
                         },
                         error: (error) => {
@@ -150,7 +155,9 @@ export class CategoryEditComponent implements OnInit {
             {
                 next: (image: Image): void => {
                     // Set the image ID on the category object
-                    this.category.imageId = image.id;
+                    if (image.id) {
+                        this.category.imageId = image.id;
+                    }
                     this.createCategoryData();
                 },
                 error: (error): void => {
