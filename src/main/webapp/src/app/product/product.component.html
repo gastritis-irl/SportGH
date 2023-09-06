@@ -3,6 +3,8 @@
     <sgh-product-filter class="product-filter"
                         [categories]="categories"
                         [subcategories]="subcategories"
+                        [filterParams]="filterParams"
+                        [filterParamNames]="filterParamNames"
                         (newFilterEvent)="filterBy($event)"
     ></sgh-product-filter>
     <sgh-product-list [products]="products"

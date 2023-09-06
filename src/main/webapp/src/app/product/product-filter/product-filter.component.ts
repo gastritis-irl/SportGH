@@ -11,19 +11,9 @@ import { Subcategory } from '../../subcategory/subcategory.model';
 export class ProductFilterComponent implements OnInit {
 
     isCollapsed: boolean[] = [];
-    @Output() newFilterEvent: EventEmitter<[ Params, string[] ]> = new EventEmitter<[ Params, string[] ]>();
-    filterParamNames: string[] = [
-        'Category',
-        'Subcategory',
-        'Min Price',
-        'Max Price'
-    ];
-    filterParams: Params = [
-        'Category', '',
-        'Subcategory', '',
-        'Min Price', '',
-        'Max Price', '',
-    ];
+    @Output() newFilterEvent: EventEmitter<Params> = new EventEmitter<Params>();
+    @Input() filterParamNames: string[] = [];
+    @Input() filterParams: Params = {};
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
 
@@ -34,6 +24,6 @@ export class ProductFilterComponent implements OnInit {
     }
 
     filterBy(): void {
-        this.newFilterEvent.emit([ this.filterParams, this.filterParamNames ]);
+        this.newFilterEvent.emit(this.filterParams);
     }
 }

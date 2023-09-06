@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
 import { ProductPage } from './product-page.model';
@@ -7,14 +7,14 @@ import { Subcategory } from '../subcategory/subcategory.model';
 import { CategoryService } from '../category/category.service';
 import { SubcategoryService } from '../subcategory/subcategory.service';
 import { ToastrService } from 'ngx-toastr';
-import { Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'sgh-product',
     templateUrl: './product.component.html',
     styleUrls: [ './product.component.scss' ],
 })
-export class ProductComponent implements OnInit, OnChanges {
+export class ProductComponent implements OnInit {
 
     products: Product[] = [];
     categories: Category[] = [];
@@ -23,23 +23,42 @@ export class ProductComponent implements OnInit, OnChanges {
     nrOfPages: number = 0;
     nrOfItems: number = 0;
     orderByElement: string = 'name';
-    filterParams: Params = [];
-    filterParamNames: string[] = [];
+    filterParams: Params = {};
+    filterParamNames: string[] = [
+        'Category',
+        'Subcategory',
+        'Min Price',
+        'Max Price'
+    ];
 
     constructor(
         private productService: ProductService,
         private categoryService: CategoryService,
         private subcategoryService: SubcategoryService,
         private toastNotify: ToastrService,
+        private route: ActivatedRoute,
     ) {
     }
 
     ngOnInit(): void {
+        this.loadParams();
         this.loadData();
     }
 
-    ngOnChanges(): void {
-        this.loadData();
+    loadParams(): void {
+        this.route.queryParams.subscribe(
+            {
+                next: (params: Params): void => {
+                    if (params['categoryId']) {
+                        this.filterParams['Category'] = params['categoryId'];
+                    }
+                },
+                error: (error): void => {
+                    console.error(error);
+                    this.toastNotify.error('Error loading filter parameters');
+                }
+            }
+        );
     }
 
     loadData(): void {
@@ -101,8 +120,8 @@ export class ProductComponent implements OnInit, OnChanges {
         this.orderByElement = orderByElement;
     }
 
-    filterBy(data: [ Params, string[] ]): void {
-        this.filterParams = data[0];
-        this.filterParamNames = data[1];
+    filterBy(filterParams: Params): void {
+        this.filterParams = filterParams;
+        this.loadData();
     }
 }
