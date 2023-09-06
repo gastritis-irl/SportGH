@@ -1,0 +1,79 @@
+@use '../../../style-variables.scss' as *;
+
+.frame39475 {
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    background: $color-neutral-1;
+    border-radius: $border-radius;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: $image-gap;
+}
+
+.card-heading {
+    color: $color-main-1;
+    font-size: $heading-font-size;
+    font-family: $font-default;
+    font-weight: $font-weight-bold;
+    line-height: $heading-line-height;
+    word-wrap: break-word;
+}
+
+.frame39474 {
+    align-self: stretch;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: $image-gap;
+
+    .heading {
+        flex: 1 1 0;
+        color: $color-main-1;
+        font-size: $name-font-size;
+        font-family: $font-default;
+        font-weight: $font-weight-regular;
+        line-height: $name-line-height;
+        word-wrap: break-word;
+    }
+}
+
+.gallery {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: $gallery-gap;
+
+    .image-placeholder {
+        width: 268.17px;
+        height: 268.17px;
+        position: relative;
+
+        .container {
+            width: 268.17px;
+            height: 268.17px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: $color-main-3;
+            border-radius: 25px;
+        }
+
+        .plus-sign {
+            width: 66px;
+            height: 64px;
+            position: absolute;
+            top: 102px;
+            left: 101px;
+            text-align: center;
+            color: #5D5A88;
+            font-size: 56px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            line-height: 66px;
+            word-wrap: break-word;
+        }
+    }
+}
