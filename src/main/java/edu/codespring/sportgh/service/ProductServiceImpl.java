@@ -4,13 +4,13 @@ import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
+import edu.codespring.sportgh.model.SubCategory;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -22,21 +22,58 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final SubCategoryService subCategoryService;
     static final int pageSize = 60;
 
     @Override
-    public ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber, String orderBy, String direction) {
-        Page<Product> page = productRepository.findByCategoryId(
-            categoryId,
-            PageRequest.of(
-                pageNumber - 1,
-                pageSize,
-                Sort.by(
-                    Sort.Direction.fromString(direction == null ? "ASC" : direction),
-                    orderBy == null ? "name" : orderBy
-                )
-            )
-        );
+    public ProductPageOutDTO findPageByParams(
+        String orderBy,
+        String direction,
+        int pageNumber,
+        Long categoryId,
+        Long subcategoryId,
+        Double minPrice,
+        Double maxPrice,
+        String textSearch
+    ) {
+        Specification<Product> specification = Specification.where(null);
+
+        Pageable pageable;
+        if (orderBy == null) {
+            pageable = PageRequest.of(pageNumber - 1, pageSize);
+        } else {
+            if (direction == null) {
+                pageable = PageRequest.of(
+                    pageNumber - 1,
+                    pageSize,
+                    Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
+                );
+            } else {
+                pageable = PageRequest.of(
+                    pageNumber - 1,
+                    pageSize,
+                    Sort.by(Sort.Direction.fromString(direction), orderBy)
+                );
+            }
+        }
+
+        if (subcategoryId != null) {
+            SubCategory subCategory = subCategoryService.findById(subcategoryId);
+            specification = specification.and(((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("subCategory"), subCategory)));
+        }
+
+        if (minPrice != null) {
+            specification = specification.and(((root, query, criteriaBuilder) ->
+                criteriaBuilder.greaterThan(root.get("rentPrice"), minPrice)));
+        }
+
+        if (maxPrice != null) {
+            specification = specification.and(((root, query, criteriaBuilder) ->
+                criteriaBuilder.lessThan(root.get("rentPrice"), maxPrice)));
+        }
+
+        Page<Product> page = productRepository.findAll(specification, pageable);
 
         Collection<Product> products = page.getContent();
         int nrOfPages = page.getTotalPages();

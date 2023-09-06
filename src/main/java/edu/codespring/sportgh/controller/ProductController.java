@@ -40,11 +40,15 @@ public class ProductController {
         if (pageNumber.isPresent()) {
             ProductPageOutDTO productPageOutDTO;
             if (categoryId.isPresent()) {
-                productPageOutDTO = productService.findPageByCategoryId(
-                    categoryId.get(),
-                    pageNumber.get(),
+                productPageOutDTO = productService.findPageByParams(
                     orderBy.orElse(null),
-                    direction.orElse(null)
+                    direction.orElse(null),
+                    pageNumber.orElse(null),
+                    categoryId.orElse(null),
+                    subcategoryId.orElse(null),
+                    minPrice.orElse(null),
+                    maxPrice.orElse(null),
+                    textSearch.orElse(null)
                 );
             } else {
                 productPageOutDTO = productService.findPageAll(
