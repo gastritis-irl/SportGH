@@ -6,11 +6,11 @@
                 (click)="isCollapsed[i] = ! isCollapsed[i]"
                 [attr.aria-expanded]="!isCollapsed"
             >
-                <div class="button-text">
+                <div>
                     Category
                 </div>
-                <div class="button-arrow" *ngIf="isCollapsed[i]">&darr;</div>
-                <div class="button-arrow" *ngIf="!isCollapsed[i]">&uarr;</div>
+                <div *ngIf="isCollapsed[i]">&darr;</div>
+                <div *ngIf="!isCollapsed[i]">&uarr;</div>
             </div>
         </div>
         <div [(ngbCollapse)]="isCollapsed[i]">
@@ -31,11 +31,11 @@
                 (click)="isCollapsed[i] = ! isCollapsed[i]"
                 [attr.aria-expanded]="!isCollapsed"
             >
-                <div class="button-text">
+                <div>
                     Subcategory
                 </div>
-                <div class="button-arrow" *ngIf="isCollapsed[i]">&darr;</div>
-                <div class="button-arrow" *ngIf="!isCollapsed[i]">&uarr;</div>
+                <div *ngIf="isCollapsed[i]">&darr;</div>
+                <div *ngIf="!isCollapsed[i]">&uarr;</div>
             </div>
         </div>
         <div [(ngbCollapse)]="isCollapsed[i]">
@@ -43,8 +43,41 @@
                 <select class="filter-select"
                         [(ngModel)]="filterParams['Subcategory']"
                 >
-                    <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.id">{{subcategory.name}}</option>
+                    <option *ngFor="let subcategory of subcategories"
+                            [ngValue]="subcategory.id">{{subcategory.name}}</option>
                 </select>
+            </div>
+        </div>
+    </div>
+
+    <div *ngFor="let i of [2]">
+        <div class="buttons">
+            <div
+                class="button-default button-secondary button-content"
+                (click)="isCollapsed[i] = ! isCollapsed[i]"
+                [attr.aria-expanded]="!isCollapsed"
+            >
+                <div>
+                    Price
+                </div>
+                <div *ngIf="isCollapsed[i]">&darr;</div>
+                <div *ngIf="!isCollapsed[i]">&uarr;</div>
+            </div>
+        </div>
+        <div [(ngbCollapse)]="isCollapsed[i]">
+            <div class="filter-item">
+                <div class="filter-price">
+                    <div>
+                        Min price: {{filterParams['MinPrice']}}
+                    </div>
+                    <input [(ngModel)]="filterParams['MinPrice']" type="range" min="0" max="1000" value="0" step="1">
+                </div>
+                <div class="filter-price">
+                    <div>
+                        Max price: {{filterParams['MaxPrice']}}
+                    </div>
+                    <input [(ngModel)]="filterParams['MaxPrice']" type="range" min="0" max="1000" value="1000" step="1">
+                </div>
             </div>
         </div>
     </div>

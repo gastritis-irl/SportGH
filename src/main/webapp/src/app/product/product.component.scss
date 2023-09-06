@@ -19,10 +19,6 @@ $product-list-width: 85%;
         width: $product-filter-width;
         min-width: $product-filter-min-width;
         max-width: $product-filter-max-width;
-
-        &:hover {
-            cursor: pointer;
-        }
     }
 
     .product-list {

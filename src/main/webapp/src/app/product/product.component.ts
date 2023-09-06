@@ -19,16 +19,21 @@ export class ProductComponent implements OnInit {
     products: Product[] = [];
     categories: Category[] = [];
     subcategories: Subcategory[] = [];
-    currentPage: number = 1;
     nrOfPages: number = 0;
     nrOfItems: number = 0;
-    orderByElement: string = 'name';
-    filterParams: Params = {};
+    filterParams: Params = {
+        pageNumber: 1,
+        orderBy: 'name',
+        direction: 'ASC',
+    };
     filterParamNames: string[] = [
+        'pageNumber',
+        'orderBy',
+        'direction',
         'Category',
         'Subcategory',
-        'Min Price',
-        'Max Price'
+        'MinPrice',
+        'MaxPrice'
     ];
 
     constructor(
@@ -64,8 +69,6 @@ export class ProductComponent implements OnInit {
     loadData(): void {
         this.scrollToTop();
         this.productService.getAllByParams(
-            this.currentPage,
-            this.orderByElement,
             this.filterParams,
             this.filterParamNames
         ).subscribe(
@@ -113,11 +116,13 @@ export class ProductComponent implements OnInit {
     }
 
     setPageNumber(pageNumber: number): void {
-        this.currentPage = pageNumber;
+        this.filterParams['pageNumber'] = pageNumber;
+        this.loadData();
     }
 
     orderBy(orderByElement: string): void {
-        this.orderByElement = orderByElement;
+        this.filterParams['orderBy'] = orderByElement;
+        this.loadData();
     }
 
     filterBy(filterParams: Params): void {

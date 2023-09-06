@@ -7,7 +7,8 @@
                         [filterParamNames]="filterParamNames"
                         (newFilterEvent)="filterBy($event)"
     ></sgh-product-filter>
-    <sgh-product-list [products]="products"
+    <sgh-product-list class="product-list"
+                      [products]="products"
                       [nrOfPages]="nrOfPages"
                       [nrOfItems]="nrOfItems"
                       (newPageEvent)="setPageNumber($event)"

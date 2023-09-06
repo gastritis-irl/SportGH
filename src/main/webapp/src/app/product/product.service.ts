@@ -10,15 +10,10 @@ import { Params } from '@angular/router';
 })
 export class ProductService extends AppService {
 
-    getAll(pageNumber: number = 1, orderBy: string = 'name'): Observable<ProductPage> {
-        const url: string = `${this.baseUrl}/products?pageNumber=${pageNumber}&orderBy=${orderBy}`;
-        return this.http.get<ProductPage>(url);
-    }
+    getAllByParams(filterParams: Params, paramNames: string[]): Observable<ProductPage>  {
+        let url: string = `${this.baseUrl}/products?`;
 
-    getAllByParams(pageNumber: number, orderBy: string, filterParams: Params, paramNames: string[]): Observable<ProductPage> {
-        let url: string = `${this.baseUrl}/products?pageNumber=${pageNumber}&orderBy=${orderBy}`;
-
-        for (let paramName of paramNames) {
+        for (const paramName of paramNames) {
             if (filterParams[paramName]) {
                 url += '&' + paramName + '=' + filterParams[paramName];
             }

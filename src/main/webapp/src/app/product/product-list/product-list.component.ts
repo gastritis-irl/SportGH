@@ -13,7 +13,7 @@ export class ProductListComponent implements OnInit {
     currentPage: number = 1;
     @Output() orderByEvent: EventEmitter<string> = new EventEmitter<string>();
     orderByElement: string = 'name';
-    @Input() nrOfPages: number = 1;
+    @Input() nrOfPages: number = 0;
     @Input() nrOfItems: number = 0;
 
     constructor() {

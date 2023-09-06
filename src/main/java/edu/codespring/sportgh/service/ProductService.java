@@ -4,9 +4,13 @@ import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 
+import java.util.Collection;
+
 public interface ProductService {
 
     Product findById(Long productId);
+
+    Collection<Product> findAll(String orderBy, String direction);
 
     ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber);
 

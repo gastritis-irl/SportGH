@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -25,7 +26,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber) {
-        Page<Product> page = productRepository.findByCategoryId(categoryId, PageRequest.of(pageNumber - 1, pageSize));
+        Page<Product> page = productRepository.findByCategoryId(
+            categoryId,
+            PageRequest.of(pageNumber - 1, pageSize)
+        );
 
         Collection<Product> products = page.getContent();
         int nrOfPages = page.getTotalPages();
@@ -48,6 +52,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findById(Long productId) {
         return productRepository.findById(productId).orElse(null);
+    }
+
+    @Override
+    public Collection<Product> findAll(String orderBy, String direction) {
+        Sort sort = Sort.by(
+            Sort.Direction.fromString(direction != null ? direction : "ASC"),
+            orderBy != null ? orderBy : "name"
+        );
+        return productRepository.findAll(sort);
     }
 
     @Override

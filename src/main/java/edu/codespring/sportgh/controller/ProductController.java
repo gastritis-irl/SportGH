@@ -27,8 +27,16 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public ResponseEntity<?> findPageByCategoryId(@RequestParam("Category") Optional<Long> categoryId,
-                                                  @RequestParam("pageNumber") Optional<Integer> pageNumber) {
+    public ResponseEntity<?> findPageByParams(
+        @RequestParam("orderBy") Optional<String> orderBy,
+        @RequestParam("direction") Optional<String> direction,
+        @RequestParam("pageNumber") Optional<Integer> pageNumber,
+        @RequestParam("Category") Optional<Long> categoryId,
+        @RequestParam("Subcategory") Optional<Long> subcategoryId,
+        @RequestParam("MinPrice") Optional<Double> minPrice,
+        @RequestParam("MaxPrice") Optional<Double> maxPrice,
+        @RequestParam("TextSearch") Optional<String> textSearch
+    ) {
         if (pageNumber.isPresent()) {
             ProductPageOutDTO productPageOutDTO;
             if (categoryId.isPresent()) {
@@ -44,8 +52,15 @@ public class ProductController {
             return new ResponseEntity<>(productPageOutDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(
-                "'pageNumber' query parameter was not given",
-                HttpStatus.BAD_REQUEST
+                productMapper.productPageToOut(
+                    productService.findAll(
+                        orderBy.orElse(null),
+                        direction.orElse(null)
+                    ),
+                    0,
+                    0
+                ),
+                HttpStatus.OK
             );
         }
     }
