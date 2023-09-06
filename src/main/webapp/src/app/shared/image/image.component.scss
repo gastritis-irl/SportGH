@@ -8,45 +8,41 @@
     gap: $gallery-gap;
 
     .image-placeholder {
-        width: 268.17px; 
-        height: 268.17px; 
+        width: 268.17px;
+        height: 268.17px;
         position: relative;
-        display: flex;
-        flex-wrap: wrap;
 
         .container {
-            width: 100%;
-            height: 100%;
-            position: relative;
+            width: 268.17px;
+            height: 268.17px;
+            position: absolute;
+            top: 0;
+            left: 0;
             background: $color-main-4;
-            border-radius: $border-radius;
-            display: flex;
-            flex-wrap: wrap;
-            align-content: flex-start;
+            border-radius: math.div($border-radius, 2);
         }
 
         .plus-sign {
-            width: 66px; 
-            height: 64px; 
-            position: relative;
-            margin: auto;
+            width: 66px;
+            height: 64px;
+            position: absolute;
+            top: 102px;
+            left: 101px;
             text-align: center;
-            color: $color-main-1;
-            font-size: $size-h1; // Adjust if necessary
-            font-family: $font-default;
-            font-weight: $font-weight-bold;
-            line-height: 66px; 
+            color: #5D5A88;
+            font-size: 56px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            line-height: 66px;
             word-wrap: break-word;
-            cursor: pointer;
-            z-index: 1;
-        }
-
-        img.uploaded-image {
-            width: calc(50% - #{math.div($image-gap, 2)});
-            height: calc(50% - #{math.div($image-gap, 2)});
-            margin: $image-gap / 2;
-            object-fit: cover;
-            border-radius: $border-radius / 2; 
         }
     }
+}
+
+img.uploaded-image {
+    width: calc(50% - math.div($image-gap, 2));
+    height: calc(50% - math.div($image-gap, 2));
+    margin: math.div($image-gap, 2);
+    object-fit: cover;
+    border-radius: math.div($border-radius, 2);
 }

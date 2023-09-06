@@ -9,7 +9,7 @@
             <div class="plus-sign">+</div>
             <ng-container *ngIf="imageDataArray.length > 0">
                 <img *ngFor="let imageData of imageDataArray" [src]="imageData?.url" alt="Uploaded Image"
-                    class="uploaded-image">
+                    class="uploaded-image container">
             </ng-container>
         </div>
     </div>
