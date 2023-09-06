@@ -72,5 +72,5 @@ Thumbs.db
 /serviceAccountKey.json
 
 ### Image Storage ###
-/src/main/resources/imageStorage
-!/src/main/resources/imageStorage/testImages/
+/src/main/resources/image-storage
+!/src/main/resources/imageStorage/test-images
