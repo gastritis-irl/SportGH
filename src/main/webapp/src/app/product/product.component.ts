@@ -7,7 +7,7 @@ import { Subcategory } from '../subcategory/subcategory.model';
 import { CategoryService } from '../category/category.service';
 import { SubcategoryService } from '../subcategory/subcategory.service';
 import { ToastrService } from 'ngx-toastr';
-import { ParamMap, Params } from '@angular/router';
+import { Params } from '@angular/router';
 
 @Component({
     selector: 'sgh-product',
@@ -23,7 +23,8 @@ export class ProductComponent implements OnInit, OnChanges {
     nrOfPages: number = 0;
     nrOfItems: number = 0;
     orderByElement: string = 'name';
-    filterParams: string[] = [];
+    filterParams: Params = [];
+    filterParamNames: string[] = [];
 
     constructor(
         private productService: ProductService,
@@ -43,7 +44,12 @@ export class ProductComponent implements OnInit, OnChanges {
 
     loadData(): void {
         this.scrollToTop();
-        this.productService.getAllByParams(this.currentPage, this.orderByElement, this.filterParams).subscribe(
+        this.productService.getAllByParams(
+            this.currentPage,
+            this.orderByElement,
+            this.filterParams,
+            this.filterParamNames
+        ).subscribe(
             {
                 next: (data: ProductPage): void => {
                     this.products = data.products;
@@ -95,7 +101,8 @@ export class ProductComponent implements OnInit, OnChanges {
         this.orderByElement = orderByElement;
     }
 
-    filterBy(filterParams: string[]): void {
-        this.filterParams = filterParams;
+    filterBy(data: [ Params, string[] ]): void {
+        this.filterParams = data[0];
+        this.filterParamNames = data[1];
     }
 }

@@ -15,11 +15,13 @@ export class ProductService extends AppService {
         return this.http.get<ProductPage>(url);
     }
 
-    getAllByParams(pageNumber: number, orderBy: string, filterParams: string[]): Observable<ProductPage> {
+    getAllByParams(pageNumber: number, orderBy: string, filterParams: Params, paramNames: string[]): Observable<ProductPage> {
         let url: string = `${this.baseUrl}/products?pageNumber=${pageNumber}&orderBy=${orderBy}`;
 
-        for (let i: number = 0; i < filterParams.length; i += 2) {
-            url += '&' + filterParams[i] + '=' + filterParams[i + 1];
+        for (let paramName of paramNames) {
+            if (filterParams[paramName]) {
+                url += '&' + paramName + '=' + filterParams[paramName];
+            }
         }
         console.log(url);
 
