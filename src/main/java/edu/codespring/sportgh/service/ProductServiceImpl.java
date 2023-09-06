@@ -32,8 +32,8 @@ public class ProductServiceImpl implements ProductService {
                 pageNumber - 1,
                 pageSize,
                 Sort.by(
-                    Sort.Direction.fromString(direction),
-                    orderBy != null ? orderBy : "name"
+                    Sort.Direction.fromString(direction == null ? "ASC" : direction),
+                    orderBy == null ? "name" : orderBy
                 )
             )
         );
@@ -47,7 +47,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductPageOutDTO findPageAll(int pageNumber) {
-        Page<Product> page = productRepository.findPageAll(PageRequest.of(pageNumber - 1, pageSize));
+        Page<Product> page = productRepository.findPageAll(
+            PageRequest.of(
+                pageNumber - 1,
+                pageSize,
+                Sort.by(
+                    Sort.DEFAULT_DIRECTION,
+                    "name"
+                )
+            ));
 
         Collection<Product> products = page.getContent();
         int nrOfPages = page.getTotalPages();
@@ -57,17 +65,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findById(Long productId) {
-        return productRepository.findById(productId).orElse(null);
+    public Collection<Product> findAll(String orderBy, String direction) {
+        Sort sort = Sort.by(
+            Sort.Direction.fromString(direction == null ? "ASC" : direction),
+            orderBy == null ? "name" : orderBy
+        );
+        return productRepository.findAll(sort);
     }
 
     @Override
-    public Collection<Product> findAll(String orderBy, String direction) {
-        Sort sort = Sort.by(
-            Sort.Direction.fromString(direction != null ? direction : "ASC"),
-            orderBy != null ? orderBy : "name"
-        );
-        return productRepository.findAll(sort);
+    public Product findById(Long productId) {
+        return productRepository.findById(productId).orElse(null);
     }
 
     @Override
