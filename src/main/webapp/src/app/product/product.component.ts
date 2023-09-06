@@ -55,8 +55,10 @@ export class ProductComponent implements OnInit {
         this.route.queryParams.subscribe(
             {
                 next: (params: Params): void => {
-                    if (params['categoryId']) {
-                        this.filterParams['Category'] = params['categoryId'];
+                    for (const paramName of this.filterParamNames) {
+                        if (params[paramName]) {
+                            this.filterParams[paramName] = params[paramName];
+                        }
                     }
                 },
                 error: (error): void => {

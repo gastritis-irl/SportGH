@@ -10,7 +10,7 @@ import { Params } from '@angular/router';
 })
 export class ProductService extends AppService {
 
-    getAllByParams(filterParams: Params, paramNames: string[]): Observable<ProductPage>  {
+    getAllByParams(filterParams: Params, paramNames: string[]): Observable<ProductPage> {
         let url: string = `${this.baseUrl}/products?`;
 
         for (const paramName of paramNames) {
@@ -18,6 +18,7 @@ export class ProductService extends AppService {
                 url += '&' + paramName + '=' + filterParams[paramName];
             }
         }
+        console.log(url);
 
         return this.http.get<ProductPage>(url);
     }
