@@ -75,6 +75,15 @@ public class ProductServiceImpl implements ProductService {
                 criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
         }
 
+        if (textSearch != null) {
+            specification = specification.and(
+                (root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%")).or(
+                (root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
+            );
+        }
+
         Page<Product> page = productRepository.findAll(specification, pageable);
 
         Collection<Product> products = page.getContent();

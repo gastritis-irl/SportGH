@@ -33,7 +33,8 @@ export class ProductComponent implements OnInit {
         'Category',
         'Subcategory',
         'MinPrice',
-        'MaxPrice'
+        'MaxPrice',
+        'TextSearch'
     ];
 
     constructor(
