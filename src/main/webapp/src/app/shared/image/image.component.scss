@@ -1,44 +1,5 @@
 @use '../../../style-variables.scss' as *;
-
-.frame39475 {
-    width: 100%;
-    height: 100%;
-    padding: 24px;
-    background: $color-neutral-1;
-    border-radius: $border-radius;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: $image-gap;
-}
-
-.card-heading {
-    color: $color-main-1;
-    font-size: $heading-font-size;
-    font-family: $font-default;
-    font-weight: $font-weight-bold;
-    line-height: $heading-line-height;
-    word-wrap: break-word;
-}
-
-.frame39474 {
-    align-self: stretch;
-    display: inline-flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: $image-gap;
-
-    .heading {
-        flex: 1 1 0;
-        color: $color-main-1;
-        font-size: $name-font-size;
-        font-family: $font-default;
-        font-weight: $font-weight-regular;
-        line-height: $name-line-height;
-        word-wrap: break-word;
-    }
-}
+@use 'sass:math';
 
 .gallery {
     display: inline-flex;
@@ -47,33 +8,45 @@
     gap: $gallery-gap;
 
     .image-placeholder {
-        width: 268.17px;
-        height: 268.17px;
+        width: 268.17px; 
+        height: 268.17px; 
         position: relative;
+        display: flex;
+        flex-wrap: wrap;
 
         .container {
-            width: 268.17px;
-            height: 268.17px;
-            position: absolute;
-            top: 0;
-            left: 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
             background: $color-main-4;
-            border-radius: 25px;
+            border-radius: $border-radius;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
         }
 
         .plus-sign {
-            width: 66px;
-            height: 64px;
-            position: absolute;
-            top: 102px;
-            left: 101px;
+            width: 66px; 
+            height: 64px; 
+            position: relative;
+            margin: auto;
             text-align: center;
-            color: #5D5A88;
-            font-size: 56px;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 700;
-            line-height: 66px;
+            color: $color-main-1;
+            font-size: $size-h1; // Adjust if necessary
+            font-family: $font-default;
+            font-weight: $font-weight-bold;
+            line-height: 66px; 
             word-wrap: break-word;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        img.uploaded-image {
+            width: calc(50% - #{math.div($image-gap, 2)});
+            height: calc(50% - #{math.div($image-gap, 2)});
+            margin: $image-gap / 2;
+            object-fit: cover;
+            border-radius: $border-radius / 2; 
         }
     }
 }

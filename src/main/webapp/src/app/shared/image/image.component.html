@@ -2,17 +2,15 @@
     <div class="image-placeholder">
         <div class="container" (click)="fileInput.click()">
             <!-- Hidden file input to trigger file selection dialog -->
-            <input type="file" (change)="onFileChange($event)" name="imageFiles" accept=".jpg, .jpeg, .png" style="display: none;"
-                #fileInput [attr.multiple]="allowMultiple ? true : null">
+            <input type="file" (change)="onFileChange($event)" name="imageFiles" accept=".jpg, .jpeg, .png"
+                style="display: none;" #fileInput [attr.multiple]="allowMultiple ? true : null">
 
             <!-- Visible image and plus sign, clicking on them will trigger the hidden file input -->
-            <ng-container *ngIf="imageDataArray.length > 0; else plusIcon">
+            <div class="plus-sign">+</div>
+            <ng-container *ngIf="imageDataArray.length > 0">
                 <img *ngFor="let imageData of imageDataArray" [src]="imageData?.url" alt="Uploaded Image"
                     class="uploaded-image">
             </ng-container>
-            <ng-template #plusIcon>
-                <div class="plus-sign">+</div>
-            </ng-template>
         </div>
     </div>
 </div>
