@@ -6,6 +6,7 @@ import { AdminComponent } from './admin.component';
 import { HomeModule } from '../home/home.module';
 import { NgForOf } from '@angular/common';
 import { ImageModule } from '../shared/image/image.module';
+
 @NgModule({
     declarations: [
         AdminComponent,

@@ -34,8 +34,8 @@ export class CategoryComponent implements OnInit {
                 }
             },
             error: (error) => {
-                // Handle the error appropriately
                 console.error('Image fetch failed', error);
+                this.toastNotify.error(`Error fetching image`);
             }
         });
     }

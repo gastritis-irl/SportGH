@@ -32,7 +32,7 @@ export class ImageComponent {
 
     upload() {
         if (!this.imageFile) {
-
+            this.toastNotify.error(`No image selected`);
             return;
         }
 

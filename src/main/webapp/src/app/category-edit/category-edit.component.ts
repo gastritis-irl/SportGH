@@ -108,7 +108,7 @@ export class CategoryEditComponent implements OnInit {
                         },
                         error: (error) => {
                             console.error(error);
-                            this.toastNotify.error('Error updating image');
+                            this.toastNotify.error(`Error uploading new image ${error.error}`);
                         }
                     }
                 );
@@ -123,7 +123,7 @@ export class CategoryEditComponent implements OnInit {
                         },
                         error: (error) => {
                             console.error(error);
-                            this.toastNotify.error('Error uploading new image');
+                            this.toastNotify.error(`Error uploading new image ${error.error}`);
                         }
                     }
                 );
@@ -138,14 +138,14 @@ export class CategoryEditComponent implements OnInit {
         if (this.newImageFile) {
             this.imageService.uploadImage(this.newImageFile).subscribe(
                 {
-                    next: (image: Image) => {
+                    next: (image: Image): void => {
                         // Set the image ID on the category object
                         this.category.imageId = image.id;
                         this.createCategoryData();
                     },
-                    error: (error) => {
+                    error: (error): void => {
                         console.error(error);
-                        this.toastNotify.error('Error uploading new image');
+                        this.toastNotify.error(`Error uploading new image${error.error}`);
                     }
                 }
             );
