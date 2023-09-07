@@ -4,7 +4,7 @@ import { AdminRoute } from './admin.route';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
 import { AdminComponent } from './admin.component';
 import { HomeModule } from '../home/home.module';
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { ImageComponent } from "../shared/image/image.component";
 
 @NgModule({
@@ -19,6 +19,7 @@ import { ImageComponent } from "../shared/image/image.component";
         FormsModule,
         HomeModule,
         NgForOf,
+        NgIf,
         ImageComponent
     ]
 })

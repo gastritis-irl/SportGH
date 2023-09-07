@@ -7,10 +7,17 @@
 
             <!-- Visible image and plus sign, clicking on them will trigger the hidden file input -->
             <div class="plus-sign">+</div>
-            <ng-container *ngIf="imageDataArray.length > 0">
-                <img *ngFor="let imageData of imageDataArray" [src]="imageData?.url" alt="Uploaded Image"
-                    class="uploaded-image container">
-            </ng-container>
+
         </div>
+
     </div>
+
+    <ng-container *ngIf="imageDataArray.length > 0">
+        <div class="image-placeholder">
+            <div class="container">
+                <img *ngFor="let imageData of imageDataArray" [src]="imageData.url" alt="Uploaded Image" class="uploaded-image">
+            </div>
+        </div>
+    </ng-container>
+
 </div>

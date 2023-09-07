@@ -28,6 +28,7 @@ export class ImageComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.imageIds && this.imageIds.length > 0) {
+            this.toastNotify.info(`Loading ${this.imageIds.length} image(s)`);
             this.loadImageFiles(this.imageIds);
         }
     }
@@ -39,7 +40,6 @@ export class ImageComponent implements OnInit {
             this.isMultiple = this.imageFiles.length > 1;
 
             this.fileChange.emit(this.imageFiles);
-            this.toastNotify.info(`Selected ${this.imageFiles.length} image(s)`);
             this.imageFiles.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = () => {

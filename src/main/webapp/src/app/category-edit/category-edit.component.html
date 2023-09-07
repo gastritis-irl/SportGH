@@ -11,11 +11,10 @@
         <textarea type="text" name="description" [(ngModel)]="category.description"
             placeholder="{{category.description}}"></textarea><br>
         ImageURL("upload image"):
-        <sgh-image [imageIds]="[category.imageId]" [allowMultiple]="false"
-            (fileChange)="onFileChange($event)"></sgh-image>
-        <img width="100px" height="auto"
-            [src]="category.imageDataUrl ? category.imageDataUrl : 'https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png'"
-            alt="Error loading img">
+        <ng-container *ngIf="category.id !== undefined">
+            <sgh-image [imageIds]="[category.imageId]" [allowMultiple]="false"
+                (fileChange)="onFileChange($event)"></sgh-image>
+        </ng-container>
         <button type="submit">Save</button>
     </form>
 </div>
