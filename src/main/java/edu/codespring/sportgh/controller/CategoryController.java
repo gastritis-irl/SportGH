@@ -46,8 +46,9 @@ public class CategoryController {
         Category category = categoryService.findById(categoryId);
         if (category == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else if (category.getImage() != null) {
+            imageService.deleteFile(category.getImage().getId());
         }
-        imageService.deleteFile(category.getImage().getId());
     }
 
     @DeleteMapping(path = "/{categoryId}")
