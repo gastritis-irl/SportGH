@@ -23,6 +23,7 @@ export class CategoryEditComponent implements OnInit {
         = { id: undefined, name: '', description: '', imageId: 0, imageDataUrl: undefined };
     newImageFile?: File;
     imageData?: Image;
+    paramCheck: 'create' | 'edit' = 'create';
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
 
@@ -56,10 +57,12 @@ export class CategoryEditComponent implements OnInit {
     loadData(param: string | undefined): void {
         if (param) {
             if (param === 'new') {
+                this.paramCheck = 'create';
                 this.clickHandlerFunction = this.createCategory;
             }
             const id: number = parseInt(param);
             if (!isNaN(id)) {
+                this.paramCheck = 'edit';
                 this.clickHandlerFunction = this.updateCategory;
                 this.categoryService.getById(id).subscribe(
                     {

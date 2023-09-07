@@ -18,6 +18,5 @@ public class CategoryInDTO {
     @Size(max = 1000, message = "Category description must be between 0-1000 characters")
     private String description;
 
-    @Min(value = 1, message = "ImageId must be greater or equal than 1")
     private Long imageId;
 }

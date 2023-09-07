@@ -11,10 +11,8 @@
         <textarea type="text" name="description" [(ngModel)]="category.description"
             placeholder="{{category.description}}"></textarea><br>
         ImageURL("upload image"):
-        <ng-container *ngIf="category.id !== undefined">
-            <sgh-image [imageIds]="[category.imageId]" [allowMultiple]="false"
+            <sgh-image [imageIds]="[category.imageId]" [allowMultiple]="false" [mode]="paramCheck"
                 (fileChange)="onFileChange($event)"></sgh-image>
-        </ng-container>
         <button type="submit">Save</button>
     </form>
 </div>

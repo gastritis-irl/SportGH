@@ -20,6 +20,7 @@ export class ImageComponent implements OnInit {
     @Input() imageIds: number[] = [];
     @Input() allowMultiple: boolean = false;
     @Output() fileChange = new EventEmitter<File[]>();
+    @Input() mode: 'edit' | 'create' = 'create';
     imageFiles: File[] = [];
     imageDataArray: Image[] = [];
     isMultiple: boolean = false;
