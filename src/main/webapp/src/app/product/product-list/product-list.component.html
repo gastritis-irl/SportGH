@@ -20,6 +20,15 @@
             </select>
         </div>
     </div>
+    <div class="filter-param-holder">
+        <div class="filter-param" *ngIf="filterParamNames.length">
+            <div class="clear-filter" (click)="resetFilters()">Reset filters&#10005;</div>
+        </div>
+        <div class="filter-param" *ngFor="let filter of filterParamNames; let i = index">
+            {{filter}}: {{filterParams[i]}}
+            <div class="clear-filter" (click)="clearFilter(i)">&#10005;</div>
+        </div>
+    </div>
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
             <img src="https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg" class="product-icon"

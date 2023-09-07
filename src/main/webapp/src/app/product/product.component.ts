@@ -21,11 +21,7 @@ export class ProductComponent implements OnInit {
     subcategories: Subcategory[] = [];
     nrOfPages: number = 0;
     nrOfItems: number = 0;
-    filterParams: Params = {
-        pageNumber: 1,
-        orderBy: 'name',
-        direction: 'ASC',
-    };
+    filterParams: Params = this.getDefaultParams();
     filterParamNames: string[] = [
         'pageNumber',
         'orderBy',
@@ -132,5 +128,25 @@ export class ProductComponent implements OnInit {
     filterBy(filterParams: Params): void {
         this.filterParams = filterParams;
         this.loadData();
+    }
+
+    clearFilter(paramName: string): void {
+        this.filterParams[paramName] = this.getDefaultParams()[paramName];
+        this.loadData();
+    }
+
+    resetFilters(): void {
+        this.filterParams = this.getDefaultParams();
+        this.loadData();
+    }
+
+    getDefaultParams(): Params {
+        return {
+            pageNumber: 1,
+            orderBy: 'name',
+            direction: 'ASC',
+            Category: 0,
+            Subcategory: 0,
+        };
     }
 }
