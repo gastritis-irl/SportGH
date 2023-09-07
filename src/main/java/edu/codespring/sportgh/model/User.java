@@ -28,6 +28,8 @@ public class User extends BaseEntity {
     @Column(length = 64)
     private String password;
 
+
+
     @Column(name = "firebase_uid", unique = true, length = 128)
     private String firebaseUid;
 

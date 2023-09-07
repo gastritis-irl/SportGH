@@ -71,7 +71,7 @@
                 </svg>
             </button>
             <div class="dropdown-content" *ngIf="showDropdown">
-                <div [routerLink]="['/profile', loggedInUserName]">Profile</div>
+                <div [routerLink]="['/users', loggedInUserName]">Profile</div>
                 <p (click)="logout()">Logout</p>
             </div>
         </div>

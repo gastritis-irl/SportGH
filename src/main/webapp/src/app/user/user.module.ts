@@ -1,12 +1,14 @@
+//module for the user component
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthenticationComponent } from './authentication.component';
+import { UserComponent } from './user.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
-        AuthenticationComponent
+        UserComponent
     ],
     imports: [
         CommonModule,
@@ -14,7 +16,7 @@ import { RouterModule } from '@angular/router';
         RouterModule
     ],
     exports: [
-        AuthenticationComponent // If you want to use it in other modules
+        UserComponent // If you want to use it in other modules
     ]
 })
-export class AuthModule { }
+export class UserModule { }

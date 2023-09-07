@@ -38,6 +38,10 @@ export class AuthenticationComponent implements OnDestroy {
     logout(): void {
         this.afAuth.signOut().then(() => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
+            this.loggedInUserName = null;  // Reset the logged-in name
+            //delete the user from the local storage and the firebasetoken from the session storage
+            localStorage.removeItem('user');
+            sessionStorage.removeItem('firebaseToken');
             this.toastNotify.success('Successfully logged out');
         }).catch(error => {
             console.error('Error during logout', error);
@@ -55,7 +59,7 @@ export class AuthenticationComponent implements OnDestroy {
             .subscribe(user => {
                 if (user) {
                     this.loggedInUserEmail = user.email;
-                    this.loggedInUserName = user.displayName; 
+                    this.loggedInUserName = user.email; 
                 } else {
                     this.loggedInUserEmail = null;
                     this.loggedInUserName = null;

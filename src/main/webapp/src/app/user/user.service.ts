@@ -26,6 +26,11 @@ export class UserService extends AppService {
         return this.http.get<User>(url);
     }
 
+    getByEmail(email: string): Observable<User> {
+        const url: string = `${this.baseUrl}/users/email/${email}`;
+        return this.http.get<User>(url);
+    }
+
     async signinWithFirebase(email: string, password: string): Promise<Observable<User>> {
         const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
         const idToken = await getIdToken(userCredential.user!);

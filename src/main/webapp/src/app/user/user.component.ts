@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { ToastrService } from 'ngx-toastr';
+import { Input } from '@angular/core';
 
 @Component({
     selector: 'sgh-user',
     templateUrl: './user.component.html',
 })
 export class UserComponent implements OnInit {
+    //input for username
+    @Input() username: string = '';
 
-    users: User[] = [];
 
     constructor(
         private userService: UserService,
@@ -18,7 +20,6 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getUsersFromServer();
     }
 
     getUsersFromServer(): void {
