@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbCollapse, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
 import { ProductFilterComponent } from './product-filter/product-filter.component';
+import { TreeViewComponent } from '../shared/treeview/tree-view.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { ProductFilterComponent } from './product-filter/product-filter.componen
         NgbPopover,
         FormCheckLabelComponent,
         NgbCollapse,
+        TreeViewComponent,
     ],
     providers: [
         ProductComponent,

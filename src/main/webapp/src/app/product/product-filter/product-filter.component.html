@@ -29,6 +29,11 @@
         </div>
     </div>
 
+    <sgh-tree-view
+        [categories]="categories"
+        [subcategories]="subcategories"
+    ></sgh-tree-view>
+
     <div *ngFor="let i of [1]">
         <div class="buttons">
             <div
@@ -103,14 +108,14 @@
                     <div>
                         Min price: {{filterParams['MinPrice']}}
                     </div>
-                    <input class="input-slider" [(ngModel)]="filterParams['MinPrice']" type="range"
+                    <input class="input-slider form-range" [(ngModel)]="filterParams['MinPrice']" type="range"
                            min="0" max="1000" value="0" step="1">
                 </div>
                 <div class="filter-price">
                     <div>
                         Max price: {{filterParams['MaxPrice']}}
                     </div>
-                    <input class="input-slider" [(ngModel)]="filterParams['MaxPrice']" type="range"
+                    <input class="input-slider form-range" [(ngModel)]="filterParams['MaxPrice']" type="range"
                            min="0" max="1000" value="1000" step="1">
                 </div>
             </div>

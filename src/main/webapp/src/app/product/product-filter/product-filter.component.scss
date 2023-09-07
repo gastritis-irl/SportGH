@@ -67,6 +67,18 @@ $select-padding: 5px;
 
             .input-slider {
                 width: 100%;
+
+                &.form-range::-moz-range-thumb {
+                    background-color: $color-main-1;
+                }
+
+                &.form-range::-webkit-slider-thumb {
+                    background-color: $color-main-1;
+                }
+
+                &.form-range::-ms-thumb {
+                    background-color: $color-main-1;
+                }
             }
         }
     }
