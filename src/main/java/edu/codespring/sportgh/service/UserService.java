@@ -10,6 +10,8 @@ public interface UserService {
 
     void login(String firebaseUid, String password);
 
+    User update(User user);
+
     Collection<User> findAll();
 
     User findById(Long userId);

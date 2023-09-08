@@ -5,17 +5,17 @@
 <div class="user-container">
     <div class="user-header">
         <div class="user-header__image">
-        <img src="{{ user?.image }}" alt="user image" />
+        <!-- <img src="{{ user?.image }}" alt="user image" /> -->
         </div>
         <div class="user-header__info">
-        <h1>{{ user?.username }}</h1>
-        <p>{{ user?.email }}</p>
-        <p>{{ user?.bio }}</p>
+        <h1>{{ user.username }}</h1>
+        <p>{{ user.email }}</p>
+        <p>{{ user.bio }}</p>
         </div>
     </div>
     <div class="user-posts">
-        <div class="user-posts__post" *ngFor="let post of user?.posts">
-        <img src="{{ post.image }}" alt="post image" />
+        <div class="user-posts__post" *ngFor="let post of user?.products">
+        <!-- <img src="{{ post.image }}" alt="post image" /> -->
         <p>{{ post.description }}</p>
         </div>
     </div>

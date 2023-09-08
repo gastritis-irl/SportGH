@@ -11,28 +11,26 @@ import { Input } from '@angular/core';
 export class UserComponent implements OnInit {
     //input for username
     @Input() username: string = '';
+    user: User = {};
 
-
-    constructor(
-        private userService: UserService,
-        private toastNotify: ToastrService,
-    ) {
+    constructor(private userService: UserService, private toastNotify: ToastrService) {
     }
 
     ngOnInit(): void {
+        this.userService.getByUsername(this.username).subscribe(user => {
+            this.user = user;
+        });
     }
 
-    getUsersFromServer(): void {
-        this.userService.getAll().subscribe(
-            {
-                next: (response: User[]): void => {
-                    this.users = response;
-                },
-                error: (error): void => {
-                    console.error(error);
-                    this.toastNotify.error(`Error fetching data`);
-                },
-            }
-        );
+    updateUser(): void {
+        if (!this.user.id) {
+            this.toastNotify.warning('User not found');
+            return;
+        }
+
+        this.userService.update(this.user.id, this.user).subscribe(() => {
+            this.toastNotify.success('User updated successfully');
+        });
     }
+
 }
