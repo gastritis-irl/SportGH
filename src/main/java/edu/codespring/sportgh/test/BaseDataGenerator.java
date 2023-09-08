@@ -6,11 +6,9 @@ import edu.codespring.sportgh.service.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 
 import java.util.Collection;
 
-@Profile({"data-gen", "dummy-data-gen"})
 @Slf4j
 @RequiredArgsConstructor
 public abstract class BaseDataGenerator {
