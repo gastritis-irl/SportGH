@@ -10,26 +10,9 @@ import { Params } from '@angular/router';
 })
 export class ProductService extends AppService {
 
-    getAllByParams(filterParams: Params, paramNames: string[]): Observable<ProductPage> {
+    getAllByParams(filterParams: Params): Observable<ProductPage> {
         let url: string = `${this.baseUrl}/products?`;
-
-        for (const paramName of paramNames) {
-            if (filterParams[paramName]) {
-                if (
-                    filterParams[paramName].length
-                    && filterParams[paramName].length > 0
-                    && typeof filterParams[paramName] != 'string'
-                ) {
-                    for (let i: number = 0; i < filterParams[paramName].length; i++) {
-                        url += '&' + paramName + '=' + filterParams[paramName][i];
-                    }
-                } else {
-                    url += '&' + paramName + '=' + filterParams[paramName];
-                }
-            }
-        }
-
-        return this.http.get<ProductPage>(url);
+        return this.http.get<ProductPage>(url, { params: filterParams });
     }
 
     getById(id: number): Observable<Product> {

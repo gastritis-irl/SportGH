@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Product } from '../product.model';
 import { Params } from '@angular/router';
+import { Category } from '../../category/category.model';
+import { Subcategory } from '../../subcategory/subcategory.model';
 
 @Component({
     selector: 'sgh-product-list',
@@ -10,6 +12,8 @@ import { Params } from '@angular/router';
 export class ProductListComponent implements OnInit, OnChanges {
 
     @Input() products: Product[] = [];
+    @Input() categories: Category[] = [];
+    @Input() subcategories: Subcategory[] = [];
     @Output() newPageEvent: EventEmitter<number> = new EventEmitter<number>();
     currentPage: number = 1;
     @Output() orderByEvent: EventEmitter<string> = new EventEmitter<string>();
@@ -20,7 +24,7 @@ export class ProductListComponent implements OnInit, OnChanges {
     @Input() filterParamNamesInput: string[] = [];
     filterParams: string[] = [];
     filterParamNames: string[] = [];
-    @Output() clearFilterEvent: EventEmitter<string> = new EventEmitter<string>();
+    @Output() clearFilterEvent: EventEmitter<[ string, string ]> = new EventEmitter<[ string, string ]>();
     @Output() resetFilterEvent: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
@@ -43,7 +47,7 @@ export class ProductListComponent implements OnInit, OnChanges {
                 && p != 'direction'
                 && p != 'orderBy'
                 && this.filterParamsInput[p].length
-                && this.filterParamsInput[p].length>0
+                && this.filterParamsInput[p].length > 0
             ) {
                 this.filterParams.push(this.filterParamsInput[p]);
                 this.filterParamNames.push(p);
@@ -55,8 +59,8 @@ export class ProductListComponent implements OnInit, OnChanges {
         this.resetFilterEvent.emit();
     }
 
-    clearFilter(i: number): void {
-        this.clearFilterEvent.emit(this.filterParamNames[i]);
+    clearFilter(paramName: string, paramItem: string): void {
+        this.clearFilterEvent.emit([ paramName, paramItem ]);
     }
 
     orderBy(): void {
@@ -91,5 +95,9 @@ export class ProductListComponent implements OnInit, OnChanges {
             result.push(i);
         }
         return result;
+    }
+
+    getTypeOfParam(param: string | number | undefined): string {
+        return typeof param;
     }
 }

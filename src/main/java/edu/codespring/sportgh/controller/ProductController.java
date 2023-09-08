@@ -31,8 +31,8 @@ public class ProductController {
         @RequestParam("orderBy") Optional<String> orderBy,
         @RequestParam("direction") Optional<String> direction,
         @RequestParam("pageNumber") Optional<Integer> pageNumber,
-        @RequestParam("Category") Optional<Long[]> categoryIds,
-        @RequestParam("Subcategory") Optional<Long[]> subcategoryIds,
+        @RequestParam("Category") Optional<String[]> categoryNames,
+        @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
         @RequestParam("MinPrice") Optional<Double> minPrice,
         @RequestParam("MaxPrice") Optional<Double> maxPrice,
         @RequestParam("TextSearch") Optional<String> textSearch
@@ -43,8 +43,8 @@ public class ProductController {
                     orderBy.orElse(null),
                     direction.orElse(null),
                     pageNumber.orElse(null),
-                    categoryIds.orElse(null),
-                    subcategoryIds.orElse(null),
+                    categoryNames.orElse(null),
+                    subcategoryNames.orElse(null),
                     minPrice.orElse(null),
                     maxPrice.orElse(null),
                     textSearch.orElse(null)

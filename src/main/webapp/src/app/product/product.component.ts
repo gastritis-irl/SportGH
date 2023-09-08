@@ -68,8 +68,7 @@ export class ProductComponent implements OnInit {
     loadData(): void {
         this.scrollToTop();
         this.productService.getAllByParams(
-            this.filterParams,
-            this.filterParamNames
+            this.filterParams
         ).subscribe(
             {
                 next: (data: ProductPage): void => {
@@ -130,8 +129,17 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
-    clearFilter(paramName: string): void {
-        this.filterParams[paramName] = this.getDefaultParams()[paramName];
+    clearFilter(paramNameAndItem: [ string, string ]): void {
+        if (typeof this.filterParams[paramNameAndItem[0]].length
+            && typeof this.filterParams[paramNameAndItem[0]] != 'string') {
+            for (let i: number = 0; i < this.filterParams[paramNameAndItem[0]].length; i++) {
+                if (this.filterParams[paramNameAndItem[0]][i] == paramNameAndItem[1]) {
+                    this.filterParams[paramNameAndItem[0]].splice(i, 1);
+                }
+            }
+        } else {
+            this.filterParams[paramNameAndItem[0]] = this.getDefaultParams()[paramNameAndItem[0]];
+        }
         this.loadData();
     }
 
