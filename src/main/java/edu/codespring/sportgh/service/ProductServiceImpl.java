@@ -23,6 +23,60 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     static final int pageSize = 60;
 
+    private Specification<Product> filterByPrice(
+        Double minPrice, Double maxPrice, Specification<Product> specification
+    ) {
+        if (minPrice != null) {
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
+        }
+
+        if (maxPrice != null) {
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
+        }
+
+        return specification;
+    }
+
+    private Specification<Product> filterByCategoriesAndSubcategories(
+        String[] categoryNames, String[] subcategoryNames, Specification<Product> specification
+    ) {
+        if (subcategoryNames != null && subcategoryNames.length > 0
+            && categoryNames != null && categoryNames.length > 0) {
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.or(
+                    root.get("subCategory").get("name").in((Object[]) subcategoryNames),
+                    root.get("subCategory").get("category").get("name").in((Object[]) categoryNames)
+                )
+            );
+        } else {
+            if (categoryNames != null && categoryNames.length > 0) {
+                specification = specification.and((root, query, criteriaBuilder) ->
+                    root.get("subCategory").get("category").get("name").in((Object[]) categoryNames));
+            }
+            if (subcategoryNames != null && subcategoryNames.length > 0) {
+                specification = specification.and((root, query, criteriaBuilder) ->
+                    root.get("subCategory").get("name").in((Object[]) subcategoryNames));
+            }
+        }
+        return specification;
+    }
+
+    private Specification<Product> filterByTextInNameOrDescription(
+        String textSearch, Specification<Product> specification
+    ) {
+        if (textSearch != null) {
+            specification = specification
+                .and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"))
+                .or((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
+                );
+        }
+        return specification;
+    }
+
     @Override
     public ProductPageOutDTO findPageByParams(
         String orderBy,
@@ -55,43 +109,9 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        if (subcategoryNames != null && subcategoryNames.length > 0
-            && categoryNames != null && categoryNames.length > 0) {
-            specification = specification.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.or(
-                    root.get("subCategory").get("name").in(subcategoryNames),
-                    root.get("subCategory").get("category").get("name").in(categoryNames)
-                )
-            );
-        } else {
-            if (categoryNames != null && categoryNames.length > 0) {
-                specification = specification.and((root, query, criteriaBuilder) ->
-                    root.get("subCategory").get("category").get("name").in(categoryNames));
-            }
-            if (subcategoryNames != null && subcategoryNames.length > 0) {
-                specification = specification.and((root, query, criteriaBuilder) ->
-                    root.get("subCategory").get("name").in(subcategoryNames));
-            }
-        }
-
-        if (minPrice != null) {
-            specification = specification.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
-        }
-
-        if (maxPrice != null) {
-            specification = specification.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
-        }
-
-        if (textSearch != null) {
-            specification = specification
-                .and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"))
-                .or((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
-                );
-        }
+        specification = filterByCategoriesAndSubcategories(categoryNames, subcategoryNames, specification);
+        specification = filterByPrice(minPrice, maxPrice, specification);
+        specification = filterByTextInNameOrDescription(textSearch, specification);
 
         Page<Product> page = productRepository.findAll(specification, pageable);
 
