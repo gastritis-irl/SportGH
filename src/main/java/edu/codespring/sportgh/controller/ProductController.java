@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -38,8 +37,6 @@ public class ProductController {
         @RequestParam("MaxPrice") Optional<Double> maxPrice,
         @RequestParam("TextSearch") Optional<String> textSearch
     ) {
-        log.info(Arrays.toString(categoryNames.orElse(null)));
-        log.info(Arrays.toString(subcategoryNames.orElse(null)));
         if (pageNumber.isPresent()) {
             return new ResponseEntity<>(
                 productService.findPageByParams(

@@ -28,7 +28,6 @@ export class ProductService extends AppService {
                 }
             }
         }
-        console.log(url);
 
         return this.http.get<ProductPage>(url);
     }
