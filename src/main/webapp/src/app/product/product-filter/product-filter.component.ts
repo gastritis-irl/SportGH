@@ -16,6 +16,7 @@ export class ProductFilterComponent implements OnInit {
     @Input() filterParams: Params = {};
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
+    selectedAtLeastOneSubCatOfCat: boolean[] = [];
     categorySelected: boolean[] = [];
     subcategorySelected: boolean[] = [];
 
@@ -39,7 +40,6 @@ export class ProductFilterComponent implements OnInit {
                 this.filterParams['Subcategory'].push(this.subcategories[i].name);
             }
         }
-
         this.newFilterEvent.emit(this.filterParams);
     }
 }

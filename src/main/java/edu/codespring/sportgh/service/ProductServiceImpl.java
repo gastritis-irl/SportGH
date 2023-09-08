@@ -55,14 +55,23 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        if (categoryNames != null && categoryNames.length > 0) {
+        if (subcategoryNames != null && subcategoryNames.length > 0
+            && categoryNames != null && categoryNames.length > 0) {
             specification = specification.and((root, query, criteriaBuilder) ->
-                root.get("subCategory").get("category").get("name").in(categoryNames));
-        }
-
-        if (subcategoryNames != null && subcategoryNames.length > 0) {
-            specification = specification.and((root, query, criteriaBuilder) ->
-                root.get("subCategory").get("name").in(subcategoryNames));
+                criteriaBuilder.or(
+                    root.get("subCategory").get("name").in(subcategoryNames),
+                    root.get("subCategory").get("category").get("name").in(categoryNames)
+                )
+            );
+        } else {
+            if (categoryNames != null && categoryNames.length > 0) {
+                specification = specification.and((root, query, criteriaBuilder) ->
+                    root.get("subCategory").get("category").get("name").in(categoryNames));
+            }
+            if (subcategoryNames != null && subcategoryNames.length > 0) {
+                specification = specification.and((root, query, criteriaBuilder) ->
+                    root.get("subCategory").get("name").in(subcategoryNames));
+            }
         }
 
         if (minPrice != null) {
