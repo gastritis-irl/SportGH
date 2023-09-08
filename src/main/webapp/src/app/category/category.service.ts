@@ -28,8 +28,8 @@ export class CategoryService extends AppService {
         return this.http.put<Category>(url, newData);
     }
 
-    delete(categoryId: number | undefined): Observable<object> {
+    delete(categoryId: number | undefined): Observable<void> {
         const url: string = `${this.baseUrl}/categories/${categoryId}`;
-        return this.http.delete(url);
+        return this.http.delete<void>(url);
     }
 }

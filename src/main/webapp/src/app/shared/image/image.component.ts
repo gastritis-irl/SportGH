@@ -7,7 +7,6 @@ import { NgIf, NgFor } from '@angular/common';
 import { of, forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { OnInit } from '@angular/core';
-import { OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'sgh-image',
@@ -16,14 +15,14 @@ import { OnChanges, SimpleChanges } from '@angular/core';
     styleUrls: ['./image.component.scss'],
     templateUrl: './image.component.html',
 })
-export class ImageComponent implements OnInit, OnChanges {
+export class ImageComponent implements OnInit {
 
-    @Input() imageIds: number[] = [];
     @Input() allowMultiple: boolean = false;
     @Output() fileChange = new EventEmitter<File[]>();
     @Input() mode: 'edit' | 'create' = 'create';
     imageFiles: File[] = [];
     imageDataArray: Image[] = [];
+    _imageIds: number[] = [];
 
     constructor(private imageService: ImageService, private toastNotify: ToastrService) { }
 
@@ -33,11 +32,16 @@ export class ImageComponent implements OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['imageIds'] && changes['imageIds'].currentValue !== changes['imageIds'].previousValue) {
-            // Reload the images when the imageIds input property changes
-            this.loadImageFiles(changes['imageIds'].currentValue);
+    @Input()
+    set imageIds(ids: number[]) {
+        this._imageIds = ids;
+        if (ids && ids.length > 0 && ids[0] !== 0) {
+            this.loadImageFiles(ids);
         }
+    }
+
+    get imageIds(): number[] {
+        return this._imageIds;
     }
 
     onFileChange(event: Event) {

@@ -34,8 +34,7 @@ export class CategoryComponent implements OnInit {
                 }
             },
             error: (error) => {
-                console.error('Image fetch failed', error);
-                this.toastNotify.error(`Error fetching image`);
+                this.toastNotify.error(`Error fetching image`, error);
             }
         });
     }
@@ -53,8 +52,7 @@ export class CategoryComponent implements OnInit {
                 });
             },
             error: (error): void => {
-                console.error(error);
-                this.toastNotify.error(`Error fetching data`);
+                this.toastNotify.error(`Error fetching data`, error);
             }
         });
     }
