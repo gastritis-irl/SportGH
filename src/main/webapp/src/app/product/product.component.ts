@@ -145,8 +145,8 @@ export class ProductComponent implements OnInit {
             pageNumber: 1,
             orderBy: 'name',
             direction: 'ASC',
-            Category: 0,
-            Subcategory: 0,
+            Category: [],
+            Subcategory: [],
         };
     }
 }

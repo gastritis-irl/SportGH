@@ -15,9 +15,9 @@ export class TreeViewComponent implements OnInit {
 
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
-    categorySelected: boolean[] = [];
+    @Input() categorySelected: boolean[] = [];
     selectedAtLeastOneSubCatOfCat: boolean[] = [];
-    subcategorySelected: boolean[] = [];
+    @Input() subcategorySelected: boolean[] = [];
     isExpanded: boolean[] = [];
 
     constructor() {

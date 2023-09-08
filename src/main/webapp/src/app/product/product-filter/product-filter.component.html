@@ -1,5 +1,5 @@
 <div class="product-filter-holder">
-    <div *ngFor="let i of [0]">
+    <div *ngFor="let i of [1]">
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div *ngFor="let i of [11]">
+    <div *ngFor="let i of [2]">
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
@@ -48,61 +48,9 @@
                 <sgh-tree-view
                     [categories]="categories"
                     [subcategories]="subcategories"
+                    [categorySelected]="categorySelected"
+                    [subcategorySelected]="subcategorySelected"
                 ></sgh-tree-view>
-            </div>
-        </div>
-    </div>
-
-    <div *ngFor="let i of [1]">
-        <div class="buttons">
-            <div
-                class="button-default button-secondary button-content"
-                (click)="isExpanded[i] = ! isExpanded[i]"
-                [attr.aria-expanded]="isExpanded[i]"
-            >
-                <div>
-                    Category
-                </div>
-                <div *ngIf="!isExpanded[i]">&darr;</div>
-                <div *ngIf="isExpanded[i]">&uarr;</div>
-            </div>
-        </div>
-        <div [(ngbCollapse)]="!isExpanded[i]">
-            <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
-                <select class="filter-select"
-                        [(ngModel)]="filterParams['Category']"
-                >
-                    <option *ngFor="let category of categories"
-                            [ngValue]="category.id">{{category.name}}</option>
-                    <option [ngValue]="0" selected>All</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <div *ngFor="let i of [2]">
-        <div class="buttons">
-            <div
-                class="button-default button-secondary button-content"
-                (click)="isExpanded[i] = ! isExpanded[i]"
-                [attr.aria-expanded]="isExpanded[i]"
-            >
-                <div>
-                    Subcategory
-                </div>
-                <div *ngIf="!isExpanded[i]">&darr;</div>
-                <div *ngIf="isExpanded[i]">&uarr;</div>
-            </div>
-        </div>
-        <div [(ngbCollapse)]="!isExpanded[i]">
-            <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
-                <select class="filter-select"
-                        [(ngModel)]="filterParams['Subcategory']"
-                >
-                    <option *ngFor="let subcategory of subcategories"
-                            [ngValue]="subcategory.id">{{subcategory.name}}</option>
-                    <option [ngValue]="0" selected>All</option>
-                </select>
             </div>
         </div>
     </div>

@@ -31,7 +31,7 @@
                 <button type="button" class="nav-link" ngbDropdownToggle>Sports</button>
                 <div ngbDropdownMenu>
                     <button class="nav-link-item" *ngFor="let category of categories" ngbDropdownItem
-                            [routerLink]="['/products']" [queryParams]="{ Category: category.id }">
+                            [routerLink]="['/products']" [queryParams]="{ Category: category.name }">
                         <a>{{category.name}}</a>
                     </button>
                 </div>

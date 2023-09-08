@@ -37,7 +37,14 @@ export class ProductListComponent implements OnInit, OnChanges {
         this.filterParamNames = [];
         this.filterParams = [];
         for (const p of this.filterParamNamesInput) {
-            if (this.filterParamsInput[p] && p != 'pageNumber' && p != 'direction' && p != 'orderBy') {
+            if (
+                this.filterParamsInput[p]
+                && p != 'pageNumber'
+                && p != 'direction'
+                && p != 'orderBy'
+                && this.filterParamsInput[p].length
+                && this.filterParamsInput[p].length>0
+            ) {
                 this.filterParams.push(this.filterParamsInput[p]);
                 this.filterParamNames.push(p);
             }

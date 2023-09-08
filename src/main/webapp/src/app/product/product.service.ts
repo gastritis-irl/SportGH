@@ -15,7 +15,17 @@ export class ProductService extends AppService {
 
         for (const paramName of paramNames) {
             if (filterParams[paramName]) {
-                url += '&' + paramName + '=' + filterParams[paramName];
+                if (
+                    filterParams[paramName].length
+                    && filterParams[paramName].length > 0
+                    && typeof filterParams[paramName] != 'string'
+                ) {
+                    for (let i: number = 0; i < filterParams[paramName].length; i++) {
+                        url += '&' + paramName + '=' + filterParams[paramName][i];
+                    }
+                } else {
+                    url += '&' + paramName + '=' + filterParams[paramName];
+                }
             }
         }
         console.log(url);

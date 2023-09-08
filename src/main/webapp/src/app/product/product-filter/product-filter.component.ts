@@ -16,6 +16,8 @@ export class ProductFilterComponent implements OnInit {
     @Input() filterParams: Params = {};
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
+    categorySelected: boolean[] = [];
+    subcategorySelected: boolean[] = [];
 
     constructor() {
     }
@@ -24,6 +26,20 @@ export class ProductFilterComponent implements OnInit {
     }
 
     filterBy(): void {
+        this.filterParams['Category'] = [];
+        for (let i: number = 0; i < this.categories.length; i++) {
+            if (this.categorySelected[i]) {
+                this.filterParams['Category'].push(this.categories[i].name);
+            }
+        }
+
+        this.filterParams['Subcategory'] = [];
+        for (let i: number = 0; i < this.subcategories.length; i++) {
+            if (this.subcategorySelected[i]) {
+                this.filterParams['Subcategory'].push(this.subcategories[i].name);
+            }
+        }
+
         this.newFilterEvent.emit(this.filterParams);
     }
 }

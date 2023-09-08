@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -31,20 +32,22 @@ public class ProductController {
         @RequestParam("orderBy") Optional<String> orderBy,
         @RequestParam("direction") Optional<String> direction,
         @RequestParam("pageNumber") Optional<Integer> pageNumber,
-        @RequestParam("Category") Optional<Long> categoryId,
-        @RequestParam("Subcategory") Optional<Long> subcategoryId,
+        @RequestParam("Category") Optional<String[]> categoryNames,
+        @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
         @RequestParam("MinPrice") Optional<Double> minPrice,
         @RequestParam("MaxPrice") Optional<Double> maxPrice,
         @RequestParam("TextSearch") Optional<String> textSearch
     ) {
+        log.info(Arrays.toString(categoryNames.orElse(null)));
+        log.info(Arrays.toString(subcategoryNames.orElse(null)));
         if (pageNumber.isPresent()) {
             return new ResponseEntity<>(
                 productService.findPageByParams(
                     orderBy.orElse(null),
                     direction.orElse(null),
                     pageNumber.orElse(null),
-                    categoryId.orElse(null),
-                    subcategoryId.orElse(null),
+                    categoryNames.orElse(null),
+                    subcategoryNames.orElse(null),
                     minPrice.orElse(null),
                     maxPrice.orElse(null),
                     textSearch.orElse(null)
