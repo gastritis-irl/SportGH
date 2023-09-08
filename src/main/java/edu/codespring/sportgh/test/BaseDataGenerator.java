@@ -1,8 +1,9 @@
 package edu.codespring.sportgh.test;
 
+import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.*;
 import edu.codespring.sportgh.service.*;
-import lombok.AllArgsConstructor;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -12,7 +13,6 @@ import java.util.Collection;
 @Profile({"data-gen", "dummy-data-gen"})
 @Slf4j
 @RequiredArgsConstructor
-@AllArgsConstructor
 public abstract class BaseDataGenerator {
 
     protected final UserService userService;
@@ -22,7 +22,32 @@ public abstract class BaseDataGenerator {
     protected final FirebaseService firebaseService;
     protected final ImageService imageService;
 
-    public abstract void init();
+    @PostConstruct
+    public void init() {
+
+        try {
+            initUsers();
+            log.info("{}Generating users: OK", this.getClass().getSimpleName());
+        } catch (ServiceException e) {
+            log.warn("Generating users: FAILED");
+            log.warn(e.getMessage());
+        }
+
+        initCategories();
+        log.info("Generating categories: OK");
+
+        initSubCategories();
+        log.info("Generating subcategories: OK");
+
+        initProducts();
+        log.info("Generating products: OK");
+    }
+
+    public abstract void initCategories();
+
+    public abstract void initSubCategories();
+
+    public abstract void initProducts();
 
     public void initUsers() {
         Collection<User> userList = firebaseService.getUsers();

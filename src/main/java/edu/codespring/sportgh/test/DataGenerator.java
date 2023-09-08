@@ -5,7 +5,6 @@ import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.service.*;
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -23,26 +22,6 @@ public class DataGenerator extends BaseDataGenerator {
 
     public DataGenerator(UserService userService, CategoryService categoryService, SubCategoryService subCategoryService, ProductService productService, FirebaseService firebaseService, ImageService imageService) {
         super(userService, categoryService, subCategoryService, productService, firebaseService, imageService);
-    }
-
-    @PostConstruct
-    public void init() {
-        try {
-            initUsers();
-            log.info("Generating users: OK");
-        } catch (ServiceException e) {
-            log.warn("Generating users: FAILED");
-            log.warn(e.getMessage());
-        }
-
-        initCategories();
-        log.info("Generating categories: OK");
-
-        initSubCategories();
-        log.info("Generating subcategories: OK");
-
-        initProducts();
-        log.info("Generating products: OK");
     }
 
     public void initCategories() {
