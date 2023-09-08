@@ -17,7 +17,7 @@ export class ProductListComponent implements OnInit, OnChanges {
     @Output() newPageEvent: EventEmitter<number> = new EventEmitter<number>();
     currentPage: number = 1;
     @Output() orderByEvent: EventEmitter<string> = new EventEmitter<string>();
-    orderByElement: string = 'name';
+    orderByElement: string = 'name#ASC';
     @Input() nrOfPages: number = 0;
     @Input() nrOfItems: number = 0;
     @Input() filterParamsInput: Params = {};
