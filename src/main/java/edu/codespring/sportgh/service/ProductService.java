@@ -16,8 +16,8 @@ public interface ProductService {
         String orderBy,
         String direction,
         int pageNumber,
-        String[] categoryNames,
-        String[] subcategoryNames,
+        Long[] categoryIds,
+        Long[] subcategoryIds,
         Double minPrice,
         Double maxPrice,
         String textSearch

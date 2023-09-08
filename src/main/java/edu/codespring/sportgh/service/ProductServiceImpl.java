@@ -28,8 +28,8 @@ public class ProductServiceImpl implements ProductService {
         String orderBy,
         String direction,
         int pageNumber,
-        String[] categoryNames,
-        String[] subcategoryNames,
+        Long[] categoryIds,
+        Long[] subcategoryIds,
         Double minPrice,
         Double maxPrice,
         String textSearch
@@ -55,14 +55,14 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        if (categoryNames != null && categoryNames.length > 0) {
+        if (categoryIds != null && categoryIds.length > 0) {
             specification = specification.and((root, query, criteriaBuilder) ->
-                root.get("subCategory").get("category").get("name").in(categoryNames));
+                root.get("subCategory").get("category").get("id").in(categoryIds));
         }
 
-        if (subcategoryNames != null && subcategoryNames.length > 0) {
+        if (subcategoryIds != null && subcategoryIds.length > 0) {
             specification = specification.and((root, query, criteriaBuilder) ->
-                root.get("subCategory").get("name").in(subcategoryNames));
+                root.get("subCategory").get("id").in(subcategoryIds));
         }
 
         if (minPrice != null) {
