@@ -26,25 +26,27 @@ public class ProductServiceImpl implements ProductService {
     private Specification<Product> filterByPrice(
         Double minPrice, Double maxPrice, Specification<Product> specification
     ) {
+        Specification<Product> spec = specification;
         if (minPrice != null) {
-            specification = specification.and((root, query, criteriaBuilder) ->
+            spec = specification.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
         }
 
         if (maxPrice != null) {
-            specification = specification.and((root, query, criteriaBuilder) ->
+            spec = specification.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
         }
 
-        return specification;
+        return spec;
     }
 
     private Specification<Product> filterByCategoriesAndSubcategories(
         String[] categoryNames, String[] subcategoryNames, Specification<Product> specification
     ) {
+        Specification<Product> spec = specification;
         if (subcategoryNames != null && subcategoryNames.length > 0
             && categoryNames != null && categoryNames.length > 0) {
-            specification = specification.and((root, query, criteriaBuilder) ->
+            spec = specification.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.or(
                     root.get("subCategory").get("name").in((Object[]) subcategoryNames),
                     root.get("subCategory").get("category").get("name").in((Object[]) categoryNames)
@@ -52,29 +54,30 @@ public class ProductServiceImpl implements ProductService {
             );
         } else {
             if (categoryNames != null && categoryNames.length > 0) {
-                specification = specification.and((root, query, criteriaBuilder) ->
+                spec = specification.and((root, query, criteriaBuilder) ->
                     root.get("subCategory").get("category").get("name").in((Object[]) categoryNames));
             }
             if (subcategoryNames != null && subcategoryNames.length > 0) {
-                specification = specification.and((root, query, criteriaBuilder) ->
+                spec = specification.and((root, query, criteriaBuilder) ->
                     root.get("subCategory").get("name").in((Object[]) subcategoryNames));
             }
         }
-        return specification;
+        return spec;
     }
 
     private Specification<Product> filterByTextInNameOrDescription(
         String textSearch, Specification<Product> specification
     ) {
+        Specification<Product> spec = specification;
         if (textSearch != null) {
-            specification = specification
+            spec = specification
                 .and((root, query, criteriaBuilder) ->
                     criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"))
                 .or((root, query, criteriaBuilder) ->
                     criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
                 );
         }
-        return specification;
+        return spec;
     }
 
     @Override
