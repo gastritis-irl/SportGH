@@ -67,9 +67,7 @@ export class ProductComponent implements OnInit {
 
     loadData(): void {
         this.scrollToTop();
-        this.productService.getAllByParams(
-            this.filterParams
-        ).subscribe(
+        this.productService.getAllByParams(this.filterParams).subscribe(
             {
                 next: (data: ProductPage): void => {
                     this.products = data.products;

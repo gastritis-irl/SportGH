@@ -28,12 +28,12 @@ public class ProductServiceImpl implements ProductService {
     ) {
         Specification<Product> spec = specification;
         if (minPrice != null) {
-            spec = specification.and((root, query, criteriaBuilder) ->
+            spec = spec.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
         }
 
         if (maxPrice != null) {
-            spec = specification.and((root, query, criteriaBuilder) ->
+            spec = spec.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
         }
 
@@ -46,11 +46,11 @@ public class ProductServiceImpl implements ProductService {
         Specification<Product> spec = specification;
 
         if (categoryNames != null && categoryNames.length > 0) {
-            spec = specification.and((root, query, criteriaBuilder) ->
+            spec = spec.and((root, query, criteriaBuilder) ->
                 root.get("subCategory").get("category").get("name").in((Object[]) categoryNames));
         }
         if (subcategoryNames != null && subcategoryNames.length > 0) {
-            spec = specification.and((root, query, criteriaBuilder) ->
+            spec = spec.and((root, query, criteriaBuilder) ->
                 root.get("subCategory").get("name").in((Object[]) subcategoryNames));
         }
         return spec;
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
     ) {
         Specification<Product> spec = specification;
         if (textSearch != null) {
-            spec = specification
+            spec = spec
                 .and((root, query, criteriaBuilder) ->
                     criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"))
                 .or((root, query, criteriaBuilder) ->
