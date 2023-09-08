@@ -55,7 +55,7 @@ public class ImageController {
         if (!file.getContentType().startsWith("image/")) {
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
         }
-        Image image = imageService.save(file);
+        Image image = imageService.saveFileAndCreateDbInstance(file);
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 

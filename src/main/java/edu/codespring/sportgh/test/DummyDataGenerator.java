@@ -117,7 +117,7 @@ public class DummyDataGenerator {
 
             categoryService.save(category);
 
-            imageService.saveData(image);
+            imageService.save(image);
         }
     }
 

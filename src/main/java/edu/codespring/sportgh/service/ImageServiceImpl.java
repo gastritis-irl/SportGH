@@ -5,6 +5,7 @@ import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,38 +30,36 @@ public class ImageServiceImpl implements ImageService {
     private String storageLocation;
 
     @Override
-    public Image save(MultipartFile file) {
+    public Image saveFileAndCreateDbInstance(MultipartFile file) {
+
+        Image image = new Image();
+
         // Generate a unique name for the file
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-        String dateStr = LocalDateTime.now().format(formatter);
-        String uniqueFilename = dateStr + "_" + UUID.randomUUID() + ".jpeg";
-        try {
-            // Save the file to the file system
-            Path filePathWithFile = Paths.get(storageLocation, uniqueFilename);
-            Path filePath = Paths.get(storageLocation);
-            Files.copy(file.getInputStream(), filePathWithFile, StandardCopyOption.REPLACE_EXISTING);
+        String uniqueFilename = getUniqueFileName();
 
-            // Save the file metadata to the database
-            Image image = new Image();
-            image.setName(uniqueFilename);
-            image.setUrl(filePath.toString());
-            image = saveData(image);
-
-            log.info("Image saved successfully ({}) with ID: ({}).", file.getOriginalFilename(), image.getId());
-            return image;
-        } catch (IOException e) {
-            throw new ServiceException("Failed to save image", e);
-        }
+        return getImage(file, image, uniqueFilename);
     }
 
     @Override
     public Image update(MultipartFile file, Long imageId) {
+        Image image = findById(imageId);
+
+        String uniqueFilename = getUniqueFileName();
+
+        deleteFile(imageId);
+        return getImage(file, image, uniqueFilename);
+    }
+
+    @NotNull
+    private static String getUniqueFileName() {
         // Generate a unique name for the file
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
         String dateStr = LocalDateTime.now().format(formatter);
-        String uniqueFilename = dateStr + "_" + UUID.randomUUID() + ".jpeg";
+        return dateStr + "_" + UUID.randomUUID() + ".jpeg";
+    }
 
-        deleteFile(imageId);
+    @NotNull
+    private Image getImage(MultipartFile file, Image image, String uniqueFilename) {
         try {
             // Save the file to the file system
             Path filePathWithFile = Paths.get(storageLocation, uniqueFilename);
@@ -68,10 +67,9 @@ public class ImageServiceImpl implements ImageService {
             Files.copy(file.getInputStream(), filePathWithFile, StandardCopyOption.REPLACE_EXISTING);
 
             // Save the file metadata to the database
-            Image image = findById(imageId);
             image.setName(uniqueFilename);
             image.setUrl(filePath.toString());
-            image = saveData(image);
+            image = save(image);
 
             log.info("Image saved successfully ({}) with ID: ({}).", file.getOriginalFilename(), image.getId());
             return image;
@@ -82,7 +80,7 @@ public class ImageServiceImpl implements ImageService {
 
 
     @Override
-    public Image saveData(Image image) {
+    public Image save(Image image) {
         return imageRepository.save(image);
     }
 

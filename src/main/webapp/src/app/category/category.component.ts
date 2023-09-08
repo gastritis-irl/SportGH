@@ -3,7 +3,7 @@ import { Category } from "./category.model";
 import {CategoryService} from "./category.service";
 import { ToastrService } from 'ngx-toastr';
 import { ImageService } from '../shared/image/image.service';
-import { Image } from '../shared/image/image.model';    
+import { Image } from '../shared/image/image.model';
 
 @Component({
     selector: 'sgh-category',
@@ -13,7 +13,7 @@ import { Image } from '../shared/image/image.model';
 export class CategoryComponent implements OnInit {
 
     categories: Category[] = [];
-    imageData?: Image;  
+    imageData?: Image;
 
     constructor(
         private categoryService: CategoryService,

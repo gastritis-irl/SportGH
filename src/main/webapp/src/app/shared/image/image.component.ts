@@ -23,7 +23,6 @@ export class ImageComponent implements OnInit {
     @Input() mode: 'edit' | 'create' = 'create';
     imageFiles: File[] = [];
     imageDataArray: Image[] = [];
-    isMultiple: boolean = false;
 
     constructor(private imageService: ImageService, private toastNotify: ToastrService) { }
 
@@ -88,23 +87,27 @@ export class ImageComponent implements OnInit {
         );
     }
 
-
     loadImageFiles(ids: number[]): void {
-        const loadObservables = ids.map(id => this.imageService.getImageFile(id));
+        const nonZeroIds = ids.filter(id => id !== 0);
+        if (nonZeroIds.length > 0) {
+            const loadObservables = nonZeroIds.map(id => this.imageService.getImageFile(id));
 
-        forkJoin(loadObservables).subscribe(blobs => {
-            blobs.forEach((blob, index) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    this.imageDataArray[index] = { url: reader.result as string };
-                };
-                if (blob) {
-                    reader.readAsDataURL(blob);
-                } else {
-                    this.toastNotify.error(`Error fetching data for image ${ids[index]}`);
-                }
+            forkJoin(loadObservables).subscribe(blobs => {
+                blobs.forEach((blob, index) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        this.imageDataArray[index] = { url: reader.result as string };
+                    };
+                    if (blob) {
+                        reader.readAsDataURL(blob);
+                    } else {
+                        this.toastNotify.error(`Error fetching data for image ${nonZeroIds[index]}`);
+                    }
+                });
             });
-        });
+        } else {
+            this.toastNotify.info('No valid image IDs to load.');
+        }
     }
 
     deleteFiles(ids: number[]): void {
