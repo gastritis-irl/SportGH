@@ -5,13 +5,11 @@
                 class="button-default button-secondary button-content"
                 [attr.aria-expanded]="isExpanded[i]"
             >
-                <div class="item-selected category-selected"
-                     [attr.aria-multiselectable]="selectedAtLeastOneSubCatOfCat[i]"
-                     [attr.aria-selected]="categorySelected[i]"
-                     (click)="selectCategory(i)"
+                <input type="checkbox" class="item-selected category-selected"
+                       [attr.multiple]="selectedAtLeastOneSubCatOfCat[i]"
+                       [checked]="categorySelected[i]"
+                       (click)="selectCategory(i)"
                 >
-                    X
-                </div>
                 <div class="flex-row" (click)="isExpanded[i] = ! isExpanded[i]">
                     <div>
                         {{category.name}}
@@ -25,12 +23,10 @@
             <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
                 <div *ngFor="let subcategory of subcategories;let j = index">
                     <div class="subcategory-list" *ngIf="subcategory.categoryId==category.id">
-                        <div class="item-selected"
-                             [attr.aria-selected]="subcategorySelected[j]"
-                             (click)="selectSubcategory(j,i)"
+                        <input type="checkbox" class="item-selected"
+                               [checked]="subcategorySelected[j]"
+                               (click)="selectSubcategory(j,i)"
                         >
-                            X
-                        </div>
                         <div>
                             {{subcategory.name}}
                         </div>

@@ -33,9 +33,6 @@ $filter-padding: 10px;
 }
 
 .item-selected {
-    border-radius: $border-radius;
-    border-style: solid;
-    border-color: $color-main-1;
 
     &:hover {
         background-color: $color-main-4;
