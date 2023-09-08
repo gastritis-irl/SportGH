@@ -7,6 +7,7 @@ import { NgIf, NgFor } from '@angular/common';
 import { of, forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { OnInit } from '@angular/core';
+import { OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'sgh-image',
@@ -15,7 +16,7 @@ import { OnInit } from '@angular/core';
     styleUrls: ['./image.component.scss'],
     templateUrl: './image.component.html',
 })
-export class ImageComponent implements OnInit {
+export class ImageComponent implements OnInit, OnChanges {
 
     @Input() imageIds: number[] = [];
     @Input() allowMultiple: boolean = false;
@@ -27,9 +28,15 @@ export class ImageComponent implements OnInit {
     constructor(private imageService: ImageService, private toastNotify: ToastrService) { }
 
     ngOnInit(): void {
-        if (this.imageIds && this.imageIds.length > 0) {
-            this.toastNotify.info(`Loading ${this.imageIds.length} image(s)`);
+        if (this.imageIds && this.imageIds.length > 0 && this.imageIds[0] !== 0) {
             this.loadImageFiles(this.imageIds);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['imageIds'] && changes['imageIds'].currentValue !== changes['imageIds'].previousValue) {
+            // Reload the images when the imageIds input property changes
+            this.loadImageFiles(changes['imageIds'].currentValue);
         }
     }
 
@@ -37,7 +44,6 @@ export class ImageComponent implements OnInit {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length) {
             this.imageFiles = Array.from(input.files);
-            this.isMultiple = this.imageFiles.length > 1;
 
             this.fileChange.emit(this.imageFiles);
             this.imageFiles.forEach((file, index) => {
@@ -105,8 +111,6 @@ export class ImageComponent implements OnInit {
                     }
                 });
             });
-        } else {
-            this.toastNotify.info('No valid image IDs to load.');
         }
     }
 
