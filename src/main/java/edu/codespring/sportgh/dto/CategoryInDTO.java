@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class CategoryInDTO {
 
-    @Min(value = 1, message = "CategoryId must be greater than 1")
+    @Min(value = 1, message = "CategoryId must be greater or equal than 1")
     private Long id;
 
     @Size(min = 4, max = 25, message = "Category name must be between 4-25 characters")
@@ -18,6 +18,5 @@ public class CategoryInDTO {
     @Size(max = 1000, message = "Category description must be between 0-1000 characters")
     private String description;
 
-    @Size(max = 1000, message = "ImageURL must be between 0-1000 characters")
-    private String imageURL;
+    private Long imageId;
 }

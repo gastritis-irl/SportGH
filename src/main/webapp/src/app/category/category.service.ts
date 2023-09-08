@@ -20,16 +20,16 @@ export class CategoryService extends AppService {
 
     create(data: Category): Observable<Category> {
         const url: string = `${this.baseUrl}/categories`;
-        return this.http.post(url, data);
+        return this.http.post<Category>(url, data);
     }
 
     update(categoryId: number | undefined, newData: Category): Observable<Category> {
         const url: string = `${this.baseUrl}/categories/${categoryId}`;
-        return this.http.put(url, newData);
+        return this.http.put<Category>(url, newData);
     }
 
-    delete(categoryId: number | undefined): Observable<Category> {
+    delete(categoryId: number | undefined): Observable<void> {
         const url: string = `${this.baseUrl}/categories/${categoryId}`;
-        return this.http.delete(url);
+        return this.http.delete<void>(url);
     }
 }

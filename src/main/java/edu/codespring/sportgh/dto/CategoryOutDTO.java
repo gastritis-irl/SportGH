@@ -8,5 +8,5 @@ public class CategoryOutDTO {
     private Long id;
     private String name;
     private String description;
-    private String imageURL;
+    private Long imageId;
 }
