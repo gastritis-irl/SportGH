@@ -129,6 +129,10 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
+    removeCommonCatIfSubCat(): void {
+        // remove Category param from filterParams if one of its subcategory is selected
+    }
+
     clearFilter(paramNameAndItem: [ string, string ]): void {
         if (typeof this.filterParams[paramNameAndItem[0]].length
             && typeof this.filterParams[paramNameAndItem[0]] != 'string') {
@@ -140,6 +144,7 @@ export class ProductComponent implements OnInit {
         } else {
             this.filterParams[paramNameAndItem[0]] = this.getDefaultParams()[paramNameAndItem[0]];
         }
+        this.removeCommonCatIfSubCat();
         this.loadData();
     }
 
