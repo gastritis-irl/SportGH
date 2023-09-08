@@ -20,10 +20,13 @@ public class DataGenerator extends BaseDataGenerator {
     @Value("${test.file.storage.location}")
     private String testFileStorageLocation;
 
-    public DataGenerator(UserService userService, CategoryService categoryService, SubCategoryService subCategoryService, ProductService productService, FirebaseService firebaseService, ImageService imageService) {
+    public DataGenerator(UserService userService, CategoryService categoryService,
+                         SubCategoryService subCategoryService, ProductService productService,
+                         FirebaseService firebaseService, ImageService imageService) {
         super(userService, categoryService, subCategoryService, productService, firebaseService, imageService);
     }
 
+    @Override
     public void initCategories() {
         saveCategory(
                 "Water sports",
@@ -74,6 +77,7 @@ public class DataGenerator extends BaseDataGenerator {
         );
     }
 
+    @Override
     public void initSubCategories() {
         saveSubcategory(
                 "Swimming",
@@ -125,6 +129,7 @@ public class DataGenerator extends BaseDataGenerator {
         );
     }
 
+    @Override
     public void initProducts() {
         User user = userService.findByUsername("akos@test.com");
         if (user == null) {

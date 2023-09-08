@@ -69,15 +69,14 @@ public class ImageServiceImpl implements ImageService {
             // Save the file metadata to the database
             image.setName(uniqueFilename);
             image.setUrl(filePath.toString());
-            image = save(image);
+            Image savedImage = save(image);
 
-            log.info("Image saved successfully ({}) with ID: ({}).", file.getOriginalFilename(), image.getId());
-            return image;
+            log.info("Image saved successfully ({}) with ID: ({}).", file.getOriginalFilename(), savedImage.getId());
+            return savedImage;
         } catch (IOException e) {
             throw new ServiceException("Failed to save image", e);
         }
     }
-
 
     @Override
     public Image save(Image image) {
