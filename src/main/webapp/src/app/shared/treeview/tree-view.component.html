@@ -3,18 +3,18 @@
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
-                (click)="isCollapsed[i] = ! isCollapsed[i]"
-                [attr.aria-expanded]="!isCollapsed[i]"
+                (click)="isExpanded[i] = ! isExpanded[i]"
+                [attr.aria-expanded]="isExpanded[i]"
             >
                 <div>
                     {{category.name}}
                 </div>
-                <div *ngIf="isCollapsed[i]">+</div>
-                <div *ngIf="!isCollapsed[i]">-</div>
+                <div *ngIf="!isExpanded[i]">+</div>
+                <div *ngIf="isExpanded[i]">-</div>
             </div>
         </div>
-        <div [(ngbCollapse)]="isCollapsed[i]">
-            <div class="filter-item" [attr.aria-expanded]="!isCollapsed[i]">
+        <div [(ngbCollapse)]="!isExpanded[i]">
+            <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
 
                 <div *ngFor="let subcategory of subcategories">
                     <div *ngIf="subcategory.categoryId==category.id">

@@ -15,14 +15,14 @@ export class TreeViewComponent implements OnInit {
 
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
-    isCollapsed: boolean[] = [];
+    isExpanded: boolean[] = [];
 
     constructor() {
     }
 
     ngOnInit(): void {
         for (let i: number = 0; i < this.categories.length; i++) {
-            this.isCollapsed[i] = true;
+            this.isExpanded[i] = true;
         }
     }
 }
