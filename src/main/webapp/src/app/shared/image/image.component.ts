@@ -117,19 +117,4 @@ export class ImageComponent implements OnInit, OnChanges {
             });
         }
     }
-
-    deleteFiles(ids: number[]): void {
-        const deleteObservables = ids.map(id => this.imageService.deleteImage(id));
-
-        forkJoin(deleteObservables).subscribe({
-            next: () => {
-                this.imageDataArray = [];
-                this.imageFiles = [];
-                this.toastNotify.success(`Images deleted successfully`);
-            },
-            error: (error) => {
-                this.toastNotify.error(`Error deleting images`, error);
-            }
-        });
-    }
 }
