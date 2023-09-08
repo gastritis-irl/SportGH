@@ -6,7 +6,6 @@
                 [attr.aria-expanded]="isExpanded[i]"
             >
                 <input type="checkbox" class="item-selected category-selected"
-                       [attr.multiple]="selectedAtLeastOneSubCatOfCat[i]"
                        [checked]="categorySelected[i]"
                        (click)="selectCategory(i)"
                 >

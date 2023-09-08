@@ -29,7 +29,7 @@ export class ProductFilterComponent implements OnInit {
     filterBy(): void {
         this.filterParams['Category'] = [];
         for (let i: number = 0; i < this.categories.length; i++) {
-            if (this.categorySelected[i]) {
+            if (this.selectedAtLeastOneSubCatOfCat[i]) {
                 this.filterParams['Category'].push(this.categories[i].name);
             }
         }

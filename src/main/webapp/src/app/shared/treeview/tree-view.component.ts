@@ -57,7 +57,7 @@ export class TreeViewComponent implements OnInit {
     selectCategory(catInd: number): void {
         this.categorySelected[catInd] = !this.categorySelected[catInd];
         this.setValueForAllSubOfCat(catInd, this.categorySelected[catInd]);
-        this.selectedAtLeastOneSubCatOfCat[catInd] = this.checkIfSelectedAtLeastOneSubOfCat(catInd);
+        this.selectedAtLeastOneSubCatOfCat[catInd] = this.categorySelected[catInd];
     }
 
     selectSubcategory(subInd: number, catInd: number): void {

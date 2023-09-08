@@ -47,8 +47,10 @@ export class ProductListComponent implements OnInit, OnChanges {
                 && p != 'direction'
                 && p != 'orderBy'
             ) {
-                this.filterParams.push(this.filterParamsInput[p]);
-                this.filterParamNames.push(p);
+                if (this.filterParamsInput[p].length != 0) {
+                    this.filterParams.push(this.filterParamsInput[p]);
+                    this.filterParamNames.push(p);
+                }
             }
         }
     }

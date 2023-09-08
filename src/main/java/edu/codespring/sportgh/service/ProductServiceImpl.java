@@ -44,23 +44,14 @@ public class ProductServiceImpl implements ProductService {
         String[] categoryNames, String[] subcategoryNames, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
-        if (subcategoryNames != null && subcategoryNames.length > 0
-            && categoryNames != null && categoryNames.length > 0) {
+
+        if (categoryNames != null && categoryNames.length > 0) {
             spec = specification.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.or(
-                    root.get("subCategory").get("name").in((Object[]) subcategoryNames),
-                    root.get("subCategory").get("category").get("name").in((Object[]) categoryNames)
-                )
-            );
-        } else {
-            if (categoryNames != null && categoryNames.length > 0) {
-                spec = specification.and((root, query, criteriaBuilder) ->
-                    root.get("subCategory").get("category").get("name").in((Object[]) categoryNames));
-            }
-            if (subcategoryNames != null && subcategoryNames.length > 0) {
-                spec = specification.and((root, query, criteriaBuilder) ->
-                    root.get("subCategory").get("name").in((Object[]) subcategoryNames));
-            }
+                root.get("subCategory").get("category").get("name").in((Object[]) categoryNames));
+        }
+        if (subcategoryNames != null && subcategoryNames.length > 0) {
+            spec = specification.and((root, query, criteriaBuilder) ->
+                root.get("subCategory").get("name").in((Object[]) subcategoryNames));
         }
         return spec;
     }

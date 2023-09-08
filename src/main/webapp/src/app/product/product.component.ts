@@ -129,22 +129,21 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
-    removeCommonCatIfSubCat(): void {
-        // remove Category param from filterParams if one of its subcategory is selected
-    }
-
     clearFilter(paramNameAndItem: [ string, string ]): void {
-        if (typeof this.filterParams[paramNameAndItem[0]].length
+        if (this.filterParams[paramNameAndItem[0]].length
             && typeof this.filterParams[paramNameAndItem[0]] != 'string') {
-            for (let i: number = 0; i < this.filterParams[paramNameAndItem[0]].length; i++) {
-                if (this.filterParams[paramNameAndItem[0]][i] == paramNameAndItem[1]) {
-                    this.filterParams[paramNameAndItem[0]].splice(i, 1);
+            if (this.filterParams[paramNameAndItem[0]].length == 1) {
+                this.filterParams[paramNameAndItem[0]] = this.getDefaultParams()[paramNameAndItem[0]];
+            } else {
+                for (let i: number = 0; i < this.filterParams[paramNameAndItem[0]].length; i++) {
+                    if (this.filterParams[paramNameAndItem[0]][i] == paramNameAndItem[1]) {
+                        this.filterParams[paramNameAndItem[0]].splice(i, 1);
+                    }
                 }
             }
         } else {
             this.filterParams[paramNameAndItem[0]] = this.getDefaultParams()[paramNameAndItem[0]];
         }
-        this.removeCommonCatIfSubCat();
         this.loadData();
     }
 
