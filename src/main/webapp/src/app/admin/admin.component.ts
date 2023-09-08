@@ -37,6 +37,9 @@ export class AdminComponent implements OnInit {
     }
 
     loadCategoryImage(imageId: number, category: Category) {
+        if (imageId === 0 || imageId === undefined || imageId === null) {
+            return;
+        }
         this.imageService.getImageFile(imageId).subscribe({
             next: (blob) => {
                 const reader = new FileReader();

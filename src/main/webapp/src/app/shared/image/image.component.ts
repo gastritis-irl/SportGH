@@ -63,14 +63,16 @@ export class ImageComponent implements OnInit, OnChanges {
         }
 
         this.imageFiles.forEach((file, index) => {
-            this.imageService.uploadImage(file).subscribe({
-                next: (response: Image) => {
-                    this.imageDataArray[index] = response;
-                },
-                error: (error) => {
-                    this.toastNotify.error(`Error uploading image`, error);
-                }
-            });
+            if (!file) {
+                this.imageService.uploadImage(file).subscribe({
+                    next: (response: Image) => {
+                        this.imageDataArray[index] = response;
+                    },
+                    error: (error) => {
+                        this.toastNotify.error(`Error uploading image`, error);
+                    }
+                });
+            }
         });
     }
 
@@ -94,9 +96,11 @@ export class ImageComponent implements OnInit, OnChanges {
     }
 
     loadImageFiles(ids: number[]): void {
-        const nonZeroIds = ids.filter(id => id !== 0);
+        const nonZeroIds = ids.filter(id => id !== 0 && id !== undefined&& id !== null);
         if (nonZeroIds.length > 0) {
             const loadObservables = nonZeroIds.map(id => this.imageService.getImageFile(id));
+
+            loadObservables.filter(observable => observable !== undefined && observable !== null);
 
             forkJoin(loadObservables).subscribe(blobs => {
                 blobs.forEach((blob, index) => {

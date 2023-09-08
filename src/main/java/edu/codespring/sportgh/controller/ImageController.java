@@ -67,7 +67,8 @@ public class ImageController {
         }
         Image image = imageService.findById(imageId);
         if (image == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            image = imageService.saveFileAndCreateDbInstance(file);
+            log.info("Creating new image with ID {}.", image.getId());
         }
 
         // Update the image with the new file (this will update the database record and replace the old file)

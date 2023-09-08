@@ -83,6 +83,10 @@ export class CategoryEditComponent implements OnInit {
     }
 
     loadCategoryImage(imageId: number) {
+        if (!imageId) {
+            return;
+        }
+
         this.imageService.getImageFile(imageId).subscribe(blob => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -103,7 +107,7 @@ export class CategoryEditComponent implements OnInit {
 
     updateCategory(): void {
         if (this.newImageFile) {
-            if (this.category.imageId !== undefined) {
+            if (this.category.imageId !== null && this.category.imageId !== undefined) {
                 // If the category already has an associated image, update the existing image
                 this.imageService.updateFile(this.category.imageId, this.newImageFile).subscribe(
                     {

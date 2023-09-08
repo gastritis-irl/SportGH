@@ -12,7 +12,7 @@
 
     </div>
 
-    <ng-container *ngIf="mode=='edit'||imageDataArray.length>0">
+    <ng-container *ngIf="mode=='edit' || (imageDataArray.length>0)">
         <div class="image-placeholder">
             <div class="container">
                 <img *ngFor="let imageData of imageDataArray" [src]="imageData.url" alt="Uploaded Image"
@@ -20,5 +20,4 @@
             </div>
         </div>
     </ng-container>
-
 </div>
