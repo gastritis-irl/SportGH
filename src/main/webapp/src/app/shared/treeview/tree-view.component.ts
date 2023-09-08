@@ -21,8 +21,5 @@ export class TreeViewComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        for (let i: number = 0; i < this.categories.length; i++) {
-            this.isExpanded[i] = true;
-        }
     }
 }

@@ -10,7 +10,7 @@ import { Subcategory } from '../../subcategory/subcategory.model';
 })
 export class ProductFilterComponent implements OnInit {
 
-    isCollapsed: boolean[] = [];
+    isExpanded: boolean[] = [];
     @Output() newFilterEvent: EventEmitter<Params> = new EventEmitter<Params>();
     @Input() filterParamNames: string[] = [];
     @Input() filterParams: Params = {};

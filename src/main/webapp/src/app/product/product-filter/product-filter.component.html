@@ -3,18 +3,18 @@
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
-                (click)="isCollapsed[i] = ! isCollapsed[i]"
-                [attr.aria-expanded]="!isCollapsed[i]"
+                (click)="isExpanded[i] = ! isExpanded[i]"
+                [attr.aria-expanded]="isExpanded[i]"
             >
                 <div>
                     Search for text
                 </div>
-                <div *ngIf="isCollapsed[i]">&darr;</div>
-                <div *ngIf="!isCollapsed[i]">&uarr;</div>
+                <div *ngIf="!isExpanded[i]">&darr;</div>
+                <div *ngIf="isExpanded[i]">&uarr;</div>
             </div>
         </div>
-        <div [(ngbCollapse)]="isCollapsed[i]">
-            <div class="filter-item" [attr.aria-expanded]="!isCollapsed[i]">
+        <div [(ngbCollapse)]="!isExpanded[i]">
+            <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
                 <div class="nav-searchbar filter-search">
                     <svg class="nav-searchbar-icon" aria-hidden="true" viewBox="0 0 23 23">
                         <g>
@@ -29,27 +29,46 @@
         </div>
     </div>
 
-    <sgh-tree-view
-        [categories]="categories"
-        [subcategories]="subcategories"
-    ></sgh-tree-view>
+    <div *ngFor="let i of [11]">
+        <div class="buttons">
+            <div
+                class="button-default button-secondary button-content"
+                (click)="isExpanded[i] = ! isExpanded[i]"
+                [attr.aria-expanded]="isExpanded[i]"
+            >
+                <div>
+                    Category / Subcategory
+                </div>
+                <div *ngIf="!isExpanded[i]">&darr;</div>
+                <div *ngIf="isExpanded[i]">&uarr;</div>
+            </div>
+        </div>
+        <div [(ngbCollapse)]="!isExpanded[i]">
+            <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
+                <sgh-tree-view
+                    [categories]="categories"
+                    [subcategories]="subcategories"
+                ></sgh-tree-view>
+            </div>
+        </div>
+    </div>
 
     <div *ngFor="let i of [1]">
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
-                (click)="isCollapsed[i] = ! isCollapsed[i]"
-                [attr.aria-expanded]="!isCollapsed[i]"
+                (click)="isExpanded[i] = ! isExpanded[i]"
+                [attr.aria-expanded]="isExpanded[i]"
             >
                 <div>
                     Category
                 </div>
-                <div *ngIf="isCollapsed[i]">&darr;</div>
-                <div *ngIf="!isCollapsed[i]">&uarr;</div>
+                <div *ngIf="!isExpanded[i]">&darr;</div>
+                <div *ngIf="isExpanded[i]">&uarr;</div>
             </div>
         </div>
-        <div [(ngbCollapse)]="isCollapsed[i]">
-            <div class="filter-item" [attr.aria-expanded]="!isCollapsed[i]">
+        <div [(ngbCollapse)]="!isExpanded[i]">
+            <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
                 <select class="filter-select"
                         [(ngModel)]="filterParams['Category']"
                 >
@@ -65,18 +84,18 @@
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
-                (click)="isCollapsed[i] = ! isCollapsed[i]"
-                [attr.aria-expanded]="!isCollapsed[i]"
+                (click)="isExpanded[i] = ! isExpanded[i]"
+                [attr.aria-expanded]="isExpanded[i]"
             >
                 <div>
                     Subcategory
                 </div>
-                <div *ngIf="isCollapsed[i]">&darr;</div>
-                <div *ngIf="!isCollapsed[i]">&uarr;</div>
+                <div *ngIf="!isExpanded[i]">&darr;</div>
+                <div *ngIf="isExpanded[i]">&uarr;</div>
             </div>
         </div>
-        <div [(ngbCollapse)]="isCollapsed[i]">
-            <div class="filter-item" [attr.aria-expanded]="!isCollapsed[i]">
+        <div [(ngbCollapse)]="!isExpanded[i]">
+            <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
                 <select class="filter-select"
                         [(ngModel)]="filterParams['Subcategory']"
                 >
@@ -92,18 +111,18 @@
         <div class="buttons">
             <div
                 class="button-default button-secondary button-content"
-                (click)="isCollapsed[i] = ! isCollapsed[i]"
-                [attr.aria-expanded]="!isCollapsed[i]"
+                (click)="isExpanded[i] = ! isExpanded[i]"
+                [attr.aria-expanded]="isExpanded[i]"
             >
                 <div>
                     Price
                 </div>
-                <div class="isCollapsed" *ngIf="isCollapsed[i]">&darr;</div>
-                <div class="notIsCollapsed" *ngIf="!isCollapsed[i]">&uarr;</div>
+                <div class="isCollapsed" *ngIf="!isExpanded[i]">&darr;</div>
+                <div class="notIsCollapsed" *ngIf="isExpanded[i]">&uarr;</div>
             </div>
         </div>
-        <div [(ngbCollapse)]="isCollapsed[i]">
-            <div class="filter-item" [attr.aria-expanded]="!isCollapsed[i]">
+        <div [(ngbCollapse)]="!isExpanded[i]">
+            <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
                 <div class="filter-price">
                     <div>
                         Min price: {{filterParams['MinPrice']}}
