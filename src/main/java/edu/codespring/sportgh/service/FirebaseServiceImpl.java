@@ -83,6 +83,12 @@ public class FirebaseServiceImpl implements FirebaseService {
                     i.getEmail(),
                     i.getEmail(),
                     "password", // we've set this password for every registered user in firebase
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
                     i.getUid(),
                     "USER",
                     null)
