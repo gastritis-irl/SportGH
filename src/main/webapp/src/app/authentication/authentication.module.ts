@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
         RouterModule
     ],
     exports: [
-        AuthenticationComponent // If you want to use it in other modules
+        AuthenticationComponent
     ]
 })
 export class AuthModule { }
