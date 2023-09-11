@@ -11,7 +11,7 @@
                        (change)="filterBy()"
                 >
                 <div class="flex-row" (click)="isExpanded[i] = ! isExpanded[i]">
-                    <div>
+                    <div class="category-name">
                         {{category.name}}
                     </div>
                     <div *ngIf="!isExpanded[i]">+</div>

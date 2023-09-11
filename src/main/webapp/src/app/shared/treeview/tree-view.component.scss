@@ -1,62 +1,69 @@
 @use '../../../style-variables.scss' as *;
 
 $filter-padding: 10px;
+$filter-gap: 5px;
 
 .flex-row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  gap: $filter-gap;
+}
+
+.category-name {
+  width: 100%;
+  overflow: clip;
 }
 
 .button-content {
-    border-radius: $border-radius;
-    border-color: $color-main-3;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    font-weight: $font-weight-bold;
+  border-radius: $border-radius;
+  border-color: $color-main-3;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  font-weight: $font-weight-bold;
 
-    &[aria-expanded="true"] {
-        border-radius: $border-radius $border-radius 0 0;
-    }
+  &[aria-expanded="true"] {
+    border-radius: $border-radius $border-radius 0 0;
+  }
 }
 
 .filter-item {
-    border-radius: $border-radius;
-    background-color: $color-main-3;
-    padding: $filter-padding;
+  border-radius: $border-radius;
+  background-color: $color-main-3;
+  padding-left: $filter-padding;
 
-    &[aria-expanded="true"] {
-        border-radius: 0 0 $border-radius $border-radius;
-    }
+  &[aria-expanded="true"] {
+    border-radius: 0 0 $border-radius $border-radius;
+  }
+
+  .subcategory-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: $border-radius;
+    border-color: $color-main-3;
+    width: 100%;
+    gap: $filter-padding;
+    padding-left: 2 * $filter-padding;
+    overflow: clip;
+  }
 }
 
 .item-selected {
 
-    &:hover {
-        background-color: $color-main-4;
-    }
+  &:hover {
+    background-color: $color-main-4;
+  }
+
+  &[aria-selected="true"] {
+    background-color: $color-main-2;
+  }
+
+  &.category-selected {
 
     &[aria-selected="true"] {
-        background-color: $color-main-2;
+      background-color: $color-main-2;
     }
-
-    &.category-selected {
-
-        &[aria-selected="true"] {
-            background-color: $color-main-2;
-        }
-    }
-}
-
-.subcategory-list {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-radius: $border-radius;
-    border-color: $color-main-3;
-    width: 100%;
-    font-weight: $font-weight-bold;
-    gap: $filter-padding;
+  }
 }
