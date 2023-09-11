@@ -27,8 +27,8 @@ export class UserService extends AppService {
     }
 
     getByUsername(username: string): Observable<User> {
-        const url: string = `${this.baseUrl}/users/${username}`;
-        return this.http.get<User>(url);
+        const url: string = `${this.baseUrl}/users`;
+        return this.http.get<User>(url,{params:{username:username}});
     }
 
     update(userId: number, user: User): Observable<User> {

@@ -89,8 +89,10 @@ public class FirebaseServiceImpl implements FirebaseService {
                     null,
                     null,
                     null,
+
                     i.getUid(),
                     "USER",
+                    null,
                     null)
                 );
             }

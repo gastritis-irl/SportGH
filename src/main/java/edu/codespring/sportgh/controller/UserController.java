@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,14 +21,22 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public ResponseEntity<Collection<UserOutDTO>> findAll() {
-        Collection<User> users = userService.findAll();
-        return new ResponseEntity<>(userMapper.usersToOuts(users), HttpStatus.OK);
-    }
+    public ResponseEntity<UserOutDTO> findByUsername(@RequestParam("username") Optional<String> username, @RequestParam Optional<Long> userId) {
 
-    @GetMapping(path = "/{userId}")
-    public ResponseEntity<UserOutDTO> findById(@PathVariable Long userId) {
-        User user = userService.findById(userId);
+        if(username.isPresent() && userId.isPresent() || username.isEmpty() && userId.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        if (username.isPresent()) {
+
+            User user = userService.findByUsername(username.get());
+            if (user == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
+        }
+
+        User user = userService.findById(userId.get());
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

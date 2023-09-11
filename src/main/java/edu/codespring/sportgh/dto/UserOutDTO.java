@@ -14,6 +14,7 @@ public class UserOutDTO {
     private String address;
     private String city;
     private String country;
+    private Long imageId;
     private String role;
 }
 

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserComponent } from './user.component';
 import { RouterModule } from '@angular/router';
+import { UserRoute } from './user.route';
 
 @NgModule({
     declarations: [
@@ -13,7 +14,8 @@ import { RouterModule } from '@angular/router';
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        UserRoute
     ],
     exports: [
         UserComponent // If you want to use it in other modules

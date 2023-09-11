@@ -53,11 +53,10 @@ public class User extends BaseEntity {
     @Column(name = "role", length = 25)
     private String role = "USER";
 
-    // until Image handling is merged
-    // @ToString.Exclude
-    // @Column(name = "image")
-    // OneToOne(cascade = CascadeType.ALL)
-    // private Image image;
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn(name = "image_id")
+    private Image image;
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "user")
