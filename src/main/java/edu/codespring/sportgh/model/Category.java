@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -24,10 +25,19 @@ public class Category extends BaseEntity {
     private String description;
 
     @ToString.Exclude
-    @Column(name = "imageURL", length = 1000)
-    private String imageURL;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private Set<SubCategory> subcategories;
+    private Set<SubCategory> subCategories;
+
+    public Category(String name, String description, Image image) {
+        super();
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.subCategories = new HashSet<>();
+    }
 }

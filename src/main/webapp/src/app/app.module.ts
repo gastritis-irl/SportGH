@@ -17,6 +17,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ImageService } from './shared/image/image.service';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
             timeOut: 10000,
         }),
     ],
-    providers: [],
+    providers: [ImageService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

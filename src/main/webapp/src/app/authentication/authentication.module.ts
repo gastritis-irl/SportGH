@@ -12,7 +12,7 @@ import { AuthenticationComponent } from './authentication.component';
         FormsModule
     ],
     exports: [
-        AuthenticationComponent // If you want to use it in other modules
+        AuthenticationComponent
     ]
 })
 export class AuthModule { }
