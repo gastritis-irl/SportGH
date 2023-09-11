@@ -1,3 +1,9 @@
+<div class="breadcrumb">
+    <a [routerLink]="['/']">Home</a>>
+    <a [routerLink]="['/products']">Products</a>>
+    <a [routerLink]="['/products',product.id]">{{product.name}}</a>
+</div>
+
 <ng-template #deletePopoverContent>
     <div class="buttons">
         <div (click)="deleteProduct()" class="button-default button-primary">
@@ -14,7 +20,7 @@
                     {{product.name}}
                     <div *ngIf="product.userId==product.userId" class="product-links buttons">
                         <button class="product-edit-link button-default button-secondary"
-                             routerLink="/products/{{product.id}}/edit">
+                                routerLink="/products/{{product.id}}/edit">
                             Edit
                         </button>
                         <button
