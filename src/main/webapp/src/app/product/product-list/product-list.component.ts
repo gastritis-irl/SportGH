@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from '../product.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
+import { Category } from '../../category/category.model';
 
 @Component({
     selector: 'sgh-product-list',
@@ -10,8 +11,10 @@ import { Subcategory } from '../../subcategory/subcategory.model';
 export class ProductListComponent implements OnInit {
 
     @Input() products: Product[] = [];
+    @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
     @Input() subcategorySelected: boolean[] = [];
+    @Input() categorySelected: boolean[] = [];
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
     @Input() maxPrice: number = 0;
@@ -37,7 +40,31 @@ export class ProductListComponent implements OnInit {
 
     clearFilter(paramName: string, paramIndex: number): void {
         this.subcategorySelected[paramIndex] = false;
+        let checkedSubWithSameCat: boolean = false;
+        for (let i: number = 0; i < this.subcategories.length; i++) {
+            if (this.subcategories[i].categoryId == this.subcategories[paramIndex].categoryId
+                && this.subcategorySelected[i]) {
+                checkedSubWithSameCat = true;
+                break;
+            }
+        }
+        if (!checkedSubWithSameCat) {
+            for (let i: number = 0; i < this.categories.length; i++) {
+                if (this.categories[i].id == this.subcategories[paramIndex].categoryId) {
+                    this.categorySelected[i] = false;
+                    break;
+                }
+            }
+        }
+
         this.clearFilterEvent.emit(paramName);
+    }
+
+    anyActiveFilter(): boolean {
+        return this.textSearch != '' ||
+            this.minPrice != 0 ||
+            this.maxPrice != 0 ||
+            this.subcategorySelected.find((e: boolean) => e) != null;
     }
 
     orderBy(): void {

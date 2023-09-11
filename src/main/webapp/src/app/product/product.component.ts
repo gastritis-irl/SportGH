@@ -240,6 +240,8 @@ export class ProductComponent implements OnInit {
         this.orderByParam = 'name';
         this.direction = 'ASC';
         this.subcategorySelected = [];
+        this.categorySelected = [];
+        this.selectedAtLeastOneSubCatOfCat = [];
         this.textSearch = '';
         this.minPrice = 0;
         this.maxPrice = 0;

@@ -77,6 +77,9 @@ $card-max-width-large: 280px;
             border-radius: $border-radius;
             padding: $order-by-select-padding;
             width: fit-content;
+            color: $color-main-1;
+            gap: 5px;
+            font-weight: $font-weight-bold;
 
             .clear-filter {
 

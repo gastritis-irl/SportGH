@@ -20,8 +20,9 @@
         </div>
     </div>
     <div class="filter-param-holder">
-        <div class="filter-param">
-            <div class="clear-filter" (click)="resetFilters()">Reset filters&#10005;</div>
+        <div class="filter-param" *ngIf="anyActiveFilter()">
+            Reset filters
+            <div class="clear-filter" (click)="resetFilters()">&#10005;</div>
         </div>
 
         <div *ngFor="let selected of subcategorySelected; let i = index">
