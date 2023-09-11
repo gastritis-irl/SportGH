@@ -21,27 +21,32 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public ResponseEntity<UserOutDTO> findByUsername(@RequestParam("username") Optional<String> username, @RequestParam Optional<Long> userId) {
+    public ResponseEntity<UserOutDTO> findByUsername(@RequestParam("username") Optional<String> username,
+                                                     @RequestParam Optional<Long> userId) {
+        validateRequestParams(username, userId);
 
-        if(username.isPresent() && userId.isPresent() || username.isEmpty() && userId.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-
-        if (username.isPresent()) {
-
-            User user = userService.findByUsername(username.get());
-            if (user == null) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
-        }
-
-        User user = userService.findById(userId.get());
+        User user = fetchUserByUsernameOrId(username, userId);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
+
+    private void validateRequestParams(Optional<String> username, Optional<Long> userId) {
+        if (username.isPresent() && userId.isPresent() || username.isEmpty() && userId.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private User fetchUserByUsernameOrId(Optional<String> username, Optional<Long> userId) {
+        if (username.isPresent()) {
+            return userService.findByUsername(username.get());
+        } else {
+            return userService.findById(userId.get());
+        }
+    }
+
 
     @DeleteMapping(path = "/{userId}")
     public ResponseEntity<?> deleteById(@PathVariable Long userId) {
