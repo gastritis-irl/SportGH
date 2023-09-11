@@ -83,9 +83,10 @@ export class ProductComponent implements OnInit {
         );
     }
 
-    changesEvent(changed: [ number, number ]): void {
+    changesEvent(changed: [ number, number, string ]): void {
         this.minPrice = changed[0];
         this.maxPrice = changed[1];
+        this.textSearch = changed[2];
         this.setParams();
         this.loadData();
     }
