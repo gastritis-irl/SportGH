@@ -51,6 +51,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
+        log.info("User with ID {} updated successfully.", user.getId());
+        log.info("User details: {}", user);
         return userRepository.save(user);
     }
 

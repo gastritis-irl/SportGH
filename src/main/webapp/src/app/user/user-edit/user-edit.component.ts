@@ -67,5 +67,4 @@ export class UserEditComponent implements OnInit {
     onSubmit(): void {
         this.updateUser();
     }
-    
-    }
+}

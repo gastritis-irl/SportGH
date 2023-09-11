@@ -14,4 +14,7 @@ public interface UserMapper {
     UserOutDTO userToOut(User user);
 
     Collection<UserOutDTO> usersToOuts(Collection<User> users);
+
+    @Mapping(source = "imageId", target = "image.id")
+    User outToUser(UserOutDTO userOutDTO);
 }
