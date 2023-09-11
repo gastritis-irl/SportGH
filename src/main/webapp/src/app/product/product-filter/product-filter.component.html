@@ -51,6 +51,7 @@
                     [selectedAtLeastOneSubCatOfCat]="selectedAtLeastOneSubCatOfCat"
                     [categorySelected]="categorySelected"
                     [subcategorySelected]="subcategorySelected"
+                    (filterEvent)="filterBy()"
                 ></sgh-tree-view>
             </div>
         </div>
@@ -77,22 +78,16 @@
                         Min price: {{minPrice}}
                     </div>
                     <input class="input-slider form-range" [(ngModel)]="minPrice" type="range"
-                           min="0" max="1000" value="0" step="1">
+                           min="0" max="1000" value="0" step="1" (mouseup)="filterBy()">
                 </div>
                 <div class="filter-price">
                     <div>
                         Max price: {{maxPrice}}
                     </div>
                     <input class="input-slider form-range" [(ngModel)]="maxPrice" type="range"
-                           min="0" max="1000" value="1000" step="1">
+                           min="0" max="1000" value="1000" step="1" (mouseup)="filterBy()">
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="buttons">
-        <div class="button-default button-primary" (click)="filterBy()">
-            Search
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category } from '../../category/category.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
@@ -20,10 +20,16 @@ export class TreeViewComponent implements OnInit {
     @Input() selectedAtLeastOneSubCatOfCat: boolean[] = [];
     @Input() subcategorySelected: boolean[] = [];
 
+    @Output() filterEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     constructor() {
     }
 
     ngOnInit(): void {
+    }
+
+    filterBy(): void {
+        this.filterEvent.emit();
     }
 
     checkIfAllSubcategorySelected(catInd: number): boolean {
