@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './user.service';
-import { User } from './user.model';
+import { UserService } from '../user.service';
+import { User } from '../user.model';
 import { ToastrService } from 'ngx-toastr';
 import { Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ImageService } from '../../shared/image/image.service';
 
 @Component({
     selector: 'sgh-user',
     templateUrl: './user.component.html',
+    styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-    //input for username
+
     @Input() username: string = '';
     user: User = {};
     imageFile?: File;
 
-    constructor(private userService: UserService, private toastNotify: ToastrService, private route: ActivatedRoute) {
+    constructor(private userService: UserService, private toastNotify: ToastrService, private route: ActivatedRoute, private imageService: ImageService) {
     }
 
     ngOnInit(): void {

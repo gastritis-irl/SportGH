@@ -8,7 +8,7 @@ export interface User {
     fullName?: string;
     phoneNumber?: string;
     bio?: string;
-    adress?: string;
+    address?: string;
     city?: string;
     country?: string;
     products?: Product[];

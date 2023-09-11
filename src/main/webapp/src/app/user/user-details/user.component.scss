@@ -1,0 +1,73 @@
+@use '../../../style-variables.scss' as *;
+
+.user-container {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-neutral-1;
+    border-radius: $border-radius;
+    padding: $item-padding;
+    max-width: $card-min-width-large;
+    margin: 0 auto;
+
+    .user-header {
+        display: flex;
+        border-bottom: 1px solid $border-color;
+        padding: $item-padding;
+        align-items: center;
+
+        &__image {
+            img {
+                border-radius: 50%;
+                width: 100px; // Adjust as necessary
+                height: 100px; // Adjust as necessary
+                object-fit: cover;
+            }
+        }
+
+        &__info {
+            margin-left: $item-padding;
+            display: flex;
+            flex-direction: column;
+
+            h1 {
+                font-family: $font-default;
+                font-weight: $font-weight-bold;
+                font-size: $size-h1;
+                color: $font-color-1;
+            }
+
+            p {
+                font-family: $font-default;
+                font-size: $size-default;
+                color: $font-color-2;
+
+                &:nth-child(2) {
+                    font-weight: $font-weight-medium;
+                }
+            }
+        }
+    }
+
+    .user-posts {
+        display: flex;
+        flex-direction: column;
+        gap: $gallery-gap;
+
+        &__post {
+            background-color: $color-main-3;
+            padding: $item-padding;
+            border-radius: $border-radius;
+            border: 1px solid $border-color;
+
+            p {
+                font-family: $font-default;
+                font-size: $size-default;
+                color: $color-neutral-2;
+            }
+
+            &:hover {
+                box-shadow: $hover-box-shadow;
+            }
+        }
+    }
+}

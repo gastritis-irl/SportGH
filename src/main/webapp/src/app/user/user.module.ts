@@ -3,13 +3,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UserComponent } from './user.component';
+import { UserComponent } from './user-details/user.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 import { RouterModule } from '@angular/router';
 import { UserRoute } from './user.route';
 
 @NgModule({
     declarations: [
-        UserComponent
+        UserComponent,
+        UserEditComponent
     ],
     imports: [
         CommonModule,
