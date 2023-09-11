@@ -28,42 +28,30 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
-        @RequestParam("orderBy") Optional<String> orderBy,
-        @RequestParam("direction") Optional<String> direction,
-        @RequestParam("pageNumber") Optional<Integer> pageNumber,
-        @RequestParam("Category") Optional<String[]> categoryNames,
-        @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
-        @RequestParam("MinPrice") Optional<Double> minPrice,
-        @RequestParam("MaxPrice") Optional<Double> maxPrice,
-        @RequestParam("TextSearch") Optional<String> textSearch
+            @RequestParam("orderBy") Optional<String> orderBy,
+            @RequestParam("direction") Optional<String> direction,
+            @RequestParam("pageNumber") Optional<Integer> pageNumber,
+            @RequestParam("Category") Optional<String[]> categoryNames,
+            @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
+            @RequestParam("MinPrice") Optional<Double> minPrice,
+            @RequestParam("MaxPrice") Optional<Double> maxPrice,
+            @RequestParam("TextSearch") Optional<String> textSearch
     ) {
-        if (pageNumber.isPresent()) {
-            return new ResponseEntity<>(
+        log.info(String.valueOf(orderBy), direction, pageNumber, categoryNames, subcategoryNames, minPrice, maxPrice, textSearch);
+        return new ResponseEntity<>(
                 productService.findPageByParams(
-                    orderBy.orElse(null),
-                    direction.orElse(null),
-                    pageNumber.orElse(null),
-                    categoryNames.orElse(null),
-                    subcategoryNames.orElse(null),
-                    minPrice.orElse(null),
-                    maxPrice.orElse(null),
-                    textSearch.orElse(null)
-                ),
-                HttpStatus.OK
-            );
-        } else {
-            return new ResponseEntity<>(
-                productMapper.productPageToOut(
-                    productService.findAll(
                         orderBy.orElse(null),
-                        direction.orElse(null)
-                    ),
-                    0,
-                    0
+                        direction.orElse(null),
+                        pageNumber.orElse(1),
+                        categoryNames.orElse(null),
+                        subcategoryNames.orElse(null),
+                        minPrice.orElse(null),
+                        maxPrice.orElse(null),
+                        textSearch.orElse(null)
                 ),
                 HttpStatus.OK
-            );
-        }
+        );
+
     }
 
     @GetMapping(path = "/{productId}")

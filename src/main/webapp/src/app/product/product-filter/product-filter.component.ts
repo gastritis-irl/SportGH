@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Category } from '../../category/category.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
 
@@ -7,7 +7,7 @@ import { Subcategory } from '../../subcategory/subcategory.model';
     templateUrl: './product-filter.component.html',
     styleUrls: [ './product-filter.component.scss' ],
 })
-export class ProductFilterComponent implements OnInit, OnChanges {
+export class ProductFilterComponent implements OnInit {
 
     isExpanded: boolean[] = [];
     @Input() categories: Category[] = [];
@@ -18,6 +18,7 @@ export class ProductFilterComponent implements OnInit, OnChanges {
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
     @Input() maxPrice: number = 0;
+
     @Output() changesEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() {
@@ -26,7 +27,7 @@ export class ProductFilterComponent implements OnInit, OnChanges {
     ngOnInit(): void {
     }
 
-    ngOnChanges(): void {
+    filterBy(): void {
         this.changesEvent.emit(true);
     }
 }

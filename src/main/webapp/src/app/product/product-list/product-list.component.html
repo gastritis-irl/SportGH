@@ -9,7 +9,6 @@
             </div>
             <select class="order-by-select"
                     [(ngModel)]="orderByElement" name="orderByElement"
-                    #orderByElem="ngModel"
                     (ngModelChange)="orderBy()"
             >
                 <option [ngValue]="'name#ASC'">Name A-Z</option>
@@ -21,24 +20,31 @@
         </div>
     </div>
     <div class="filter-param-holder">
-<!--        <div class="filter-param" *ngIf="filterParamNames.length">-->
-<!--            <div class="clear-filter" (click)="resetFilters()">Reset filters&#10005;</div>-->
-<!--        </div>-->
-<!--        <div *ngFor="let filter of filterParamNames; let i = index">-->
-<!--            <div-->
-<!--                *ngIf="filter=='Category' || filter=='Subcategory' && filterParams[i].length>=1">-->
-<!--                <div class="filter-param" *ngFor="let filterItem of filterParams[i]">-->
-<!--                    {{filter}}: {{filterItem}}-->
-<!--                    <div class="clear-filter" (click)="clearFilter(filter,filterItem)">&#10005;</div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div *ngIf="filter!='Category' && filter!='Subcategory'">-->
-<!--                <div class="filter-param">-->
-<!--                    {{filter}}: {{filterParams[i]}}-->
-<!--                    <div class="clear-filter" (click)="clearFilter(filter,'')">&#10005;</div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="filter-param">
+            <div class="clear-filter" (click)="resetFilters()">Reset filters&#10005;</div>
+        </div>
+
+        <div *ngFor="let filter of subcategorySelected; let i = index">
+            <div class="filter-param" *ngIf="filter">
+                {{subcategories[i].name}}
+                <div class="clear-filter" (click)="clearFilter('Subcategory',i)">&#10005;</div>
+            </div>
+        </div>
+
+        <div class="filter-param" *ngIf="textSearch!=''">
+            Search: {{textSearch}}
+            <div class="clear-filter" (click)="clearFilter('TextSearch',0)">&#10005;</div>
+        </div>
+
+        <div class="filter-param" *ngIf="minPrice">
+            Min price: {{minPrice}}
+            <div class="clear-filter" (click)="clearFilter('MinPrice',0)">&#10005;</div>
+        </div>
+
+        <div class="filter-param" *ngIf="maxPrice">
+            Max price: {{maxPrice}}
+            <div class="clear-filter" (click)="clearFilter('MaxPrice',0)">&#10005;</div>
+        </div>
     </div>
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">

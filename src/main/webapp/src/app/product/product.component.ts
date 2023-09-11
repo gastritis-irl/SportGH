@@ -7,7 +7,7 @@ import { Subcategory } from '../subcategory/subcategory.model';
 import { CategoryService } from '../category/category.service';
 import { SubcategoryService } from '../subcategory/subcategory.service';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
     selector: 'sgh-product',
@@ -21,7 +21,18 @@ export class ProductComponent implements OnInit {
     subcategories: Subcategory[] = [];
     nrOfPages: number = 0;
     nrOfItems: number = 0;
-    filterParams: Params = this.getDefaultParams();
+    currentPage: number = 1;
+    orderByParam: string = 'name';
+    direction: string = 'ASC';
+    filterParams: Params = {
+        pageNumber: 1,
+        orderBy: 'name',
+        direction: 'ASC',
+        Subcategory: [],
+        TextSearch: '',
+        MinPrice: 0,
+        MaxPrice: 0,
+    };
     filterParamNames: string[] = [
         'pageNumber',
         'orderBy',
@@ -45,55 +56,17 @@ export class ProductComponent implements OnInit {
         private subcategoryService: SubcategoryService,
         private toastNotify: ToastrService,
         private route: ActivatedRoute,
+        private router: Router,
     ) {
     }
 
     ngOnInit(): void {
-        this.loadParams();
+        this.loadCategoriesAndSubcategories();
+        this.getQueryParams();
         this.loadData();
     }
 
-    changesEvent(changed: boolean): void {
-        this.loadData();
-    }
-
-    loadParams(): void {
-        this.route.queryParams.subscribe(
-            {
-                next: (params: Params): void => {
-                    for (const paramName of this.filterParamNames) {
-                        if (params[paramName]) {
-                            if (paramName == 'Category' || paramName == 'Subcategory') {
-                                this.filterParams[paramName].push(params[paramName]);
-                            } else {
-                                this.filterParams[paramName] = params[paramName];
-                            }
-                        }
-                    }
-                },
-                error: (error): void => {
-                    console.error(error);
-                    this.toastNotify.error('Error loading filter parameters');
-                }
-            }
-        );
-    }
-
-    loadData(): void {
-        this.scrollToTop();
-        this.productService.getAllByParams(this.filterParams).subscribe(
-            {
-                next: (data: ProductPage): void => {
-                    this.products = data.products;
-                    this.nrOfPages = data.nrOfPages;
-                    this.nrOfItems = data.nrOfElements;
-                },
-                error: (error): void => {
-                    console.error('Error fetching data (products):', error);
-                    this.toastNotify.error('Error loading products');
-                }
-            }
-        );
+    loadCategoriesAndSubcategories(): void {
         this.categoryService.getAll().subscribe(
             {
                 next: (data: Category[]): void => {
@@ -118,6 +91,109 @@ export class ProductComponent implements OnInit {
         );
     }
 
+    changesEvent(changed: boolean): void {
+        if (changed) {
+            this.setParams();
+            this.loadData();
+        }
+    }
+
+    getQueryParams(): void {
+        this.route.queryParams.subscribe(
+            {
+                next: (params: Params): void => {
+                    for (const paramName of this.filterParamNames) {
+                        if (params[paramName] != 0) {
+                            if (paramName == 'Subcategory') {
+                                this.filterParams[paramName].push(params[paramName]);
+                                for (let i: number = 0; i < this.subcategories.length; i++) {
+                                    if (this.subcategories[i].name == params[paramName]) {
+                                        this.subcategorySelected[i] = true;
+                                    }
+                                }
+                            } else {
+                                this.filterParams[paramName] = params[paramName];
+                            }
+                            if (paramName == 'Category') {
+                                let catInd: number = -1;
+                                for (let i: number = 0; i < this.categories.length; i++) {
+                                    if (this.categories[i].name == params[paramName]) {
+                                        catInd = i;
+                                        break;
+                                    }
+                                }
+                                if (catInd != -1) {
+                                    this.categorySelected[catInd] = true;
+                                }
+                                for (let i: number = 0; i < this.categories.length; i++) {
+                                    if (this.subcategories[i].categoryId == this.categories[catInd].id) {
+                                        this.subcategorySelected[i] = true;
+                                    }
+                                }
+                            }
+                            if (paramName == 'pageNumber') {
+                                this.currentPage = params[paramName];
+                            }
+                            if (paramName == 'orderBy') {
+                                this.orderByParam = params[paramName];
+                            }
+                            if (paramName == 'direction') {
+                                this.direction = params[paramName];
+                            }
+                            if (paramName == 'TextSearch') {
+                                this.textSearch = params[paramName];
+                            }
+                            if (paramName == 'MinPrice') {
+                                this.minPrice = params[paramName];
+                            }
+                            if (paramName == 'MaxPrice') {
+                                this.maxPrice = params[paramName];
+                            }
+                        }
+                    }
+                },
+                error: (error): void => {
+                    console.error(error);
+                    this.toastNotify.error('Error loading filter parameters');
+                }
+            }
+        );
+    }
+
+    setQueryParams(): void {
+        this.router.navigate(
+            [],
+            {
+                relativeTo: this.route,
+                queryParams: this.filterParams,
+                replaceUrl: true,
+                queryParamsHandling: 'merge'
+            }
+        )
+            .catch(error => {
+                console.error(error);
+                this.toastNotify.error('Error loading filter parameters');
+            });
+    }
+
+    loadData(): void {
+        this.scrollToTop();
+        this.setQueryParams();
+        this.productService.getAllByParams(this.filterParams).subscribe(
+            {
+                next: (data: ProductPage): void => {
+                    this.products = data.products;
+                    this.nrOfPages = data.nrOfPages;
+                    this.nrOfItems = data.nrOfElements;
+                },
+                error: (error): void => {
+                    console.error('Error fetching data (products):', error);
+                    this.toastNotify.error('Error loading products');
+                }
+            }
+        );
+    }
+
     scrollToTop(): void {
         window.scroll({
             top: 0,
@@ -136,43 +212,75 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
-    filterBy(filterParams: Params): void {
-        this.filterParams = filterParams;
-        this.loadData();
-    }
-
-    clearFilter(paramNameAndItem: [ string, string, number ]): void {
-        if (paramNameAndItem[0] == 'Category' ||
-            paramNameAndItem[0] == 'Subcategory') {
-            if (this.filterParams[paramNameAndItem[0]].length == 1) {
-                this.filterParams[paramNameAndItem[0]] = this.getDefaultParams()[paramNameAndItem[0]];
-            } else {
-                for (let i: number = 0; i < this.filterParams[paramNameAndItem[0]].length; i++) {
-                    if (this.filterParams[paramNameAndItem[0]][i] == paramNameAndItem[1]) {
-                        this.filterParams[paramNameAndItem[0]].splice(i, 1);
-                    }
-                }
-            }
-        } else {
-            this.filterParams[paramNameAndItem[0]] = this.getDefaultParams()[paramNameAndItem[0]];
+    clearFilter(paramNameAndIndex: [ string, number ]): void {
+        if (paramNameAndIndex[0] == 'Subcategory') {
+            this.subcategorySelected[paramNameAndIndex[1]] = false;
+        }
+        if (paramNameAndIndex[0] == 'TextSearch') {
+            this.textSearch = '';
+        }
+        if (paramNameAndIndex[0] == 'MinPrice') {
+            this.minPrice = 0;
+        }
+        if (paramNameAndIndex[0] == 'MaxPrice') {
+            this.maxPrice = 0;
         }
         this.loadData();
     }
 
     resetFilters(): void {
-        this.filterParams = this.getDefaultParams();
+        this.setDefaultParams();
         this.loadData();
     }
 
-    getDefaultParams(): Params {
-        return {
+    setDefaultParams(): void {
+        this.filterParams = {
             pageNumber: 1,
             orderBy: 'name',
             direction: 'ASC',
-            Category: [],
             Subcategory: [],
+            TextSearch: '',
             MinPrice: 0,
             MaxPrice: 0,
         };
+        this.currentPage = 1;
+        this.orderByParam = 'name';
+        this.direction = 'ASC';
+        this.subcategorySelected = [];
+        this.textSearch = '';
+        this.minPrice = 0;
+        this.maxPrice = 0;
+    }
+
+    setParams(): void {
+        this.filterParams = {
+            pageNumber: this.currentPage,
+            orderBy: this.orderByParam,
+            direction: this.direction,
+            Subcategory: [],
+            TextSearch: this.textSearch,
+            MinPrice: this.minPrice,
+            MaxPrice: this.maxPrice,
+        };
+
+        for (let i: number = 0; i < this.categorySelected.length; i++) {
+            if (this.categorySelected[i]) {
+                this.setSubcategoryOfCategory(i);
+            }
+        }
+
+        for (let i: number = 0; i < this.subcategorySelected.length; i++) {
+            if (this.subcategorySelected[i]) {
+                this.filterParams['Subcategory'].push(this.subcategories[i].name);
+            }
+        }
+    }
+
+    setSubcategoryOfCategory(categoryIndex: number): void {
+        for (let i: number = 0; i < this.subcategories.length; i++) {
+            if (this.subcategories[i].categoryId == this.categories[categoryIndex].id) {
+                this.subcategorySelected[i] = true;
+            }
+        }
     }
 }

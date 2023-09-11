@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from '../product.model';
-import { Params } from '@angular/router';
-import { Category } from '../../category/category.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
 
 @Component({
@@ -9,13 +7,10 @@ import { Subcategory } from '../../subcategory/subcategory.model';
     templateUrl: './product-list.component.html',
     styleUrls: [ './product-list.component.scss' ],
 })
-export class ProductListComponent implements OnInit, OnChanges {
+export class ProductListComponent implements OnInit {
 
     @Input() products: Product[] = [];
-    @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
-    @Input() categorySelected: boolean[] = [];
-    @Input() selectedAtLeastOneSubCatOfCat: boolean[] = [];
     @Input() subcategorySelected: boolean[] = [];
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
@@ -27,7 +22,7 @@ export class ProductListComponent implements OnInit, OnChanges {
 
     @Output() newPageEvent: EventEmitter<number> = new EventEmitter<number>();
     @Output() orderByEvent: EventEmitter<string> = new EventEmitter<string>();
-    @Output() clearFilterEvent: EventEmitter<[ string, string, number ]> = new EventEmitter<[ string, string, number ]>();
+    @Output() clearFilterEvent: EventEmitter<[ string, number ]> = new EventEmitter<[ string, number ]>();
     @Output() resetFilterEvent: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
@@ -36,15 +31,12 @@ export class ProductListComponent implements OnInit, OnChanges {
     ngOnInit(): void {
     }
 
-    ngOnChanges(): void {
-    }
-
     resetFilters(): void {
         this.resetFilterEvent.emit();
     }
 
-    clearFilter(paramName: string, paramItem: string, paramIndex: number): void {
-        this.clearFilterEvent.emit([ paramName, paramItem, paramIndex ]);
+    clearFilter(paramName: string, paramIndex: number): void {
+        this.clearFilterEvent.emit([ paramName, paramIndex ]);
     }
 
     orderBy(): void {
