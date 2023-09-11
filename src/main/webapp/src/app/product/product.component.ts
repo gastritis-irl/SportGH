@@ -24,15 +24,7 @@ export class ProductComponent implements OnInit {
     currentPage: number = 1;
     orderByParam: string = 'name';
     direction: string = 'ASC';
-    filterParams: Params = {
-        pageNumber: 1,
-        orderBy: 'name',
-        direction: 'ASC',
-        Subcategory: [],
-        TextSearch: '',
-        MinPrice: 0,
-        MaxPrice: 0,
-    };
+    filterParams: Params = {};
     filterParamNames: string[] = [
         'pageNumber',
         'orderBy',
@@ -61,6 +53,7 @@ export class ProductComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.setDefaultParams();
         this.loadDataFirst();
     }
 
