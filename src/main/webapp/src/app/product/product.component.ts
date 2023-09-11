@@ -127,6 +127,7 @@ export class ProductComponent implements OnInit {
                                 for (let i: number = 0; i < this.subcategories.length; i++) {
                                     if (this.subcategories[i].categoryId == this.categories[catInd].id) {
                                         this.subcategorySelected[i] = true;
+                                        this.filterParams['Subcategory'].push(this.subcategories[i].name);
                                     }
                                 }
                             }
@@ -262,22 +263,8 @@ export class ProductComponent implements OnInit {
             MaxPrice: this.maxPrice,
         };
 
-        for (let i: number = 0; i < this.categorySelected.length; i++) {
-            if (this.categorySelected[i]) {
-                this.setSubcategoryOfCategory(i);
-            }
-        }
-
         for (let i: number = 0; i < this.subcategories.length; i++) {
             if (this.subcategorySelected[i]) {
-                this.filterParams['Subcategory'].push(this.subcategories[i].name);
-            }
-        }
-    }
-
-    setSubcategoryOfCategory(categoryIndex: number): void {
-        for (let i: number = 0; i < this.subcategories.length; i++) {
-            if (this.subcategories[i].categoryId == this.categories[categoryIndex].id) {
                 this.filterParams['Subcategory'].push(this.subcategories[i].name);
             }
         }
