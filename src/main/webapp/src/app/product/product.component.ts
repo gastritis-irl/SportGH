@@ -74,7 +74,6 @@ export class ProductComponent implements OnInit {
                             next: (data: Subcategory[]): void => {
                                 this.subcategories = data;
                                 this.getQueryParams();
-                                this.loadData();
                             },
                             error: (error): void => {
                                 console.error('Error fetching data(subcategories):', error);
@@ -125,7 +124,7 @@ export class ProductComponent implements OnInit {
                                 if (catInd != -1) {
                                     this.categorySelected[catInd] = true;
                                 }
-                                for (let i: number = 0; i < this.categories.length; i++) {
+                                for (let i: number = 0; i < this.subcategories.length; i++) {
                                     if (this.subcategories[i].categoryId == this.categories[catInd].id) {
                                         this.subcategorySelected[i] = true;
                                     }
@@ -166,7 +165,7 @@ export class ProductComponent implements OnInit {
             [],
             {
                 relativeTo: this.route,
-                queryParams: this.filterParams,
+                // queryParams: this.filterParams,
                 replaceUrl: true,
                 queryParamsHandling: 'merge'
             }
@@ -213,19 +212,17 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
-    clearFilter(paramNameAndIndex: [ string, number ]): void {
-        if (paramNameAndIndex[0] == 'Subcategory') {
-            this.subcategorySelected[paramNameAndIndex[1]] = false;
-        }
-        if (paramNameAndIndex[0] == 'TextSearch') {
+    clearFilter(paramName: string): void {
+        if (paramName[0] == 'TextSearch') {
             this.textSearch = '';
         }
-        if (paramNameAndIndex[0] == 'MinPrice') {
+        if (paramName[0] == 'MinPrice') {
             this.minPrice = 0;
         }
-        if (paramNameAndIndex[0] == 'MaxPrice') {
+        if (paramName[0] == 'MaxPrice') {
             this.maxPrice = 0;
         }
+        this.setParams();
         this.loadData();
     }
 
@@ -254,6 +251,7 @@ export class ProductComponent implements OnInit {
     }
 
     setParams(): void {
+        this.filterParams = [];
         this.filterParams = {
             pageNumber: this.currentPage,
             orderBy: this.orderByParam,
@@ -270,7 +268,7 @@ export class ProductComponent implements OnInit {
             }
         }
 
-        for (let i: number = 0; i < this.subcategorySelected.length; i++) {
+        for (let i: number = 0; i < this.subcategories.length; i++) {
             if (this.subcategorySelected[i]) {
                 this.filterParams['Subcategory'].push(this.subcategories[i].name);
             }
@@ -280,7 +278,7 @@ export class ProductComponent implements OnInit {
     setSubcategoryOfCategory(categoryIndex: number): void {
         for (let i: number = 0; i < this.subcategories.length; i++) {
             if (this.subcategories[i].categoryId == this.categories[categoryIndex].id) {
-                this.subcategorySelected[i] = true;
+                this.filterParams['Subcategory'].push(this.subcategories[i].name);
             }
         }
     }

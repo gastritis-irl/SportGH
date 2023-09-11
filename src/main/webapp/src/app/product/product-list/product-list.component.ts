@@ -22,7 +22,7 @@ export class ProductListComponent implements OnInit {
 
     @Output() newPageEvent: EventEmitter<number> = new EventEmitter<number>();
     @Output() orderByEvent: EventEmitter<string> = new EventEmitter<string>();
-    @Output() clearFilterEvent: EventEmitter<[ string, number ]> = new EventEmitter<[ string, number ]>();
+    @Output() clearFilterEvent: EventEmitter<string> = new EventEmitter<string>();
     @Output() resetFilterEvent: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
@@ -36,7 +36,8 @@ export class ProductListComponent implements OnInit {
     }
 
     clearFilter(paramName: string, paramIndex: number): void {
-        this.clearFilterEvent.emit([ paramName, paramIndex ]);
+        this.subcategorySelected[paramIndex] = false;
+        this.clearFilterEvent.emit(paramName);
     }
 
     orderBy(): void {

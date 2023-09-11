@@ -24,8 +24,8 @@
             <div class="clear-filter" (click)="resetFilters()">Reset filters&#10005;</div>
         </div>
 
-        <div *ngFor="let filter of subcategorySelected; let i = index">
-            <div class="filter-param" *ngIf="filter">
+        <div *ngFor="let selected of subcategorySelected; let i = index">
+            <div class="filter-param" *ngIf="selected">
                 {{subcategories[i].name}}
                 <div class="clear-filter" (click)="clearFilter('Subcategory',i)">&#10005;</div>
             </div>

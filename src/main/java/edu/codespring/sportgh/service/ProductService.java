@@ -13,14 +13,13 @@ public interface ProductService {
     Collection<Product> findAll(String orderBy, String direction);
 
     ProductPageOutDTO findPageByParams(
-        String orderBy,
-        String direction,
-        int pageNumber,
-        String[] categoryNames,
-        String[] subcategoryNames,
-        Double minPrice,
-        Double maxPrice,
-        String textSearch
+            String orderBy,
+            String direction,
+            int pageNumber,
+            String[] subcategoryNames,
+            Double minPrice,
+            Double maxPrice,
+            String textSearch
     );
 
     boolean notExistsByNameAndUser(String name, User user);

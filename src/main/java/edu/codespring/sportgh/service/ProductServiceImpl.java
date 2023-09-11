@@ -24,48 +24,44 @@ public class ProductServiceImpl implements ProductService {
     static final int pageSize = 60;
 
     private Specification<Product> filterByPrice(
-        Double minPrice, Double maxPrice, Specification<Product> specification
+            Double minPrice, Double maxPrice, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
         if (minPrice != null && minPrice != 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
+                    criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
         }
 
         if (maxPrice != null && maxPrice != 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
+                    criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
         }
 
         return spec;
     }
 
     private Specification<Product> filterByCategoriesAndSubcategories(
-        String[] categoryNames, String[] subcategoryNames, Specification<Product> specification
+            String[] subcategoryNames, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
 
-        if (categoryNames != null && categoryNames.length > 0) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                root.get("subCategory").get("category").get("name").in((Object[]) categoryNames));
-        }
         if (subcategoryNames != null && subcategoryNames.length > 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                root.get("subCategory").get("name").in((Object[]) subcategoryNames));
+                    root.get("subCategory").get("name").in((Object[]) subcategoryNames));
         }
         return spec;
     }
 
     private Specification<Product> filterByTextInNameOrDescription(
-        String textSearch, Specification<Product> specification
+            String textSearch, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
         if (textSearch != null) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.or(
-                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"),
-                    criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
-                )
+                    criteriaBuilder.or(
+                            criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"),
+                            criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
+                    )
             );
         }
         return spec;
@@ -73,14 +69,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductPageOutDTO findPageByParams(
-        String orderBy,
-        String direction,
-        int pageNumber,
-        String[] categoryNames,
-        String[] subcategoryNames,
-        Double minPrice,
-        Double maxPrice,
-        String textSearch
+            String orderBy,
+            String direction,
+            int pageNumber,
+            String[] subcategoryNames,
+            Double minPrice,
+            Double maxPrice,
+            String textSearch
     ) {
         Specification<Product> specification = Specification.where(null);
 
@@ -90,20 +85,20 @@ public class ProductServiceImpl implements ProductService {
         } else {
             if (direction == null) {
                 pageable = PageRequest.of(
-                    pageNumber - 1,
-                    pageSize,
-                    Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
+                        pageNumber - 1,
+                        pageSize,
+                        Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
                 );
             } else {
                 pageable = PageRequest.of(
-                    pageNumber - 1,
-                    pageSize,
-                    Sort.by(Sort.Direction.fromString(direction), orderBy)
+                        pageNumber - 1,
+                        pageSize,
+                        Sort.by(Sort.Direction.fromString(direction), orderBy)
                 );
             }
         }
 
-        specification = filterByCategoriesAndSubcategories(categoryNames, subcategoryNames, specification);
+        specification = filterByCategoriesAndSubcategories(subcategoryNames, specification);
         specification = filterByPrice(minPrice, maxPrice, specification);
         specification = filterByTextInNameOrDescription(textSearch, specification);
 
@@ -119,8 +114,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Collection<Product> findAll(String orderBy, String direction) {
         Sort sort = Sort.by(
-            Sort.Direction.fromString(direction == null ? "ASC" : direction),
-            orderBy == null ? "name" : orderBy
+                Sort.Direction.fromString(direction == null ? "ASC" : direction),
+                orderBy == null ? "name" : orderBy
         );
         return productRepository.findAll(sort);
     }
