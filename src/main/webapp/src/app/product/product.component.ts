@@ -61,30 +61,30 @@ export class ProductComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadCategoriesAndSubcategories();
-        this.getQueryParams();
-        this.loadData();
+        this.loadDataFirst();
     }
 
-    loadCategoriesAndSubcategories(): void {
+    loadDataFirst(): void {
         this.categoryService.getAll().subscribe(
             {
                 next: (data: Category[]): void => {
                     this.categories = data;
+                    this.subcategoryService.getAll().subscribe(
+                        {
+                            next: (data: Subcategory[]): void => {
+                                this.subcategories = data;
+                                this.getQueryParams();
+                                this.loadData();
+                            },
+                            error: (error): void => {
+                                console.error('Error fetching data(subcategories):', error);
+                                this.toastNotify.error('Error loading filters');
+                            }
+                        }
+                    );
                 },
                 error: (error): void => {
                     console.error('Error fetching data(categories):', error);
-                    this.toastNotify.error('Error loading filters');
-                }
-            }
-        );
-        this.subcategoryService.getAll().subscribe(
-            {
-                next: (data: Subcategory[]): void => {
-                    this.subcategories = data;
-                },
-                error: (error): void => {
-                    console.error('Error fetching data(subcategories):', error);
                     this.toastNotify.error('Error loading filters');
                 }
             }
@@ -103,7 +103,7 @@ export class ProductComponent implements OnInit {
             {
                 next: (params: Params): void => {
                     for (const paramName of this.filterParamNames) {
-                        if (params[paramName] != 0) {
+                        if (params[paramName] && params[paramName] != 0) {
                             if (paramName == 'Subcategory') {
                                 this.filterParams[paramName].push(params[paramName]);
                                 for (let i: number = 0; i < this.subcategories.length; i++) {
@@ -151,6 +151,7 @@ export class ProductComponent implements OnInit {
                             }
                         }
                     }
+                    this.loadData();
                 },
                 error: (error): void => {
                     console.error(error);

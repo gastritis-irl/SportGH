@@ -37,7 +37,6 @@ public class ProductController {
             @RequestParam("MaxPrice") Optional<Double> maxPrice,
             @RequestParam("TextSearch") Optional<String> textSearch
     ) {
-        log.info(String.valueOf(orderBy), direction, pageNumber, categoryNames, subcategoryNames, minPrice, maxPrice, textSearch);
         return new ResponseEntity<>(
                 productService.findPageByParams(
                         orderBy.orElse(null),
