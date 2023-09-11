@@ -90,11 +90,11 @@ export class ProductComponent implements OnInit {
         );
     }
 
-    changesEvent(changed: boolean): void {
-        if (changed) {
-            this.setParams();
-            this.loadData();
-        }
+    changesEvent(changed: [ number, number ]): void {
+        this.minPrice = changed[0];
+        this.maxPrice = changed[1];
+        this.setParams();
+        this.loadData();
     }
 
     getQueryParams(): void {
@@ -214,13 +214,13 @@ export class ProductComponent implements OnInit {
     }
 
     clearFilter(paramName: string): void {
-        if (paramName[0] == 'TextSearch') {
+        if (paramName == 'TextSearch') {
             this.textSearch = '';
         }
-        if (paramName[0] == 'MinPrice') {
+        if (paramName == 'MinPrice') {
             this.minPrice = 0;
         }
-        if (paramName[0] == 'MaxPrice') {
+        if (paramName == 'MaxPrice') {
             this.maxPrice = 0;
         }
         this.setParams();

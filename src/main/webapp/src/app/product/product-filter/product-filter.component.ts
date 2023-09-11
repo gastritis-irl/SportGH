@@ -19,7 +19,7 @@ export class ProductFilterComponent implements OnInit {
     @Input() minPrice: number = 0;
     @Input() maxPrice: number = 0;
 
-    @Output() changesEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() changesEvent: EventEmitter<[ number, number ]> = new EventEmitter<[ number, number ]>();
 
     constructor() {
     }
@@ -28,6 +28,6 @@ export class ProductFilterComponent implements OnInit {
     }
 
     filterBy(): void {
-        this.changesEvent.emit(true);
+        this.changesEvent.emit([ this.minPrice, this.maxPrice ]);
     }
 }

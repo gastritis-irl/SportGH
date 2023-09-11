@@ -11,6 +11,7 @@ import { Params } from '@angular/router';
 export class ProductService extends AppService {
 
     getAllByParams(filterParams: Params): Observable<ProductPage> {
+        console.log(filterParams);
         const url: string = `${this.baseUrl}/products`;
         return this.http.get<ProductPage>(url, { params: filterParams });
     }
