@@ -13,12 +13,12 @@ import { NgForOf, NgIf } from '@angular/common';
 })
 export class TreeViewComponent implements OnInit {
 
+    isExpanded: boolean[] = [];
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
     @Input() categorySelected: boolean[] = [];
     @Input() selectedAtLeastOneSubCatOfCat: boolean[] = [];
     @Input() subcategorySelected: boolean[] = [];
-    isExpanded: boolean[] = [];
 
     constructor() {
     }

@@ -32,6 +32,12 @@ export class ProductComponent implements OnInit {
         'MaxPrice',
         'TextSearch'
     ];
+    selectedAtLeastOneSubCatOfCat: boolean[] = [];
+    categorySelected: boolean[] = [];
+    subcategorySelected: boolean[] = [];
+    textSearch: string = '';
+    minPrice: number = 0;
+    maxPrice: number = 0;
 
     constructor(
         private productService: ProductService,
@@ -44,6 +50,10 @@ export class ProductComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadParams();
+        this.loadData();
+    }
+
+    changesEvent(changed: boolean): void {
         this.loadData();
     }
 
@@ -131,7 +141,7 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
-    clearFilter(paramNameAndItem: [ string, string ]): void {
+    clearFilter(paramNameAndItem: [ string, string, number ]): void {
         if (paramNameAndItem[0] == 'Category' ||
             paramNameAndItem[0] == 'Subcategory') {
             if (this.filterParams[paramNameAndItem[0]].length == 1) {

@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
-import { Params } from '@angular/router';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Category } from '../../category/category.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
 
@@ -8,17 +7,18 @@ import { Subcategory } from '../../subcategory/subcategory.model';
     templateUrl: './product-filter.component.html',
     styleUrls: [ './product-filter.component.scss' ],
 })
-export class ProductFilterComponent implements OnInit {
+export class ProductFilterComponent implements OnInit, OnChanges {
 
     isExpanded: boolean[] = [];
-    @Output() newFilterEvent: EventEmitter<Params> = new EventEmitter<Params>();
-    @Input() filterParamNames: string[] = [];
-    @Input() filterParams: Params = {};
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
-    selectedAtLeastOneSubCatOfCat: boolean[] = [];
-    categorySelected: boolean[] = [];
-    subcategorySelected: boolean[] = [];
+    @Input() categorySelected: boolean[] = [];
+    @Input() selectedAtLeastOneSubCatOfCat: boolean[] = [];
+    @Input() subcategorySelected: boolean[] = [];
+    @Input() textSearch: string = '';
+    @Input() minPrice: number = 0;
+    @Input() maxPrice: number = 0;
+    @Output() changesEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() {
     }
@@ -26,20 +26,7 @@ export class ProductFilterComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    filterBy(): void {
-        this.filterParams['Category'] = [];
-        for (let i: number = 0; i < this.categories.length; i++) {
-            if (this.selectedAtLeastOneSubCatOfCat[i]) {
-                this.filterParams['Category'].push(this.categories[i].name);
-            }
-        }
-
-        this.filterParams['Subcategory'] = [];
-        for (let i: number = 0; i < this.subcategories.length; i++) {
-            if (this.subcategorySelected[i]) {
-                this.filterParams['Subcategory'].push(this.subcategories[i].name);
-            }
-        }
-        this.newFilterEvent.emit(this.filterParams);
+    ngOnChanges(): void {
+        this.changesEvent.emit(true);
     }
 }

@@ -21,24 +21,24 @@
         </div>
     </div>
     <div class="filter-param-holder">
-        <div class="filter-param" *ngIf="filterParamNames.length">
-            <div class="clear-filter" (click)="resetFilters()">Reset filters&#10005;</div>
-        </div>
-        <div *ngFor="let filter of filterParamNames; let i = index">
-            <div
-                *ngIf="filter=='Category' || filter=='Subcategory' && filterParams[i].length>=1">
-                <div class="filter-param" *ngFor="let filterItem of filterParams[i]">
-                    {{filter}}: {{filterItem}}
-                    <div class="clear-filter" (click)="clearFilter(filter,filterItem)">&#10005;</div>
-                </div>
-            </div>
-            <div *ngIf="filter!='Category' && filter!='Subcategory'">
-                <div class="filter-param">
-                    {{filter}}: {{filterParams[i]}}
-                    <div class="clear-filter" (click)="clearFilter(filter,'')">&#10005;</div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="filter-param" *ngIf="filterParamNames.length">-->
+<!--            <div class="clear-filter" (click)="resetFilters()">Reset filters&#10005;</div>-->
+<!--        </div>-->
+<!--        <div *ngFor="let filter of filterParamNames; let i = index">-->
+<!--            <div-->
+<!--                *ngIf="filter=='Category' || filter=='Subcategory' && filterParams[i].length>=1">-->
+<!--                <div class="filter-param" *ngFor="let filterItem of filterParams[i]">-->
+<!--                    {{filter}}: {{filterItem}}-->
+<!--                    <div class="clear-filter" (click)="clearFilter(filter,filterItem)">&#10005;</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div *ngIf="filter!='Category' && filter!='Subcategory'">-->
+<!--                <div class="filter-param">-->
+<!--                    {{filter}}: {{filterParams[i]}}-->
+<!--                    <div class="clear-filter" (click)="clearFilter(filter,'')">&#10005;</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">

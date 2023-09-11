@@ -14,17 +14,20 @@ export class ProductListComponent implements OnInit, OnChanges {
     @Input() products: Product[] = [];
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
-    @Output() newPageEvent: EventEmitter<number> = new EventEmitter<number>();
-    currentPage: number = 1;
-    @Output() orderByEvent: EventEmitter<string> = new EventEmitter<string>();
-    orderByElement: string = 'name#ASC';
+    @Input() categorySelected: boolean[] = [];
+    @Input() selectedAtLeastOneSubCatOfCat: boolean[] = [];
+    @Input() subcategorySelected: boolean[] = [];
+    @Input() textSearch: string = '';
+    @Input() minPrice: number = 0;
+    @Input() maxPrice: number = 0;
     @Input() nrOfPages: number = 0;
     @Input() nrOfItems: number = 0;
-    @Input() filterParamsInput: Params = {};
-    @Input() filterParamNamesInput: string[] = [];
-    filterParams: string[] = [];
-    filterParamNames: string[] = [];
-    @Output() clearFilterEvent: EventEmitter<[ string, string ]> = new EventEmitter<[ string, string ]>();
+    currentPage: number = 1;
+    orderByElement: string = 'name#ASC';
+
+    @Output() newPageEvent: EventEmitter<number> = new EventEmitter<number>();
+    @Output() orderByEvent: EventEmitter<string> = new EventEmitter<string>();
+    @Output() clearFilterEvent: EventEmitter<[ string, string, number ]> = new EventEmitter<[ string, string, number ]>();
     @Output() resetFilterEvent: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
@@ -34,33 +37,14 @@ export class ProductListComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(): void {
-        this.refreshFilterParams();
-    }
-
-    refreshFilterParams(): void {
-        this.filterParamNames = [];
-        this.filterParams = [];
-        for (const p of this.filterParamNamesInput) {
-            if (
-                this.filterParamsInput[p]
-                && p != 'pageNumber'
-                && p != 'direction'
-                && p != 'orderBy'
-            ) {
-                if (this.filterParamsInput[p].length != 0) {
-                    this.filterParams.push(this.filterParamsInput[p]);
-                    this.filterParamNames.push(p);
-                }
-            }
-        }
     }
 
     resetFilters(): void {
         this.resetFilterEvent.emit();
     }
 
-    clearFilter(paramName: string, paramItem: string): void {
-        this.clearFilterEvent.emit([ paramName, paramItem ]);
+    clearFilter(paramName: string, paramItem: string, paramIndex: number): void {
+        this.clearFilterEvent.emit([ paramName, paramItem, paramIndex ]);
     }
 
     orderBy(): void {
@@ -95,9 +79,5 @@ export class ProductListComponent implements OnInit, OnChanges {
             result.push(i);
         }
         return result;
-    }
-
-    getTypeOfParam(param: string | number | undefined): string {
-        return typeof param;
     }
 }
