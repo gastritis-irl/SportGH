@@ -25,16 +25,16 @@
             <div class="clear-filter" (click)="resetFilters()">&#10005;</div>
         </div>
 
+        <div class="filter-param" *ngIf="textSearch!=''">
+            Search: {{textSearch}}
+            <div class="clear-filter" (click)="clearFilter('TextSearch',0)">&#10005;</div>
+        </div>
+
         <div *ngFor="let selected of subcategorySelected; let i = index">
             <div class="filter-param" *ngIf="selected">
                 {{subcategories[i].name}}
                 <div class="clear-filter" (click)="clearFilter('Subcategory',i)">&#10005;</div>
             </div>
-        </div>
-
-        <div class="filter-param" *ngIf="textSearch!=''">
-            Search: {{textSearch}}
-            <div class="clear-filter" (click)="clearFilter('TextSearch',0)">&#10005;</div>
         </div>
 
         <div class="filter-param" *ngIf="minPrice">

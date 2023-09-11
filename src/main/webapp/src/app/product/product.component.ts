@@ -88,6 +88,7 @@ export class ProductComponent implements OnInit {
         this.maxPrice = changed[1];
         this.textSearch = changed[2];
         this.setParams();
+        this.setQueryParams();
         this.loadData();
     }
 
@@ -98,10 +99,11 @@ export class ProductComponent implements OnInit {
                     for (const paramName of this.filterParamNames) {
                         if (params[paramName] && params[paramName] != 0) {
                             if (paramName == 'Subcategory') {
-                                this.filterParams[paramName].push(params[paramName]);
-                                for (let i: number = 0; i < this.subcategories.length; i++) {
-                                    if (this.subcategories[i].name == params[paramName]) {
-                                        this.subcategorySelected[i] = true;
+                                for (let i: number = 0; i < params[paramName].length; i++) {
+                                    for (let j: number = 0; j < this.subcategories.length; j++) {
+                                        if (this.subcategories[j].name == params[paramName][i]) {
+                                            this.subcategorySelected[j] = true;
+                                        }
                                     }
                                 }
                             } else {
@@ -121,7 +123,6 @@ export class ProductComponent implements OnInit {
                                 for (let i: number = 0; i < this.subcategories.length; i++) {
                                     if (this.subcategories[i].categoryId == this.categories[catInd].id) {
                                         this.subcategorySelected[i] = true;
-                                        this.filterParams['Subcategory'].push(this.subcategories[i].name);
                                     }
                                 }
                             }
@@ -145,6 +146,7 @@ export class ProductComponent implements OnInit {
                             }
                         }
                     }
+                    this.setParams();
                     this.loadData();
                 },
                 error: (error): void => {
@@ -160,9 +162,13 @@ export class ProductComponent implements OnInit {
             [],
             {
                 relativeTo: this.route,
-                // queryParams: this.filterParams,
+                queryParams: {
+                    Subcategory: this.filterParams['Subcategory'],
+                    TextSearch: this.textSearch,
+                    MinPrice: this.minPrice,
+                    MaxPrice: this.maxPrice,
+                },
                 replaceUrl: true,
-                queryParamsHandling: 'merge'
             }
         )
             .catch(error => {
@@ -173,7 +179,6 @@ export class ProductComponent implements OnInit {
 
     loadData(): void {
         this.scrollToTop();
-        this.setQueryParams();
         this.productService.getAllByParams(this.filterParams).subscribe(
             {
                 next: (data: ProductPage): void => {
@@ -218,11 +223,13 @@ export class ProductComponent implements OnInit {
             this.maxPrice = 0;
         }
         this.setParams();
+        this.setQueryParams();
         this.loadData();
     }
 
     resetFilters(): void {
         this.setDefaultParams();
+        this.setQueryParams();
         this.loadData();
     }
 
