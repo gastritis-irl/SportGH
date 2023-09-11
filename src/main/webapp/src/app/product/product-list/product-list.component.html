@@ -26,19 +26,13 @@
         </div>
         <div *ngFor="let filter of filterParamNames; let i = index">
             <div
-                *ngIf="filterParams[i].length && filterParams[i].length>1 && getTypeOfParam(filterParams[i])!='string'">
+                *ngIf="filter=='Category' || filter=='Subcategory' && filterParams[i].length>=1">
                 <div class="filter-param" *ngFor="let filterItem of filterParams[i]">
                     {{filter}}: {{filterItem}}
                     <div class="clear-filter" (click)="clearFilter(filter,filterItem)">&#10005;</div>
                 </div>
             </div>
-            <div *ngIf="filterParams[i].length && filterParams[i].length<=1">
-                <div class="filter-param">
-                    {{filter}}: {{filterParams[i]}}
-                    <div class="clear-filter" (click)="clearFilter(filter,'')">&#10005;</div>
-                </div>
-            </div>
-            <div *ngIf="getTypeOfParam(filterParams[i])=='string' || getTypeOfParam(filterParams[i])=='number'">
+            <div *ngIf="filter!='Category' && filter!='Subcategory'">
                 <div class="filter-param">
                     {{filter}}: {{filterParams[i]}}
                     <div class="clear-filter" (click)="clearFilter(filter,'')">&#10005;</div>

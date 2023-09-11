@@ -53,7 +53,11 @@ export class ProductComponent implements OnInit {
                 next: (params: Params): void => {
                     for (const paramName of this.filterParamNames) {
                         if (params[paramName]) {
-                            this.filterParams[paramName] = params[paramName];
+                            if (paramName == 'Category' || paramName == 'Subcategory') {
+                                this.filterParams[paramName].push(params[paramName]);
+                            } else {
+                                this.filterParams[paramName] = params[paramName];
+                            }
                         }
                     }
                 },
@@ -128,8 +132,8 @@ export class ProductComponent implements OnInit {
     }
 
     clearFilter(paramNameAndItem: [ string, string ]): void {
-        if (this.filterParams[paramNameAndItem[0]].length
-            && typeof this.filterParams[paramNameAndItem[0]] != 'string') {
+        if (paramNameAndItem[0] == 'Category' ||
+            paramNameAndItem[0] == 'Subcategory') {
             if (this.filterParams[paramNameAndItem[0]].length == 1) {
                 this.filterParams[paramNameAndItem[0]] = this.getDefaultParams()[paramNameAndItem[0]];
             } else {
@@ -157,6 +161,8 @@ export class ProductComponent implements OnInit {
             direction: 'ASC',
             Category: [],
             Subcategory: [],
+            MinPrice: 0,
+            MaxPrice: 0,
         };
     }
 }

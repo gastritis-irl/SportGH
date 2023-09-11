@@ -27,12 +27,12 @@ public class ProductServiceImpl implements ProductService {
         Double minPrice, Double maxPrice, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
-        if (minPrice != null) {
+        if (minPrice != null && minPrice != 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
         }
 
-        if (maxPrice != null) {
+        if (maxPrice != null && maxPrice != 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
         }
@@ -61,12 +61,12 @@ public class ProductServiceImpl implements ProductService {
     ) {
         Specification<Product> spec = specification;
         if (textSearch != null) {
-            spec = spec
-                .and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"))
-                .or((root, query, criteriaBuilder) ->
+            spec = spec.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.or(
+                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"),
                     criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
-                );
+                )
+            );
         }
         return spec;
     }
