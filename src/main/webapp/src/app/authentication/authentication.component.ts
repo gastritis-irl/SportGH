@@ -8,6 +8,18 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../user/user.model';
 import jwtDecode from 'jwt-decode';
 
+interface IdToken {
+    iss: string;
+    aud: string;
+    auth_time: number;
+    user_id: string;
+    sub: string;
+    iat: number;
+    exp: number;
+    email: string;
+    email_verified: boolean;
+}
+
 @Component({
     selector: 'sgh-authentication',
     templateUrl: './authentication.component.html',
@@ -44,7 +56,7 @@ export class AuthenticationComponent implements OnDestroy {
 
     ngOnInit(): void {
         const firebaseIdToken: string | null = sessionStorage.getItem('firebaseIdToken');
-        const decodedIdToken: any = jwtDecode(firebaseIdToken ? firebaseIdToken : '');
+        const decodedIdToken: IdToken = jwtDecode(firebaseIdToken ? firebaseIdToken : '');
         this.loggedInUserEmail = decodedIdToken.email;
 
         this.afAuth.authState
