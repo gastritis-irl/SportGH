@@ -49,7 +49,6 @@ public abstract class BaseDataGenerator {
 
     public void initUsers() {
         Collection<User> userListFB = firebaseService.getUsers();
-        log.info("FbUsers: {}", userListFB);
         for (User user : userListFB) {
             if (userService.findByFirebaseUid(user.getFirebaseUid()) == null
                 && userService.findByUsername(user.getEmail()) == null) {
