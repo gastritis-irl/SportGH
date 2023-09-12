@@ -1,9 +1,3 @@
-<div class="breadcrumb">
-    <a [routerLink]="['/']">Home</a>>
-    <a [routerLink]="['/products']">Products</a>>
-    <a [routerLink]="['/products',product.id]">{{product.name}}</a>
-</div>
-
 <ng-template #deletePopoverContent>
     <div class="buttons">
         <div (click)="deleteProduct()" class="button-default button-primary">
