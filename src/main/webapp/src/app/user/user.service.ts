@@ -37,6 +37,6 @@ export class UserService extends AppService {
         const idToken: string = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/signup`;
-        return this.http.post<User>(url, { email, idToken, password });
+        return this.http.post<User>(url, { email, idToken });
     }
 }
