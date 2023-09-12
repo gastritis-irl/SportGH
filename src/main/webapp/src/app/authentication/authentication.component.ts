@@ -52,6 +52,7 @@ export class AuthenticationComponent implements OnDestroy {
             console.error('Error during logout', error);
             this.toastNotify.warning('Error logging out');
         });
+        sessionStorage.clear();
     }
 
     ngOnInit(): void {
@@ -75,6 +76,7 @@ export class AuthenticationComponent implements OnDestroy {
         this.ngUnsubscribe.complete();
         this.ngUnsubscribe.pipe(takeUntil(this.ngUnsubscribe));
         this.closeModal(); // Close any open modal
+        sessionStorage.clear();
     }
 
     openModal(content: TemplateRef<string>): void {
