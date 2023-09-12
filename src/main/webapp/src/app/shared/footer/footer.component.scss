@@ -1,0 +1,117 @@
+@use '../../../style-variables.scss' as *;
+
+$item-gap: 10px;
+$footer-column-gap: 10%;
+
+.footer {
+    padding: $main-page-padding;
+    background-color: $color-neutral-1;
+    color: $color-main-2;
+    display: flex;
+    flex-direction: column;
+
+    .footer-top {
+        padding-bottom: $main-page-padding;
+        display: flex;
+        flex-direction: row;
+        column-gap: $footer-column-gap;
+
+        @media (max-width: $breakpoint-medium) {
+            flex-wrap: wrap;
+        }
+
+        .title-and-social-media {
+            display: flex;
+            flex-direction: column;
+
+            .title {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: $item-gap;
+
+                .logo {
+
+                }
+
+                .name {
+                    color: $color-main-1;
+                    font-size: $size-h1;
+                }
+            }
+
+            .description {
+
+            }
+
+            .social-media {
+                display: flex;
+                flex-direction: row;
+                gap: $item-gap;
+                color: $color-main-1;
+
+                div {
+                    border-radius: $border-radius;
+                    padding: $item-gap;
+                    background-color: $color-main-3;
+                }
+            }
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            gap: $item-gap;
+
+            .title {
+                color: $color-main-1;
+                font-size: $size-h2;
+            }
+
+            .row {
+
+                .row-item {
+
+                }
+
+            }
+
+            &.company {
+
+            }
+
+            &.support {
+
+            }
+        }
+    }
+
+    .footer-bottom {
+        border-top-style: solid;
+        border-top-color: $color-main-3;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: $item-gap;
+
+        div {
+            padding-inline: $item-gap;
+        }
+
+        .copyright {
+            border-right-style: solid;
+            border-right-color: $color-main-3;
+            color: $color-main-1;
+        }
+
+        .terms-and-conditions {
+            border-right-style: solid;
+            border-right-color: $color-main-3;
+            text-decoration-line: underline;
+        }
+
+        .privacy-policy {
+            text-decoration-line: underline;
+        }
+    }
+}
