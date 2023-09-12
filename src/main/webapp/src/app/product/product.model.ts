@@ -7,6 +7,7 @@ export interface Product {
     location?: string,
     rentPrice?: number,
     categoryId?: number,
+    categoryName?: string,
     subCategoryId?: number,
     subCategoryName?: string,
     userId?: number,

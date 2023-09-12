@@ -75,6 +75,10 @@ $icon-size: 50px;
                 .product-avail-0 {
                     color: darkred;
                 }
+
+                .product-category-and-subcategory {
+                    color: $color-main-2;
+                }
             }
         }
 
@@ -82,6 +86,7 @@ $icon-size: 50px;
             display: flex;
             flex-direction: row;
             gap: $item-gap-1;
+            color: $color-main-2;
         }
 
         .images-and-pricing {
