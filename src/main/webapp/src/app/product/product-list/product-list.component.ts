@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from '../product.model';
+import { ImageService } from '../../shared/image/image.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'sgh-product-list',
     templateUrl: './product-list.component.html',
-    styleUrls: [ './product-list.component.scss' ],
+    styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
 
@@ -14,10 +16,39 @@ export class ProductListComponent implements OnInit {
     @Input() nrOfPages: number = 1;
     @Input() nrOfItems: number = 0;
 
-    constructor() {
+    constructor(private imageService: ImageService) {
     }
 
     ngOnInit(): void {
+        this.products.forEach(product => {
+            if (product.imageIds && product.imageIds.length > 0) {
+                this.loadProductImages(product.imageIds.slice(0, 8), product);
+            }
+        });
+    }
+
+    loadProductImages(imageIds: number[], product: Product): void {
+        const loadObservables = imageIds.map(id => this.imageService.getImageFile(id));
+
+        forkJoin(loadObservables).subscribe({
+            next: (blobs) => {
+                blobs.forEach((blob, index) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        if (!product.imageDataUrls) {
+                            product.imageDataUrls = [];
+                        }
+                        product.imageDataUrls[index] = reader.result as string;
+                    };
+                    if (blob) {
+                        reader.readAsDataURL(blob);
+                    }
+                });
+            },
+            error: (error) => {
+                console.error(`Error fetching images`, error);
+            }
+        });
     }
 
     navToPage(): void {
