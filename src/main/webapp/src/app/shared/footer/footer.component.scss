@@ -2,6 +2,7 @@
 
 $item-gap: 10px;
 $footer-column-gap: 10%;
+$title-logo-size: 30px;
 
 .footer {
     padding: $main-page-padding;
@@ -31,12 +32,14 @@ $footer-column-gap: 10%;
                 gap: $item-gap;
 
                 .logo {
-
+                    content: $nav-header-logo-icon;
+                    width: $title-logo-size;
                 }
 
                 .name {
                     color: $color-main-1;
                     font-size: $size-h1;
+                    font-weight: $font-weight-bold;
                 }
             }
 
