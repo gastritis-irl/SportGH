@@ -59,8 +59,10 @@ public abstract class BaseDataGenerator {
         Collection<User> userListDB = userService.findAll();
         for (User user : userListDB) {
             if (!userListFB.contains(user)) {
-                // add user to firebase
-                log.info("User {} not yet in firebase", user);
+                String firebaseUid = firebaseService.signupUserToFirebase(user);
+                user.setFirebaseUid(firebaseUid);
+                userService.update(user);
+                log.info("User {} successfully updated and registered to firebase.", user);
             }
         }
     }

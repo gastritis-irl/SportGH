@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../user/user.model';
-
+import jwtDecode from 'jwt-decode';
 
 @Component({
     selector: 'sgh-authentication',
@@ -43,6 +43,10 @@ export class AuthenticationComponent implements OnDestroy {
     }
 
     ngOnInit(): void {
+        const firebaseIdToken: string | null = sessionStorage.getItem('firebaseIdToken');
+        const decodedIdToken: any = jwtDecode(firebaseIdToken ? firebaseIdToken : '');
+        this.loggedInUserEmail = decodedIdToken.email;
+
         this.afAuth.authState
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((user): void => {

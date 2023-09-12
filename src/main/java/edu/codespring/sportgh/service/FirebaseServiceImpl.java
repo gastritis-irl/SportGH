@@ -24,6 +24,22 @@ public class FirebaseServiceImpl implements FirebaseService {
     private final UserRepository userRepository;
 
     @Override
+    public String signupUserToFirebase(User user) {
+        try {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            UserRecord userRecord = firebaseAuth.createUser(
+                new UserRecord.CreateRequest()
+                    .setEmail(user.getEmail())
+                    .setPassword("password")
+            );
+            return userRecord.getUid();
+
+        } catch (FirebaseAuthException e) {
+            throw new ServiceException("Failed to add user to firebase", e);
+        }
+    }
+
+    @Override
     public String getFirebaseUidFromToken(String idToken) {
         FirebaseTokenHolder tokenHolder = verifyTokenAndReturnTokenHolder(idToken);
         return tokenHolder.getUid();

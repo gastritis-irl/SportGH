@@ -8,6 +8,8 @@ import java.util.Collection;
 
 public interface FirebaseService {
 
+    String signupUserToFirebase(User user);
+
     FirebaseTokenHolder verifyTokenAndReturnTokenHolder(String idToken);
 
     String getFirebaseUidFromToken(String idToken);

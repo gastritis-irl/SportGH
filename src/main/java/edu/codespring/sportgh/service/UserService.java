@@ -8,6 +8,8 @@ public interface UserService {
 
     User signup(String userName, String firebaseUid);
 
+    User update(User user);
+
     Collection<User> findAll();
 
     User findById(Long userId);
