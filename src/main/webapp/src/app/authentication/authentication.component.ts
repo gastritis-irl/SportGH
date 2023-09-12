@@ -75,7 +75,7 @@ export class AuthenticationComponent implements OnDestroy {
     }
 
     login(): void {
-        this.userService.signinWithFirebase(this.email, this.password)
+        this.userService.signInWithFirebase(this.email, this.password)
             .then((userObservable: Observable<User>): void => {
                 userObservable.subscribe({
                     next: (): void => {
@@ -97,7 +97,7 @@ export class AuthenticationComponent implements OnDestroy {
     }
 
     register(): void {
-        this.userService.registerWithFirebase(this.email, this.password)
+        this.userService.signUpWithFirebase(this.email, this.password)
             .then((userObservable: Observable<User>): void => {
                 userObservable.subscribe({
                     next: (): void => {
