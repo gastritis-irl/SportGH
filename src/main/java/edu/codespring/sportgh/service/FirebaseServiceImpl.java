@@ -24,13 +24,13 @@ public class FirebaseServiceImpl implements FirebaseService {
     private final UserRepository userRepository;
 
     @Override
-    public String signupUserToFirebase(User user) {
+    public String signupUserToFirebase(User user, String password) {
         try {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             UserRecord userRecord = firebaseAuth.createUser(
                 new UserRecord.CreateRequest()
                     .setEmail(user.getEmail())
-                    .setPassword("password")
+                    .setPassword(password)
             );
             return userRecord.getUid();
 

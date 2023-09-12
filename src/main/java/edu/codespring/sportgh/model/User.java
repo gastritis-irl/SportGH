@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -33,5 +33,14 @@ public class User extends BaseEntity {
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "user")
     private Set<Product> products;
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        User userObj = (User) object;
+        return Objects.equals(firebaseUid, userObj.firebaseUid) &&
+            Objects.equals(email, userObj.email);
+    }
 }
 

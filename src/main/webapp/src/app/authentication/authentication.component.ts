@@ -92,24 +92,17 @@ export class AuthenticationComponent implements OnDestroy {
 
     login(): void {
         this.userService.signInWithFirebase(this.email, this.password)
-            .then((userObservable: Observable<User>): void => {
-                userObservable.subscribe({
-                    next: (): void => {
-                        // Use the email directly here before clearing the form
-                        this.loggedInUserEmail = this.email;
+            .then((): void => {
+                // Use the email directly here before clearing the form
+                this.loggedInUserEmail = this.email;
 
-                        this.toastNotify.success(`Successfully logged in as ${this.email}`);
-                        this.closeModal(); // Close the modal
-                    },
-                    error: (error): void => {
-                        console.log(error);
-                        this.toastNotify.warning(`Error logging in`);
-                    }
-                });
-            }).catch(error => {
-            console.log(error);
-            this.toastNotify.warning(`Error logging in`);
-        });
+                this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                this.closeModal(); // Close the modal
+            })
+            .catch(error => {
+                console.log(error);
+                this.toastNotify.warning(`Error logging in`);
+            });
     }
 
     register(): void {
