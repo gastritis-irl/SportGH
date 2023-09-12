@@ -21,4 +21,9 @@ public interface ProductService {
     void rent(Product product);
 
     void delete(Product product);
+
+    //Image handling methods
+    void addImage(Long productId, Long imageId);
+
+    void removeImage(Long productId, Long imageId);
 }

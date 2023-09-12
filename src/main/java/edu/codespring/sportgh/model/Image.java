@@ -15,4 +15,13 @@ public class Image extends BaseEntity {
     private String name;
 
     private String url;
+
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    public Image(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
 }

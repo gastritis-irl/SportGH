@@ -2,6 +2,7 @@ package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.service.ImageService;
+import edu.codespring.sportgh.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ import java.nio.file.Paths;
 public class ImageController {
 
     private final ImageService imageService;
+    private final ProductService productService;
 
     @GetMapping(path = "/{imageId}")
     public ResponseEntity<Image> findById(@PathVariable Long imageId) {
@@ -51,28 +53,42 @@ public class ImageController {
 
 
     @PostMapping
-    public ResponseEntity<Image> save(@RequestParam("image") MultipartFile file) {
+    public ResponseEntity<Image> save(@RequestParam("image") MultipartFile file, @RequestParam("productId") Long productId) {
         if (!file.getContentType().startsWith("image/")) {
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
         }
+        if (productId != 0) {
+            Image image = imageService.saveFileAndCreateDbInstance(file);
+            productService.addImage(productId, image.getId());
+            log.info("Creating new image with ID {}.", image.getId());
+            return new ResponseEntity<>(image, HttpStatus.OK);
+        }
         Image image = imageService.saveFileAndCreateDbInstance(file);
+        log.info("Creating new image with ID {}.", image.getId());
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
     @Transactional
     @PutMapping(path = "/file/{imageId}")
-    public ResponseEntity<Image> update(@PathVariable Long imageId, @RequestParam("image") MultipartFile file) {
+    public ResponseEntity<Image> update(@PathVariable Long imageId, @RequestParam("image") MultipartFile file, @RequestParam("productId") Long productId) {
         if (!file.getContentType().startsWith("image/")) {
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
         }
         Image image = imageService.findById(imageId);
         if (image == null) {
-            image = imageService.saveFileAndCreateDbInstance(file);
+            if (productId != 0) {
+                image = imageService.saveFileAndCreateDbInstance(file);
+                productService.addImage(productId, image.getId());
+            }else
+            {
+                image = imageService.saveFileAndCreateDbInstance(file);
+            }
             log.info("Creating new image with ID {}.", image.getId());
         }
 
         // Update the image with the new file (this will update the database record and replace the old file)
         image = imageService.update(file, imageId);
+        log.info("Updating image with ID {}.", image.getId());
 
         return new ResponseEntity<>(image, HttpStatus.OK);
     }

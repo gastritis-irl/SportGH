@@ -6,8 +6,9 @@ import { AppService } from "../../app.service";
 @Injectable()
 export class ImageService extends AppService {
 
-    uploadImage(image: File): Observable<Image> {
+    uploadImage(image: File, productId: number = 0): Observable<Image> {
         const formData = new FormData();
+        formData.append('productId', productId.toString());
         formData.append('image', image);
         return this.http.post<Image>(this.baseUrl + '/images', formData);
     }
@@ -20,8 +21,9 @@ export class ImageService extends AppService {
         return this.http.get(this.baseUrl + `/images/file/${id}`, { responseType: 'blob' });
     }
 
-    updateFile(id: number, image: File): Observable<Image> {
+    updateFile(id: number, image: File, productId: number=0): Observable<Image> {
         const formData = new FormData();
+        formData.append('productId', productId.toString());
         formData.append('image', image);
         return this.http.put<Image>(this.baseUrl + `/images/file/${id}`, formData);
     }

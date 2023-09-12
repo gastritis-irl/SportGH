@@ -98,6 +98,12 @@ public class ProductController {
     @DeleteMapping(path = "/{productId}")
     public ResponseEntity<?> delete(@PathVariable Long productId) {
         Product product = productService.findById(productId);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if(product.getImages() != null) {
+            product.getImages().forEach(image -> productService.removeImage(productId, image.getId()));
+        }
         productService.delete(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }

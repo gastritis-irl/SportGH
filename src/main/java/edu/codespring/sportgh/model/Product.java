@@ -39,4 +39,17 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Image> images = new HashSet<>();
 
+
+    public void addImage(Long imageId) {
+        Image image = new Image();
+        image.setId(imageId);
+        images.add(image);
+    }
+
+
+    public void removeImage( Long imageId) {
+        Image image = new Image();
+        image.setId(imageId);
+        images.remove(image);
+    }
 }
