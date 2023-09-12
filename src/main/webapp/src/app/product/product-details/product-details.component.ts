@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../../user/user.model';
 import { UserService } from '../../user/user.service';
 import { ViewportScroller } from '@angular/common';
+import { Image } from '../../shared/image/image.model';
+import { ImageService } from '../../shared/image/image.service';
 
 @Component({
     selector: 'sgh-product-details',
@@ -16,8 +18,10 @@ export class ProductDetailsComponent implements OnInit {
 
     product: Product = {};
     productLender: User = {};
+    imageDatas: Image[] = [];
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
+
 
     constructor(
         private productService: ProductService,
@@ -26,8 +30,32 @@ export class ProductDetailsComponent implements OnInit {
         private router: Router,
         private viewPortScroller: ViewportScroller,
         private toastNotify: ToastrService,
+        private imageService: ImageService,
     ) {
     }
+
+    loadProductImages(imageIds: number[]): void {
+        imageIds.forEach((imageId, index) => {
+            this.imageService.getImageFile(imageId).subscribe({
+                next: (blob) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        if (!this.product.imageDataUrls) {
+                            this.product.imageDataUrls = [];
+                        }
+                        this.product.imageDataUrls[index] = reader.result as string;
+                    };
+                    if (blob) {
+                        reader.readAsDataURL(blob);
+                    }
+                },
+                error: (error) => {
+                    this.toastNotify.error(`Error fetching image`, error);
+                }
+            });
+        });
+    }
+
 
     ngOnInit(): void {
         this.route.params.subscribe(

@@ -44,8 +44,21 @@
 
         <div class="images-and-pricing">
             <div class="images">
-                <img src="" alt="[Images]">
+                <ng-container *ngIf="product.imageDataUrls && product.imageDataUrls.length; else defaultImage">
+                    <div class="carousel">
+                        <ng-container *ngFor="let imageUrl of product.imageDataUrls">
+                            <div class="carousel-item">
+                                <img [src]="imageUrl" alt="Product Image">
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+                <ng-template #defaultImage>
+                    <img src="https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png" alt="Default Image">
+                </ng-template>
             </div>
+
+
             <div class="pricing">
                 <div class="heading">{{product.rentPrice}} RON / day</div>
 
