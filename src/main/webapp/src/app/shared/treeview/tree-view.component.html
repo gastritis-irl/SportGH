@@ -1,4 +1,4 @@
-<div>
+<div class="tree-view-component">
     <div *ngFor="let category of categories; let i = index">
         <div class="buttons">
             <div
@@ -10,7 +10,7 @@
                        (click)="selectCategory(i)"
                        (change)="filterBy()"
                 >
-                <div class="flex-row" (click)="isExpanded[i] = ! isExpanded[i]">
+                <div class="category-name-item" (click)="isExpanded[i] = ! isExpanded[i]">
                     <div class="category-name">
                         {{category.name}}
                     </div>
