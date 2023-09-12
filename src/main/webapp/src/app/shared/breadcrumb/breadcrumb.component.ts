@@ -27,7 +27,7 @@ export class BreadcrumbComponent implements OnInit {
         this.route.url.subscribe(
             {
                 next: (urlSegments: UrlSegment[]): void => {
-                    for (let urlSegment of urlSegments) {
+                    for (const urlSegment of urlSegments) {
                         this.url.push(String(urlSegment));
                     }
                 },
