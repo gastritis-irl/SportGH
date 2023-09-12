@@ -61,7 +61,6 @@ public class FirebaseServiceImpl implements FirebaseService {
 
         // Create a UserDetails object using Spring Security's User class
         UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
-            .password(user.getPassword())
             .roles(user.getRole())
             .accountExpired(false)
             .accountLocked(false)
@@ -82,7 +81,6 @@ public class FirebaseServiceImpl implements FirebaseService {
                 users.add(new User(
                     i.getEmail(),
                     i.getEmail(),
-                    "password", // we've set this password for every registered user in firebase
                     i.getUid(),
                     "USER",
                     null)

@@ -1,17 +1,17 @@
 import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
-import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../user/user.model';
 
 
 @Component({
     selector: 'sgh-authentication',
     templateUrl: './authentication.component.html',
-    styleUrls: ['./authentication.component.scss']
+    styleUrls: [ './authentication.component.scss' ]
 })
 export class AuthenticationComponent implements OnDestroy {
 
@@ -22,18 +22,18 @@ export class AuthenticationComponent implements OnDestroy {
     email: string = '';
     password: string = '';
 
-    private ngUnsubscribe = new Subject<void>();
+    private ngUnsubscribe: Subject<void> = new Subject<void>();
 
     constructor(
         private modalService: NgbModal,
         private userService: UserService,
-        private router: Router,
         private afAuth: AngularFireAuth,
         private toastNotify: ToastrService,
-    ) { }
+    ) {
+    }
 
     logout(): void {
-        this.afAuth.signOut().then(() => {
+        this.afAuth.signOut().then((): void => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
             this.toastNotify.success('Successfully logged out');
         }).catch(error => {
@@ -45,7 +45,7 @@ export class AuthenticationComponent implements OnDestroy {
     ngOnInit(): void {
         this.afAuth.authState
             .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe(user => {
+            .subscribe((user): void => {
                 if (user) {
                     this.loggedInUserEmail = user.email;
                 } else {
@@ -75,47 +75,49 @@ export class AuthenticationComponent implements OnDestroy {
     }
 
     login(): void {
-        this.userService.signinWithFirebase(this.email, this.password).then(userObservable => {
-            userObservable.subscribe({
-                next: () => {
-                    // Use the email directly here before clearing the form
-                    this.loggedInUserEmail = this.email;
+        this.userService.signinWithFirebase(this.email, this.password)
+            .then((userObservable: Observable<User>): void => {
+                userObservable.subscribe({
+                    next: (): void => {
+                        // Use the email directly here before clearing the form
+                        this.loggedInUserEmail = this.email;
 
-                    this.toastNotify.success(`Successfully logged in as ${this.email}`);
-                    this.closeModal(); // Close the modal
+                        this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                        this.closeModal(); // Close the modal
                     },
-                error: (error): void => {
-                    console.log(error);
-                    this.toastNotify.warning(`Error logging in`);
-                }
-            });
-        }).catch(error => {
+                    error: (error): void => {
+                        console.log(error);
+                        this.toastNotify.warning(`Error logging in`);
+                    }
+                });
+            }).catch(error => {
             console.log(error);
             this.toastNotify.warning(`Error logging in`);
         });
     }
 
     register(): void {
-        this.userService.registerWithFirebase(this.email, this.password).then(userObservable => {
-            userObservable.subscribe({
-                next: () => {
+        this.userService.registerWithFirebase(this.email, this.password)
+            .then((userObservable: Observable<User>): void => {
+                userObservable.subscribe({
+                    next: (): void => {
 
-                    // Use the email directly here before clearing the form
-                    this.loggedInUserEmail = this.email;
+                        // Use the email directly here before clearing the form
+                        this.loggedInUserEmail = this.email;
 
-                    
-                    this.toastNotify.success('Registration successful');
-                    this.closeModal(); // Close the modal
-                },
-                error: (error): void => {
-                    console.log(error);
-                    this.toastNotify.warning(`Error registering`);
-                }
+
+                        this.toastNotify.success('Registration successful');
+                        this.closeModal(); // Close the modal
+                    },
+                    error: (error): void => {
+                        console.log(error);
+                        this.toastNotify.warning(`Error registering`);
+                    }
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                this.toastNotify.warning(`Error registering`);
             });
-        }).catch(error => {
-            console.log(error);
-            this.toastNotify.warning(`Error registering`);
-        });
     }
-
 }

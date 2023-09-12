@@ -1,9 +1,7 @@
 package edu.codespring.sportgh.service;
 
-import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.UserRepository;
-import edu.codespring.sportgh.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,28 +23,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User signup(String email, String firebaseUid, String password) {
+    public User signup(String email, String firebaseUid) {
         User user = new User();
 
         user.setEmail(email);
         user.setUsername(email);
         user.setFirebaseUid(firebaseUid);
-        user.setPassword(UserUtil.generateHashedPassword(password, firebaseUid));
         userRepository.save(user);
         log.info("Signup successful ({}).", user);
         return user;
-    }
-
-    @Override
-    public void login(String firebaseUid, String password) {
-        String passwordHash = UserUtil.generateHashedPassword(password, firebaseUid);
-        User user = userRepository.findByFirebaseUid(firebaseUid);
-        if (userRepository.existsByFirebaseUidAndPassword(firebaseUid, passwordHash)) {
-            log.info("Login successful ({}).", user);
-        } else {
-            log.warn("Invalid credentials for ({})!", user);
-            throw new BadRequestException("Invalid credentials");
-        }
     }
 
     @Override

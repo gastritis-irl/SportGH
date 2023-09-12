@@ -24,10 +24,6 @@ public class User extends BaseEntity {
     @Column(name = "email", unique = true, length = 64)
     private String email;
 
-    @ToString.Exclude
-    @Column(length = 64)
-    private String password;
-
     @Column(name = "firebase_uid", unique = true, length = 128)
     private String firebaseUid;
 

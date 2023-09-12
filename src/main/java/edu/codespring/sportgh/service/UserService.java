@@ -6,9 +6,7 @@ import java.util.Collection;
 
 public interface UserService {
 
-    User signup(String userName, String firebaseUid, String password);
-
-    void login(String firebaseUid, String password);
+    User signup(String userName, String firebaseUid);
 
     Collection<User> findAll();
 
