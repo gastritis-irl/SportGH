@@ -1,2 +1,11 @@
 <div class="breadcrumb">
+    <div routerLink="/">Home</div>
+    <div routerLink="/{{url.slice(0,i+1).join('/')}}" *ngFor="let urlSegment of url; let i = index">
+        <div>
+            >
+        </div>
+        <div>
+            {{urlSegment.charAt(0).toUpperCase() + urlSegment.slice(1)}}
+        </div>
+    </div>
 </div>

@@ -84,28 +84,6 @@ Global classes
 }
 
 
-/* ----------Breadcrumb---------- */
-.breadcrumb {
-    padding-left: $main-page-padding;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: 15px;
-
-    a {
-        color: $color-main-1;
-        font-weight: $font-weight-bold;
-        text-decoration: none;
-
-        &:hover {
-            color: $color-main-2;
-        }
-    }
-}
-
-
 /* ----------Sign in/Sign up button---------- */
 
 // Text size
