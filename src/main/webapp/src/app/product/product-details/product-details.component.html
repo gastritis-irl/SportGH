@@ -44,7 +44,7 @@
 
         <div class="images-and-pricing">
             <div class="images">
-                <ng-container *ngIf="product.imageDataUrls && product.imageDataUrls.length; else defaultImage">
+                <ng-container *ngIf="product.imageDataUrls && product.imageDataUrls.length>0; else defaultImage">
                     <div class="carousel">
                         <ng-container *ngFor="let imageUrl of product.imageDataUrls">
                             <div class="carousel-item">

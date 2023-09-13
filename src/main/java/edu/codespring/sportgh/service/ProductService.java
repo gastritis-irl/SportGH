@@ -1,6 +1,7 @@
 package edu.codespring.sportgh.service;
 
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
+import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 
@@ -23,7 +24,7 @@ public interface ProductService {
     void delete(Product product);
 
     //Image handling methods
-    void addImage(Long productId, Long imageId);
+    void addImage(Long productId, Image image);
 
     void removeImage(Long productId, Long imageId);
 }

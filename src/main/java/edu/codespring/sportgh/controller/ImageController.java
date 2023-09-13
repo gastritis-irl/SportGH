@@ -57,13 +57,13 @@ public class ImageController {
         if (!file.getContentType().startsWith("image/")) {
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
         }
-        if (productId != 0) {
-            Image image = imageService.saveFileAndCreateDbInstance(file);
-            productService.addImage(productId, image.getId());
-            log.info("Creating new image with ID {}.", image.getId());
-            return new ResponseEntity<>(image, HttpStatus.OK);
-        }
+        log.info("Creating new image with productId {}.", productId);
         Image image = imageService.saveFileAndCreateDbInstance(file);
+        if (productId != 0) {
+            image.setProduct(productService.findById(productId));
+            imageService.save(image);
+            productService.addImage(productId, image);
+        }
         log.info("Creating new image with ID {}.", image.getId());
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
@@ -76,11 +76,12 @@ public class ImageController {
         }
         Image image = imageService.findById(imageId);
         if (image == null) {
+            log.info("Creating new image with productId {}.", productId);
             if (productId != 0) {
                 image = imageService.saveFileAndCreateDbInstance(file);
-                productService.addImage(productId, image.getId());
-            }else
-            {
+                image.setProduct(productService.findById(productId));
+                productService.addImage(productId, image);
+            } else {
                 image = imageService.saveFileAndCreateDbInstance(file);
             }
             log.info("Creating new image with ID {}.", image.getId());

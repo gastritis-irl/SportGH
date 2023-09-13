@@ -91,10 +91,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addImage(Long productId, Long imageId) {
+    public void addImage(Long productId, Image image) {
 
         Product product = findById(productId);
-        Image image = imageService.findById(imageId);
+        image.setProduct(product);
+        imageService.save(image);
         Set<Image> images=product.getImages();
         if(images.size()>=8){
             throw new BadRequestException("Maximum 8 images can be uploaded");

@@ -35,6 +35,7 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     loadProductImages(imageIds: number[]): void {
+        this.toastNotify.info(`Loading images...`);
         imageIds.forEach((imageId, index) => {
             this.imageService.getImageFile(imageId).subscribe({
                 next: (blob) => {
@@ -44,6 +45,7 @@ export class ProductDetailsComponent implements OnInit {
                             this.product.imageDataUrls = [];
                         }
                         this.product.imageDataUrls[index] = reader.result as string;
+                        this.toastNotify.success(`Image ${index + 1} successfully loaded with id ${imageId} and name ${this.product.imageDataUrls[index]}`);
                     };
                     if (blob) {
                         reader.readAsDataURL(blob);
@@ -77,6 +79,13 @@ export class ProductDetailsComponent implements OnInit {
                 next: (data: Product): void => {
                     this.product = data;
                     this.loadProductLender(this.product.userId ? this.product.userId : 0);
+
+                    this.toastNotify.info(`Loading ${data.imageIds?.length} images`);
+
+                    // Call the function to load the images if imageIds are available
+                    if (this.product.imageIds && this.product.imageIds.length > 0) {
+                        this.loadProductImages(this.product.imageIds);
+                    }
                 },
                 error: (error): void => {
                     console.error(error);
@@ -85,6 +94,7 @@ export class ProductDetailsComponent implements OnInit {
             }
         );
     }
+
 
     loadProductLender(userId: number): void {
         this.userService.getById(userId).subscribe(
