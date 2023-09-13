@@ -27,27 +27,28 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public ResponseEntity<?> findPageByCategoryId(@RequestParam("categoryId") Optional<Long> categoryId,
-                                                  @RequestParam("pageNumber") Optional<Integer> pageNumber) {
-        if (pageNumber.isPresent()) {
-            ProductPageOutDTO productPageOutDTO;
-            if (categoryId.isPresent()) {
-                productPageOutDTO = productService.findPageByCategoryId(
-                    categoryId.get(),
-                    pageNumber.get()
-                );
-            } else {
-                productPageOutDTO = productService.findPageAll(
-                    pageNumber.get()
-                );
-            }
-            return new ResponseEntity<>(productPageOutDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(
-                "'pageNumber' query parameter was not given",
-                HttpStatus.BAD_REQUEST
-            );
-        }
+    public ResponseEntity<ProductPageOutDTO> findPageByParams(
+            @RequestParam("orderBy") Optional<String> orderBy,
+            @RequestParam("direction") Optional<String> direction,
+            @RequestParam("pageNumber") Optional<Integer> pageNumber,
+            @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
+            @RequestParam("MinPrice") Optional<Double> minPrice,
+            @RequestParam("MaxPrice") Optional<Double> maxPrice,
+            @RequestParam("TextSearch") Optional<String> textSearch
+    ) {
+        return new ResponseEntity<>(
+                productService.findPageByParams(
+                        orderBy.orElse(null),
+                        direction.orElse(null),
+                        pageNumber.orElse(1),
+                        subcategoryNames.orElse(null),
+                        minPrice.orElse(null),
+                        maxPrice.orElse(null),
+                        textSearch.orElse(null)
+                ),
+                HttpStatus.OK
+        );
+
     }
 
     @GetMapping(path = "/{productId}")

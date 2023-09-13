@@ -9,8 +9,8 @@ import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -26,20 +26,86 @@ public class ProductServiceImpl implements ProductService {
     private final ImageService imageService;
     static final int pageSize = 60;
 
-    @Override
-    public ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber) {
-        Page<Product> page = productRepository.findByCategoryId(categoryId, PageRequest.of(pageNumber - 1, pageSize));
+    private Specification<Product> filterByPrice(
+            Double minPrice, Double maxPrice, Specification<Product> specification
+    ) {
+        Specification<Product> spec = specification;
+        if (minPrice != null && minPrice != 0) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
+        }
 
-        Collection<Product> products = page.getContent();
-        int nrOfPages = page.getTotalPages();
-        long nrOfElements = page.getTotalElements();
+        if (maxPrice != null && maxPrice != 0) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
+        }
 
-        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
+        return spec;
+    }
+
+    private Specification<Product> filterByCategoriesAndSubcategories(
+            String[] subcategoryNames, Specification<Product> specification
+    ) {
+        Specification<Product> spec = specification;
+
+        if (subcategoryNames != null && subcategoryNames.length > 0) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    root.get("subCategory").get("name").in((Object[]) subcategoryNames));
+        }
+        return spec;
+    }
+
+    private Specification<Product> filterByTextInNameOrDescription(
+            String textSearch, Specification<Product> specification
+    ) {
+        Specification<Product> spec = specification;
+        if (textSearch != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.or(
+                            criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"),
+                            criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
+                    )
+            );
+        }
+        return spec;
     }
 
     @Override
-    public ProductPageOutDTO findPageAll(int pageNumber) {
-        Page<Product> page = productRepository.findPageAll(PageRequest.of(pageNumber - 1, pageSize));
+    public ProductPageOutDTO findPageByParams(
+            String orderBy,
+            String direction,
+            int pageNumber,
+            String[] subcategoryNames,
+            Double minPrice,
+            Double maxPrice,
+            String textSearch
+    ) {
+        Specification<Product> specification = Specification.where(null);
+
+        Pageable pageable;
+        if (orderBy == null) {
+            pageable = PageRequest.of(pageNumber - 1, pageSize);
+        } else {
+            if (direction == null) {
+                pageable = PageRequest.of(
+                        pageNumber - 1,
+                        pageSize,
+                        Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
+                );
+            } else {
+                pageable = PageRequest.of(
+                        pageNumber - 1,
+                        pageSize,
+                        Sort.by(Sort.Direction.fromString(direction), orderBy)
+                );
+            }
+        }
+
+        specification = filterByCategoriesAndSubcategories(subcategoryNames, specification);
+        specification = filterByPrice(minPrice, maxPrice, specification);
+        specification = filterByTextInNameOrDescription(textSearch, specification);
+
+        Page<Product> page = productRepository.findAll(specification, pageable);
 
         Collection<Product> products = page.getContent();
         int nrOfPages = page.getTotalPages();
@@ -54,8 +120,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean existsByNameAndUser(String name, User user) {
-        return productRepository.existsByNameAndUser(name, user);
+    public boolean notExistsByNameAndUser(String name, User user) {
+        return !productRepository.existsByNameAndUser(name, user);
     }
 
     @Override

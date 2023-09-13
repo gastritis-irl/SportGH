@@ -1,6 +1,51 @@
 <div class="product-list-holder">
-    <div class="product-list-info">
-        Number of results: {{nrOfItems}}
+    <div class="product-list-info-holder">
+        <div>
+            Number of results: {{nrOfItems}}
+        </div>
+        <div class="order-by-holder">
+            <div>
+                Order by
+            </div>
+            <select class="order-by-select"
+                    [(ngModel)]="orderByElement" name="orderByElement"
+                    (ngModelChange)="orderBy()"
+            >
+                <option [ngValue]="'name#ASC'">Name A-Z</option>
+                <option [ngValue]="'name#DESC'">Name Z-A</option>
+                <option [ngValue]="'rentPrice#ASC'">Lowest price first</option>
+                <option [ngValue]="'rentPrice#DESC'">Highest price first</option>
+                <option [ngValue]="'newest'" disabled>Newest (by upload date)</option>
+            </select>
+        </div>
+    </div>
+    <div class="filter-param-holder">
+        <div class="filter-param" *ngIf="anyActiveFilter()">
+            Reset filters
+            <div class="clear-filter" (click)="resetFilters()">&#10005;</div>
+        </div>
+
+        <div class="filter-param" *ngIf="textSearch!=''">
+            Search: {{textSearch}}
+            <div class="clear-filter" (click)="clearFilter('TextSearch',0)">&#10005;</div>
+        </div>
+
+        <div *ngFor="let selected of subcategorySelected; let i = index">
+            <div class="filter-param" *ngIf="selected">
+                {{subcategories[i].name}}
+                <div class="clear-filter" (click)="clearFilter('Subcategory',i)">&#10005;</div>
+            </div>
+        </div>
+
+        <div class="filter-param" *ngIf="minPrice">
+            Min price: {{minPrice}}
+            <div class="clear-filter" (click)="clearFilter('MinPrice',0)">&#10005;</div>
+        </div>
+
+        <div class="filter-param" *ngIf="maxPrice">
+            Max price: {{maxPrice}}
+            <div class="clear-filter" (click)="clearFilter('MaxPrice',0)">&#10005;</div>
+        </div>
     </div>
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
@@ -19,26 +64,30 @@
             </div>
         </div>
     </div>
-
     <div class="pagination-item-holder">
         <div *ngIf="currentPage>1" class="buttons">
             <div class="button-default button-primary" (click)="previousPage()">
-                < </div>
+                <
             </div>
-            <div class="pagination-item buttons" *ngFor="let currentPageNumber of range(1,nrOfPages)">
-                <div *ngIf="currentPageNumber==currentPage"
-                    class="button-default button-primary pagination-item-current-page" disabled>
-                    {{currentPageNumber}}
-                </div>
-                <div *ngIf="currentPageNumber!=currentPage" class="button-default button-secondary"
-                    (click)="selectPage(currentPageNumber)">
-                    {{currentPageNumber}}
-                </div>
+        </div>
+        <div class="pagination-item buttons" *ngFor="let currentPageNumber of range(1,nrOfPages)">
+            <div *ngIf="currentPageNumber==currentPage"
+                 class="button-default button-primary pagination-item-current-page" disabled>
+                {{currentPageNumber}}
             </div>
-            <div *ngIf="currentPage<nrOfPages" class="buttons">
-                <div class="button-default button-primary" (click)="nextPage()">
-                    >
-                </div>
+            <div *ngIf="currentPageNumber!=currentPage" class="button-default button-secondary"
+                 (click)="selectPage(currentPageNumber)">
+                {{currentPageNumber}}
+            </div>
+        </div>
+        <div *ngIf="currentPage<nrOfPages" class="buttons">
+            <div class="button-default button-primary" (click)="nextPage()">
+                >
             </div>
         </div>
     </div>
+    <div *ngIf="products.length===0" class="no-item-found-img-holder">
+        <img class="no-item-found-img" src="https://saferoomdesigns.com/wp-content/uploads/2021/06/item_no.png"
+             alt="No item found">
+    </div>
+</div>

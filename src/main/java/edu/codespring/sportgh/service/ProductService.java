@@ -9,11 +9,17 @@ public interface ProductService {
 
     Product findById(Long productId);
 
-    ProductPageOutDTO findPageByCategoryId(Long categoryId, int pageNumber);
+    ProductPageOutDTO findPageByParams(
+        String orderBy,
+        String direction,
+        int pageNumber,
+        String[] subcategoryNames,
+        Double minPrice,
+        Double maxPrice,
+        String textSearch
+    );
 
-    ProductPageOutDTO findPageAll(int pageNumber);
-
-    boolean existsByNameAndUser(String name, User user);
+    boolean notExistsByNameAndUser(String name, User user);
 
     boolean existsById(Long productId);
 
