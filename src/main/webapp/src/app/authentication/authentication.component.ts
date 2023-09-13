@@ -5,7 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../user/user.model';
-import jwtDecode from 'jwt-decode';
+import { FirebaseIdTokenService } from './firebaseIdTokenService';
 
 interface IdToken {
     iss: string;
@@ -38,14 +38,14 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private afAuth: AngularFireAuth,
         private toastNotify: ToastrService,
+        private firebaseIdTokenService: FirebaseIdTokenService,
     ) {
     }
 
     ngOnInit(): void {
-        const firebaseIdToken: string | null = sessionStorage.getItem('firebaseIdToken');
-        if (firebaseIdToken) {
-            const decodedIdToken: IdToken = jwtDecode(firebaseIdToken);
-            this.loggedInUserEmail = decodedIdToken.email;
+        const idToken: IdToken | null = this.firebaseIdTokenService.getIdToken();
+        if (idToken) {
+            this.loggedInUserEmail = idToken.email;
         }
     }
 
@@ -87,7 +87,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 this.closeModal(); // Close the modal
             })
             .catch((error: string): void => {
-                this.toastNotify.warning(`Error logging in: ${(String(error)).split(':')[2].split('(')[0]}`);
+                this.toastNotify.warning(`Error logging in: ${this.getErrorMessageInfo(error)}`);
             });
     }
 
@@ -103,12 +103,15 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 },
                 error: (error): void => {
                     console.log(error);
-                    this.toastNotify.warning(`Error registering2`);
+                    this.toastNotify.warning(`Error registering`);
                 }
             });
-        }).catch(error => {
-            console.log(error);
-            this.toastNotify.warning(`Error registering1`);
+        }).catch((error: string): void => {
+            this.toastNotify.warning(`Error registering: ${this.getErrorMessageInfo(error)}`);
         });
+    }
+
+    getErrorMessageInfo(error: string): string {
+        return (String(error)).split(':')[2].split('(')[0];
     }
 }
