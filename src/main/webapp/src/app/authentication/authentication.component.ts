@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/c
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../user/user.model';
 import jwtDecode from 'jwt-decode';
@@ -34,14 +33,24 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     email: string = '';
     password: string = '';
 
-    private ngUnsubscribe: Subject<void> = new Subject<void>();
-
     constructor(
         private modalService: NgbModal,
         private userService: UserService,
         private afAuth: AngularFireAuth,
         private toastNotify: ToastrService,
     ) {
+    }
+
+    ngOnInit(): void {
+        const firebaseIdToken: string | null = sessionStorage.getItem('firebaseIdToken');
+        if (firebaseIdToken) {
+            const decodedIdToken: IdToken = jwtDecode(firebaseIdToken);
+            this.loggedInUserEmail = decodedIdToken.email;
+        }
+    }
+
+    ngOnDestroy(): void {
+        sessionStorage.clear();
     }
 
     logout(): void {
@@ -52,32 +61,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             console.error('Error during logout', error);
             this.toastNotify.warning('Error logging out');
         });
-        sessionStorage.clear();
-    }
-
-    ngOnInit(): void {
-        const firebaseIdToken: string | null = sessionStorage.getItem('firebaseIdToken');
-        if (firebaseIdToken) {
-            const decodedIdToken: IdToken = jwtDecode(firebaseIdToken);
-            this.loggedInUserEmail = decodedIdToken.email;
-        }
-
-        this.afAuth.authState
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe((user): void => {
-                if (user) {
-                    this.loggedInUserEmail = user.email;
-                } else {
-                    this.loggedInUserEmail = null;
-                }
-            });
-    }
-
-    ngOnDestroy(): void {
-        this.ngUnsubscribe.next();
-        this.ngUnsubscribe.complete();
-        this.ngUnsubscribe.pipe(takeUntil(this.ngUnsubscribe));
-        this.closeModal(); // Close any open modal
         sessionStorage.clear();
     }
 
@@ -103,9 +86,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 this.toastNotify.success(`Successfully logged in as ${this.email}`);
                 this.closeModal(); // Close the modal
             })
-            .catch(error => {
-                console.log(error);
-                this.toastNotify.warning(`Error logging in`);
+            .catch((error: string): void => {
+                this.toastNotify.warning(`Error logging in: ${(String(error)).split(':')[2].split('(')[0]}`);
             });
     }
 
@@ -121,12 +103,12 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 },
                 error: (error): void => {
                     console.log(error);
-                    this.toastNotify.warning(`Error registering`);
+                    this.toastNotify.warning(`Error registering2`);
                 }
             });
         }).catch(error => {
             console.log(error);
-            this.toastNotify.warning(`Error registering`);
+            this.toastNotify.warning(`Error registering1`);
         });
     }
 }
