@@ -1,0 +1,40 @@
+@use "../../style-variables.scss" as *;
+
+$breakpoint-custom-increase: 30px;
+
+$product-filter-width: 20%;
+$product-filter-min-width: 200px;
+$product-filter-max-width: 250px;
+$item-gap: 15px;
+$product-list-width: 85%;
+
+.product-holder {
+    padding-left: $main-page-padding;
+    padding-right: $main-page-padding;
+    display: flex;
+    flex-direction: row;
+    gap: $item-gap;
+
+    .product-filter {
+        width: $product-filter-width;
+        min-width: $product-filter-min-width;
+        max-width: $product-filter-max-width;
+    }
+
+    .product-list {
+        width: $product-list-width;
+    }
+
+    @media (max-width: $breakpoint-small + $breakpoint-custom-increase) {
+        flex-direction: column;
+        justify-content: center;
+
+        .product-filter {
+            width: 100%;
+        }
+
+        .product-list {
+            width: 100%;
+        }
+    }
+}
