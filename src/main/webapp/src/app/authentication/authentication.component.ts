@@ -5,7 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../user/user.model';
-import { FirebaseIdTokenService } from './firebaseIdTokenService';
+import { FirebaseIdTokenService } from './firebase-id-token.service';
 
 interface IdToken {
     iss: string;

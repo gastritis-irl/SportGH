@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import { IdToken } from './firebaseIdToken.model';
+import { IdToken } from './firebase-id-token.model';
 import { Injectable } from '@angular/core';
 
 @Injectable({
