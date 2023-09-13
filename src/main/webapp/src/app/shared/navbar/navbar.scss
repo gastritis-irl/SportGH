@@ -1,4 +1,4 @@
-@import '../../../style-variables.scss';
+@use '../../../style-variables.scss' as *;
 
 // Media size
 $media-width-limit: 660px;
@@ -6,16 +6,9 @@ $media-width-limit: 660px;
 // Item Size
 $height-nav-header: 4.25em;
 $height-nav: 2.7em;
-$width-nav-searchbar: 100%;
-$height-nav-searchbar: 2.15em;
 
 // Margin/Border/Padding
-$padding-nav-horiz: 10%;
 $padding-nav-vert: 15px;
-$padding-left-searchbar: 2.5em;
-$border-input: 0.1em solid transparent;
-$border-radius-searchbar: 2.5em;
-$pos-searchbar-icon: 1em;
 
 // Gap
 $gap-nav-1: 33px;
@@ -23,22 +16,11 @@ $gap-nav-2: 15px;
 $row-gap-nav: 15px;
 $gap-nav-header-icon: 0.5em;
 
-// Box-shadow
-$box-shadow-searchbar-1: 0 0 3px;
-$box-shadow-searchbar-2: 0 0 0 5px;
-
-
-/* ----------Font---------- */
-body {
-    font-family: $font-default;
-}
-
-
 /* ----------Nav (header, title, searchbar, login)---------- */
 .nav-header-frame {
     background-color: $color-neutral-1;
-    padding-left: $padding-nav-horiz;
-    padding-right: $padding-nav-horiz;
+    padding-left: $main-page-padding;
+    padding-right: $main-page-padding;
 
     .nav-header-content {
         display: flex;
@@ -82,42 +64,6 @@ body {
                 color: $color-main-1;
             }
         }
-
-        .nav-searchbar {
-            display: flex;
-            align-items: center;
-            position: relative;
-
-            .nav-searchbar-icon {
-                position: absolute;
-                left: $pos-searchbar-icon;
-                fill: $color-main-1;
-                width: $pos-searchbar-icon;
-                height: $pos-searchbar-icon;
-            }
-
-            .nav-searchbar-input {
-                height: $height-nav-searchbar;
-                width: $width-nav-searchbar;
-                padding-left: $padding-left-searchbar;
-                border: $border-input;
-                border-radius: $border-radius-searchbar;
-                outline: none;
-                background-color: $color-main-3;
-                box-shadow: $box-shadow-searchbar-1 $color-main-2, $box-shadow-searchbar-2 $color-main-3;
-                transition: .3s ease;
-
-                &:hover {
-                    background-color: $color-neutral-1;
-                    box-shadow: $box-shadow-searchbar-1 $color-main-3, $box-shadow-searchbar-2 $color-main-2;
-                }
-
-                &:focus {
-                    background-color: $color-neutral-1;
-                    box-shadow: $box-shadow-searchbar-1 $color-main-3, $box-shadow-searchbar-2 $color-main-2;
-                }
-            }
-        }
     }
 }
 
@@ -127,7 +73,7 @@ body {
     position: relative;
     display: flex;
     justify-content: flex-start;
-    padding-left: $padding-nav-horiz;
+    padding-left: $main-page-padding;
     background-color: $color-main-1;
 
     @media(min-width: $media-width-limit) {
