@@ -1,0 +1,94 @@
+@use '../../../style-variables.scss' as *;
+
+$filter-gap: 10px;
+$filter-padding: 10px;
+$select-padding: 5px;
+
+.heading {
+    color: $color-main-1;
+    font-family: $font-default;
+    font-weight: $font-weight-bold;
+    font-size: $size-h2;
+    display: flex;
+    justify-content: center;
+}
+
+.product-filter-holder {
+    display: flex;
+    flex-direction: column;
+    gap: $filter-gap;
+    padding: $filter-padding;
+    border-radius: $border-radius;
+    background-color: $color-neutral-1;
+    color: $color-main-1;
+
+    .filter-search {
+        border-color: $color-main-3;
+
+        .nav-searchbar-input {
+            background-color: $color-neutral-1;
+            border-color: $color-main-3;
+            border-style: solid;
+            box-shadow: 0 0, 0 0;
+
+            &:hover, &:focus {
+                border-color: $color-main-2;
+            }
+        }
+    }
+
+    .button-content {
+        border-radius: $border-radius;
+        border-color: $color-main-3;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        font-weight: $font-weight-bold;
+
+        &[aria-expanded="true"] {
+            border-radius: $border-radius $border-radius 0 0;
+        }
+    }
+
+    .filter-item {
+        border-radius: $border-radius;
+        background-color: $color-main-3;
+        padding: $filter-padding;
+
+        &[aria-expanded="true"] {
+            border-radius: 0 0 $border-radius $border-radius;
+        }
+
+        .filter-select {
+            width: 100%;
+            border-radius: $border-radius;
+            border-style: solid;
+            padding: $select-padding;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $color-main-3;
+            }
+        }
+
+        .filter-price {
+
+            .input-slider {
+                width: 100%;
+
+                &.form-range::-moz-range-thumb {
+                    background-color: $color-main-1;
+                }
+
+                &.form-range::-webkit-slider-thumb {
+                    background-color: $color-main-1;
+                }
+
+                &.form-range::-ms-thumb {
+                    background-color: $color-main-1;
+                }
+            }
+        }
+    }
+}
