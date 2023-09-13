@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppService } from '../app.service';
 import { User } from './user.model';
-import { getIdToken } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
+import { getIdToken } from '@angular/fire/auth';
 
 
 @Injectable({
