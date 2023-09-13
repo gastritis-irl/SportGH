@@ -112,15 +112,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Collection<Product> findAll(String orderBy, String direction) {
-        Sort sort = Sort.by(
-                Sort.Direction.fromString(direction == null ? "ASC" : direction),
-                orderBy == null ? "name" : orderBy
-        );
-        return productRepository.findAll(sort);
-    }
-
-    @Override
     public Product findById(Long productId) {
         return productRepository.findById(productId).orElse(null);
     }
