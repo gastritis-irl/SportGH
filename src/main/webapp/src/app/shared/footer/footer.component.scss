@@ -3,9 +3,12 @@
 $item-gap: 10px;
 $footer-column-gap: 10%;
 $title-logo-size: 30px;
+$footer-top-gap: 30px;
+$footer-padding-and-margin: 50px;
 
 .footer {
-    padding: $main-page-padding;
+    margin-top: $footer-padding-and-margin;
+    padding: $footer-padding-and-margin;
     background-color: $color-neutral-1;
     color: $color-main-2;
     display: flex;
@@ -15,7 +18,8 @@ $title-logo-size: 30px;
         padding-bottom: $main-page-padding;
         display: flex;
         flex-direction: row;
-        column-gap: $footer-column-gap;
+        justify-content: space-between;
+        gap: $footer-top-gap;
 
         @media (max-width: $breakpoint-medium) {
             flex-wrap: wrap;
