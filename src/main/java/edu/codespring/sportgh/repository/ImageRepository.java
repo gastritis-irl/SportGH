@@ -2,7 +2,9 @@ package edu.codespring.sportgh.repository;
 
 import edu.codespring.sportgh.model.Image;
 
+import java.util.Collection;
+
 public interface ImageRepository extends BaseRepository<Image> {
 
-    boolean existsByName(String name);
+    Collection<Image> findByProductId(Long product_id);
 }

@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.UUID;
 
 @Service
@@ -113,8 +114,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public boolean existsByName(String name) {
-        return imageRepository.existsByName(name);
+    public Collection<Image> findByProductId(Long product_id) {
+        return imageRepository.findByProductId(product_id);
     }
 }
 

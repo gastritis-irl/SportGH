@@ -11,6 +11,8 @@ import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-
 import { ImageComponent } from "../shared/image/image.component";
 import { ProductFilterComponent } from './product-filter/product-filter.component';
 import { TreeViewComponent } from '../shared/treeview/tree-view.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
     declarations: [
@@ -29,7 +31,8 @@ import { TreeViewComponent } from '../shared/treeview/tree-view.component';
         FormCheckLabelComponent,
         NgbCollapse,
         TreeViewComponent,
-        ImageComponent
+        ImageComponent,
+        NgbModule,
     ],
     providers: [
         ProductComponent,

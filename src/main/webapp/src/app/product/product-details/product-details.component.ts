@@ -12,7 +12,7 @@ import { ImageService } from '../../shared/image/image.service';
 @Component({
     selector: 'sgh-product-details',
     templateUrl: './product-details.component.html',
-    styleUrls: [ './product-details.component.scss' ],
+    styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
 
@@ -34,30 +34,36 @@ export class ProductDetailsComponent implements OnInit {
     ) {
     }
 
-    loadProductImages(imageIds: number[]): void {
+    loadProductImages(productId: number): void {
         this.toastNotify.info(`Loading images...`);
-        imageIds.forEach((imageId, index) => {
-            this.imageService.getImageFile(imageId).subscribe({
-                next: (blob) => {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        if (!this.product.imageDataUrls) {
-                            this.product.imageDataUrls = [];
+
+        this.imageService.getImageFilesByProductId(productId).subscribe({
+            next: async (response: {name:string, data:Uint8Array}[]) => {
+                try {
+                    const imageDTOs: Image[] = response;
+                    this.product.imageDataUrls = [];
+
+                    for (const imageDTO of imageDTOs) {
+                        if (!imageDTO.data) {
+                            continue;
                         }
-                        this.product.imageDataUrls[index] = reader.result as string;
-                        this.toastNotify.success(`Image ${index + 1} successfully loaded with id ${imageId} and name ${this.product.imageDataUrls[index]}`);
-                    };
-                    if (blob) {
-                        reader.readAsDataURL(blob);
+
+                        const base64String = imageDTO.data
+                        const imageUrl = 'data:image/jpeg;base64,' + base64String;
+                        this.product.imageDataUrls.push(imageUrl);
+                        this.toastNotify.success(`Image ${imageDTO.name} successfully loaded.`);
                     }
-                },
-                error: (error) => {
-                    this.toastNotify.error(`Error fetching image`, error);
+
+                    this.toastNotify.success(`Images successfully loaded.`);
+                } catch (error) {
+                    this.toastNotify.error(`Error loading images: ${error}`);
                 }
-            });
+            },
+            error: (error) => {
+                this.toastNotify.error(`Error fetching images`, error);
+            }
         });
     }
-
 
     ngOnInit(): void {
         this.route.params.subscribe(
@@ -80,12 +86,8 @@ export class ProductDetailsComponent implements OnInit {
                     this.product = data;
                     this.loadProductLender(this.product.userId ? this.product.userId : 0);
 
-                    this.toastNotify.info(`Loading ${data.imageIds?.length} images`);
+                    this.loadProductImages(this.product.id ? this.product.id : 0);
 
-                    // Call the function to load the images if imageIds are available
-                    if (this.product.imageIds && this.product.imageIds.length > 0) {
-                        this.loadProductImages(this.product.imageIds);
-                    }
                 },
                 error: (error): void => {
                     console.error(error);
@@ -164,7 +166,7 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (): void => {
                     this.toastNotify.success(`Product ${this.product.name} successfully deleted!`);
-                    this.router.navigate([ `/products` ])
+                    this.router.navigate([`/products`])
                         .catch((error): void => {
                             console.error(error);
                             this.toastNotify.error('Error redirecting to page');

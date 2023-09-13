@@ -3,6 +3,8 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.model.Image;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
+
 public interface ImageService {
 
     Image saveFileAndCreateDbInstance(MultipartFile file);
@@ -17,5 +19,5 @@ public interface ImageService {
 
     Image findById(Long imageID);
 
-    boolean existsByName(String name);
+    Collection<Image> findByProductId(Long product_id);
 }

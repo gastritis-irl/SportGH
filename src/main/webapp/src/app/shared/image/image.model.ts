@@ -6,4 +6,5 @@ export interface Image {
     file?: File;
     imageDataUrl?: string;
     productId?: number;
+    data?: Uint8Array;
 }

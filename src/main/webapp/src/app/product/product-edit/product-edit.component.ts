@@ -123,11 +123,11 @@ export class ProductEditComponent implements OnInit {
 
     loadProductImages(product: Product): void {
         if (product.imageIds && product.imageIds.length > 0) {
-            product.imageIds.forEach((imageId, index) => {
+            product.imageIds.forEach((imageId) => {
                 this.imageService.getImageFile(imageId).subscribe(blob => {
                     const reader = new FileReader();
                     reader.onload = () => {
-                        this.imageDatas[index].imageDataUrl = reader.result as string;
+                        this.product.imageDataUrls?.push(reader.result as string);
                     };
                     if (blob) {
                         reader.readAsDataURL(blob);

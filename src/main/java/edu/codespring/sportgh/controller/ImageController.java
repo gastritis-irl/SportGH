@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.controller;
 
+import edu.codespring.sportgh.dto.ImageDTO;
 import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.service.ImageService;
 import edu.codespring.sportgh.service.ProductService;
@@ -15,8 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/images")
@@ -49,6 +55,49 @@ public class ImageController {
         return ResponseEntity.ok()
             .contentType(MediaType.IMAGE_JPEG)
             .body(resource);
+    }
+
+    @GetMapping(path = "/product/files/{productId}")
+    public ResponseEntity<List<ImageDTO>> getImageFilesByProductId(@PathVariable Long productId) {
+        Collection<Image> images = imageService.findByProductId(productId);
+
+        if (images.isEmpty()) {
+            log.error("Images not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        log.info("Found {} images for productId {}.", images.size(), productId);
+
+        List<ImageDTO> imageDTOs = images.stream()
+            .map(this::getResourceResponseEntity)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
+
+        if (imageDTOs.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok()
+            .body(imageDTOs);
+    }
+
+    private ImageDTO getResourceResponseEntity(Image image) {
+        if (image == null) {
+            log.error("Image not found");
+            return null;
+        }
+
+        try {
+            Path imagePath = Paths.get(image.getUrl(), image.getName());
+            byte[] imageData = Files.readAllBytes(imagePath);
+            ImageDTO imageDTO = new ImageDTO();
+            imageDTO.setName(image.getName());
+            imageDTO.setData(imageData);
+            return imageDTO;
+        } catch (Exception e) {
+            log.error("Error loading image: " + image.getName(), e);
+            return null;
+        }
     }
 
 
