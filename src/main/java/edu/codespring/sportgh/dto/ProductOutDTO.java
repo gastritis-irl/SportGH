@@ -15,5 +15,6 @@ public class ProductOutDTO {
     private Long subCategoryId;
     private String subCategoryName;
     private Long userId;
+    private String userUid;
     private String username;
 }

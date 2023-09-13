@@ -10,5 +10,6 @@ export interface Product {
     subCategoryId?: number,
     subCategoryName?: string,
     userId?: number,
+    userUid?: string,
     username?: string,
 }
