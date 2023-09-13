@@ -5,6 +5,7 @@ import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
+import edu.codespring.sportgh.service.ImageService;
 import edu.codespring.sportgh.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductMapper productMapper;
+    private final ImageService imageService;
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
@@ -86,6 +88,8 @@ public class ProductController {
         if (!productService.existsById(productId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        imageService.findByProductId(productId).forEach(image -> imageService.delete(image.getId()));
         return save(productInDTO);
     }
 

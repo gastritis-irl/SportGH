@@ -102,7 +102,9 @@ export class ProductEditComponent implements OnInit {
                             this.getSubcategoriesByCategoryId();
                             this.initializeImageDatas(data.id);
                             this.toastNotify.info(`Loading ${data.imageIds?.length} images`);
-                            this.loadProductImages(data);
+
+                            // Call the loadProductImages method here
+                            this.loadProductImages(data.id ? data.id : 0);
                         },
                         error: (error): void => {
                             console.error(error);
@@ -121,21 +123,36 @@ export class ProductEditComponent implements OnInit {
         }
     }
 
-    loadProductImages(product: Product): void {
-        if (product.imageIds && product.imageIds.length > 0) {
-            product.imageIds.forEach((imageId) => {
-                this.imageService.getImageFile(imageId).subscribe(blob => {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        this.product.imageDataUrls?.push(reader.result as string);
-                    };
-                    if (blob) {
-                        reader.readAsDataURL(blob);
+    loadProductImages(productId: number): void {
+        this.toastNotify.info(`Loading images...`);
+
+        this.imageService.getImageFilesByProductId(productId).subscribe({
+            next: async (response: { name: string, data: Uint8Array }[]) => {
+                try {
+                    this.product.imageDataUrls = [];
+
+                    for (const imageDTO of response) {
+                        if (!imageDTO.data) {
+                            continue;
+                        }
+
+                        const base64String = btoa(new TextDecoder('iso-8859-1').decode(new Uint8Array(imageDTO.data)));
+                        const imageUrl = 'data:image/jpeg;base64,' + base64String;
+                        this.product.imageDataUrls.push(imageUrl);
+                        this.toastNotify.success(`Image ${imageDTO.name} successfully loaded.`);
                     }
-                });
-            });
-        }
+
+                    this.toastNotify.success(`Images successfully loaded.`);
+                } catch (error) {
+                    this.toastNotify.error(`Error loading images: ${error}`);
+                }
+            },
+            error: (error) => {
+                this.toastNotify.error(`Error fetching images`, error);
+            }
+        });
     }
+
 
     getSubcategoriesByCategoryId(): void {
         this.subcategoryService.getByCategoryId(this.product.categoryId ? this.product.categoryId : 0).subscribe(
@@ -186,7 +203,7 @@ export class ProductEditComponent implements OnInit {
         this.toastNotify.info(`Uploading ${files.length} images`);
         files.forEach((file, index) => {
             this.toastNotify.info(`Uploading image name: ${file.name} on product id: ${productId}`);
-            if (file && productId) {
+            if (file) {
                 this.imageService.uploadImage(file, productId).subscribe({
                     next: (image: Image) => {
                         this.toastNotify.success(`Image ${index + 1} successfully uploaded`);
