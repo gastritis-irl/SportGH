@@ -37,7 +37,6 @@ import { ImageService } from './shared/image/image.service';
         ProductModule,
         CategoryModule,
         AdminModule,
-        NavbarComponent,
         BrowserAnimationsModule,
         ToastrModule.forRoot({
             timeOut: 10000,

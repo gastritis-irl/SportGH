@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductComponent } from './product.component';
@@ -6,8 +6,10 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { ProductRoute } from './product.route';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { FormsModule } from '@angular/forms';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapse, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
+import { ProductFilterComponent } from './product-filter/product-filter.component';
+import { TreeViewComponent } from '../shared/treeview/tree-view.component';
 import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
 
 @NgModule({
@@ -15,6 +17,7 @@ import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
         ProductDetailsComponent,
         ProductListComponent,
         ProductEditComponent,
+        ProductFilterComponent,
         ProductComponent,
     ],
     imports: [
@@ -24,6 +27,8 @@ import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
         NgIf,
         NgbPopover,
         FormCheckLabelComponent,
+        NgbCollapse,
+        TreeViewComponent,
         BreadcrumbComponent,
     ],
     providers: [

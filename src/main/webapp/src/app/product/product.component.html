@@ -1,6 +1,30 @@
 <sgh-breadcrumb></sgh-breadcrumb>
-<sgh-product-list [products]="products"
-                  [nrOfPages]="nrOfPages"
-                  [nrOfItems]="nrOfItems"
-                  (newPageEvent)="setPageNumber($event)"></sgh-product-list>
-<!--sgh-product-filter-->
+<div class="product-holder">
+    <sgh-product-filter class="product-filter"
+                        [categories]="categories"
+                        [subcategories]="subcategories"
+                        [categorySelected]="categorySelected"
+                        [subcategorySelected]="subcategorySelected"
+                        [selectedAtLeastOneSubCatOfCat]="selectedAtLeastOneSubCatOfCat"
+                        [textSearch]="textSearch"
+                        [minPrice]="minPrice"
+                        [maxPrice]="maxPrice"
+                        (changesEvent)="changesEvent($event)"
+    ></sgh-product-filter>
+    <sgh-product-list class="product-list"
+                      [products]="products"
+                      [categories]="categories"
+                      [subcategories]="subcategories"
+                      [nrOfPages]="nrOfPages"
+                      [nrOfItems]="nrOfItems"
+                      [subcategorySelected]="subcategorySelected"
+                      [categorySelected]="categorySelected"
+                      [textSearch]="textSearch"
+                      [minPrice]="minPrice"
+                      [maxPrice]="maxPrice"
+                      (newPageEvent)="setPageNumber($event)"
+                      (orderByEvent)="orderBy($event)"
+                      (clearFilterEvent)="clearFilter($event)"
+                      (resetFilterEvent)="resetFilters()"
+    ></sgh-product-list>
+</div>
