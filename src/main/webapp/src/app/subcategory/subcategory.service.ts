@@ -9,6 +9,11 @@ import { Subcategory } from './subcategory.model';
 })
 export class SubcategoryService extends AppService {
 
+    getAll(): Observable<Subcategory[]> {
+        const url: string = `${this.baseUrl}/subcategories`;
+        return this.http.get<Subcategory[]>(url);
+    }
+
     getByCategoryId(categoryId: number): Observable<Subcategory[]> {
         const url: string = `${this.baseUrl}/subcategories/categories/${categoryId}`;
         return this.http.get<Subcategory[]>(url);

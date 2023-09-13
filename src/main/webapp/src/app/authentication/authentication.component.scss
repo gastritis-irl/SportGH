@@ -1,4 +1,4 @@
-@import '../../style-variables.scss';
+@use '../../style-variables.scss' as *;
 
 $font-size-welcome-message: 20px;
 $padding-left-welcome-message: 1em;

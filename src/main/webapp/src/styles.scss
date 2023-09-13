@@ -324,3 +324,56 @@ $logout-btn-transition-duration: .3s;
         opacity: 0;
     }
 }
+
+
+/* ----------Searchbar---------- */
+
+// Box-shadow
+$box-shadow-searchbar-1: 0 0 3px;
+$box-shadow-searchbar-2: 0 0 0 5px;
+
+// Size
+$width-nav-searchbar: 100%;
+$height-nav-searchbar: 2.15em;
+
+// Margin/Border/Padding
+$padding-left-searchbar: 2.5em;
+$border-input: 0.1em solid transparent;
+$border-radius-searchbar: 2.5em;
+$pos-searchbar-icon: 1em;
+
+.nav-searchbar {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .nav-searchbar-icon {
+        position: absolute;
+        left: $pos-searchbar-icon;
+        fill: $color-main-1;
+        width: $pos-searchbar-icon;
+        height: $pos-searchbar-icon;
+    }
+
+    .nav-searchbar-input {
+        height: $height-nav-searchbar;
+        width: $width-nav-searchbar;
+        padding-left: $padding-left-searchbar;
+        border: $border-input;
+        border-radius: $border-radius-searchbar;
+        outline: none;
+        background-color: $color-main-3;
+        box-shadow: $box-shadow-searchbar-1 $color-main-2, $box-shadow-searchbar-2 $color-main-3;
+        transition: .3s ease;
+
+        &:hover {
+            background-color: $color-neutral-1;
+            box-shadow: $box-shadow-searchbar-1 $color-main-3, $box-shadow-searchbar-2 $color-main-2;
+        }
+
+        &:focus {
+            background-color: $color-neutral-1;
+            box-shadow: $box-shadow-searchbar-1 $color-main-3, $box-shadow-searchbar-2 $color-main-2;
+        }
+    }
+}
