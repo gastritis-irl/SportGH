@@ -1,6 +1,10 @@
 import jwtDecode from 'jwt-decode';
 import { IdToken } from './firebaseIdToken.model';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class FirebaseIdTokenService {
 
     getIdToken(): IdToken | null {
