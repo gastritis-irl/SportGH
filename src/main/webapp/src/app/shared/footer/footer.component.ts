@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { formatDate, getLocaleTimeFormat } from '@angular/common';
 
 @Component({
     selector: 'sgh-footer',
@@ -17,4 +18,8 @@ export class FooterComponent implements OnInit {
 
     ngOnInit(): void {
     }
+
+    protected readonly getLocaleTimeFormat = getLocaleTimeFormat;
+    protected readonly Date = Date;
+    protected readonly formatDate = formatDate;
 }
