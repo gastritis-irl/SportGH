@@ -51,6 +51,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         sessionStorage.clear();
+        indexedDB.deleteDatabase('firebaseLocalStorageDb');
     }
 
     logout(): void {
@@ -62,6 +63,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             this.toastNotify.warning('Error logging out');
         });
         sessionStorage.clear();
+        indexedDB.deleteDatabase('firebaseLocalStorageDb');
     }
 
     openModal(content: TemplateRef<string>): void {
