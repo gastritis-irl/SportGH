@@ -43,6 +43,15 @@ public class ImageController {
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/product/{productId}")
+    public ResponseEntity<Collection<Image>> findIdsByProductId(@PathVariable Long productId) {
+        Collection<Image> images = imageService.findByProductId(productId);
+        if (images.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(images, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/file/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<Resource> getImageFile(@PathVariable Long imageId) {
         Image image = imageService.findById(imageId);

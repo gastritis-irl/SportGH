@@ -53,7 +53,7 @@
             </div>
             <div class="images form-part">
                 <div class="heading">Images</div>
-                <sgh-image (fileChange)="onFileChange($event)" [imageIds]="imageIds" [allowMultiple]="true"
+                <sgh-image (fileChange)="onFileChange($event)" [imageIds]="_imageIds" [allowMultiple]="true"
                     [mode]="modeParam">
                 </sgh-image>
             </div>

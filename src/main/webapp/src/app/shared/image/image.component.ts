@@ -22,7 +22,7 @@ export class ImageComponent implements OnInit {
     @Input() mode: 'edit' | 'create' = 'create';
     imageFiles: File[] = [];
     imageDataArray: Image[] = [];
-    _imageIds: number[] = [];
+    _imageIds?: number[] = [];
 
     constructor(private imageService: ImageService, private toastNotify: ToastrService) { }
 
@@ -33,14 +33,14 @@ export class ImageComponent implements OnInit {
     }
 
     @Input()
-    set imageIds(ids: number[]) {
+    set imageIds(ids: number[] | undefined) {
         this._imageIds = ids;
         if (ids && ids.length > 0 && ids[0] !== 0) {
             this.loadImageFiles(ids);
         }
     }
 
-    get imageIds(): number[] {
+    get imageIds(): number[] | undefined {
         return this._imageIds;
     }
 
@@ -61,16 +61,22 @@ export class ImageComponent implements OnInit {
     }
 
     deleteImage(index: number): void {
-        // Remove the image from the imageDataArray
-        this.imageDataArray.splice(index, 1);
-
-        // Optionally, you can also remove the image from the imageFiles array 
-        // (if it was a newly added image that hasn't been uploaded yet)
         if (this.imageFiles[index]) {
             this.imageFiles.splice(index, 1);
+        } else {
+            // delete from db
+            if (!this.imageIds) {
+                return;
+            }
+            this.imageService.deleteImage(this.imageIds[index]).subscribe({
+                next: () => {
+                    this.toastNotify.success('Image deleted successfully');
+                }
+            });
+            this.imageIds.splice(index, 1);
+
         }
 
-        // Notify the user
         this.toastNotify.success('Image deleted successfully');
     }
 
@@ -114,12 +120,18 @@ export class ImageComponent implements OnInit {
     }
 
     loadImageFiles(ids: number[]): void {
-        const nonZeroIds = ids.filter(id => id !== 0 && id !== undefined&& id !== null);
+        // this.toastNotify.info(`Loading ${ids.length} images`);
+        const nonZeroIds = ids.filter(id => id !== 0 && id !== undefined && id !== null);
+        // this.toastNotify.info(`Loading ${nonZeroIds.length} images from ${ids.length} ids with ${nonZeroIds.length>0} non-zero ids`);
         if (nonZeroIds.length > 0) {
+
+            this.toastNotify.info(`${nonZeroIds.length > 0} images`)
             const loadObservables = nonZeroIds.map(id => this.imageService.getImageFile(id));
+            this.toastNotify.info(`Loading ${nonZeroIds.length} images`);
 
             loadObservables.filter(observable => observable !== undefined && observable !== null);
 
+            this.toastNotify.info(`Loading ${loadObservables.length} images`);
             forkJoin(loadObservables).subscribe(blobs => {
                 blobs.forEach((blob, index) => {
                     const reader = new FileReader();

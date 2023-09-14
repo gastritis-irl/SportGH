@@ -20,7 +20,7 @@ type ClickHandlerFunction = () => void;
 })
 export class ProductEditComponent implements OnInit {
 
-    @ViewChild('imageComponent', { static: false }) imageComponent?: ImageComponent;
+    @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
 
     product: Product = {};
     categories: Category[] = [];
@@ -31,7 +31,7 @@ export class ProductEditComponent implements OnInit {
     editMode: boolean = false;
     modeParam: "create" | "edit" = "create";
     buttonPushed: boolean = false;
-    _imageIds: number[] = [];
+    _imageIds?: number[];
     newImageFiles: File[] = [];
     imageDatas: Image[] = [];
 
@@ -86,7 +86,6 @@ export class ProductEditComponent implements OnInit {
             this.clickHandlerFunction = this.createProduct;
             this.editMode = false;
             this.modeParam = "create";
-            this.initializeImageDatas();
         } else {
             const id: number = parseInt(param);
             if (!isNaN(id)) {
@@ -100,11 +99,13 @@ export class ProductEditComponent implements OnInit {
                             this.product = data;
                             this.subcategoryDropdownDisabled = false;
                             this.getSubcategoriesByCategoryId();
-                            this.initializeImageDatas(data.id);
-                            this.toastNotify.info(`Loading ${data.imageIds?.length} images`);
-
                             // Call the loadProductImages method here
-                            this.loadProductImages(data.id ? data.id : 0);
+                            if(data.id) {
+                                this.loadProductImageIds(data.id);
+                            }
+                            else {
+                                this.toastNotify.error(`Error loading images: ${data.id} is undefined`);
+                            }
                         },
                         error: (error): void => {
                             console.error(error);
@@ -116,32 +117,13 @@ export class ProductEditComponent implements OnInit {
         }
     }
 
-    initializeImageDatas(productId?: number): void {
-        this.imageDatas = [];
-        for (let i = 0; i < 8; i++) {
-            this.imageDatas.push({ id: undefined, imageDataUrl: undefined, productId: productId });
-        }
-    }
-
-    loadProductImages(productId: number): void {
-        this.toastNotify.info(`Loading images...`);
-
-        this.imageService.getImageFilesByProductId(productId).subscribe({
-            next: async (response: { name: string, data: Uint8Array }[]) => {
+    
+    loadProductImageIds(productId: number): void {
+        this.imageService.getImageIdsByProductId(productId).subscribe({
+            next: (response: Image[]) => {
                 try {
-                    this.product.imageDataUrls = [];
-
-                    for (const imageDTO of response) {
-                        if (!imageDTO.data) {
-                            continue;
-                        }
-
-                        const base64String = btoa(new TextDecoder('iso-8859-1').decode(new Uint8Array(imageDTO.data)));
-                        const imageUrl = 'data:image/jpeg;base64,' + base64String;
-                        this.product.imageDataUrls.push(imageUrl);
-                    }
-
-                    this.toastNotify.success(`Images successfully loaded.`);
+                    this._imageIds = response.map(image => image.id).filter(id => id !== undefined) as number[];
+                    console.log('Image IDs loaded:', this._imageIds);
                 } catch (error) {
                     this.toastNotify.error(`Error loading images: ${error}`);
                 }
@@ -151,6 +133,7 @@ export class ProductEditComponent implements OnInit {
             }
         });
     }
+
 
 
     getSubcategoriesByCategoryId(): void {
@@ -234,7 +217,6 @@ export class ProductEditComponent implements OnInit {
             }
         );
 
-        // After editing the product, upload the new images (if any)
         if (this.newImageFiles.length > 0) {
             this.toastNotify.info(`Uploading ${this.newImageFiles.length} images for product id: ${this.product.id}`);
             if (this.product.id) {
@@ -250,13 +232,5 @@ export class ProductEditComponent implements OnInit {
                 console.error(error);
                 this.toastNotify.error('Error redirecting to page');
             });
-    }
-
-    set imageIds(ids: number[]) {
-        this._imageIds = ids;
-    }
-
-    get imageIds(): number[] {
-        return this._imageIds.filter((id: number): boolean => id !== 0);
     }
 }

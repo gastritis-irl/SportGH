@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from '../product.model';
 import { ImageService } from '../../shared/image/image.service';
-import { forkJoin } from 'rxjs';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { Category } from '../../category/category.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'sgh-product-list',
@@ -30,41 +30,47 @@ export class ProductListComponent implements OnInit {
     @Output() clearFilterEvent: EventEmitter<string> = new EventEmitter<string>();
     @Output() resetFilterEvent: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private imageService: ImageService) {
+    constructor(private imageService: ImageService, private toastNotify: ToastrService) {
     }
 
     ngOnInit(): void {
-        this.products.forEach(product => {
-            if (product.imageIds && product.imageIds.length > 0) {
-                this.loadProductImages(product.imageIds.slice(0, 8), product);
-            }
-        });
+        this.loadProductImages(this.products);
     }
 
-    loadProductImages(imageIds: number[], product: Product): void {
-        const loadObservables = imageIds.map(id => this.imageService.getImageFile(id));
+    loadProductImages(products: Product[]): void {
 
-        forkJoin(loadObservables).subscribe({
-            next: (blobs) => {
-                blobs.forEach((blob, index) => {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        if (!product.imageDataUrls) {
-                            product.imageDataUrls = [];
+        for (const product of products) {
+            this.toastNotify.info(`Loading images...`);
+
+            if (!product.id) {
+                continue;
+            }
+            this.imageService.getImageFilesByProductId(product.id).subscribe({
+                next: async (response: { name: string, data: Uint8Array }[]) => {
+                    try {
+                        product.imageDataUrls = [];
+
+                        for (const imageDTO of response) {
+                            if (!imageDTO.data) {
+                                continue;
+                            }
+
+                            const base64String = btoa(new TextDecoder('iso-8859-1').decode(new Uint8Array(imageDTO.data)));
+                            const imageUrl = 'data:image/jpeg;base64,' + base64String;
+                            product.imageDataUrls.push(imageUrl);
                         }
-                        product.imageDataUrls[index] = reader.result as string;
-                    };
-                    if (blob) {
-                        reader.readAsDataURL(blob);
-                    }
-                });
-            },
-            error: (error) => {
-                console.error(`Error fetching images`, error);
-            }
-        });
-    }
 
+                        this.toastNotify.success(`Images successfully loaded.`);
+                    } catch (error) {
+                        this.toastNotify.error(`Error loading images: ${error}`);
+                    }
+                },
+                error: (error) => {
+                    this.toastNotify.error(`Error fetching images`, error);
+                }
+            });
+        }
+    }
     resetFilters(): void {
         this.resetFilterEvent.emit();
     }

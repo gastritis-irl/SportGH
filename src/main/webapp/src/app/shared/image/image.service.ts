@@ -13,10 +13,13 @@ export class ImageService extends AppService {
         return this.http.post<Image>(this.baseUrl + '/images', formData);
     }
 
-    getImageFilesByProductId(productId: number): Observable<{ name: string; data:Uint8Array}[]> {
-        return this.http.get<{ name: string; data: Uint8Array }[]>(this.baseUrl + `/images/product/files/${productId}`, { responseType: 'json' });
+    getImageFilesByProductId(productId: number): Observable<{ id: number; name: string; data:Uint8Array}[]> {
+        return this.http.get<{ id: number; name: string; data: Uint8Array }[]>(this.baseUrl + `/images/product/files/${productId}`, { responseType: 'json' });
     }
 
+    getImageIdsByProductId(productId: number): Observable<Image[]> {
+        return this.http.get<Image[]>(this.baseUrl + `/images/product/${productId}`, { responseType: 'json' });
+    }
 
     getImageModel(id: number): Observable<Image> {
         return this.http.get<Image>(this.baseUrl + `/images/${id}`);

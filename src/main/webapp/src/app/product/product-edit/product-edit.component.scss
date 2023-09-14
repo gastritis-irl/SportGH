@@ -26,53 +26,8 @@ $main-page-padding: 50px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
         gap: $item-gap;
         overflow-x: auto;
-
-        .image-placeholder {
-            width: $container-dimensions;
-            height: $container-dimensions;
-            position: relative;
-
-            .container {
-                width: $container-dimensions;
-                height: $container-dimensions;
-                position: absolute;
-                top: 0;
-                left: 0;
-                background: $color-main-4;
-                border-radius: math.div($border-radius, 2);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                object-fit: contain;
-                overflow: hidden;
-            }
-
-            .plus-sign {
-                width: $plus-sign-width;
-                height: $plus-sign-height;
-                position: absolute;
-                top: math.div($container-dimensions - $plus-sign-height, 2); // Centering it vertically
-                left: math.div($container-dimensions - $plus-sign-width, 2); // Centering it horizontally
-                text-align: center;
-                color: $color-main-1;
-                font-size: $plus-sign-font-size;
-                font-family: $font-default;
-                font-weight: $font-weight-bold;
-                line-height: $plus-sign-line-height;
-                word-wrap: break-word;
-            }
-        }
-
-        img.uploaded-image {
-            width: calc(#{$image-width-percentage} - math.div($image-gap, 2));
-            height: calc(#{$image-height-percentage} - math.div($image-gap, 2));
-            margin: math.div($image-gap, 2);
-            object-fit: cover;
-            border-radius: $border-radius;
-        }
     }
 
     .heading {

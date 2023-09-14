@@ -27,19 +27,61 @@ $image-height-percentage: 50%;
             right: 10px;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
-            /* Add a background to make the icon more visible */
             border-radius: 50%;
-            /* Optional: for rounded corners */
             padding: 5px;
-            /* Optional: for some spacing around the icon */
 
             .svgIcon {
+                position: relative;
                 width: 20px;
-                /* Adjust as necessary */
                 height: 20px;
-                /* Adjust as necessary */
                 fill: #ffffff;
-                /* Color of the SVG icon */
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 10px;
+                    height: 2px;
+                    background-color: #ffffff;
+                }
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 2px;
+                    height: 10px;
+                    background-color: #ffffff;
+                }
+
+                &:hover {
+                    fill: #ff0000;
+                }
+
+                &:hover:before {
+                    background-color: #ff0000;
+                }
+
+                &:hover:after {
+                    background-color: #ff0000;
+                }
+
+                &:active {
+                    fill: #ff0000;
+                }
+
+                &:active:before {
+                    background-color: #ff0000;
+                }
+
+                &:active:after {
+                    background-color: #ff0000;
+                }
+                
             }
         }
 
