@@ -32,7 +32,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        const idToken: IdToken | null = this.firebaseIdTokenService.getIdToken();
+        const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
         if (idToken) {
             this.loggedInUserEmail = idToken.email;
         }

@@ -1,16 +1,12 @@
 package edu.codespring.sportgh.security;
 
-import edu.codespring.sportgh.service.FirebaseService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -19,8 +15,9 @@ import java.io.IOException;
 @Component
 public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
+    /*
     private final FirebaseService firebaseService;
-
+    */
     @Override
     protected void doFilterInternal(
         @NotNull HttpServletRequest request,
@@ -28,6 +25,7 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
         @NotNull FilterChain filterChain
     )
         throws ServletException, IOException {
+        /*
         String idToken = extractToken(request);
 
         if (idToken != null) {
@@ -37,17 +35,20 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
+         */
 
         filterChain.doFilter(request, response);
     }
 
+    /*
     private String extractToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Firebase-Auth");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+        String idToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(idToken)) {
+            return idToken;
         }
         return null;
     }
+    */
 }
 
 
