@@ -40,4 +40,15 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Set<Image> images = new HashSet<>();
+
+    public void addImage(Image image) {
+        images.add(image);
+    }
+
+
+    public void removeImage( Long imageId) {
+        Image image = new Image();
+        image.setId(imageId);
+        images.remove(image);
+    }
 }

@@ -139,7 +139,6 @@ export class ProductEditComponent implements OnInit {
                         const base64String = btoa(new TextDecoder('iso-8859-1').decode(new Uint8Array(imageDTO.data)));
                         const imageUrl = 'data:image/jpeg;base64,' + base64String;
                         this.product.imageDataUrls.push(imageUrl);
-                        this.toastNotify.success(`Image ${imageDTO.name} successfully loaded.`);
                     }
 
                     this.toastNotify.success(`Images successfully loaded.`);
@@ -237,6 +236,7 @@ export class ProductEditComponent implements OnInit {
 
         // After editing the product, upload the new images (if any)
         if (this.newImageFiles.length > 0) {
+            this.toastNotify.info(`Uploading ${this.newImageFiles.length} images for product id: ${this.product.id}`);
             if (this.product.id) {
                 this.uploadImages(this.product.id, this.newImageFiles);
             }

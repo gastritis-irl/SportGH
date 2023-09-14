@@ -14,11 +14,34 @@ $image-height-percentage: 50%;
     justify-content: flex-start;
     align-items: flex-start;
     gap: $gallery-gap;
+    object-fit: cover;
 
     .image-placeholder {
         width: $container-dimensions;
         height: $container-dimensions;
         position: relative;
+
+        .delete-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Add a background to make the icon more visible */
+            border-radius: 50%;
+            /* Optional: for rounded corners */
+            padding: 5px;
+            /* Optional: for some spacing around the icon */
+
+            .svgIcon {
+                width: 20px;
+                /* Adjust as necessary */
+                height: 20px;
+                /* Adjust as necessary */
+                fill: #ffffff;
+                /* Color of the SVG icon */
+            }
+        }
 
         .container {
             width: $container-dimensions;
@@ -31,8 +54,16 @@ $image-height-percentage: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            object-fit: contain;
+            object-fit: cover;
             overflow: hidden;
+            padding: 0.5px; // Adding a slight padding to avoid edge cropping
+
+            img.uploaded-image {
+                width: 100%; // Make sure the image takes up the entire space of the container
+                height: 100%; // Make sure the image takes up the entire space of the container
+                object-fit: cover; // Updated to cover to show as much of the image as possible, potentially cropping a little
+                border-radius: math.div($border-radius, 2);
+            }
         }
 
         .plus-sign {
@@ -50,12 +81,4 @@ $image-height-percentage: 50%;
             word-wrap: break-word;
         }
     }
-}
-
-img.uploaded-image {
-    width: calc(#{$image-width-percentage} - math.div($image-gap, 2));
-    height: calc(#{$image-height-percentage} - math.div($image-gap, 2));
-    margin: math.div($image-gap, 2);
-    object-fit: contain;
-    border-radius: $border-radius;
 }

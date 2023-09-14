@@ -60,6 +60,20 @@ export class ImageComponent implements OnInit {
         }
     }
 
+    deleteImage(index: number): void {
+        // Remove the image from the imageDataArray
+        this.imageDataArray.splice(index, 1);
+
+        // Optionally, you can also remove the image from the imageFiles array 
+        // (if it was a newly added image that hasn't been uploaded yet)
+        if (this.imageFiles[index]) {
+            this.imageFiles.splice(index, 1);
+        }
+
+        // Notify the user
+        this.toastNotify.success('Image deleted successfully');
+    }
+
     upload(): void {
         if (this.imageFiles.length === 0) {
             this.toastNotify.warning(`No image selected`);

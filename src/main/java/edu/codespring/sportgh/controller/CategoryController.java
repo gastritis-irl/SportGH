@@ -6,6 +6,7 @@ import edu.codespring.sportgh.mapper.CategoryMapper;
 import edu.codespring.sportgh.model.Category;
 import edu.codespring.sportgh.service.CategoryService;
 import edu.codespring.sportgh.service.ImageService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,7 @@ public class CategoryController {
         }
     }
 
+    @Transactional
     @DeleteMapping(path = "/{categoryId}")
     public ResponseEntity<?> deleteById(@PathVariable Long categoryId) {
         deleteImageFileByCategoryId(categoryId);
@@ -73,6 +75,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
     }
 
+    @Transactional
     @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> update(@PathVariable Long categoryId,
                                                  @RequestBody @Valid CategoryInDTO categoryInDTO) {

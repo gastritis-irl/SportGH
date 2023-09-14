@@ -7,6 +7,7 @@ import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.service.ImageService;
 import edu.codespring.sportgh.service.ProductService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -78,6 +79,7 @@ public class ProductController {
         return save(productInDTO);
     }
 
+    @Transactional
     @PutMapping(path = "/{productId}")
     public ResponseEntity<ProductOutDTO> update(@RequestBody @Valid ProductInDTO productInDTO,
                                                 @PathVariable Long productId) {
@@ -93,6 +95,7 @@ public class ProductController {
         return save(productInDTO);
     }
 
+    @Transactional
     @PutMapping(path = "/{productId}/rent")
     public ResponseEntity<ProductOutDTO> rent(@PathVariable Long productId) {
         Product product = productService.findById(productId);
@@ -100,15 +103,16 @@ public class ProductController {
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
+    @Transactional
     @DeleteMapping(path = "/{productId}")
     public ResponseEntity<?> delete(@PathVariable Long productId) {
         Product product = productService.findById(productId);
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        if(product.getImages() != null) {
-            product.getImages().forEach(image -> productService.removeImage(productId, image.getId()));
-        }
+        // image info
+        log.info("Image info: {}", product.getImages().size());
+        product.getImages().forEach(image -> productService.removeImage(productId, image.getId()));
         productService.delete(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }

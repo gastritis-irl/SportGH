@@ -2,6 +2,7 @@ package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.dto.ImageDTO;
 import edu.codespring.sportgh.model.Image;
+import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.service.ImageService;
 import edu.codespring.sportgh.service.ProductService;
 import jakarta.transaction.Transactional;
@@ -100,7 +101,6 @@ public class ImageController {
         }
     }
 
-
     @PostMapping
     public ResponseEntity<Image> save(@RequestParam("image") MultipartFile file, @RequestParam("productId") Long productId) {
         if (!file.getContentType().startsWith("image/")) {
@@ -109,7 +109,9 @@ public class ImageController {
         log.info("Creating new image with productId {}.", productId);
         Image image = imageService.saveFileAndCreateDbInstance(file);
         if (productId != 0) {
-            image.setProduct(productService.findById(productId));
+            Product product = productService.findById(productId);
+            image.setProduct( product);
+            product.addImage(image);
             imageService.save(image);
             productService.addImage(productId, image);
         }

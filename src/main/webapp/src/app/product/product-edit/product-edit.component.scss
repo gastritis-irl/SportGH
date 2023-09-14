@@ -1,4 +1,5 @@
 @use '../../../style-variables.scss' as *;
+@use 'sass:math';
 
 $item-gap: 15px;
 $form-part-padding: 25px;
@@ -7,11 +8,72 @@ $input-height: 30px;
 $font-weight-1: 700;
 $font-weight-2: 600;
 $description-textarea-height: 200px;
+$container-dimensions: 268.17px;
+$plus-sign-width: 66px;
+$plus-sign-height: 64px;
+$plus-sign-font-size: 64px;
+$plus-sign-line-height: 66px;
+$image-width-percentage: 50%;
+$image-height-percentage: 50%;
+$main-page-padding: 50px;
 
 .product-add-div {
     background-color: $color-main-3;
     padding-left: $main-page-padding;
     padding-right: $main-page-padding;
+
+    .images{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: $item-gap;
+        overflow-x: auto;
+
+        .image-placeholder {
+            width: $container-dimensions;
+            height: $container-dimensions;
+            position: relative;
+
+            .container {
+                width: $container-dimensions;
+                height: $container-dimensions;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: $color-main-4;
+                border-radius: math.div($border-radius, 2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                object-fit: contain;
+                overflow: hidden;
+            }
+
+            .plus-sign {
+                width: $plus-sign-width;
+                height: $plus-sign-height;
+                position: absolute;
+                top: math.div($container-dimensions - $plus-sign-height, 2); // Centering it vertically
+                left: math.div($container-dimensions - $plus-sign-width, 2); // Centering it horizontally
+                text-align: center;
+                color: $color-main-1;
+                font-size: $plus-sign-font-size;
+                font-family: $font-default;
+                font-weight: $font-weight-bold;
+                line-height: $plus-sign-line-height;
+                word-wrap: break-word;
+            }
+        }
+
+        img.uploaded-image {
+            width: calc(#{$image-width-percentage} - math.div($image-gap, 2));
+            height: calc(#{$image-height-percentage} - math.div($image-gap, 2));
+            margin: math.div($image-gap, 2);
+            object-fit: cover;
+            border-radius: $border-radius;
+        }
+    }
 
     .heading {
         color: $color-main-1;
