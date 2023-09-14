@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,8 +25,13 @@ public class SubCategoryController {
     private final SubCategoryMapper subCategoryMapper;
 
     @GetMapping
-    public ResponseEntity<Collection<SubCategoryOutDTO>> findAll() {
-        Collection<SubCategory> subCategories = subCategoryService.findAll();
+    public ResponseEntity<Collection<SubCategoryOutDTO>> findAll(
+        @RequestParam("Category") Optional<Long> categoryId
+    ) {
+        Collection<SubCategory> subCategories = categoryId.isPresent() ?
+            subCategoryService.findByCategoryId(categoryId.get()) :
+            subCategoryService.findAll();
+
         return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
@@ -63,11 +69,4 @@ public class SubCategoryController {
 
         return ResponseEntity.ok(subCategoryOutDTO1);
     }
-
-    @GetMapping(path = "/categories/{categoryId}")
-    public ResponseEntity<Collection<SubCategoryOutDTO>> findByCategoryId(@PathVariable Long categoryId) {
-        Collection<SubCategory> subCategories = subCategoryService.findByCategoryId(categoryId);
-        return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
-    }
-
 }

@@ -15,7 +15,7 @@ export class SubcategoryService extends AppService {
     }
 
     getByCategoryId(categoryId: number): Observable<Subcategory[]> {
-        const url: string = `${this.baseUrl}/subcategories/categories/${categoryId}`;
+        const url: string = `${this.baseUrl}/subcategories?Category=${categoryId}`;
         return this.httpGet<Subcategory[]>(url);
     }
 }
