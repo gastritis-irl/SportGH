@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppService } from '../app.service';
 import { User } from './user.model';
-import { getIdToken } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
+import { getIdToken } from '@angular/fire/auth';
 
 
 @Injectable({
@@ -26,17 +26,17 @@ export class UserService extends AppService {
         return this.httpGet<User>(url);
     }
 
-    async signinWithFirebase(email: string, password: string): Promise<Observable<User>> {
+    async signInWithFirebase(email: string, password: string): Promise<void> {
         const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
-        const idToken = await getIdToken(userCredential.user!);
+        const idToken: string = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/login`;
         return this.httpPost<User>(url, { body: [ idToken, password ] });
     }
 
-    async registerWithFirebase(email: string, password: string): Promise<Observable<User>> {
+    async signUpWithFirebase(email: string, password: string): Promise<Observable<User>> {
         const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
-        const idToken = await getIdToken(userCredential.user!);
+        const idToken: string = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/signup`;
         return this.httpPost<User>(url, { body: [ email, idToken, password ] });

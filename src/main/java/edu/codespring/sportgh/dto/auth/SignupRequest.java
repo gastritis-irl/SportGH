@@ -9,5 +9,4 @@ public class SignupRequest {
 
     private String email;
     private String idToken;
-    private String password;
 }

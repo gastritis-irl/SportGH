@@ -8,5 +8,4 @@ import lombok.Data;
 public class LoginRequest {
 
     private String idToken;
-    private String password;
 }
