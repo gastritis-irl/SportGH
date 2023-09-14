@@ -28,9 +28,8 @@ public class SubCategoryController {
     public ResponseEntity<Collection<SubCategoryOutDTO>> findAll(
         @RequestParam("Category") Optional<Long> categoryId
     ) {
-        Collection<SubCategory> subCategories = categoryId.isPresent() ?
-            subCategoryService.findByCategoryId(categoryId.get()) :
-            subCategoryService.findAll();
+        Collection<SubCategory> subCategories = categoryId.isPresent()
+            ? subCategoryService.findByCategoryId(categoryId.get()) : subCategoryService.findAll();
 
         return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
