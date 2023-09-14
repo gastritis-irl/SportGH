@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../../user/user.model';
 import { UserService } from '../../user/user.service';
 import { ViewportScroller } from '@angular/common';
+import { FirebaseIdTokenService } from '../../authentication/firebase-id-token.service';
 
 @Component({
     selector: 'sgh-product-details',
@@ -26,6 +27,7 @@ export class ProductDetailsComponent implements OnInit {
         private router: Router,
         private viewPortScroller: ViewportScroller,
         private toastNotify: ToastrService,
+        private fbIdTokenService: FirebaseIdTokenService,
     ) {
     }
 
@@ -41,6 +43,14 @@ export class ProductDetailsComponent implements OnInit {
                 }
             }
         );
+    }
+
+    getLoggedInUserEmail(): string | null {
+        const email: string | undefined = this.fbIdTokenService.getDecodedIdToken()?.email;
+        if (email != undefined) {
+            return email;
+        }
+        return null;
     }
 
     loadProduct(productId: number): void {

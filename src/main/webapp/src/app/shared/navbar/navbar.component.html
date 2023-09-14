@@ -2,7 +2,7 @@
     <div class="nav-header-frame">
         <div class="nav-header-content">
             <div class="nav-header-logo" routerLink="/">
-                <img class="nav-header-logo-icon" src="" alt="Logo">
+                <div class="nav-header-logo-icon"></div>
                 <div class="nav-header-logo-title">SportGH</div>
             </div>
             <div class="nav-searchbar">
@@ -38,6 +38,9 @@
             </div>
             <div *ngIf="sessionStorage.getItem('firebaseIdToken')" class="nav-content-link">
                 <a routerLink="/products/new">Add new listing</a>
+            </div>
+            <div *ngIf="sessionStorage.getItem('firebaseIdToken')" class="nav-content-link">
+                <a routerLink="/admin/categories">Manage categories</a>
             </div>
         </div>
     </div>

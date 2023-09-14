@@ -12,7 +12,7 @@
             <div class="product-name-and-avail">
                 <div class="heading product-heading">
                     {{product.name}}
-                    <div *ngIf="product.userId==product.userId" class="product-links buttons">
+                    <div *ngIf="productLender.email===getLoggedInUserEmail()" class="product-links buttons">
                         <button class="product-edit-link button-default button-secondary"
                              routerLink="/products/{{product.id}}/edit">
                             Edit

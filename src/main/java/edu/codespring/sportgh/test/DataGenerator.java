@@ -127,6 +127,10 @@ public class DataGenerator extends BaseDataGenerator {
                 "Cycling",
                 "Track & Field"
         );
+        saveSubcategory(
+                "Other",
+                "Other"
+        );
     }
 
     @Override
