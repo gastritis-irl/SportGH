@@ -1,19 +1,19 @@
-import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
-import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-
+import { User } from '../user/user.model';
+import { FirebaseIdTokenService } from './firebase-id-token.service';
+import { IdToken } from './firebase-id-token.model';
 
 @Component({
     selector: 'sgh-authentication',
     templateUrl: './authentication.component.html',
-    styleUrls: ['./authentication.component.scss']
+    styleUrls: [ './authentication.component.scss' ]
 })
-export class AuthenticationComponent implements OnDestroy {
+export class AuthenticationComponent implements OnInit, OnDestroy {
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
 
@@ -22,43 +22,37 @@ export class AuthenticationComponent implements OnDestroy {
     email: string = '';
     password: string = '';
 
-    private ngUnsubscribe = new Subject<void>();
-
     constructor(
         private modalService: NgbModal,
         private userService: UserService,
-        private router: Router,
         private afAuth: AngularFireAuth,
         private toastNotify: ToastrService,
-    ) { }
+        private firebaseIdTokenService: FirebaseIdTokenService,
+    ) {
+    }
+
+    ngOnInit(): void {
+        const idToken: IdToken | null = this.firebaseIdTokenService.getIdToken();
+        if (idToken) {
+            this.loggedInUserEmail = idToken.email;
+        }
+    }
+
+    ngOnDestroy(): void {
+        sessionStorage.clear();
+        indexedDB.deleteDatabase('firebaseLocalStorageDb');
+    }
 
     logout(): void {
-        this.afAuth.signOut().then(() => {
+        this.afAuth.signOut().then((): void => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
             this.toastNotify.success('Successfully logged out');
         }).catch(error => {
             console.error('Error during logout', error);
             this.toastNotify.warning('Error logging out');
         });
-    }
-
-    ngOnInit(): void {
-        this.afAuth.authState
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe(user => {
-                if (user) {
-                    this.loggedInUserEmail = user.email;
-                } else {
-                    this.loggedInUserEmail = null;
-                }
-            });
-    }
-
-    ngOnDestroy(): void {
-        this.ngUnsubscribe.next();
-        this.ngUnsubscribe.complete();
-        this.ngUnsubscribe.pipe(takeUntil(this.ngUnsubscribe));
-        this.closeModal(); // Close any open modal
+        sessionStorage.clear();
+        indexedDB.deleteDatabase('firebaseLocalStorageDb');
     }
 
     openModal(content: TemplateRef<string>): void {
@@ -75,35 +69,26 @@ export class AuthenticationComponent implements OnDestroy {
     }
 
     login(): void {
-        this.userService.signinWithFirebase(this.email, this.password).then(userObservable => {
-            userObservable.subscribe({
-                next: () => {
-                    // Use the email directly here before clearing the form
-                    this.loggedInUserEmail = this.email;
+        this.userService.signInWithFirebase(this.email, this.password)
+            .then((): void => {
+                // Use the email directly here before clearing the form
+                this.loggedInUserEmail = this.email;
 
-                    this.toastNotify.success(`Successfully logged in as ${this.email}`);
-                    this.closeModal(); // Close the modal
-                    },
-                error: (error): void => {
-                    console.log(error);
-                    this.toastNotify.warning(`Error logging in`);
-                }
+                this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                this.closeModal(); // Close the modal
+            })
+            .catch((error: string): void => {
+                this.toastNotify.warning(`Error logging in: ${this.getErrorMessageInfo(error)}`);
             });
-        }).catch(error => {
-            console.log(error);
-            this.toastNotify.warning(`Error logging in`);
-        });
     }
 
     register(): void {
-        this.userService.registerWithFirebase(this.email, this.password).then(userObservable => {
+        this.userService.signUpWithFirebase(this.email, this.password).then((userObservable: Observable<User>): void => {
             userObservable.subscribe({
-                next: () => {
-
+                next: (): void => {
                     // Use the email directly here before clearing the form
                     this.loggedInUserEmail = this.email;
 
-                    
                     this.toastNotify.success('Registration successful');
                     this.closeModal(); // Close the modal
                 },
@@ -112,10 +97,12 @@ export class AuthenticationComponent implements OnDestroy {
                     this.toastNotify.warning(`Error registering`);
                 }
             });
-        }).catch(error => {
-            console.log(error);
-            this.toastNotify.warning(`Error registering`);
+        }).catch((error: string): void => {
+            this.toastNotify.warning(`Error registering: ${this.getErrorMessageInfo(error)}`);
         });
     }
 
+    getErrorMessageInfo(error: string): string {
+        return (String(error)).split(':')[2].split('(')[0];
+    }
 }

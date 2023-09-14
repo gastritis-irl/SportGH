@@ -14,7 +14,5 @@ public interface UserRepository extends BaseRepository<User> {
     @Query("select user from User user where user.firebaseUid=:fbUid")
     User findByFirebaseUid(@Param("fbUid") String firebaseUid);
 
-    boolean existsByFirebaseUidAndPassword(String firebaseUid, String passwordHash);
-
     User findByUsername(String username);
 }
