@@ -30,8 +30,6 @@ export class UserService extends AppService {
         const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
         const idToken: string = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
-        const url: string = `${this.baseUrl}/auth/login`;
-        return this.httpPost<User>(url, { body: [ idToken, password ] });
     }
 
     async signUpWithFirebase(email: string, password: string): Promise<Observable<User>> {
