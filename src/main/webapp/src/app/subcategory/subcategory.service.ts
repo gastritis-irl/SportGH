@@ -11,11 +11,11 @@ export class SubcategoryService extends AppService {
 
     getAll(): Observable<Subcategory[]> {
         const url: string = `${this.baseUrl}/subcategories`;
-        return this.http.get<Subcategory[]>(url);
+        return this.httpGet<Subcategory[]>(url);
     }
 
     getByCategoryId(categoryId: number): Observable<Subcategory[]> {
         const url: string = `${this.baseUrl}/subcategories/categories/${categoryId}`;
-        return this.http.get<Subcategory[]>(url);
+        return this.httpGet<Subcategory[]>(url);
     }
 }

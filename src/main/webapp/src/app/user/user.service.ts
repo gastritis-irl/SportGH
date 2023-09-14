@@ -18,12 +18,12 @@ export class UserService extends AppService {
 
     getAll(): Observable<User[]> {
         const url: string = `${this.baseUrl}/users`;
-        return this.http.get<User[]>(url);
+        return this.httpGet<User[]>(url);
     }
 
     getById(userId: number): Observable<User> {
         const url: string = `${this.baseUrl}/users/${userId}`;
-        return this.http.get<User>(url);
+        return this.httpGet<User>(url);
     }
 
     async signinWithFirebase(email: string, password: string): Promise<Observable<User>> {
@@ -31,7 +31,7 @@ export class UserService extends AppService {
         const idToken = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/login`;
-        return this.http.post<User>(url, { idToken, password });
+        return this.httpPost<User>(url, { body: [ idToken, password ] });
     }
 
     async registerWithFirebase(email: string, password: string): Promise<Observable<User>> {
@@ -39,6 +39,6 @@ export class UserService extends AppService {
         const idToken = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/signup`;
-        return this.http.post<User>(url, { email, idToken, password });
+        return this.httpPost<User>(url, { body: [ email, idToken, password ] });
     }
 }
