@@ -1,16 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../product.model';
 import { ImageService } from '../../shared/image/image.service';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { Category } from '../../category/category.model';
 import { ToastrService } from 'ngx-toastr';
+import { ChangeDetectorRef } from '@angular/core';
+import { OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'sgh-product-list',
     templateUrl: './product-list.component.html',
     styleUrls: [ './product-list.component.scss' ],
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnChanges {
 
     @Input() products: Product[] = [];
     @Input() categories: Category[] = [];
@@ -30,15 +32,17 @@ export class ProductListComponent implements OnInit {
     @Output() clearFilterEvent: EventEmitter<string> = new EventEmitter<string>();
     @Output() resetFilterEvent: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private imageService: ImageService, private toastNotify: ToastrService) {
+    constructor(private imageService: ImageService, private toastNotify: ToastrService, private cdr: ChangeDetectorRef) {
     }
 
-    ngOnInit(): void {
-        this.loadProductImages(this.products);
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['products'] && changes['products'].currentValue) {
+            this.loadProductImages(changes['products'].currentValue);
+        }
     }
+
 
     loadProductImages(products: Product[]): void {
-
         for (const product of products) {
             this.toastNotify.info(`Loading images...`);
 
@@ -46,21 +50,22 @@ export class ProductListComponent implements OnInit {
                 continue;
             }
             this.imageService.getImageFilesByProductId(product.id).subscribe({
-                next: async (response: { name: string, data: Uint8Array }[]) => {
+                next: (response: { name: string, data: Uint8Array }[]) => {
+                    this.toastNotify.info(`Images loaded.`);
+                    this.toastNotify.info(`Size of response: ${response.length}`);
                     try {
                         product.imageDataUrls = [];
-
                         for (const imageDTO of response) {
                             if (!imageDTO.data) {
                                 continue;
                             }
-
                             const base64String = btoa(new TextDecoder('iso-8859-1').decode(new Uint8Array(imageDTO.data)));
                             const imageUrl = 'data:image/jpeg;base64,' + base64String;
                             product.imageDataUrls.push(imageUrl);
                         }
-
+                        product.imagesLoaded = true;  // Set imagesLoaded to true here
                         this.toastNotify.success(`Images successfully loaded.`);
+                        this.cdr.markForCheck();  // Tell Angular to check for changes
                     } catch (error) {
                         this.toastNotify.error(`Error loading images: ${error}`);
                     }
@@ -71,6 +76,7 @@ export class ProductListComponent implements OnInit {
             });
         }
     }
+
     resetFilters(): void {
         this.resetFilterEvent.emit();
     }

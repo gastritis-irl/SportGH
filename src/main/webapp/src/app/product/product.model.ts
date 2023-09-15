@@ -13,4 +13,5 @@ export interface Product {
     username?: string,
     imageIds?: number[],
     imageDataUrls?: string[],
+    imagesLoaded?: boolean;
 }

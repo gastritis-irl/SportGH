@@ -73,8 +73,8 @@ public class ImageController {
         Collection<Image> images = imageService.findByProductId(productId);
 
         if (images.isEmpty()) {
-            log.error("Images not found");
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            log.warn("Images not found");
+            return ResponseEntity.ok().body(null);
         }
 
         log.info("Found {} images for productId {}.", images.size(), productId);
