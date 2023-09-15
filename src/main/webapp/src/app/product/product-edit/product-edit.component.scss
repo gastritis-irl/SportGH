@@ -1,6 +1,5 @@
-@import '../../../style-variables.scss';
+@use '../../../style-variables.scss' as *;
 
-$main-page-padding: 10%;
 $item-gap: 15px;
 $form-part-padding: 25px;
 $input-padding-left: 10px;

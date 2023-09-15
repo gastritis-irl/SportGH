@@ -18,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ImageService } from './shared/image/image.service';
 import { UserModule } from './user/user.module';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { UserModule } from './user/user.module';
         AdminModule,
         UserModule,
         NavbarComponent,
+        FooterComponent,
         BrowserAnimationsModule,
         ToastrModule.forRoot({
             timeOut: 10000,

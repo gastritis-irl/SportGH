@@ -2,7 +2,7 @@
     <h1 class="category-heading">Equipment categories</h1>
     <div class="categories">
         <!-- Repeat for each category -->
-        <div class="category-item" [routerLink]="['/products']" [queryParams]="{ categoryId: category.id }" *ngFor="let category of categories">
+        <div class="category-item" [routerLink]="['/products']" [queryParams]="{ Category: category.name }" *ngFor="let category of categories">
             <img [src]="category.imageDataUrl ? category.imageDataUrl : 'https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png'"
                 class="category-icon" />
             <div class="text-box">

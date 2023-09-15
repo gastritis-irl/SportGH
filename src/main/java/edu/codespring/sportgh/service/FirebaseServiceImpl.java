@@ -24,6 +24,22 @@ public class FirebaseServiceImpl implements FirebaseService {
     private final UserRepository userRepository;
 
     @Override
+    public String signupUserToFirebase(User user, String password) {
+        try {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            UserRecord userRecord = firebaseAuth.createUser(
+                new UserRecord.CreateRequest()
+                    .setEmail(user.getEmail())
+                    .setPassword(password)
+            );
+            return userRecord.getUid();
+
+        } catch (FirebaseAuthException e) {
+            throw new ServiceException("Failed to add user to firebase", e);
+        }
+    }
+
+    @Override
     public String getFirebaseUidFromToken(String idToken) {
         FirebaseTokenHolder tokenHolder = verifyTokenAndReturnTokenHolder(idToken);
         return tokenHolder.getUid();
@@ -61,7 +77,6 @@ public class FirebaseServiceImpl implements FirebaseService {
 
         // Create a UserDetails object using Spring Security's User class
         UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
-            .password(user.getPassword())
             .roles(user.getRole())
             .accountExpired(false)
             .accountLocked(false)
@@ -82,14 +97,12 @@ public class FirebaseServiceImpl implements FirebaseService {
                 users.add(new User(
                     i.getEmail(),
                     i.getEmail(),
-                    "password", // we've set this password for every registered user in firebase
                     null,
                     null,
                     null,
                     null,
                     null,
                     null,
-
                     i.getUid(),
                     "USER",
                     null,

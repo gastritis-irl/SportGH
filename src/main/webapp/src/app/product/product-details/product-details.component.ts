@@ -126,7 +126,7 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (): void => {
                     this.toastNotify.success(`Product ${this.product.name} successfully deleted!`);
-                    this.router.navigate([ `/categories/${this.product.categoryId}` ])
+                    this.router.navigate([ `/products` ])
                         .catch((error): void => {
                             console.error(error);
                             this.toastNotify.error('Error redirecting to page');

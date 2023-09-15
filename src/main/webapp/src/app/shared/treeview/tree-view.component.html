@@ -1,0 +1,39 @@
+<div class="tree-view-component">
+    <div *ngFor="let category of categories; let i = index">
+        <div class="buttons">
+            <div
+                class="button-default button-secondary button-content"
+                [attr.aria-expanded]="isExpanded[i]"
+            >
+                <input type="checkbox" class="item-selected category-selected"
+                       [checked]="categorySelected[i]"
+                       (click)="selectCategory(i)"
+                       (change)="filterBy()"
+                >
+                <div class="category-name-item" (click)="isExpanded[i] = ! isExpanded[i]">
+                    <div class="category-name">
+                        {{category.name}}
+                    </div>
+                    <div *ngIf="!isExpanded[i]">+</div>
+                    <div *ngIf="isExpanded[i]">-</div>
+                </div>
+            </div>
+        </div>
+        <div [(ngbCollapse)]="!isExpanded[i]">
+            <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
+                <div *ngFor="let subcategory of subcategories;let j = index">
+                    <div class="subcategory-list" *ngIf="subcategory.categoryId==category.id">
+                        <input type="checkbox" class="item-selected"
+                               [checked]="subcategorySelected[j]"
+                               (click)="selectSubcategory(j,i)"
+                               (change)="filterBy()"
+                        >
+                        <div>
+                            {{subcategory.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

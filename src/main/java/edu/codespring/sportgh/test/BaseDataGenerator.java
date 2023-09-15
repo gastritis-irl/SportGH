@@ -25,7 +25,7 @@ public abstract class BaseDataGenerator {
 
         try {
             initUsers();
-            log.info("{}Generating users: OK", this.getClass().getSimpleName());
+            log.info("{} Generating users: OK", this.getClass().getSimpleName());
         } catch (ServiceException e) {
             log.warn("Generating users: FAILED");
             log.warn(e.getMessage());
@@ -48,12 +48,21 @@ public abstract class BaseDataGenerator {
     public abstract void initProducts();
 
     public void initUsers() {
-        Collection<User> userList = firebaseService.getUsers();
-        log.info("Users: {}", userList);
-        for (User user : userList) {
+        Collection<User> userListFB = firebaseService.getUsers();
+        for (User user : userListFB) {
             if (userService.findByFirebaseUid(user.getFirebaseUid()) == null
                 && userService.findByUsername(user.getEmail()) == null) {
-                userService.signup(user.getEmail(), user.getFirebaseUid(), user.getPassword());
+                userService.signup(user.getEmail(), user.getFirebaseUid());
+            }
+        }
+
+        Collection<User> userListDB = userService.findAll();
+        for (User user : userListDB) {
+            if (!userListFB.contains(user)) {
+                String firebaseUid = firebaseService.signupUserToFirebase(user, "password");
+                user.setFirebaseUid(firebaseUid);
+                userService.update(user);
+                log.info("User {} successfully updated and registered to firebase.", user);
             }
         }
     }
@@ -78,7 +87,7 @@ public abstract class BaseDataGenerator {
 
     public void saveProduct(Product product, String subCategoryName, User user) {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
-        if (subCategory != null && !productService.existsByNameAndUser(product.getName(), user)) {
+        if (subCategory != null && productService.notExistsByNameAndUser(product.getName(), user)) {
             productService.save(new Product(true, product.getName(), product.getDescription(),
                 product.getLocation(), product.getRentPrice(),
                 subCategory, user));
