@@ -1,5 +1,9 @@
 package edu.codespring.sportgh.security;
 
+// import edu.codespring.sportgh.service.FirebaseService;
+// import org.springframework.security.core.Authentication;
+// import org.springframework.security.core.context.SecurityContextHolder;
+// import org.springframework.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,40 +19,30 @@ import java.io.IOException;
 @Component
 public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
-    /*
-    private final FirebaseService firebaseService;
-    */
+
+    // private final FirebaseService firebaseService;
+
     @Override
     protected void doFilterInternal(
-        @NotNull HttpServletRequest request,
-        @NotNull HttpServletResponse response,
-        @NotNull FilterChain filterChain
+            @NotNull HttpServletRequest request,
+            @NotNull HttpServletResponse response,
+            @NotNull FilterChain filterChain
     )
-        throws ServletException, IOException {
-        /*
-        String idToken = extractToken(request);
+            throws ServletException, IOException {
 
-        if (idToken != null) {
-            Authentication authentication = firebaseService.getAuthentication(idToken);
-
-            if (authentication != null) {
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-        }
-         */
+        // String idToken = request.getHeader("Authorization");
+        // idToken = StringUtils.hasText(idToken) ? idToken : null;
+        //
+        // if (idToken != null) {
+        //     Authentication authentication = firebaseService.getAuthentication(idToken);
+        //
+        //     if (authentication != null) {
+        //         SecurityContextHolder.getContext().setAuthentication(authentication);
+        //     }
+        // }
 
         filterChain.doFilter(request, response);
     }
-
-    /*
-    private String extractToken(HttpServletRequest request) {
-        String idToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(idToken)) {
-            return idToken;
-        }
-        return null;
-    }
-    */
 }
 
 
