@@ -23,6 +23,7 @@ public class Image extends BaseEntity {
     private Product product;
 
     public Image(String name, String url) {
+        super();
         this.name = name;
         this.url = url;
     }

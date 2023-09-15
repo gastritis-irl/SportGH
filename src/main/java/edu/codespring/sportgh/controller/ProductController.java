@@ -91,7 +91,6 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        imageService.findByProductId(productId).forEach(image -> imageService.delete(image.getId()));
         return save(productInDTO);
     }
 
@@ -112,7 +111,7 @@ public class ProductController {
         }
         // image info
         log.info("Image info: {}", product.getImages().size());
-        product.getImages().forEach(image -> productService.removeImage(productId, image.getId()));
+        imageService.deleteByProductId(productId);
         productService.delete(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }

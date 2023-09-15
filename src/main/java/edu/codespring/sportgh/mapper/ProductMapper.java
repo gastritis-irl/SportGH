@@ -54,7 +54,7 @@ public abstract class ProductMapper {
         } else {
             entity.setUser(userService.findById(dto.getUserId()));
         }
-        if(dto.getImageIds() != null) {
+        if (dto.getImageIds() != null) {
             entity.getImages().clear();
             Arrays.stream(dto.getImageIds()).map(imageService::findById).forEach(entity.getImages()::add);
         }

@@ -1,7 +1,7 @@
 package edu.codespring.sportgh.service;
 
-import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
+import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.model.Product;
@@ -9,7 +9,10 @@ import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -27,44 +30,44 @@ public class ProductServiceImpl implements ProductService {
     static final int pageSize = 60;
 
     private Specification<Product> filterByPrice(
-            Double minPrice, Double maxPrice, Specification<Product> specification
+        Double minPrice, Double maxPrice, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
         if (minPrice != null && minPrice != 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
+                criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
         }
 
         if (maxPrice != null && maxPrice != 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
+                criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
         }
 
         return spec;
     }
 
     private Specification<Product> filterByCategoriesAndSubcategories(
-            String[] subcategoryNames, Specification<Product> specification
+        String[] subcategoryNames, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
 
         if (subcategoryNames != null && subcategoryNames.length > 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                    root.get("subCategory").get("name").in((Object[]) subcategoryNames));
+                root.get("subCategory").get("name").in((Object[]) subcategoryNames));
         }
         return spec;
     }
 
     private Specification<Product> filterByTextInNameOrDescription(
-            String textSearch, Specification<Product> specification
+        String textSearch, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
         if (textSearch != null) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.or(
-                            criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"),
-                            criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
-                    )
+                criteriaBuilder.or(
+                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"),
+                    criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
+                )
             );
         }
         return spec;
@@ -72,13 +75,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductPageOutDTO findPageByParams(
-            String orderBy,
-            String direction,
-            int pageNumber,
-            String[] subcategoryNames,
-            Double minPrice,
-            Double maxPrice,
-            String textSearch
+        String orderBy,
+        String direction,
+        int pageNumber,
+        String[] subcategoryNames,
+        Double minPrice,
+        Double maxPrice,
+        String textSearch
     ) {
         Specification<Product> specification = Specification.where(null);
 
@@ -88,15 +91,15 @@ public class ProductServiceImpl implements ProductService {
         } else {
             if (direction == null) {
                 pageable = PageRequest.of(
-                        pageNumber - 1,
-                        pageSize,
-                        Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
+                    pageNumber - 1,
+                    pageSize,
+                    Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
                 );
             } else {
                 pageable = PageRequest.of(
-                        pageNumber - 1,
-                        pageSize,
-                        Sort.by(Sort.Direction.fromString(direction), orderBy)
+                    pageNumber - 1,
+                    pageSize,
+                    Sort.by(Sort.Direction.fromString(direction), orderBy)
                 );
             }
         }
@@ -162,22 +165,11 @@ public class ProductServiceImpl implements ProductService {
         Product product = findById(productId);
         image.setProduct(product);
         imageService.save(image);
-        Set<Image> images=product.getImages();
-        if(images.size()>=8){
+        Set<Image> images = product.getImages();
+        if (images.size() >= 8) {
             throw new BadRequestException("Maximum 8 images can be uploaded");
         }
         images.add(image);
-        product.setImages(images);
-        save(product);
-    }
-
-    @Override
-    public void removeImage(Long productId, Long imageId) {
-        Product product = findById(productId);
-        Image image = imageService.findById(imageId);
-        Set<Image> images=product.getImages();
-        imageService.delete(imageId);
-        images.remove(image);
         product.setImages(images);
         save(product);
     }

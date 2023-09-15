@@ -109,13 +109,18 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    public void deleteByProductId(Long productId) {
+        imageRepository.deleteByProductId(productId);
+    }
+
+    @Override
     public Image findById(Long imageID) {
         return imageRepository.findById(imageID).orElse(null);
     }
 
     @Override
-    public Collection<Image> findByProductId(Long product_id) {
-        return imageRepository.findByProductId(product_id);
+    public Collection<Image> findByProductId(Long productId) {
+        return imageRepository.findByProductId(productId);
     }
 }
 

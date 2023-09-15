@@ -6,5 +6,7 @@ import java.util.Collection;
 
 public interface ImageRepository extends BaseRepository<Image> {
 
-    Collection<Image> findByProductId(Long product_id);
+    Collection<Image> findByProductId(Long productId);
+
+    void deleteByProductId(Long productId);
 }

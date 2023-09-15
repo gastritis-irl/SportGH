@@ -44,11 +44,4 @@ public class Product extends BaseEntity {
     public void addImage(Image image) {
         images.add(image);
     }
-
-
-    public void removeImage( Long imageId) {
-        Image image = new Image();
-        image.setId(imageId);
-        images.remove(image);
-    }
 }

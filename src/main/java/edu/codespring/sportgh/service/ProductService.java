@@ -29,8 +29,5 @@ public interface ProductService {
 
     void delete(Product product);
 
-    //Image handling methods
     void addImage(Long productId, Image image);
-
-    void removeImage(Long productId, Long imageId);
 }

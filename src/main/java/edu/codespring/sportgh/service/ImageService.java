@@ -19,5 +19,7 @@ public interface ImageService {
 
     Image findById(Long imageID);
 
-    Collection<Image> findByProductId(Long product_id);
+    Collection<Image> findByProductId(Long productId);
+
+    void deleteByProductId(Long productId);
 }

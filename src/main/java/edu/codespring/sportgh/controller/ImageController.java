@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -104,14 +105,15 @@ public class ImageController {
             imageDTO.setName(image.getName());
             imageDTO.setData(imageData);
             return imageDTO;
-        } catch (Exception e) {
-            log.error("Error loading image: " + image.getName(), e);
+        } catch (IOException e) {
+            log.error("Failed to read image file", e);
             return null;
         }
     }
 
     @PostMapping
-    public ResponseEntity<Image> save(@RequestParam("image") MultipartFile file, @RequestParam("productId") Long productId) {
+    public ResponseEntity<Image> save(@RequestParam("image") MultipartFile file,
+                                      @RequestParam("productId") Long productId) {
         if (!file.getContentType().startsWith("image/")) {
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
         }
@@ -119,7 +121,7 @@ public class ImageController {
         Image image = imageService.saveFileAndCreateDbInstance(file);
         if (productId != 0) {
             Product product = productService.findById(productId);
-            image.setProduct( product);
+            image.setProduct(product);
             product.addImage(image);
             imageService.save(image);
             productService.addImage(productId, image);
@@ -130,19 +132,23 @@ public class ImageController {
 
     @Transactional
     @PutMapping(path = "/file/{imageId}")
-    public ResponseEntity<Image> update(@PathVariable Long imageId, @RequestParam("image") MultipartFile file, @RequestParam("productId") Long productId) {
+    public ResponseEntity<Image> update(@PathVariable Long imageId,
+                                        @RequestParam("image") MultipartFile file,
+                                        @RequestParam("productId") Long productId) {
         if (!file.getContentType().startsWith("image/")) {
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
         }
         Image image = imageService.findById(imageId);
         if (image == null) {
             log.info("Creating new image with productId {}.", productId);
-            if (productId != 0) {
+            if (productId == 0) {
                 image = imageService.saveFileAndCreateDbInstance(file);
-                image.setProduct(productService.findById(productId));
-                productService.addImage(productId, image);
+                imageService.save(image);
             } else {
                 image = imageService.saveFileAndCreateDbInstance(file);
+                image.setProduct(productService.findById(productId));
+                imageService.save(image);
+                productService.addImage(productId, image);
             }
             log.info("Creating new image with ID {}.", image.getId());
         }
