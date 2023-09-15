@@ -1,16 +1,19 @@
 @use '../../style-variables.scss' as *;
 
-$item-gap: 30px;
+$gap-small: 15px;
+$gap-medium: 30px;
+$gap-large: 50px;
 
 .home-page {
     display: flex;
     flex-direction: column;
     padding-inline: $main-page-padding;
+    gap: $gap-medium;
 
     .home-page-info {
         display: flex;
         flex-direction: column;
-        gap: $item-gap;
+        gap: $gap-medium;
 
         .main-info {
             color: $color-main-1;
@@ -26,27 +29,40 @@ $item-gap: 30px;
             .title {
                 display: flex;
                 flex-direction: row;
-                gap: 15px;
+                gap: $gap-small;
                 align-items: center;
 
                 .logo {
                     content: $nav-header-logo-icon;
                     width: 75px;
+
+                    @media (max-width: $breakpoint-medium) {
+                        width: 50px;
+                    }
                 }
 
                 .name {
                     font-size: xxx-large;
                     font-weight: $font-weight-bold;
+
+                    @media (max-width: $breakpoint-medium) {
+                        font-size: xx-large;
+                    }
                 }
             }
 
             .slogan {
                 font-size: xx-large;
                 font-weight: $font-weight-bold;
+
+                @media (max-width: $breakpoint-medium) {
+                    font-size: x-large;
+                }
             }
 
             .searchbar {
                 width: 30%;
+                min-width: 200px;
             }
         }
 
@@ -56,8 +72,8 @@ $item-gap: 30px;
             justify-content: center;
             background-color: $color-neutral-1;
             border-radius: $border-radius;
-            padding: $item-gap;
-            gap: $item-gap;
+            padding: $gap-medium;
+            gap: $gap-medium;
 
             .how-it-works {
                 display: flex;
@@ -73,8 +89,14 @@ $item-gap: 30px;
                 flex-direction: row;
                 justify-content: center;
                 align-items: flex-end;
-                gap: 10%;
+                column-gap: 10%;
+                row-gap: $gap-large;
+                flex-wrap: wrap;
 
+                @media (max-width: $breakpoint-medium) {
+                    flex-direction: column;
+                    align-items: center;
+                }
 
                 .signup,
                 .rent,
@@ -92,7 +114,7 @@ $item-gap: 30px;
                     justify-content: center;
                     border-radius: 100px;
                     background-color: $color-main-3;
-                    padding: $item-gap;
+                    padding: $gap-medium;
 
                     .icon {
                         width: 100%;
@@ -103,7 +125,7 @@ $item-gap: 30px;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    gap: $item-gap;
+                    gap: $gap-medium;
 
                     .icon {
                         content: $signup;
@@ -114,7 +136,7 @@ $item-gap: 30px;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    gap: $item-gap;
+                    gap: $gap-medium;
 
                     .icon {
                         content: $rent;
@@ -125,7 +147,7 @@ $item-gap: 30px;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    gap: $item-gap;
+                    gap: $gap-medium;
 
                     .icon {
                         content: $discover;
@@ -133,5 +155,10 @@ $item-gap: 30px;
                 }
             }
         }
+    }
+
+    .category-holder {
+        border-radius: $border-radius;
+        background-color: $color-neutral-1;
     }
 }
