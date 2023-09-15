@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../category/category.service';
-import { Category } from '../category/category.model';
+import { CategoryService } from '../../category/category.service';
+import { Category } from '../../category/category.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ImageService } from '../shared/image/image.service';
+import { ImageService } from '../../shared/image/image.service';
 
 @Component({
     selector: 'sgh-admin',
-    templateUrl: './admin.component.html',
+    templateUrl: './category-list-manage.component.html',
+    styleUrls: ['./category-list-manage.component.scss'],
 })
-export class AdminComponent implements OnInit {
+export class CategoryListManageComponent implements OnInit {
     categories: Category[] = [];
 
     constructor(

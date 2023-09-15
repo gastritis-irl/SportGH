@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../category/category.service';
+import { CategoryService } from '../../category/category.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Category } from '../category/category.model';
+import { Category } from '../../category/category.model';
 import { ToastrService } from 'ngx-toastr';
-import { Image } from '../shared/image/image.model';
-import { ImageService } from '../shared/image/image.service';
+import { Image } from '../../shared/image/image.model';
+import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';
-import { ImageComponent } from '../shared/image/image.component';
+import { ImageComponent } from '../../shared/image/image.component';
 
 type ClickHandlerFunction = () => void;
 

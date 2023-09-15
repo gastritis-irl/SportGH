@@ -1,0 +1,48 @@
+@use '../../../style-variables.scss' as *;
+
+$button-width: 200px;
+$edit-btn-width: 100px;
+$page-padding: 20px;
+
+
+.category-list-manage-holder {
+    padding-inline: $main-page-padding;
+    padding-block: $page-padding;
+
+    .category-list-manage {
+        padding: $page-padding;
+        border-radius: $border-radius;
+        background-color: $color-neutral-1;
+        display: flex;
+        flex-direction: column;
+
+        .buttons {
+            width: $button-width;
+        }
+
+        .categories {
+            padding-block: $page-padding;
+            display: flex;
+            flex-direction: column;
+            gap: $page-padding;
+
+            .category {
+                display: flex;
+                flex-direction: row;
+                gap: $page-padding;
+                border-radius: $border-radius;
+                background-color: $color-main-3;
+
+                .buttons > div{
+                    width: $edit-btn-width;
+                }
+
+                .delete {
+                }
+
+                .edit {
+                }
+            }
+        }
+    }
+}

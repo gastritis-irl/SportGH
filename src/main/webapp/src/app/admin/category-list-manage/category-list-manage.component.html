@@ -1,0 +1,32 @@
+<div class="category-list-manage-holder">
+    <div class="category-list-manage">
+        <div class="buttons">
+            <div class="button-default button-primary" routerLink="/admin/categories/new">Create new category +</div>
+        </div>
+        <div class="categories">
+            <div class="category" *ngFor="let category of categories; let i = index">
+                <div class="buttons">
+                    <div class="delete button-default button-primary" (click)="deleteCategory(category.id,i)">
+                        Delete
+                    </div>
+                </div>
+                <div class="buttons">
+                    <div class="edit button-default button-secondary">
+                        Edit
+                    </div>
+                </div>
+                <div class="image">
+
+                </div>
+                <div class="id">
+                    {{category.id}}
+                </div>
+                <div class="name">
+                    {{category.name}}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
