@@ -91,6 +91,9 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        // log the number of images
+        log.info("Images: {}", imageService.findByProductId(productId).size());
+
         return save(productInDTO);
     }
 

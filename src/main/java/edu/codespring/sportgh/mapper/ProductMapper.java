@@ -13,7 +13,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 @Mapper(componentModel = "spring")
@@ -53,10 +52,6 @@ public abstract class ProductMapper {
             entity.setUser(null);
         } else {
             entity.setUser(userService.findById(dto.getUserId()));
-        }
-        if (dto.getImageIds() != null) {
-            entity.getImages().clear();
-            Arrays.stream(dto.getImageIds()).map(imageService::findById).forEach(entity.getImages()::add);
         }
     }
 }

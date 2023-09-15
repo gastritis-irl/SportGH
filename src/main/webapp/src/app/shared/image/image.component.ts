@@ -63,6 +63,7 @@ export class ImageComponent implements OnInit {
     deleteImage(index: number): void {
         if (this.imageFiles[index]) {
             this.imageFiles.splice(index, 1);
+            this.imageDataArray.splice(index, 1);
         } else {
             // delete from db
             if (!this.imageIds) {
