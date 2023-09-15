@@ -28,9 +28,9 @@ public class FirebaseServiceImpl implements FirebaseService {
         try {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             UserRecord userRecord = firebaseAuth.createUser(
-                new UserRecord.CreateRequest()
-                    .setEmail(user.getEmail())
-                    .setPassword(password)
+                    new UserRecord.CreateRequest()
+                            .setEmail(user.getEmail())
+                            .setPassword(password)
             );
             return userRecord.getUid();
 
@@ -77,12 +77,12 @@ public class FirebaseServiceImpl implements FirebaseService {
 
         // Create a UserDetails object using Spring Security's User class
         UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
-            .roles(user.getRole())
-            .accountExpired(false)
-            .accountLocked(false)
-            .credentialsExpired(false)
-            .disabled(false)
-            .build();
+                .roles(user.getRole())
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
+                .build();
 
         // Create an Authentication object using the UserDetails
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -95,19 +95,19 @@ public class FirebaseServiceImpl implements FirebaseService {
             ListUsersPage listUsersPage = FirebaseAuth.getInstance().listUsers(null);
             for (ExportedUserRecord i : listUsersPage.getValues()) {
                 users.add(new User(
-                    i.getEmail(),
-                    i.getEmail(),
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    i.getUid(),
-                    "USER",
-                    null,
-                    null)
-                );
+                        i.getEmail(),
+                        i.getEmail(),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        i.getUid(),
+                        "USER",
+                        null,
+                        null
+                ));
             }
         } catch (FirebaseAuthException e) {
             throw new ServiceException("[FbService] listUsers failed!", e);

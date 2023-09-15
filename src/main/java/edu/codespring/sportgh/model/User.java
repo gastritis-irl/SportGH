@@ -25,11 +25,6 @@ public class User extends BaseEntity {
     @Column(name = "email", unique = true, length = 64)
     private String email;
 
-    @EqualsAndHashCode.Include
-    @ToString.Exclude
-    @Column(length = 64)
-    private String password;
-
     @Column(name = "full_name", length = 64)
     private String fullName;
 
