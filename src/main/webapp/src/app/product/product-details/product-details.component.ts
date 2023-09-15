@@ -40,7 +40,6 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     loadProductImages(productId: number): void {
-        this.toastNotify.info(`Loading images...`);
 
         this.imageService.getImageFilesByProductId(productId).subscribe({
             next: async (response: {name:string, data:Uint8Array}[]) => {
@@ -56,10 +55,8 @@ export class ProductDetailsComponent implements OnInit {
                         const base64String = imageDTO.data
                         const imageUrl = 'data:image/jpeg;base64,' + base64String;
                         this.product.imageDataUrls.push(imageUrl);
-                        this.toastNotify.success(`Image ${imageDTO.name} successfully loaded.`);
                     }
 
-                    this.toastNotify.success(`Images successfully loaded.`);
                 } catch (error) {
                     this.toastNotify.error(`Error loading images: ${error}`);
                 }
