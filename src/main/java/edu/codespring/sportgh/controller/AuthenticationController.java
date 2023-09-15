@@ -1,10 +1,12 @@
 package edu.codespring.sportgh.controller;
 
+import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.service.FirebaseService;
 import edu.codespring.sportgh.service.UserService;
-import edu.codespring.sportgh.dto.auth.LoginRequest;
 import edu.codespring.sportgh.dto.auth.SignupRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,15 +18,11 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public void signup(@RequestBody SignupRequest request) {
+    public ResponseEntity<User> signup(@RequestBody SignupRequest request) {
         String firebaseUid = firebaseService.getFirebaseUidFromToken(request.getIdToken());
-        userService.signup(request.getEmail(), firebaseUid, request.getPassword());
+        return new ResponseEntity<>(
+            userService.signup(request.getEmail(), firebaseUid),
+            HttpStatus.OK
+        );
     }
-
-    @PostMapping("/login")
-    public void login(@RequestBody LoginRequest request) {
-        String firebaseUid = firebaseService.getFirebaseUidFromToken(request.getIdToken());
-        userService.login(firebaseUid, request.getPassword());
-    }
-
 }

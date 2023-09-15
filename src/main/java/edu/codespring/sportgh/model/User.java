@@ -20,14 +20,12 @@ public class User extends BaseEntity {
     @Column(name = "username", unique = true, length = 64)
     private String username;
 
+    @EqualsAndHashCode.Include
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
     @Column(name = "email", unique = true, length = 64)
     private String email;
 
-    @ToString.Exclude
-    @Column(length = 64)
-    private String password;
-
+    @EqualsAndHashCode.Include
     @Column(name = "firebase_uid", unique = true, length = 128)
     private String firebaseUid;
 
