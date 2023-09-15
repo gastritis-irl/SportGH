@@ -43,6 +43,7 @@ public class User extends BaseEntity {
     @Column(name = "country", length = 64)
     private String country;
 
+    @EqualsAndHashCode.Include
     @Column(name = "firebase_uid", unique = true, length = 128)
     private String firebaseUid;
 

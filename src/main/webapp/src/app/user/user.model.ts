@@ -13,6 +13,5 @@ export interface User {
     country?: string;
     products?: Product[];
     imageId?: number;
-    password?: string;
     role?: string;
 }

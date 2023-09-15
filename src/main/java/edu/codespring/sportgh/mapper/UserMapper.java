@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.mapper;
 
+import edu.codespring.sportgh.dto.UserInDTO;
 import edu.codespring.sportgh.dto.UserOutDTO;
 import edu.codespring.sportgh.model.User;
 import org.mapstruct.Mapper;
@@ -16,5 +17,5 @@ public interface UserMapper {
     Collection<UserOutDTO> usersToOuts(Collection<User> users);
 
     @Mapping(source = "imageId", target = "image.id")
-    User outToUser(UserOutDTO userOutDTO);
+    User dtoToUser(UserInDTO userInDTO);
 }

@@ -1,9 +1,11 @@
 package edu.codespring.sportgh.controller;
 
+import edu.codespring.sportgh.dto.UserInDTO;
 import edu.codespring.sportgh.dto.UserOutDTO;
 import edu.codespring.sportgh.mapper.UserMapper;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,26 +25,28 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public ResponseEntity<UserOutDTO> findByUsername(@RequestParam("username") Optional<String> username, @RequestParam Optional<Long> userId) {
+    public ResponseEntity<UserOutDTO> findByUsername(
+            @RequestParam("username") Optional<String> username,
+            @RequestParam("userId") Optional<Long> userId
+    ) {
 
-        if(username.isPresent() && userId.isPresent() || username.isEmpty() && userId.isEmpty()){
+        if (username.isPresent() && userId.isPresent() || username.isEmpty() && userId.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+        } else {
+            User user;
 
-        if (username.isPresent()) {
+            if (username.isPresent()) {
+                user = userService.findByUsername(username.get());
+            } else {
+                user = userService.findById(userId.get());
+            }
 
-            User user = userService.findByUsername(username.get());
             if (user == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
             }
+
             return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
         }
-
-        User user = userService.findById(userId.get());
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{userId}")
@@ -52,13 +56,16 @@ public class UserController {
     }
 
     @PutMapping(path = "/{userId}")
-    public ResponseEntity<UserOutDTO> update(@RequestBody UserOutDTO userOutDTO, @PathVariable Long userId) {
+    public ResponseEntity<UserOutDTO> update(
+            @Valid @RequestBody UserInDTO userInDTO,
+            @PathVariable Long userId
+    ) {
 
-        userOutDTO.setId(userId);
-        log.info("User with ID {} updated successfully.", userOutDTO.getId());
-        log.info("User details: {}", userOutDTO);
+        userInDTO.setId(userId);
+        log.info("User with ID {} updated successfully.", userInDTO.getId());
+        log.info("User details: {}", userInDTO);
 
-        User user = userMapper.outToUser(userOutDTO);
+        User user = userMapper.dtoToUser(userInDTO);
         User updatedUser = userService.update(user);
         return new ResponseEntity<>(userMapper.userToOut(updatedUser), HttpStatus.OK);
     }

@@ -8,16 +8,21 @@ import { ImageService } from '../../shared/image/image.service';
 
 @Component({
     selector: 'sgh-user',
-    templateUrl: './user.component.html',
-    styleUrls: ['./user.component.scss']
+    templateUrl: './user-details.component.html',
+    styleUrls: [ './user-details.component.scss' ]
 })
-export class UserComponent implements OnInit {
+export class UserDetailsComponent implements OnInit {
 
     @Input() username: string = '';
     user: User = {};
     imageFile?: File;
 
-    constructor(private userService: UserService, private toastNotify: ToastrService, private route: ActivatedRoute, private imageService: ImageService) {
+    constructor(
+        private userService: UserService,
+        private toastNotify: ToastrService,
+        private route: ActivatedRoute,
+        private imageService: ImageService
+    ) {
     }
 
     ngOnInit(): void {
@@ -39,6 +44,7 @@ export class UserComponent implements OnInit {
             this.userService.getByUsername(username).subscribe({
                 next: (data: User): void => {
                     this.user = data;
+                    console.log(data);
                 },
                 error: (error): void => {
                     console.error(error);
@@ -47,16 +53,4 @@ export class UserComponent implements OnInit {
             });
         }
     }
-
-    updateUser(): void {
-        if (!this.user.id) {
-            this.toastNotify.warning('User not found');
-            return;
-        }
-
-        this.userService.update(this.user.id, this.user).subscribe(() => {
-            this.toastNotify.success('User updated successfully');
-        });
-    }
-
 }
