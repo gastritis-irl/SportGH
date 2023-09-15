@@ -44,19 +44,25 @@
 
         <div class="images-and-pricing">
             <div class="images">
-                <ngb-carousel *ngIf="product.imageDataUrls && product.imageDataUrls.length > 0">
-                    <ng-template ngbSlide *ngFor="let imageUrl of product.imageDataUrls">
+                <div class="image-thumbnails">
+                    <div *ngFor="let imageUrl of product.imageDataUrls; let i = index" class="thumbnail"
+                        (click)="carousel.select('slide-' + i)">
+                        <img [src]="imageUrl" alt="Thumbnail Image">
+                    </div>
+                </div>
+                <ngb-carousel #carousel *ngIf="product.imageDataUrls && product.imageDataUrls.length > 0">
+                    <ng-template ngbSlide *ngFor="let imageUrl of product.imageDataUrls; let i = index" [id]="'slide-' + i">
                         <div class="carousel-item">
                             <img [src]="imageUrl" alt="Product Image">
                         </div>
                     </ng-template>
                 </ngb-carousel>
-                
+            
                 <ng-template #defaultImage *ngIf="!(product.imageDataUrls && product.imageDataUrls.length > 0)">
                     <img src="https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png" alt="Default Image">
                 </ng-template>
-
             </div>
+
 
 
             <div class="pricing">

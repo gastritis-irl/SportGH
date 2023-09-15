@@ -47,23 +47,27 @@ export class ImageComponent implements OnInit {
     onFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length) {
-            this.imageFiles = Array.from(input.files);
+            const newImageFiles = Array.from(input.files);
 
-            this.fileChange.emit(this.imageFiles);
-            this.imageFiles.forEach((file, index) => {
+            this.fileChange.emit(newImageFiles);
+            newImageFiles.forEach((file) => {
                 const reader = new FileReader();
                 reader.onload = () => {
-                    this.imageDataArray[index] = { url: reader.result as string };
+                    this.imageDataArray.push({ url: reader.result as string });
                 };
                 reader.readAsDataURL(file);
             });
+
+            this.imageFiles = [...this.imageFiles, ...newImageFiles];
         }
     }
+
 
     deleteImage(index: number): void {
         if (this.imageFiles[index]) {
             this.imageFiles.splice(index, 1);
             this.imageDataArray.splice(index, 1);
+            this.toastNotify.success('Image deleted successfully');
         } else {
             // delete from db
             if (!this.imageIds) {
@@ -71,15 +75,17 @@ export class ImageComponent implements OnInit {
             }
             this.imageService.deleteImage(this.imageIds[index]).subscribe({
                 next: () => {
+                    this.imageIds?.splice(index, 1);
+                    this.imageDataArray.splice(index, 1);  // Add this line to remove the image from the array
                     this.toastNotify.success('Image deleted successfully');
+                },
+                error: (error) => {
+                    this.toastNotify.error('Error deleting image', error);
                 }
             });
-            this.imageIds.splice(index, 1);
-
         }
-
-        this.toastNotify.success('Image deleted successfully');
     }
+
 
     upload(): void {
         if (this.imageFiles.length === 0) {

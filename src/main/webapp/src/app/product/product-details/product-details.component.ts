@@ -9,12 +9,17 @@ import { ViewportScroller } from '@angular/common';
 import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 
+import { ViewChild } from '@angular/core';
+import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
     selector: 'sgh-product-details',
     templateUrl: './product-details.component.html',
     styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
+
+    @ViewChild(NgbCarousel) carousel!: NgbCarousel;
 
     product: Product = {};
     productLender: User = {};
