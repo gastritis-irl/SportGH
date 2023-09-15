@@ -33,7 +33,7 @@ export class UserService extends AppService {
 
     update(userId: number, user: User): Observable<User> {
         const url: string = `${this.baseUrl}/users/${userId}`;
-        return this.http.put<User>(url, {user});
+        return this.http.put<User>(url, user);
     }
 
     async signInWithFirebase(email: string, password: string): Promise<void> {

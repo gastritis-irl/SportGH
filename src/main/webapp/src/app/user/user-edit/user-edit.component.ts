@@ -3,7 +3,6 @@
 // Path: src/app/user/user-edit/user-edit.component.ts
 
 import { ToastrService } from 'ngx-toastr';
-import { Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ImageService } from '../../shared/image/image.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,14 +16,14 @@ import { User } from '../user.model';
     styleUrls: ['./user-edit.component.scss']
 })
 export class UserEditComponent implements OnInit {
-    
-        @Input() username: string = '';
+
+        username: string = '';
         user: User = {};
         imageFile?: File;
-    
+
         constructor(private userService: UserService, private toastNotify: ToastrService, private route: ActivatedRoute, private imageService: ImageService) {
         }
-    
+
         ngOnInit(): void {
             this.route.params.subscribe(
                 {
@@ -38,7 +37,7 @@ export class UserEditComponent implements OnInit {
                 }
             );
         }
-    
+
         loadData(username: string | undefined): void {
             if (username) {
                 this.userService.getByUsername(username).subscribe({
@@ -52,18 +51,18 @@ export class UserEditComponent implements OnInit {
                 });
             }
         }
-    
+
         updateUser(): void {
             if (!this.user.id) {
                 this.toastNotify.warning('User not found');
                 return;
             }
-    
+
             this.userService.update(this.user.id, this.user).subscribe(() => {
                 this.toastNotify.success('User updated successfully');
             });
     }
-    
+
     onSubmit(): void {
         this.updateUser();
     }

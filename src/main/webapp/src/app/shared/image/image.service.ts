@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { Image } from "./image.model";
-import { AppService } from "../../app.service";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Image } from './image.model';
+import { AppService } from '../../app.service';
 
 @Injectable()
 export class ImageService extends AppService {
@@ -28,5 +28,17 @@ export class ImageService extends AppService {
 
     deleteImage(id: number): Observable<void> {
         return this.http.delete<void>(this.baseUrl + `/images/${id}`);
+    }
+
+    readImageBlob(imageBlob: Blob): string {
+        let image: string = '';
+        const reader: FileReader = new FileReader();
+        reader.onload = (): void => {
+            image = reader.result as string;
+        };
+        if (imageBlob) {
+            reader.readAsDataURL(imageBlob);
+        }
+        return image;
     }
 }

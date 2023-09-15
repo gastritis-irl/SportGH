@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { ToastrService } from 'ngx-toastr';
-import { Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ImageService } from '../../shared/image/image.service';
 
@@ -13,9 +12,9 @@ import { ImageService } from '../../shared/image/image.service';
 })
 export class UserDetailsComponent implements OnInit {
 
-    @Input() username: string = '';
+    username: string = '';
     user: User = {};
-    imageFile?: File;
+    image: string = '';
 
     constructor(
         private userService: UserService,
@@ -44,11 +43,24 @@ export class UserDetailsComponent implements OnInit {
             this.userService.getByUsername(username).subscribe({
                 next: (data: User): void => {
                     this.user = data;
-                    console.log(data);
+                    this.loadImage(data.imageId ? data.imageId : null);
                 },
                 error: (error): void => {
                     console.error(error);
                     this.toastNotify.error(`Error fetching data`);
+                }
+            });
+        }
+    }
+
+    loadImage(imageId: number | null): void {
+        if (imageId) {
+            this.imageService.getImageFile(imageId).subscribe({
+                next: (blob: Blob): void => {
+                    this.image = this.imageService.readImageBlob(blob);
+                },
+                error: (error): void => {
+                    this.toastNotify.error(`Error fetching image`, error);
                 }
             });
         }

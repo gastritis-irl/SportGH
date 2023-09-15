@@ -15,21 +15,18 @@
         padding: $item-padding;
         align-items: center;
 
-        &__image {
-            img {
-                border-radius: 50%;
-                width: 100px; // Adjust as necessary
-                height: 100px; // Adjust as necessary
-                object-fit: cover;
-            }
+        .image {
+            border-radius: 50%;
+            width: 100px;
+            object-fit: cover;
         }
 
-        &__info {
+        .info {
             margin-left: $item-padding;
             display: flex;
             flex-direction: column;
 
-            h1 {
+            div {
                 font-family: $font-default;
                 font-weight: $font-weight-bold;
                 font-size: $size-h1;
