@@ -27,6 +27,12 @@
         <div [routerLink]="['/products']" [queryParams]="{ Subcategory: product.subCategoryName }">
             {{product.subCategoryName}}
         </div>
+        <div>
+            >
+        </div>
+        <div routerLink="/products/{{product.id}}">
+            {{product.name}}
+        </div>
     </div>
 
     <!--    User page-->
