@@ -92,6 +92,17 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
+    selectAllSubCatOfCat(categoryInd: number): void {
+        if (categoryInd != -1) {
+            this.categorySelected[categoryInd] = true;
+        }
+        for (let i: number = 0; i < this.subcategories.length; i++) {
+            if (this.subcategories[i].categoryId == this.categories[categoryInd].id) {
+                this.subcategorySelected[i] = true;
+            }
+        }
+    }
+
     getQueryParams(): void {
         this.route.queryParams.subscribe(
             {
@@ -118,19 +129,25 @@ export class ProductComponent implements OnInit {
                                 this.filterParams[paramName] = params[paramName];
                             }
                             if (paramName == 'Category') {
-                                let catInd: number = -1;
-                                for (let i: number = 0; i < this.categories.length; i++) {
-                                    if (this.categories[i].name == params[paramName]) {
-                                        catInd = i;
-                                        break;
+                                if (typeof params[paramName] == 'string') {
+                                    let catInd: number = -1;
+                                    for (let i: number = 0; i < this.categories.length; i++) {
+                                        if (this.categories[i].name == params[paramName]) {
+                                            catInd = i;
+                                            break;
+                                        }
                                     }
-                                }
-                                if (catInd != -1) {
-                                    this.categorySelected[catInd] = true;
-                                }
-                                for (let i: number = 0; i < this.subcategories.length; i++) {
-                                    if (this.subcategories[i].categoryId == this.categories[catInd].id) {
-                                        this.subcategorySelected[i] = true;
+                                    this.selectAllSubCatOfCat(catInd);
+                                } else {
+                                    for (let j: number = 0; j < params[paramName].length; j++) {
+                                        let catInd: number = -1;
+                                        for (let i: number = 0; i < this.categories.length; i++) {
+                                            if (this.categories[i].name == params[paramName][j]) {
+                                                catInd = i;
+                                                break;
+                                            }
+                                        }
+                                        this.selectAllSubCatOfCat(catInd);
                                     }
                                 }
                             }
