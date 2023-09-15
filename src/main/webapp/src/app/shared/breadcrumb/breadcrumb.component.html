@@ -1,11 +1,42 @@
 <div class="breadcrumb">
-    <div routerLink="/">Home</div>
-    <div routerLink="/{{url.slice(0,i+1).join('/')}}" *ngFor="let urlSegment of url; let i = index">
+    <!--    General-->
+    <div *ngIf="!user && !product">
+        <div routerLink="/">Home</div>
+        <div class="routes" routerLink="/{{url.slice(0,i+1).join('/')}}" *ngFor="let urlSegment of url; let i = index">
+            <div>
+                >
+            </div>
+            <div>
+                {{urlSegment.charAt(0).toUpperCase() + urlSegment.slice(1)}}
+            </div>
+        </div>
+    </div>
+
+    <!--    Product-details-->
+    <div *ngIf="product" class="routes">
+        <div routerLink="/">Home</div>
+        <div>
+            >
+        </div>
+        <div [routerLink]="['/products']" [queryParams]="{ Category: product.categoryName }">
+            {{product.categoryName}}
+        </div>
+        <div>
+            >
+        </div>
+        <div [routerLink]="['/products']" [queryParams]="{ Subcategory: product.subCategoryName }">
+            {{product.subCategoryName}}
+        </div>
+    </div>
+
+    <!--    User page-->
+    <div *ngIf="user" class="routes">
+        <div routerLink="/">Home</div>
         <div>
             >
         </div>
         <div>
-            {{urlSegment.charAt(0).toUpperCase() + urlSegment.slice(1)}}
+            {{user.username}}
         </div>
     </div>
 </div>

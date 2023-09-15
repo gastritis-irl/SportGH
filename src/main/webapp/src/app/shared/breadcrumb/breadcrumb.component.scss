@@ -8,8 +8,13 @@ $padding-block: 20px;
     padding-block: $padding-block;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: $column-gap;
+
+    .routes {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: $column-gap;
+    }
 
     div {
         color: $color-main-1;
