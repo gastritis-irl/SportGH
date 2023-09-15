@@ -3,6 +3,18 @@
 $gap-small: 15px;
 $gap-medium: 30px;
 $gap-large: 50px;
+$navigation-column-gap: 10%;
+
+$font-large: xxx-large;
+$font-medium: xx-large;
+$font-small: x-large;
+
+$icon-border: 100px;
+$icon-holder-width: 200px;
+$searchbar-min-width: 200px;
+
+$logo-large: 75px;
+$logo-small: 50px;
 
 .home-page {
     display: flex;
@@ -19,10 +31,10 @@ $gap-large: 50px;
             color: $color-main-1;
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: $gap-large;
             justify-content: center;
             align-items: center;
-            padding-block: 50px;
+            padding-block: $gap-large;
             background-color: $color-neutral-1;
             border-radius: $border-radius;
 
@@ -34,35 +46,35 @@ $gap-large: 50px;
 
                 .logo {
                     content: $nav-header-logo-icon;
-                    width: 75px;
+                    width: $logo-large;
 
                     @media (max-width: $breakpoint-medium) {
-                        width: 50px;
+                        width: $logo-small;
                     }
                 }
 
                 .name {
-                    font-size: xxx-large;
+                    font-size: $font-large;
                     font-weight: $font-weight-bold;
 
                     @media (max-width: $breakpoint-medium) {
-                        font-size: xx-large;
+                        font-size: $font-medium;
                     }
                 }
             }
 
             .slogan {
-                font-size: xx-large;
+                font-size: $font-medium;
                 font-weight: $font-weight-bold;
 
                 @media (max-width: $breakpoint-medium) {
-                    font-size: x-large;
+                    font-size: $font-small;
                 }
             }
 
             .searchbar {
                 width: 30%;
-                min-width: 200px;
+                min-width: $searchbar-min-width;
             }
         }
 
@@ -89,7 +101,7 @@ $gap-large: 50px;
                 flex-direction: row;
                 justify-content: center;
                 align-items: flex-end;
-                column-gap: 10%;
+                column-gap: $navigation-column-gap;
                 row-gap: $gap-large;
                 flex-wrap: wrap;
 
@@ -101,18 +113,18 @@ $gap-large: 50px;
                 .signup,
                 .rent,
                 .discover > div {
-                    font-size: x-large;
+                    font-size: $font-small;
                     font-weight: $font-weight-bold;
                     color: $color-main-2;
                 }
 
                 .icon-holder {
-                    width: 200px;
+                    width: $icon-holder-width;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    border-radius: 100px;
+                    border-radius: $icon-border;
                     background-color: $color-main-3;
                     padding: $gap-medium;
 
