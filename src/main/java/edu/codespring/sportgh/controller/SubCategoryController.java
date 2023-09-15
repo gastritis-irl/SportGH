@@ -26,8 +26,7 @@ public class SubCategoryController {
 
     @GetMapping
     public ResponseEntity<Collection<SubCategoryOutDTO>> findAll(
-            @RequestParam("Category") Optional<Long> categoryId,
-            @RequestHeader("Authorization") String idToken
+            @RequestParam("Category") Optional<Long> categoryId
     ) {
         Collection<SubCategory> subCategories = categoryId.isPresent()
                 ? subCategoryService.findByCategoryId(categoryId.get()) : subCategoryService.findAll();

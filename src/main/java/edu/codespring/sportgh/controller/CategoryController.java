@@ -28,17 +28,14 @@ public class CategoryController {
     private final ImageService imageService;
 
     @GetMapping
-    public ResponseEntity<Collection<CategoryOutDTO>> findAll(
-            @RequestHeader("Authorization") String idToken
-    ) {
+    public ResponseEntity<Collection<CategoryOutDTO>> findAll() {
         Collection<Category> categories = categoryService.findAll();
         return new ResponseEntity<>(categoryMapper.categoriesToOuts(categories), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> findById(
-            @PathVariable Long categoryId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long categoryId
     ) {
         Category category = categoryService.findById(categoryId);
         if (category == null) {

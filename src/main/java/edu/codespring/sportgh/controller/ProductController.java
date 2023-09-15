@@ -34,8 +34,7 @@ public class ProductController {
             @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
             @RequestParam("MinPrice") Optional<Double> minPrice,
             @RequestParam("MaxPrice") Optional<Double> maxPrice,
-            @RequestParam("TextSearch") Optional<String> textSearch,
-            @RequestHeader("Authorization") String idToken
+            @RequestParam("TextSearch") Optional<String> textSearch
     ) {
         return new ResponseEntity<>(
                 productService.findPageByParams(
@@ -54,8 +53,7 @@ public class ProductController {
 
     @GetMapping(path = "/{productId}")
     public ResponseEntity<ProductOutDTO> findById(
-            @PathVariable Long productId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long productId
     ) {
         Product product = productService.findById(productId);
         if (product == null) {
