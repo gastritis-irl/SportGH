@@ -28,13 +28,18 @@ public class CategoryController {
     private final ImageService imageService;
 
     @GetMapping
-    public ResponseEntity<Collection<CategoryOutDTO>> findAll() {
+    public ResponseEntity<Collection<CategoryOutDTO>> findAll(
+            @RequestHeader("Authorization") String idToken
+    ) {
         Collection<Category> categories = categoryService.findAll();
         return new ResponseEntity<>(categoryMapper.categoriesToOuts(categories), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{categoryId}")
-    public ResponseEntity<CategoryOutDTO> findById(@PathVariable Long categoryId) {
+    public ResponseEntity<CategoryOutDTO> findById(
+            @PathVariable Long categoryId,
+            @RequestHeader("Authorization") String idToken
+    ) {
         Category category = categoryService.findById(categoryId);
         if (category == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -52,16 +57,13 @@ public class CategoryController {
     }
 
     @DeleteMapping(path = "/{categoryId}")
-    public ResponseEntity<?> deleteById(@PathVariable Long categoryId) {
+    public ResponseEntity<?> deleteById(
+            @PathVariable Long categoryId,
+            @RequestHeader("Authorization") String idToken
+    ) {
         deleteImageFileByCategoryId(categoryId);
         log.info("Deleting category with ID {}.", categoryId);
         categoryService.delete(categoryId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @DeleteMapping
-    public ResponseEntity<?> deleteAll() {
-        categoryService.deleteAll();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -74,8 +76,11 @@ public class CategoryController {
     }
 
     @PutMapping(path = "/{categoryId}")
-    public ResponseEntity<CategoryOutDTO> update(@PathVariable Long categoryId,
-                                                 @RequestBody @Valid CategoryInDTO categoryInDTO) {
+    public ResponseEntity<CategoryOutDTO> update(
+            @PathVariable Long categoryId,
+            @RequestBody @Valid CategoryInDTO categoryInDTO,
+            @RequestHeader("Authorization") String idToken
+    ) {
         log.info("Updating category with ID {}.", categoryId);
         if (!Objects.equals(categoryId, categoryInDTO.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -87,17 +92,15 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryOutDTO> create(@RequestBody @Valid CategoryInDTO categoryInDTO) {
+    public ResponseEntity<CategoryOutDTO> create(
+            @RequestBody @Valid CategoryInDTO categoryInDTO,
+            @RequestHeader("Authorization") String idToken
+    ) {
         log.info("Creating category with name {}.", categoryInDTO.getName());
         if (categoryInDTO.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return save(categoryInDTO);
-    }
-
-    @GetMapping(path = "/count")
-    public ResponseEntity<Long> count() {
-        return new ResponseEntity<>(categoryService.count(), HttpStatus.OK);
     }
 }
 

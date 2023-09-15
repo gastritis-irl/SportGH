@@ -26,37 +26,32 @@ public class SubCategoryController {
 
     @GetMapping
     public ResponseEntity<Collection<SubCategoryOutDTO>> findAll(
-        @RequestParam("Category") Optional<Long> categoryId
+            @RequestParam("Category") Optional<Long> categoryId,
+            @RequestHeader("Authorization") String idToken
     ) {
         Collection<SubCategory> subCategories = categoryId.isPresent()
-            ? subCategoryService.findByCategoryId(categoryId.get()) : subCategoryService.findAll();
+                ? subCategoryService.findByCategoryId(categoryId.get()) : subCategoryService.findAll();
 
-        return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/ids/{subCategoryIDs}")
-    public ResponseEntity<Collection<SubCategoryOutDTO>> findByIds(@PathVariable Collection<Long> subCategoryIDs) {
-        Collection<SubCategory> subCategories = subCategoryService.findByIds(subCategoryIDs);
         return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{subCategoryId}")
-    public ResponseEntity<?> deleteById(@PathVariable Long subCategoryId) {
+    public ResponseEntity<?> deleteById(
+            @PathVariable Long subCategoryId,
+            @RequestHeader("Authorization") String idToken
+    ) {
         log.info("Deleting subCategory with ID {}.", subCategoryId);
         subCategoryService.delete(subCategoryId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteAll() {
-        subCategoryService.deleteAll();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @PostMapping(path = "/{subCategoryId}")
     @PutMapping(path = "/{subCategoryId}")
-    public ResponseEntity<SubCategoryOutDTO> save(@RequestBody @Valid SubCategoryInDTO subCategoryInDTO,
-                                                  @PathVariable(required = false) Long subCategoryId) {
+    public ResponseEntity<SubCategoryOutDTO> save(
+            @RequestBody @Valid SubCategoryInDTO subCategoryInDTO,
+            @PathVariable(required = false) Long subCategoryId,
+            @RequestHeader("Authorization") String idToken
+    ) {
         SubCategory subCategory;
         subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
         log.info("Saving subCategory with ID {}.", subCategoryId);

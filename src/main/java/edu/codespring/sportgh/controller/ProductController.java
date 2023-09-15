@@ -34,7 +34,8 @@ public class ProductController {
             @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
             @RequestParam("MinPrice") Optional<Double> minPrice,
             @RequestParam("MaxPrice") Optional<Double> maxPrice,
-            @RequestParam("TextSearch") Optional<String> textSearch
+            @RequestParam("TextSearch") Optional<String> textSearch,
+            @RequestHeader("Authorization") String idToken
     ) {
         return new ResponseEntity<>(
                 productService.findPageByParams(
@@ -52,7 +53,10 @@ public class ProductController {
     }
 
     @GetMapping(path = "/{productId}")
-    public ResponseEntity<ProductOutDTO> findById(@PathVariable Long productId) {
+    public ResponseEntity<ProductOutDTO> findById(
+            @PathVariable Long productId,
+            @RequestHeader("Authorization") String idToken
+    ) {
         Product product = productService.findById(productId);
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -60,7 +64,9 @@ public class ProductController {
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
-    private ResponseEntity<ProductOutDTO> save(@Valid ProductInDTO productInDTO) {
+    private ResponseEntity<ProductOutDTO> save(
+            @Valid ProductInDTO productInDTO
+    ) {
         Product product = productMapper.dtoToProduct(productInDTO);
         productService.save(product);
         ProductOutDTO productOutDTO = productMapper.productToOut(product);
@@ -68,7 +74,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductOutDTO> create(@RequestBody @Valid ProductInDTO productInDTO) {
+    public ResponseEntity<ProductOutDTO> create(
+            @RequestBody @Valid ProductInDTO productInDTO,
+            @RequestHeader("Authorization") String idToken
+    ) {
         log.info("Creating product with name: {}.", productInDTO.getName());
         if (productInDTO.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -77,8 +86,11 @@ public class ProductController {
     }
 
     @PutMapping(path = "/{productId}")
-    public ResponseEntity<ProductOutDTO> update(@RequestBody @Valid ProductInDTO productInDTO,
-                                                @PathVariable Long productId) {
+    public ResponseEntity<ProductOutDTO> update(
+            @RequestBody @Valid ProductInDTO productInDTO,
+            @PathVariable Long productId,
+            @RequestHeader("Authorization") String idToken
+    ) {
         log.info("Updating product with ID {}.", productId);
         if (!Objects.equals(productId, productInDTO.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -90,14 +102,20 @@ public class ProductController {
     }
 
     @PutMapping(path = "/{productId}/rent")
-    public ResponseEntity<ProductOutDTO> rent(@PathVariable Long productId) {
+    public ResponseEntity<ProductOutDTO> rent(
+            @PathVariable Long productId,
+            @RequestHeader("Authorization") String idToken
+    ) {
         Product product = productService.findById(productId);
         productService.rent(product);
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{productId}")
-    public ResponseEntity<?> delete(@PathVariable Long productId) {
+    public ResponseEntity<?> delete(
+            @PathVariable Long productId,
+            @RequestHeader("Authorization") String idToken
+    ) {
         Product product = productService.findById(productId);
         productService.delete(product);
         return new ResponseEntity<>(HttpStatus.OK);

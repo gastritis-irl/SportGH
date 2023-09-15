@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
         return spec;
     }
 
-    private Specification<Product> filterByCategoriesAndSubcategories(
+    private Specification<Product> filterBySubcategories(
             String[] subcategoryNames, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
@@ -98,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        specification = filterByCategoriesAndSubcategories(subcategoryNames, specification);
+        specification = filterBySubcategories(subcategoryNames, specification);
         specification = filterByPrice(minPrice, maxPrice, specification);
         specification = filterByTextInNameOrDescription(textSearch, specification);
 

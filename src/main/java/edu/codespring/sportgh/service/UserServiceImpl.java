@@ -61,10 +61,4 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userId);
         log.info("User with ID {} deleted successfully.", userId);
     }
-
-    @Override
-    public void deleteAll() {
-        int rowsAffected = userRepository.deleteAllWithCount();
-        log.info("All users deleted successfully. Rows affected: {}.", rowsAffected);
-    }
 }

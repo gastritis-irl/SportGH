@@ -10,8 +10,6 @@ public interface SubCategoryService {
 
     void delete(Long subCategoryID);
 
-    void deleteAll();
-
     boolean existsById(Long subCategoryID);
 
     boolean existsByName(String subCategoryName);
@@ -20,11 +18,7 @@ public interface SubCategoryService {
 
     SubCategory findByName(String subCategoryName);
 
-    Long count();
-
     Collection<SubCategory> findAll();
-
-    Collection<SubCategory> findByIds(Collection<Long> subCategoryIDs);
 
     Collection<SubCategory> findByCategoryId(Long categoryId);
 }
