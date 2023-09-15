@@ -1,5 +1,7 @@
 @use '../../style-variables.scss' as *;
 
+$home-page-padding: 20px;
+
 $gap-small: 15px;
 $gap-medium: 30px;
 $gap-large: 50px;
@@ -20,6 +22,7 @@ $logo-small: 50px;
     display: flex;
     flex-direction: column;
     padding-inline: $main-page-padding;
+    padding-block: $home-page-padding;
     gap: $gap-medium;
 
     .home-page-info {
@@ -100,14 +103,13 @@ $logo-small: 50px;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
-                align-items: flex-end;
+                align-items: center;
                 column-gap: $navigation-column-gap;
                 row-gap: $gap-large;
                 flex-wrap: wrap;
 
                 @media (max-width: $breakpoint-medium) {
                     flex-direction: column;
-                    align-items: center;
                 }
 
                 .signup,
@@ -137,6 +139,7 @@ $logo-small: 50px;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                    align-items: center;
                     gap: $gap-medium;
 
                     .icon {
@@ -148,6 +151,7 @@ $logo-small: 50px;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                    align-items: center;
                     gap: $gap-medium;
 
                     .icon {
@@ -159,6 +163,7 @@ $logo-small: 50px;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                    align-items: center;
                     gap: $gap-medium;
 
                     .icon {

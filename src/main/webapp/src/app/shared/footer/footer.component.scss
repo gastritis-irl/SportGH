@@ -4,7 +4,7 @@ $item-gap: 10px;
 $footer-column-gap: 10%;
 $title-logo-size: 30px;
 $footer-top-gap: 30px;
-$footer-padding-and-margin: 50px;
+$footer-padding: 50px;
 $footer-bottom-padding: 30px;
 $border-width: 2px;
 
@@ -16,9 +16,8 @@ $border-width: 2px;
 
     .footer {
         width: 99.9%;
-        margin-top: $footer-padding-and-margin;
         padding-inline: $main-page-padding;
-        padding-top: $footer-padding-and-margin;
+        padding-top: $footer-padding;
         background-color: $color-neutral-1;
         border-color: $color-main-2;
         border-style: solid;
@@ -26,7 +25,7 @@ $border-width: 2px;
         color: $color-main-2;
         display: flex;
         flex-direction: column;
-        gap: $footer-padding-and-margin;
+        gap: $footer-padding;
 
         .footer-top {
             display: flex;
