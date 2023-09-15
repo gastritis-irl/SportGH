@@ -99,10 +99,18 @@ export class ProductComponent implements OnInit {
                     for (const paramName of this.filterParamNames) {
                         if (params[paramName] && params[paramName] != 0) {
                             if (paramName == 'Subcategory') {
-                                for (let i: number = 0; i < params[paramName].length; i++) {
+                                if (typeof params[paramName] == 'string') {
                                     for (let j: number = 0; j < this.subcategories.length; j++) {
-                                        if (this.subcategories[j].name == params[paramName][i]) {
+                                        if (this.subcategories[j].name == params[paramName]) {
                                             this.subcategorySelected[j] = true;
+                                        }
+                                    }
+                                } else {
+                                    for (let i: number = 0; i < params[paramName].length; i++) {
+                                        for (let j: number = 0; j < this.subcategories.length; j++) {
+                                            if (this.subcategories[j].name == params[paramName][i]) {
+                                                this.subcategorySelected[j] = true;
+                                            }
                                         }
                                     }
                                 }
