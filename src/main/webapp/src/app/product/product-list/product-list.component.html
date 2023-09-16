@@ -48,11 +48,13 @@
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
             <!-- Carousel for product images -->
-            <ngb-carousel *ngIf="product.imagesLoaded && product.imageDataUrls && product.imageDataUrls.length > 0">
-                <ng-template ngbSlide *ngFor="let imageUrl of product.imageDataUrls; let isLast = last">
-                    <div style="height: 200px; background-size: cover; background-image: url('{{imageUrl}}')">
-                        <div
-                            style="height: 100%; background: rgba(0, 0, 0, 0.5); color: white; text-align: center; display: flex; align-items: center; justify-content: center;">
+            <ngb-carousel 
+                *ngIf="product.imagesLoaded && product.imageDataUrls && product.imageDataUrls.length > 0"
+                [showNavigationArrows]="false"
+                [showNavigationIndicators]="false">
+                <ng-template ngbSlide *ngFor="let imageUrl of product.imageDataUrls; let isLast = last" class="carousel-item">
+                    <div style="height: 200px; background-size: cover; background-image: url('{{imageUrl}}'); border-radius: 5%;">
+                        <div class="carousel-item">
                             <div *ngIf="isLast">Last slide</div>
                         </div>
                     </div>

@@ -123,7 +123,6 @@ export class ProductEditComponent implements OnInit {
             next: (response: Image[]) => {
                 try {
                     this._imageIds = response.map(image => image.id).filter(id => id !== undefined) as number[];
-                    console.log('Image IDs loaded:', this._imageIds);
                 } catch (error) {
                     this.toastNotify.error(`Error loading images: ${error}`);
                 }
@@ -160,7 +159,6 @@ export class ProductEditComponent implements OnInit {
             {
                 next: (resp: Product): void => {
 
-                    this.toastNotify.info(`Uploading ${this.newImageFiles.length} images`);
                     if (this.newImageFiles.length > 0) {
                         if (resp.id) {
                             this.uploadImages(resp.id, this.newImageFiles);
@@ -182,13 +180,10 @@ export class ProductEditComponent implements OnInit {
     }
 
     uploadImages(productId: number, files: File[]): void {
-        this.toastNotify.info(`Uploading ${files.length} images`);
         files.forEach((file, index) => {
-            this.toastNotify.info(`Uploading image name: ${file.name} on product id: ${productId}`);
             if (file) {
                 this.imageService.uploadImage(file, productId).subscribe({
                     next: (image: Image) => {
-                        this.toastNotify.success(`Image ${index + 1} successfully uploaded`);
                         this.imageDatas[index] = image;
                     },
                     error: (error) => {
@@ -218,7 +213,6 @@ export class ProductEditComponent implements OnInit {
         );
 
         if (this.newImageFiles.length > 0) {
-            this.toastNotify.info(`Uploading ${this.newImageFiles.length} images for product id: ${this.product.id}`);
             if (this.product.id) {
                 this.uploadImages(this.product.id, this.newImageFiles);
             }

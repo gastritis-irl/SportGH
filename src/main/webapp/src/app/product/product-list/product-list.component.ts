@@ -44,28 +44,28 @@ export class ProductListComponent implements OnChanges {
 
     loadProductImages(products: Product[]): void {
         for (const product of products) {
-            this.toastNotify.info(`Loading images...`);
 
             if (!product.id) {
                 continue;
             }
             this.imageService.getImageFilesByProductId(product.id).subscribe({
                 next: (response: { name: string, data: Uint8Array }[]) => {
-                    this.toastNotify.info(`Images loaded.`);
-                    this.toastNotify.info(`Size of response: ${response.length}`);
+                    if (!response) {
+                        return;
+                    }
                     try {
                         product.imageDataUrls = [];
                         for (const imageDTO of response) {
                             if (!imageDTO.data) {
                                 continue;
                             }
-                            const base64String = btoa(new TextDecoder('iso-8859-1').decode(new Uint8Array(imageDTO.data)));
+
+                            const base64String = imageDTO.data;
                             const imageUrl = 'data:image/jpeg;base64,' + base64String;
                             product.imageDataUrls.push(imageUrl);
                         }
-                        product.imagesLoaded = true;  // Set imagesLoaded to true here
-                        this.toastNotify.success(`Images successfully loaded.`);
-                        this.cdr.markForCheck();  // Tell Angular to check for changes
+                        product.imagesLoaded = true;  
+                        this.cdr.markForCheck();
                     } catch (error) {
                         this.toastNotify.error(`Error loading images: ${error}`);
                     }

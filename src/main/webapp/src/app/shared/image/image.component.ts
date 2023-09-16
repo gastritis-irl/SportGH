@@ -127,18 +127,13 @@ export class ImageComponent implements OnInit {
     }
 
     loadImageFiles(ids: number[]): void {
-        // this.toastNotify.info(`Loading ${ids.length} images`);
         const nonZeroIds = ids.filter(id => id !== 0 && id !== undefined && id !== null);
-        // this.toastNotify.info(`Loading ${nonZeroIds.length} images from ${ids.length} ids with ${nonZeroIds.length>0} non-zero ids`);
         if (nonZeroIds.length > 0) {
 
-            this.toastNotify.info(`${nonZeroIds.length > 0} images`)
             const loadObservables = nonZeroIds.map(id => this.imageService.getImageFile(id));
-            this.toastNotify.info(`Loading ${nonZeroIds.length} images`);
 
             loadObservables.filter(observable => observable !== undefined && observable !== null);
 
-            this.toastNotify.info(`Loading ${loadObservables.length} images`);
             forkJoin(loadObservables).subscribe(blobs => {
                 blobs.forEach((blob, index) => {
                     const reader = new FileReader();
