@@ -13,7 +13,6 @@ import { ProductFilterComponent } from './product-filter/product-filter.componen
 import { TreeViewComponent } from '../shared/treeview/tree-view.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
 @NgModule({
     declarations: [
         ProductDetailsComponent,

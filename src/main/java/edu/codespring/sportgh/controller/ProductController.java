@@ -91,9 +91,6 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // log the number of images
-        log.info("Images: {}", imageService.findByProductId(productId).size());
-
         return save(productInDTO);
     }
 
@@ -112,8 +109,7 @@ public class ProductController {
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        // image info
-        log.info("Image info: {}", product.getImages().size());
+
         imageService.deleteByProductId(productId);
         productService.delete(product);
         return new ResponseEntity<>(HttpStatus.OK);

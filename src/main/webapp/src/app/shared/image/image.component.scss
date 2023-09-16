@@ -81,7 +81,7 @@ $image-height-percentage: 50%;
                 &:active:after {
                     background-color: #ff0000;
                 }
-                
+
             }
         }
 
@@ -101,9 +101,9 @@ $image-height-percentage: 50%;
             padding: 0.5px; // Adding a slight padding to avoid edge cropping
 
             img.uploaded-image {
-                width: 100%; // Make sure the image takes up the entire space of the container
-                height: 100%; // Make sure the image takes up the entire space of the container
-                object-fit: cover; // Updated to cover to show as much of the image as possible, potentially cropping a little
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
                 border-radius: math.div($border-radius, 2);
             }
         }

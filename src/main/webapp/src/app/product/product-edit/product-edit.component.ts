@@ -219,7 +219,6 @@ export class ProductEditComponent implements OnInit {
         }
     }
 
-
     cancelEdit(route: string): void {
         this.router.navigate([ route ])
             .catch((error): void => {
