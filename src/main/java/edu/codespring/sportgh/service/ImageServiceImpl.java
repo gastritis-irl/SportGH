@@ -110,7 +110,10 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void deleteByProductId(Long productId) {
-        imageRepository.deleteByProductId(productId);
+        Collection<Image> images = findByProductId(productId);
+        for (Image image : images) {
+            delete(image.getId());
+        }
     }
 
     @Override
