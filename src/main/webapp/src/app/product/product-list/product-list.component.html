@@ -7,7 +7,9 @@
             <div>
                 Order by
             </div>
-            <select class="order-by-select" [(ngModel)]="orderByElement" name="orderByElement"
+            <select class="order-by-select" 
+                [(ngModel)]="orderByElement" 
+                name="orderByElement"
                 (ngModelChange)="orderBy()">
                 <option [ngValue]="'name#ASC'">Name A-Z</option>
                 <option [ngValue]="'name#DESC'">Name Z-A</option>

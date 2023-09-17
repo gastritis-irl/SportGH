@@ -7,53 +7,81 @@
                 <div class="heading">Details</div>
                 <div>
                     <label class="form-part-label">Listing name</label>
-                    <input class="product-name form-part-input" type="text" name="name" [(ngModel)]="product.name"
-                        #name="ngModel">
+                    <input class="product-name form-part-input" 
+                            type="text" name="name" 
+                            [(ngModel)]="product.name"
+                            #name="ngModel">
                     <div class="form-check-label">
-                        <sgh-form-ch-lbl *ngIf="name.dirty || name.touched || buttonPushed" [fieldName]="'Listing name'"
-                            [required]="true" [length]="product.name?.length" [minlength]="4"
-                            [maxlength]="50"></sgh-form-ch-lbl>
+                        <sgh-form-ch-lbl *ngIf="name.dirty || name.touched || buttonPushed" 
+                            [fieldName]="'Listing name'"
+                            [required]="true" 
+                            [length]="product.name?.length" 
+                            [minlength]="4"
+                            [maxlength]="50">
+                        </sgh-form-ch-lbl>
                     </div>
                 </div>
                 <div>
                     <label class="form-part-label">Category</label>
-                    <select class="product-category form-part-input" [(ngModel)]="product.categoryId" name="categoryId"
-                        #category="ngModel" (change)="getSubcategoriesByCategoryId()">
+                    <select class="product-category form-part-input" 
+                            [(ngModel)]="product.categoryId" name="categoryId"
+                            #category="ngModel" 
+                            (change)="getSubcategoriesByCategoryId()">
                         <option class="product-category form-part-input" *ngFor="let category of categories"
-                            [ngValue]="category.id">{{category.name}}</option>
+                                [ngValue]="category.id">{{category.name}}</option>
                     </select>
                     <div class="form-check-label">
-                        <sgh-form-ch-lbl *ngIf="category.dirty || category.touched || buttonPushed"
-                            [fieldName]="'Category'" [required]="true" [length]="product.categoryId"></sgh-form-ch-lbl>
+                        <sgh-form-ch-lbl 
+                            *ngIf="category.dirty || category.touched || buttonPushed"
+                            [fieldName]="'Category'" 
+                            [required]="true" 
+                            [length]="product.categoryId">
+                        </sgh-form-ch-lbl>
                     </div>
                 </div>
                 <div>
                     <label class="form-part-label">Subcategory</label>
-                    <select class="product-subcategory form-part-input" [disabled]="subcategoryDropdownDisabled"
-                        [(ngModel)]="product.subCategoryId" name="subcategoryId" #subcategory="ngModel">
+                    <select class="product-subcategory form-part-input"
+                            [disabled]="subcategoryDropdownDisabled"
+                            [(ngModel)]="product.subCategoryId" 
+                            name="subcategoryId" 
+                            #subcategory="ngModel">
                         <option class="product-category form-part-input" *ngFor="let subcategory of subcategories"
-                            value="{{subcategory.id}}">{{subcategory.name}}</option>
+                                value="{{subcategory.id}}">{{subcategory.name}}</option>
                     </select>
                     <div class="form-check-label">
-                        <sgh-form-ch-lbl *ngIf="subcategory.dirty || subcategory.touched || buttonPushed"
-                            [fieldName]="'Subcategory'" [required]="true"
-                            [length]="product.subCategoryId"></sgh-form-ch-lbl>
+                        <sgh-form-ch-lbl 
+                            *ngIf="subcategory.dirty || subcategory.touched || buttonPushed"
+                            [fieldName]="'Subcategory'" 
+                            [required]="true"
+                            [length]="product.subCategoryId">
+                        </sgh-form-ch-lbl>
                     </div>
                 </div>
                 <div>
                     <label class="form-part-label">Description</label>
-                    <textarea class="product-description form-part-input" type="text" name="description"
-                        [(ngModel)]="product.description" #description="ngModel"></textarea>
+                    <textarea class="product-description form-part-input" 
+                            type="text"    
+                            name="description"
+                            [(ngModel)]="product.description" 
+                            #description="ngModel">
+                    </textarea>
                     <div class="form-check-label">
-                        <sgh-form-ch-lbl *ngIf="description.dirty || description.touched || buttonPushed"
-                            [fieldName]="'Description'" [length]="product.description?.length"
-                            [maxlength]="1000"></sgh-form-ch-lbl>
+                        <sgh-form-ch-lbl 
+                            *ngIf="description.dirty || description.touched || buttonPushed"
+                            [fieldName]="'Description'" 
+                            [length]="product.description?.length"
+                            [maxlength]="1000">
+                        </sgh-form-ch-lbl>
                     </div>
                 </div>
             </div>
             <div class="images form-part">
                 <div class="heading">Images</div>
-                <sgh-image (fileChange)="onFileChange($event)" [imageIds]="_imageIds" [allowMultiple]="true"
+                <sgh-image 
+                    (fileChange)="onFileChange($event)" 
+                    [imageIds]="_imageIds" 
+                    [allowMultiple]="true"
                     [mode]="modeParam">
                 </sgh-image>
             </div>
@@ -62,12 +90,18 @@
                 <div class="product-location">
                     <div>
                         <label class="form-part-label">Type address</label>
-                        <input class="product-address-text form-part-input" type="text" name="location"
-                            [(ngModel)]="product.location" #location="ngModel">
+                        <input class="product-address-text form-part-input" 
+                            type="text" 
+                            name="location"
+                            [(ngModel)]="product.location" 
+                            #location="ngModel">
                         <div class="form-check-label">
-                            <sgh-form-ch-lbl *ngIf="location.dirty || location.touched || buttonPushed"
-                                [fieldName]="'Location'" [length]="product.location?.length"
-                                [maxlength]="100"></sgh-form-ch-lbl>
+                            <sgh-form-ch-lbl 
+                                *ngIf="location.dirty || location.touched || buttonPushed"
+                                [fieldName]="'Location'" 
+                                [length]="product.location?.length"
+                                [maxlength]="100">
+                            </sgh-form-ch-lbl>
                         </div>
                     </div>
                     or<br>
@@ -102,12 +136,19 @@
                     </div>
                     <div>
                         <label class="form-part-label">Daily rent price</label>
-                        <input class="form-part-input product-price-d" type="number" name="price"
-                            [(ngModel)]="product.rentPrice" #daily="ngModel">
+                        <input class="form-part-input product-price-d" 
+                            type="number" name="price"
+                            [(ngModel)]="product.rentPrice" 
+                            #daily="ngModel">
                         <div class="form-check-label">
-                            <sgh-form-ch-lbl *ngIf="daily.dirty || daily.touched || buttonPushed"
-                                [fieldName]="'Daily rent price'" [fieldType]="'number'" [required]="true"
-                                [value]="product.rentPrice" [min]="0"></sgh-form-ch-lbl>
+                            <sgh-form-ch-lbl 
+                                *ngIf="daily.dirty || daily.touched || buttonPushed"
+                                [fieldName]="'Daily rent price'" 
+                                [fieldType]="'number'" 
+                                [required]="true"
+                                [value]="product.rentPrice" 
+                                [min]="0">
+                            </sgh-form-ch-lbl>
                         </div>
                     </div>
                     <div>
