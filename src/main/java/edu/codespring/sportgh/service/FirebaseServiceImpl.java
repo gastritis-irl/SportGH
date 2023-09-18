@@ -28,9 +28,9 @@ public class FirebaseServiceImpl implements FirebaseService {
         try {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             UserRecord userRecord = firebaseAuth.createUser(
-                new UserRecord.CreateRequest()
-                    .setEmail(user.getEmail())
-                    .setPassword(password)
+                    new UserRecord.CreateRequest()
+                            .setEmail(user.getEmail())
+                            .setPassword(password)
             );
             return userRecord.getUid();
 
@@ -68,6 +68,9 @@ public class FirebaseServiceImpl implements FirebaseService {
 
         // Extract the UID from the FirebaseToken
         String uid = firebaseToken.getUid();
+        if (uid == null) {
+            throw new BadRequestException("Missing UID from firebase token.");
+        }
 
         // Look up the user in your own database using the UID
         User user = userRepository.findByFirebaseUid(uid);
@@ -77,12 +80,12 @@ public class FirebaseServiceImpl implements FirebaseService {
 
         // Create a UserDetails object using Spring Security's User class
         UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
-            .roles(user.getRole())
-            .accountExpired(false)
-            .accountLocked(false)
-            .credentialsExpired(false)
-            .disabled(false)
-            .build();
+                .roles(user.getRole())
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
+                .build();
 
         // Create an Authentication object using the UserDetails
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -95,11 +98,11 @@ public class FirebaseServiceImpl implements FirebaseService {
             ListUsersPage listUsersPage = FirebaseAuth.getInstance().listUsers(null);
             for (ExportedUserRecord i : listUsersPage.getValues()) {
                 users.add(new User(
-                    i.getEmail(),
-                    i.getEmail(),
-                    i.getUid(),
-                    "USER",
-                    null)
+                        i.getEmail(),
+                        i.getEmail(),
+                        i.getUid(),
+                        "USER",
+                        null)
                 );
             }
         } catch (FirebaseAuthException e) {
