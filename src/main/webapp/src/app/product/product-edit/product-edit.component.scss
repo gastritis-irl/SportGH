@@ -1,79 +1,13 @@
 @use '../../../style-variables.scss' as *;
 
-$item-gap: 15px;
-$form-part-padding: 25px;
-$input-padding-left: 10px;
-$input-height: 30px;
-$font-weight-1: 700;
-$font-weight-2: 600;
-$description-textarea-height: 200px;
-
 .product-add-div {
-    background-color: $color-main-3;
-    padding-left: $main-page-padding;
-    padding-right: $main-page-padding;
-
-    .heading {
-        color: $color-main-1;
-        font-size: $size-h1;
-        font-family: $font-default;
-        font-weight: $font-weight-1;
-        text-align: start;
-    }
-
-    .main-title {
-        padding: $form-part-padding;
-    }
+    padding-inline: $main-page-padding;
 
     .general-data {
 
         .general-data-form {
-            gap: $item-gap;
-            display: flex;
-            flex-direction: column;
 
             .form-part {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                padding: $form-part-padding;
-                background-color: $color-neutral-1;
-                border-radius: $border-radius;
-                gap: $item-gap;
-
-                .form-part-label {
-                    color: $color-main-1;
-                    font-size: $size-h3;
-                    font-weight: $font-weight-2;
-                }
-
-                .form-part-input {
-                    width: 100%;
-                    height: $input-height;
-                    border-radius: $border-radius;
-                    border-style: solid;
-                    border-color: $color-main-3;
-                    padding-left: $input-padding-left;
-                    color: $color-main-1;
-
-                    &:disabled {
-                        background-color: $color-main-3;
-                    }
-
-                    &:enabled {
-                        background-color: $color-neutral-1;
-                    }
-
-                    &:focus {
-                        outline: none;
-                        border-color: $color-main-2;
-                    }
-                }
-
-                .form-check-label {
-                    font-size: $font-default;
-                    color: $toast-error-bg-color;
-                }
 
                 .product-pricing {
                     display: flex;
@@ -84,33 +18,6 @@ $description-textarea-height: 200px;
                         display: flex;
                         flex-direction: column;
                     }
-                }
-
-                .product-description {
-                    height: $description-textarea-height;
-                    resize: none;
-                }
-            }
-
-            .publish-btn-holder {
-                padding-bottom: $form-part-padding;
-                justify-content: center;
-
-                .publish-btn {
-                    width: 50%;
-                }
-            }
-
-            .edit-btn-holder {
-                padding-bottom: $form-part-padding;
-                justify-content: space-between;
-
-                .save-btn {
-                    width: 50%;
-                }
-
-                .cancel-btn {
-                    width: 50%;
                 }
             }
         }

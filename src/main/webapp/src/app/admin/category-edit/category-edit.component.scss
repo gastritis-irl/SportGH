@@ -1,0 +1,8 @@
+@use '../../../style-variables.scss' as *;
+
+$page-padding: 30px;
+
+.category-edit-holder {
+    padding-inline: $main-page-padding;
+    padding-bottom: $page-padding;
+}

@@ -6,6 +6,7 @@ import { CategoryListManageComponent } from './category-list-manage/category-lis
 import { HomeModule } from '../home/home.module';
 import { NgForOf, NgIf } from '@angular/common';
 import { ImageComponent } from "../shared/image/image.component";
+import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { ImageComponent } from "../shared/image/image.component";
         HomeModule,
         NgForOf,
         NgIf,
-        ImageComponent
+        ImageComponent,
+        FormCheckLabelComponent
     ]
 })
 export class AdminModule {

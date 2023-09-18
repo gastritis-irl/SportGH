@@ -1,10 +1,10 @@
 <div class="product-add-div">
-    <div class="heading main-title">{{editMode ? "Edit" : "Add"}} listing</div>
+    <div class="form-heading form-main-title">{{editMode ? "Edit" : "Add"}} listing</div>
     <div class="general-data">
         <div class="general-data-heading"></div>
         <form class="general-data-form" (ngSubmit)="clickHandlerFunction()">
             <div class="form-part">
-                <div class="heading">Details</div>
+                <div class="form-heading">Details</div>
                 <div>
                     <label class="form-part-label">Listing name</label>
                     <input class="product-name form-part-input"
@@ -63,7 +63,7 @@
                 </div>
                 <div>
                     <label class="form-part-label">Description</label>
-                    <textarea class="product-description form-part-input"
+                    <textarea class="description-area form-part-input"
                               type="text" name="description"
                               [(ngModel)]="product.description"
                               #description="ngModel"
@@ -79,13 +79,13 @@
                 </div>
             </div>
             <div class="images form-part">
-                <div class="heading">Images</div>
+                <div class="form-heading">Images</div>
                 <div class="product-images">
                     [IMAGE UPLOAD]
                 </div>
             </div>
             <div class="location form-part">
-                <div class="heading">Location</div>
+                <div class="form-heading">Location</div>
                 <div class="product-location">
                     <div>
                         <label class="form-part-label">Type address</label>
@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="availability form-part">
-                <div class="heading">Availability</div>
+                <div class="form-heading">Availability</div>
                 <div class="product-availability">
                     <div>
                         <label class="form-part-label">From</label>
@@ -126,7 +126,7 @@
                 </div>
             </div>
             <div class="pricing form-part">
-                <div class="heading">Pricing</div>
+                <div class="form-heading">Pricing</div>
                 <div class="product-pricing">
                     <div>
                         <label class="form-part-label">Hourly rent price</label>
