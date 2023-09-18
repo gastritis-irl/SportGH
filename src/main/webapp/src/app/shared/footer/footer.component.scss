@@ -9,6 +9,7 @@ $footer-bottom-padding: 30px;
 $border-width: 2px;
 
 .footer-holder {
+    margin-top: $main-padding-block;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -16,7 +17,7 @@ $border-width: 2px;
 
     .footer {
         width: 99.9%;
-        padding-inline: $main-page-padding;
+        padding-inline: $main-padding-inline;
         padding-top: $footer-padding;
         background-color: $color-neutral-1;
         border-color: $color-main-2;

@@ -10,8 +10,7 @@ $item-max-width: 250px;
 
 .category-list-manage-holder {
     color: $color-main-1;
-    padding-inline: $main-page-padding;
-    padding-block: $page-padding;
+    padding-inline: $main-padding-inline;
 
     .category-list-manage {
         padding: $page-padding;

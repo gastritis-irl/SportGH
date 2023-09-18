@@ -31,7 +31,7 @@ $animation-duration: 3s;
 $animation-translation: -20px;
 
 .category-list-holder {
-    padding-left: 10%;
+    padding-inline: $main-padding-inline;
 
     .category-heading {
         color: $color-main-1;

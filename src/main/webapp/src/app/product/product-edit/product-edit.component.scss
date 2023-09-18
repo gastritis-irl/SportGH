@@ -1,7 +1,7 @@
 @use '../../../style-variables.scss' as *;
 
 .product-add-div {
-    padding-inline: $main-page-padding;
+    padding-inline: $main-padding-inline;
 
     .product-pricing {
         display: flex;
