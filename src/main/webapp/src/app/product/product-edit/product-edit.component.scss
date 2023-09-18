@@ -3,23 +3,14 @@
 .product-add-div {
     padding-inline: $main-page-padding;
 
-    .general-data {
+    .product-pricing {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
 
-        .general-data-form {
-
-            .form-part {
-
-                .product-pricing {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-
-                    @media (max-width: 900px) {
-                        display: flex;
-                        flex-direction: column;
-                    }
-                }
-            }
+        @media (max-width: 900px) {
+            display: flex;
+            flex-direction: column;
         }
     }
 }
