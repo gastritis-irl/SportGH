@@ -1,3 +1,11 @@
+<ng-template #deletePopoverContent>
+    <sgh-popover-delete
+            [deleteData]="[]"
+            (deleteEvent)="deleteCategory($event)"
+    >
+    </sgh-popover-delete>
+</ng-template>
+
 <div class="category-list-manage-holder">
     <div class="category-list-manage">
         <div class="title">
@@ -15,11 +23,10 @@
                     <img class="image" src="{{category.imageDataUrl}}" alt="Category image">
                 </div>
                 <div class="row-item">
-                    <div class="buttons">
-                        <div class="button-default button-primary" (click)="deleteCategory(category.id,i)">
-                            Delete
-                        </div>
-                    </div>
+                    <sgh-popover-delete
+                            [deleteData]="[category.id?category.id:0, i]"
+                            (deleteEvent)="deleteCategory($event)"
+                    ></sgh-popover-delete>
                     <div class="buttons">
                         <div class="button-default button-secondary" routerLink="/admin/categories/{{category.id}}">
                             Edit
