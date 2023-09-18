@@ -13,7 +13,7 @@ import { ImageService } from '../../shared/image/image.service';
 export class UserDetailsComponent implements OnInit {
 
     username: string = '';
-    user: User = {};
+    user: User = { id: undefined, username: '', email: '', phoneNumber: '', address: '', imageId: 0, imageDataUrl: undefined };
     image: string = '';
 
     constructor(

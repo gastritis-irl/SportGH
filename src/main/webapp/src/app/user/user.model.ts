@@ -12,6 +12,7 @@ export interface User {
     city?: string;
     country?: string;
     products?: Product[];
-    imageId?: number;
+    imageId: number;
+    imageDataUrl?: string;
     role?: string;
 }

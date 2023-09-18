@@ -41,6 +41,10 @@ public class ImageController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
+        if (imageId == 0) {
+            return ResponseEntity.ok().body(null);
+        }
+
         Path imagePath = Paths.get(image.getUrl(), image.getName());
         Resource resource = new FileSystemResource(imagePath);
 

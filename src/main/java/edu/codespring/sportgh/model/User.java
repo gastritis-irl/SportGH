@@ -52,7 +52,7 @@ public class User extends BaseEntity {
 
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn(name = "image_id")
+    @JoinColumn(name = "image_id")
     private Image image;
 
     @ToString.Exclude

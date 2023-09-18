@@ -22,6 +22,11 @@
                     <input type="text" class="form-control" id="address" name="address" [(ngModel)]="user.address"
                         required />
                 </div>
+                <!-- Image upload -->
+                <div class="form-group">
+                    <label for="image">Profile Image ("upload image")</label>
+                    <sgh-image [imageIds]="[user.imageId]" [allowMultiple]="false" (fileChange)="onFileChange($event)" [mode]="'edit'"></sgh-image>
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

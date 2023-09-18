@@ -8,6 +8,9 @@ import { ImageService } from '../../shared/image/image.service';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
+import { ViewChild } from '@angular/core';
+import { ImageComponent } from '../../shared/image/image.component';
+import { Image } from '../../shared/image/image.model';
 
 
 @Component({
@@ -17,50 +20,81 @@ import { User } from '../user.model';
 })
 export class UserEditComponent implements OnInit {
 
-        username: string = '';
-        user: User = {};
-        imageFile?: File;
+    @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
 
-        constructor(private userService: UserService, private toastNotify: ToastrService, private route: ActivatedRoute, private imageService: ImageService) {
+    username: string = '';
+    user: User = { id: undefined, username: '', email: '', phoneNumber: '', address: '', imageId: 0, imageDataUrl: undefined };
+    newImageFile?: File;
+
+    constructor(private userService: UserService, private toastNotify: ToastrService, private route: ActivatedRoute, private imageService: ImageService) {
+    }
+
+    ngOnInit(): void {
+        this.route.params.subscribe(
+            {
+                next: (params: Params): void => {
+                    this.loadData(params['username']);
+                },
+                error: (error): void => {
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
+                }
+            }
+        );
+    }
+
+    loadData(username: string | undefined): void {
+        if (username) {
+            this.userService.getByUsername(username).subscribe({
+                next: (data: User): void => {
+                    this.user = data;
+                },
+                error: (error): void => {
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
+                }
+            });
+        }
+    }
+
+    onFileChange(files: File[]): void {
+        if (files.length > 0) {
+            this.newImageFile = files[0];
+        }
+    }
+
+    updateUser(): void {
+        if (!this.user.id) {
+            this.toastNotify.warning('User not found');
+            return;
         }
 
-        ngOnInit(): void {
-            this.route.params.subscribe(
+        if (this.newImageFile) {
+            this.imageService.uploadImage(this.newImageFile).subscribe(
                 {
-                    next: (params: Params): void => {
-                        this.loadData(params['username']);
+                    next: (image: Image) => {
+                        if (image.id) {
+                            this.user.imageId = image.id;
+                        }
+                        this.updateUserData();
                     },
-                    error: (error): void => {
+                    error: (error) => {
                         console.error(error);
-                        this.toastNotify.error(`Error fetching data`);
+                        this.toastNotify.error(`Error uploading new image ${error.error}`);
                     }
                 }
             );
+        } else {
+            this.updateUserData();
         }
+    }
 
-        loadData(username: string | undefined): void {
-            if (username) {
-                this.userService.getByUsername(username).subscribe({
-                    next: (data: User): void => {
-                        this.user = data;
-                    },
-                    error: (error): void => {
-                        console.error(error);
-                        this.toastNotify.error(`Error fetching data`);
-                    }
-                });
-            }
-        }
-
-        updateUser(): void {
-            if (!this.user.id) {
-                this.toastNotify.warning('User not found');
-                return;
-            }
-
+    updateUserData(): void {
+        if (this.user.id) {
             this.userService.update(this.user.id, this.user).subscribe(() => {
                 this.toastNotify.success('User updated successfully');
             });
+        }
     }
 
     onSubmit(): void {
