@@ -79,9 +79,8 @@ public class FirebaseServiceImpl implements FirebaseService {
             throw new BadRequestException("User not found with Firebase UID: " + uid);
         }
 
-        // Create an Authentication object using the UserDetails
         return new UsernamePasswordAuthenticationToken(
-            user.getEmail(),
+            user,
             firebaseToken,
             Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
         );

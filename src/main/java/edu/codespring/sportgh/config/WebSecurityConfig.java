@@ -39,13 +39,14 @@ public class WebSecurityConfig {
                 ).permitAll()
                 // users
                 .requestMatchers(HttpMethod.GET, "/api/users/[0-9]+").hasRole("USER")
+                .requestMatchers(HttpMethod.PUT, "/api/users/[0-9]+").hasRole("USER")
                 // products
                 .requestMatchers("/api/products/**").hasRole("USER")
                 // images
                 .requestMatchers("/api/images/**").hasRole("USER")
                 // rent
                 .requestMatchers("/api/rent/**").hasRole("USER")
-                // else -> deny
+                // admin
                 .requestMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )

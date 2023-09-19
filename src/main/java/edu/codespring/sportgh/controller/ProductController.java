@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,32 +31,32 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
-            @RequestParam("orderBy") Optional<String> orderBy,
-            @RequestParam("direction") Optional<String> direction,
-            @RequestParam("pageNumber") Optional<Integer> pageNumber,
-            @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
-            @RequestParam("MinPrice") Optional<Double> minPrice,
-            @RequestParam("MaxPrice") Optional<Double> maxPrice,
-            @RequestParam("TextSearch") Optional<String> textSearch
+        @RequestParam("orderBy") Optional<String> orderBy,
+        @RequestParam("direction") Optional<String> direction,
+        @RequestParam("pageNumber") Optional<Integer> pageNumber,
+        @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
+        @RequestParam("MinPrice") Optional<Double> minPrice,
+        @RequestParam("MaxPrice") Optional<Double> maxPrice,
+        @RequestParam("TextSearch") Optional<String> textSearch
     ) {
         return new ResponseEntity<>(
-                productService.findPageByParams(
-                        orderBy.orElse(null),
-                        direction.orElse(null),
-                        pageNumber.orElse(1),
-                        subcategoryNames.orElse(null),
-                        minPrice.orElse(null),
-                        maxPrice.orElse(null),
-                        textSearch.orElse(null)
-                ),
-                HttpStatus.OK
+            productService.findPageByParams(
+                orderBy.orElse(null),
+                direction.orElse(null),
+                pageNumber.orElse(1),
+                subcategoryNames.orElse(null),
+                minPrice.orElse(null),
+                maxPrice.orElse(null),
+                textSearch.orElse(null)
+            ),
+            HttpStatus.OK
         );
 
     }
 
     @GetMapping(path = "/{productId}")
     public ResponseEntity<ProductOutDTO> findById(
-            @PathVariable Long productId
+        @PathVariable Long productId
     ) {
         Product product = productService.findById(productId);
         if (product == null) {
@@ -65,7 +66,7 @@ public class ProductController {
     }
 
     private ResponseEntity<ProductOutDTO> save(
-            @Valid ProductInDTO productInDTO
+        @Valid ProductInDTO productInDTO
     ) {
         Product product = productMapper.dtoToProduct(productInDTO);
         productService.save(product);
@@ -75,7 +76,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductOutDTO> create(
-            @RequestBody @Valid ProductInDTO productInDTO
+        @RequestBody @Valid ProductInDTO productInDTO
     ) {
         log.info("Creating product with name: {}.", productInDTO.getName());
         if (productInDTO.getUserId() != null) {
@@ -87,8 +88,8 @@ public class ProductController {
 
     @PutMapping(path = "/{productId}")
     public ResponseEntity<ProductOutDTO> update(
-            @RequestBody @Valid ProductInDTO productInDTO,
-            @PathVariable Long productId
+        @RequestBody @Valid ProductInDTO productInDTO,
+        @PathVariable Long productId
     ) {
         log.info("Updating product with ID {}.", productId);
         if (!Objects.equals(productId, productInDTO.getId())) {
@@ -97,12 +98,19 @@ public class ProductController {
         if (!productService.existsById(productId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals(
+            productMapper.dtoToProduct(productInDTO).getUser())
+            && !"ADMIN".equals(productMapper.dtoToProduct(productInDTO).getUser().getRole())
+        ) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         return save(productInDTO);
     }
 
     @PutMapping(path = "/{productId}/rent")
     public ResponseEntity<ProductOutDTO> rent(
-            @PathVariable Long productId
+        @PathVariable Long productId
     ) {
         Product product = productService.findById(productId);
         productService.rent(product);
@@ -111,9 +119,15 @@ public class ProductController {
 
     @DeleteMapping(path = "/{productId}")
     public ResponseEntity<?> delete(
-            @PathVariable Long productId
+        @PathVariable Long productId
     ) {
         Product product = productService.findById(productId);
+
+        if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals(product.getUser())
+            && !"ADMIN".equals(product.getUser().getRole())) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         productService.delete(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }
