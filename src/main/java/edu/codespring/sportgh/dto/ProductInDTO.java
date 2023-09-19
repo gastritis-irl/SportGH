@@ -13,7 +13,7 @@ public class ProductInDTO {
     @Min(value = 1, message = "ProductId must be greater than 1")
     private Long id;
 
-    private boolean available;
+    private boolean publicContact;
 
     @Size(min = 4, max = 50, message = "Product name must be between 4-50 characters")
     @NotNull(message = "Product name can't be empty.")

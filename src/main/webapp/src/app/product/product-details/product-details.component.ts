@@ -4,7 +4,6 @@ import { ProductService } from '../product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../user/user.model';
-import { UserService } from '../../user/user.service';
 import { ViewportScroller } from '@angular/common';
 
 @Component({
@@ -15,13 +14,11 @@ import { ViewportScroller } from '@angular/common';
 export class ProductDetailsComponent implements OnInit {
 
     product: Product = {};
-    productLender: User = {};
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
 
     constructor(
         private productService: ProductService,
-        private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
         private viewPortScroller: ViewportScroller,
@@ -48,24 +45,10 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (data: Product): void => {
                     this.product = data;
-                    this.loadProductLender(this.product.userId ? this.product.userId : 0);
                 },
                 error: (error): void => {
                     console.error(error);
                     this.toastNotify.error(`Error fetching data`);
-                }
-            }
-        );
-    }
-
-    loadProductLender(userId: number): void {
-        this.userService.getById(userId).subscribe(
-            {
-                next: (resp: User): void => {
-                    this.productLender = resp;
-                },
-                error: (): void => {
-                    this.toastNotify.error(`Error loading lender info`);
                 }
             }
         );
@@ -107,18 +90,27 @@ export class ProductDetailsComponent implements OnInit {
         this.viewPortScroller.scrollToAnchor(elementId);
     }
 
-    rentProduct(): void {
-        this.productService.rent(this.product.id ? this.product.id : 0).subscribe(
-            {
-                next: (data: Product): void => {
-                    this.product = data;
-                    this.toastNotify.success(`Product successfully rented`);
+    getOwnerInfo(): void {
+        if (this.product.publicContact) {
+            // load modal with owner's data
+            this.productService.getOwnerInfo(this.product).subscribe({
+                next: (user: User): void => {
+                    this.toastNotify.success(`Owner info: ${user.username}`);
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error renting product: ${error.error}`);
+                    this.toastNotify.error(error.error);
                 }
-            }
-        );
+            });
+        } else {
+            this.productService.sendContactRequest(this.product).subscribe({
+                next: (): void => {
+                    this.toastNotify.info('Request sent successfully.');
+                },
+                error: (error): void => {
+                    console.error(error);
+                }
+            });
+        }
     }
 
     deleteProduct(): void {

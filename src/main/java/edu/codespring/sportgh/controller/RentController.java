@@ -28,7 +28,7 @@ public class RentController {
     private final UserMapper userMapper;
     private final RentService rentService;
 
-    @PutMapping
+    @PostMapping
     public ResponseEntity<UserOutDTO> rentRequest(
         // @RequestHeader("Authorization") String idToken,
         @RequestParam Optional<Long> productId
@@ -88,7 +88,7 @@ public class RentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/answer")
+    @PutMapping
     public ResponseEntity<?> rentRequestAnswer(
         // @RequestHeader("Authorization") String idToken,
         @RequestParam Optional<Long> productId,

@@ -31,8 +31,6 @@
                         </button>
                     </div>
                 </div>
-                <div *ngIf="product.available" class="product-avail-1 heading">Available</div>
-                <div *ngIf="!product.available" class="product-avail-0 heading">Currently unavailable</div>
             </div>
         </div>
 
@@ -70,7 +68,7 @@
                     </div>
 
                     <div class="rent-button-holder buttons">
-                        <button class="rent-button button-default button-primary" (click)="rentProduct()">Rent</button>
+                        <button class="rent-button button-default button-primary" (click)="getOwnerInfo()">Get Contact</button>
                     </div>
                 </div>
             </div>
@@ -88,13 +86,6 @@
             <div class="heading">Description</div>
             <div class="product-description-content">
                 {{product.description}}
-            </div>
-        </div>
-
-        <div class="product-lender-description product-details-item" id="prod-lend-desc">
-            <div class="heading">About lender</div>
-            <div class="product-lender-description-content">
-                {{productLender.username}}
             </div>
         </div>
 

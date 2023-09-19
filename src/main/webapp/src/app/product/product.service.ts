@@ -4,6 +4,7 @@ import { AppService } from '../app.service';
 import { Product } from './product.model';
 import { ProductPage } from './product-page.model';
 import { Params } from '@angular/router';
+import { User } from '../user/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -35,8 +36,16 @@ export class ProductService extends AppService {
         return this.http.delete(url);
     }
 
-    rent(productId: number): Observable<Product> {
-        const url: string = `${this.baseUrl}/products/${productId}/rent`;
-        return this.http.put(url, {});  // body: renter?
+    getOwnerInfo(product: Product): Observable<User> {
+        const url: string = `${this.baseUrl}/users/${product.userId}`;
+        return this.http.get<User>(url);
+    }
+
+    sendContactRequest(product: Product): Observable<void> {
+        const url: string = `${this.baseUrl}/rent`;
+        const params: Params = {
+            productId: product.id
+        };
+        return this.http.post<void>(url, null, { params: params });
     }
 }

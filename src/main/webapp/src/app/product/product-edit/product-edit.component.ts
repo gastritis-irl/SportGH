@@ -109,7 +109,7 @@ export class ProductEditComponent implements OnInit {
     createProduct(): void {
         this.buttonPushed = true;
         this.product.userId = 1;
-        this.product.available = true;
+        this.product.publicContact = true;
 
         this.productService.create(this.product).subscribe(
             {
