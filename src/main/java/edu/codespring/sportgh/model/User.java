@@ -38,8 +38,5 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "renter")
     private Set<RentRequest> myRequests;
-
-    @OneToMany(mappedBy = "lender")
-    private Set<RentRequest> requestsForMe;
 }
 

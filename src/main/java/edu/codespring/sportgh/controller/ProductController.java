@@ -28,25 +28,25 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
-            @RequestParam("orderBy") Optional<String> orderBy,
-            @RequestParam("direction") Optional<String> direction,
-            @RequestParam("pageNumber") Optional<Integer> pageNumber,
-            @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
-            @RequestParam("MinPrice") Optional<Double> minPrice,
-            @RequestParam("MaxPrice") Optional<Double> maxPrice,
-            @RequestParam("TextSearch") Optional<String> textSearch
+        @RequestParam("orderBy") Optional<String> orderBy,
+        @RequestParam("direction") Optional<String> direction,
+        @RequestParam("pageNumber") Optional<Integer> pageNumber,
+        @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
+        @RequestParam("MinPrice") Optional<Double> minPrice,
+        @RequestParam("MaxPrice") Optional<Double> maxPrice,
+        @RequestParam("TextSearch") Optional<String> textSearch
     ) {
         return new ResponseEntity<>(
-                productService.findPageByParams(
-                        orderBy.orElse(null),
-                        direction.orElse(null),
-                        pageNumber.orElse(1),
-                        subcategoryNames.orElse(null),
-                        minPrice.orElse(null),
-                        maxPrice.orElse(null),
-                        textSearch.orElse(null)
-                ),
-                HttpStatus.OK
+            productService.findPageByParams(
+                orderBy.orElse(null),
+                direction.orElse(null),
+                pageNumber.orElse(1),
+                subcategoryNames.orElse(null),
+                minPrice.orElse(null),
+                maxPrice.orElse(null),
+                textSearch.orElse(null)
+            ),
+            HttpStatus.OK
         );
 
     }
@@ -87,13 +87,6 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return save(productInDTO);
-    }
-
-    @PutMapping(path = "/{productId}/rent")
-    public ResponseEntity<ProductOutDTO> rent(@PathVariable Long productId) {
-        Product product = productService.findById(productId);
-        productService.rent(product);
-        return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{productId}")

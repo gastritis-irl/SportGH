@@ -24,7 +24,5 @@ public interface ProductService {
 
     void save(Product product);
 
-    void rent(Product product);
-
     void delete(Product product);
 }

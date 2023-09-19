@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    private boolean available = true;
+    private boolean publicContact = true;
 
     @Column(length = 50)
     private String name;

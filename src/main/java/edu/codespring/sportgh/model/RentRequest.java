@@ -17,10 +17,6 @@ public class RentRequest extends BaseEntity {
     private User renter;
 
     @ManyToOne
-    @JoinColumn(name = "lender_id")
-    private User lender;
-
-    @ManyToOne
     private Product product;
 
     // { active, closed, accepted, declined }
