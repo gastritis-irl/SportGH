@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,8 +29,41 @@ public class RentController {
     private final UserMapper userMapper;
     private final RentService rentService;
 
+    @GetMapping
+    public ResponseEntity<?> getRentRequestsByProductOrOwner(
+        // @RequestHeader("Authorization") String idToken,
+        @RequestParam("productId") Optional<Long> productId,
+        @RequestParam("ownerId") Optional<Long> ownerId
+    ) {
+        if (productId.isPresent() && ownerId.isPresent() || productId.isEmpty() && ownerId.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Long userId = 1L;   // = idToken.userId
+        // if (userId == null) {
+        //     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        // }
+        if (productId.isPresent()) {
+            Product product = productService.findById(productId.get());
+            if (product == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            if (!product.getUser().getId().equals(userId)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
+            Collection<RentRequest> rentRequests;
+        } else {
+            if (!userId.equals(ownerId.get())) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping
-    public ResponseEntity<UserOutDTO> rentRequest(
+    public ResponseEntity<UserOutDTO> createRentRequest(
         // @RequestHeader("Authorization") String idToken,
         @RequestParam Optional<Long> productId
     ) {
@@ -56,7 +90,7 @@ public class RentController {
         }
     }
 
-    private ResponseEntity<?> rentRequestAnswer(
+    private ResponseEntity<?> answerRequest(
         Long ownerId,
         Optional<Long> productId,
         Optional<Long> renterId,
@@ -84,13 +118,13 @@ public class RentController {
     }
 
     @PutMapping
-    public ResponseEntity<?> rentRequestAnswer(
+    public ResponseEntity<?> answerRentRequest(
         // @RequestHeader("Authorization") String idToken,
         @RequestParam Optional<Long> productId,
         @RequestParam Optional<Long> renterId,
         @RequestParam Optional<String> answer
     ) {
         Long userId = 1L;   // = idToken.decode.userId
-        return rentRequestAnswer(userId, productId, renterId, answer);
+        return answerRequest(userId, productId, renterId, answer);
     }
 }
