@@ -57,6 +57,11 @@ export class NavbarComponent implements OnInit {
         return !!this.getDecodedIdToken()?.user_id;
     }
 
+    checkIfAdmin(): boolean {
+        return false;
+        // return this.getDecodedIdToken().role=='admin';
+    }
+
     getDecodedIdToken(): IdToken | null {
         return this.fbIdTokenService.getDecodedIdToken();
     }

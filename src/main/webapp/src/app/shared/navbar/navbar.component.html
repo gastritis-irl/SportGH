@@ -39,7 +39,7 @@
             <div *ngIf="checkIfLoggedIn()" class="nav-content-link">
                 <a routerLink="/products/new">Add new listing</a>
             </div>
-            <div *ngIf="checkIfLoggedIn()" class="nav-content-link">
+            <div *ngIf="checkIfAdmin()" class="nav-content-link">
                 <a routerLink="/admin/categories">Manage categories</a>
             </div>
         </div>
