@@ -78,12 +78,10 @@
             </div>
             <div class="images form-part">
                 <div class="heading">Images</div>
-                <sgh-image 
-                    (fileChange)="onFileChange($event)" 
-                    [imageIds]="_imageIds" 
-                    [allowMultiple]="true"
-                    [mode]="modeParam">
+                <sgh-image (fileChange)="onFileChange($event)" (fileRemoved)="onFileRemoved($event)" [imageIds]="_imageIds"
+                    [allowMultiple]="true" [mode]="modeParam">
                 </sgh-image>
+
             </div>
             <div class="location form-part">
                 <div class="heading">Location</div>

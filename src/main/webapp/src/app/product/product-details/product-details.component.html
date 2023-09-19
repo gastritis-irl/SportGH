@@ -58,7 +58,7 @@
                     </ng-template>
                 </ngb-carousel>
             
-                <ng-template #defaultImage *ngIf="!(product.imageDataUrls && product.imageDataUrls.length > 0)">
+                <ng-template #defaultImage *ngIf="!(product.imageDataUrls && product.imageDataUrls.length==0)">
                     <img src="https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png" alt="Default Image">
                 </ng-template>
             </div>

@@ -7,4 +7,5 @@ export interface Image {
     imageDataUrl?: string;
     productId?: number;
     data?: Uint8Array;
+    isUploaded?: boolean;
 }

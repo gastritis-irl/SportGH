@@ -62,10 +62,13 @@ export class ProductEditComponent implements OnInit {
     }
 
     onFileChange(files: File[]): void {
-        if (files.length > 0) {
-            this.newImageFiles = files;
-        }
+        this.newImageFiles = files;
     }
+
+    onFileRemoved(file: File): void {
+        this.newImageFiles = this.newImageFiles.filter(f => f !== file);
+    }
+
 
     loadDataByParam(): void {
         this.route.params.subscribe(
@@ -117,7 +120,7 @@ export class ProductEditComponent implements OnInit {
         }
     }
 
-    
+
     loadProductImageIds(productId: number): void {
         this.imageService.getImageIdsByProductId(productId).subscribe({
             next: (response: Image[]) => {

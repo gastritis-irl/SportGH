@@ -98,6 +98,11 @@ $icon-size: 50px;
                 display: flex;
                 gap: $item-gap-1;
                 margin-right: $item-gap-1;
+                flex-direction: row;
+
+                @media(max-width: $breakpoint-large) {
+                    flex-direction: column;
+                }
 
                 .image-thumbnails {
                     display: flex;
@@ -107,6 +112,16 @@ $icon-size: 50px;
                     overflow-x: hidden;
                     opacity: 0.5;
                     margin-right: 5%;
+
+                    @media(max-width: $breakpoint-large) {
+                        flex-direction: row;
+                        max-width: 600px;
+                        max-height: 100px;
+                        margin-right: 0;
+                        overflow-y: hidden;
+                        overflow-x: hidden;
+                        display: flex;
+                    }
 
                     .thumbnail {
                         width: 100px; 
