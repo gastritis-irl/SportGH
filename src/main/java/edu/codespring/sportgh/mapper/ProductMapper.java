@@ -4,7 +4,6 @@ import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.model.Product;
-import edu.codespring.sportgh.service.ImageService;
 import edu.codespring.sportgh.service.SubCategoryService;
 import edu.codespring.sportgh.service.UserService;
 import org.mapstruct.AfterMapping;
@@ -22,8 +21,6 @@ public abstract class ProductMapper {
     protected SubCategoryService subCategoryService;
     @Autowired
     protected UserService userService;
-    @Autowired
-    protected ImageService imageService;
 
     @Mapping(source = "subCategory.id", target = "subCategoryId")
     @Mapping(source = "subCategory.name", target = "subCategoryName")

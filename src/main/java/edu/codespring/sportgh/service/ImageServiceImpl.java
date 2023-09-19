@@ -52,7 +52,6 @@ public class ImageServiceImpl implements ImageService {
             image.setProduct(product);
             product.addImage(image);
             save(image);
-            productService.addImage(productId, image);
         }
         log.info("Creating new image with ID {}.", image.getId());
         return image;
