@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -38,8 +39,12 @@ public class WebSecurityConfig {
                     "/api/images/**"
                 ).permitAll()
                 // users
-                .requestMatchers(HttpMethod.GET, "/api/users/[0-9]+").hasRole("USER")
-                .requestMatchers(HttpMethod.PUT, "/api/users/[0-9]+").hasRole("USER")
+                .requestMatchers(
+                    customRequestMatcher(HttpMethod.GET, "/api/users/[0-9]+")
+                ).hasRole("USER")
+                .requestMatchers(
+                    customRequestMatcher(HttpMethod.PUT, "/api/users/[0-9]+")
+                ).hasRole("USER")
                 // products
                 .requestMatchers("/api/products/**").hasRole("USER")
                 // images
@@ -57,5 +62,9 @@ public class WebSecurityConfig {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(fbAuthProvider);
+    }
+
+    private RegexRequestMatcher customRequestMatcher(HttpMethod method, String pattern) {
+        return new RegexRequestMatcher(pattern, method.name());
     }
 }

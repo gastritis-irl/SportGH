@@ -7,6 +7,7 @@ import edu.codespring.sportgh.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -34,6 +35,13 @@ public class UserController {
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
+        if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals(user)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        // check if request is not accepted
+        // if request-not-accepted -> unauthorized
+
         return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
