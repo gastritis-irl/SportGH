@@ -123,15 +123,15 @@ export class ProductEditComponent implements OnInit {
 
     loadProductImageIds(productId: number): void {
         this.imageService.getImageIdsByProductId(productId).subscribe({
-            next: (response: Image[]) => {
+            next: (response: Image[]): void => {
                 try {
                     this._imageIds = response.map(image => image.id).filter(id => id !== undefined) as number[];
                 } catch (error) {
                     this.toastNotify.error(`Error loading images: ${error}`);
                 }
             },
-            error: (error) => {
-                this.toastNotify.error(`Error fetching images`, error);
+            error: (): void => {
+                this.toastNotify.warning(`Error fetching images or no images found`);
             }
         });
     }

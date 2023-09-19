@@ -99,27 +99,31 @@ $icon-size: 50px;
                 gap: $item-gap-1;
                 margin-right: $item-gap-1;
                 flex-direction: row;
+                align-items: flex-start; 
 
-                img{
+                img {
                     max-height: 400px;
                     width: 100%;
                     height: 100%;
                     object-fit: contain;
                     border-radius: $border-radius;
+                    cursor: pointer;
                 }
 
                 @media(max-width: $breakpoint-large) {
                     flex-direction: column;
+                    align-items: center; 
                 }
 
                 .image-thumbnails {
                     display: flex;
                     flex-direction: column;
-                    max-height: 400px; 
+                    max-height: 400px;
                     overflow-y: auto;
                     overflow-x: hidden;
                     opacity: 0.5;
                     margin-right: 5%;
+                    flex-shrink: 0; 
 
                     @media(max-width: $breakpoint-large) {
                         flex-direction: row;
@@ -132,8 +136,8 @@ $icon-size: 50px;
                     }
 
                     .thumbnail {
-                        width: 100px; 
-                        height: 100px; 
+                        width: 100px;
+                        height: 100px;
                         margin-bottom: 10px;
 
                         img {
@@ -147,33 +151,29 @@ $icon-size: 50px;
 
                 .ngb-carousel {
                     flex-grow: 1;
+                    flex-shrink: 1;
+                    max-width: calc(100% - 100px - 5%); 
                 }
             }
 
             .carousel {
                 display: flex;
                 flex-direction: row;
-                overflow-x: auto;
-                overflow-y: hidden;
                 scroll-snap-type: x mandatory;
                 scroll-behavior: smooth;
                 -webkit-overflow-scrolling: touch;
-                gap: $item-gap-1;
                 padding-bottom: $item-padding;
                 color: $color-main-1;
 
                 .carousel-item {
-                    flex: none;
+                    flex: 0 0 auto;
                     scroll-snap-align: start;
-                    // Adjusting width to take up necessary space only
                     width: 600px;
                     height: fit-content;
                     background-color: $color-neutral-1;
                     border: $border;
                     border-radius: $border-radius;
-                    padding: $item-padding;
                     display: flex;
-                    align-items: center;
                     justify-content: center;
 
                     img {
