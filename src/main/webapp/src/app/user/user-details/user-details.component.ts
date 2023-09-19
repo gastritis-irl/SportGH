@@ -4,6 +4,7 @@ import { User } from '../user.model';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ImageService } from '../../shared/image/image.service';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
     selector: 'sgh-user',
@@ -20,8 +21,13 @@ export class UserDetailsComponent implements OnInit {
         private userService: UserService,
         private toastNotify: ToastrService,
         private route: ActivatedRoute,
-        private imageService: ImageService
+        private imageService: ImageService,
+        private viewPortScroller: ViewportScroller,
     ) {
+    }
+
+    scrollToPagePart(elementId: string): void {
+        this.viewPortScroller.scrollToAnchor(elementId);
     }
 
     ngOnInit(): void {

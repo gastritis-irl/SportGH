@@ -1,16 +1,37 @@
 <div class="user-container">
     <div class="user-header">
-        <img class="image" src="{{ image }}" alt="user image"/>
-        <div class="info">
-            <div>{{ user.username }}</div>
-            <div>{{ user.email }}</div>
-            <div>{{ user.bio }}</div>
+        <div class="image-container">
+            <img class="image" src="{{ user.imageDataUrl }}" alt="user image" />
+        </div>
+        <div class="info heading">
+            <div class="username">{{ user.username }}</div>
+            <div class="email">{{ user.email }}</div>
+            <div class="bio">{{ user.bio }}</div>
         </div>
     </div>
-    <div class="user-posts">
-        <div class="user-post" *ngFor="let post of user?.products">
-            <!-- <img src="{{ post.image }}" alt="post image" /> -->
-            <div>{{ post.description }}</div>
+
+    <div class="user-details-area">
+        <div class="user-details-nav-btn buttons">
+            <div (click)="scrollToPagePart('user-desc')" class="button-default button-secondary">Profile</div>
+            <div (click)="scrollToPagePart('user-products')" class="button-default button-secondary">Products</div>
+        </div>
+
+        <div class="user-description user-details-item" id="user-desc">
+            <div class="heading">Profile Details</div>
+            <div class="user-description-content">
+                Full Name: {{ user.fullName }} <br>
+                Phone: {{ user.phoneNumber }} <br>
+                Address: {{ user.address }}, {{ user.city }}, {{ user.country }}
+            </div>
+        </div>
+
+        <div class="user-products user-details-item" id="user-products">
+            <div class="heading">Products</div>
+            <div class="user-products-content">
+                <div class="user-post" *ngFor="let post of user?.products">
+                    <div>{{ post.description }}</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

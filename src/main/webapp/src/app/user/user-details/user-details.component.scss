@@ -15,10 +15,17 @@
         padding: $item-padding;
         align-items: center;
 
-        .image {
+        .image-container {
             border-radius: 50%;
             width: 100px;
-            object-fit: cover;
+            height: 100px;
+            overflow: hidden;
+
+            .image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         }
 
         .info {
@@ -26,41 +33,56 @@
             display: flex;
             flex-direction: column;
 
-            div {
+            .username {
                 font-family: $font-default;
                 font-weight: $font-weight-bold;
                 font-size: $size-h1;
-                color: $font-color-1;
+                color: $color-main-1;
             }
 
-            p {
+            .email,
+            .bio {
                 font-family: $font-default;
-                font-size: $size-default;
-                color: $font-color-2;
-
-                &:nth-child(2) {
-                    font-weight: $font-weight-medium;
-                }
+                font-size: $size-h2;
+                color: $color-main-1;
             }
         }
     }
 
-    .user-posts {
+    .user-details-area {
         display: flex;
         flex-direction: column;
-        gap: $gallery-gap;
+        gap: 5px;
 
-        &__post {
+        .user-details-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            border-radius: $border-radius;
+            background-color: $color-neutral-1;
+            padding: $item-padding;
+        }
+
+        .user-details-nav-btn {
+            padding-top: $item-padding;
+            font-weight: $font-weight-medium;
+
+            .button-secondary {
+                border-color: $color-main-3;
+            }
+        }
+    }
+
+    .user-products-content {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .user-post {
             background-color: $color-main-3;
             padding: $item-padding;
             border-radius: $border-radius;
             border: 1px solid $border-color;
-
-            p {
-                font-family: $font-default;
-                font-size: $size-default;
-                color: $color-neutral-2;
-            }
 
             &:hover {
                 box-shadow: $hover-box-shadow;
