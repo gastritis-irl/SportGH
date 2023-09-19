@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -72,7 +71,6 @@ public class ProductController {
         return new ResponseEntity<>(productOutDTO, HttpStatus.OK);
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<ProductOutDTO> create(
             @RequestBody @Valid ProductInDTO productInDTO
@@ -84,7 +82,6 @@ public class ProductController {
         return save(productInDTO);
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @PutMapping(path = "/{productId}")
     public ResponseEntity<ProductOutDTO> update(
             @RequestBody @Valid ProductInDTO productInDTO,
@@ -100,7 +97,6 @@ public class ProductController {
         return save(productInDTO);
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @PutMapping(path = "/{productId}/rent")
     public ResponseEntity<ProductOutDTO> rent(
             @PathVariable Long productId
@@ -110,7 +106,6 @@ public class ProductController {
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @DeleteMapping(path = "/{productId}")
     public ResponseEntity<?> delete(
             @PathVariable Long productId

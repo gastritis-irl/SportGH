@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,7 +29,27 @@ public class WebSecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                .requestMatchers("/**").permitAll()
+                // general restrictions
+                .requestMatchers(HttpMethod.GET,
+                    "/api/categories/**",
+                    "/api/categories",
+                    "/api/subcategories/**",
+                    "/api/subcategories",
+                    "/api/products/**",
+                    "/api/products",
+                    "/api/images/**",
+                    "/api/images"
+                ).permitAll()
+                // users
+                .requestMatchers(HttpMethod.GET, "/api/users/[0-9]+").hasRole("USER")
+                // products
+                .requestMatchers("/api/products/**").hasRole("USER")
+                // images
+                .requestMatchers("/api/images/**").hasRole("USER")
+                // rent
+                .requestMatchers("/api/rent/**").hasRole("USER")
+                // else -> deny
+                .requestMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .addFilterBefore(fbAuthTokenFilter, UsernamePasswordAuthenticationFilter.class);
