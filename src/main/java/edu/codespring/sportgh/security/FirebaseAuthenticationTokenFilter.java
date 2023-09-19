@@ -3,7 +3,6 @@ package edu.codespring.sportgh.security;
 import edu.codespring.sportgh.service.FirebaseService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +30,6 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String idToken = request.getHeader("Authorization");
-        idToken = StringUtils.hasText(idToken) ? idToken : null;
 
         if (idToken != null) {
             Authentication authentication = firebaseService.getAuthentication(idToken);
