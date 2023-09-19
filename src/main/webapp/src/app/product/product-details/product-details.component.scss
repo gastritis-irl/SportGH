@@ -100,6 +100,14 @@ $icon-size: 50px;
                 margin-right: $item-gap-1;
                 flex-direction: row;
 
+                img{
+                    max-height: 400px;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                    border-radius: $border-radius;
+                }
+
                 @media(max-width: $breakpoint-large) {
                     flex-direction: column;
                 }

@@ -47,6 +47,9 @@ export class ProductDetailsComponent implements OnInit {
                     const imageDTOs: Image[] = response;
                     this.product.imageDataUrls = [];
 
+                    if (!imageDTOs || imageDTOs.length === 0) {
+                        return;
+                    }
                     for (const imageDTO of imageDTOs) {
                         if (!imageDTO.data) {
                             continue;
