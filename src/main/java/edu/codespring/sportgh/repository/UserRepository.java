@@ -10,7 +10,7 @@ public interface UserRepository extends BaseRepository<User> {
     @Query("DELETE FROM User")
     int deleteAllWithCount();
 
-    User findByFirebaseUid( String firebaseUid);
+    User findByFirebaseUid(String firebaseUid);
 
     User findByUsername(String username);
 
