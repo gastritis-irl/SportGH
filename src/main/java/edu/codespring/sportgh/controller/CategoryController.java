@@ -55,8 +55,7 @@ public class CategoryController {
 
     @DeleteMapping(path = "/{categoryId}")
     public ResponseEntity<?> deleteById(
-            @PathVariable Long categoryId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long categoryId
     ) {
         deleteImageFileByCategoryId(categoryId);
         log.info("Deleting category with ID {}.", categoryId);
@@ -75,8 +74,7 @@ public class CategoryController {
     @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> update(
             @PathVariable Long categoryId,
-            @RequestBody @Valid CategoryInDTO categoryInDTO,
-            @RequestHeader("Authorization") String idToken
+            @RequestBody @Valid CategoryInDTO categoryInDTO
     ) {
         log.info("Updating category with ID {}.", categoryId);
         if (!Objects.equals(categoryId, categoryInDTO.getId())) {
@@ -90,8 +88,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryOutDTO> create(
-            @RequestBody @Valid CategoryInDTO categoryInDTO,
-            @RequestHeader("Authorization") String idToken
+            @RequestBody @Valid CategoryInDTO categoryInDTO
     ) {
         log.info("Creating category with name {}.", categoryInDTO.getName());
         if (categoryInDTO.getId() != null) {

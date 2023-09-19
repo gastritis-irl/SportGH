@@ -73,8 +73,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductOutDTO> create(
-            @RequestBody @Valid ProductInDTO productInDTO,
-            @RequestHeader("Authorization") String idToken
+            @RequestBody @Valid ProductInDTO productInDTO
     ) {
         log.info("Creating product with name: {}.", productInDTO.getName());
         if (productInDTO.getId() != null) {
@@ -86,8 +85,7 @@ public class ProductController {
     @PutMapping(path = "/{productId}")
     public ResponseEntity<ProductOutDTO> update(
             @RequestBody @Valid ProductInDTO productInDTO,
-            @PathVariable Long productId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long productId
     ) {
         log.info("Updating product with ID {}.", productId);
         if (!Objects.equals(productId, productInDTO.getId())) {
@@ -101,8 +99,7 @@ public class ProductController {
 
     @PutMapping(path = "/{productId}/rent")
     public ResponseEntity<ProductOutDTO> rent(
-            @PathVariable Long productId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long productId
     ) {
         Product product = productService.findById(productId);
         productService.rent(product);
@@ -111,8 +108,7 @@ public class ProductController {
 
     @DeleteMapping(path = "/{productId}")
     public ResponseEntity<?> delete(
-            @PathVariable Long productId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long productId
     ) {
         Product product = productService.findById(productId);
         productService.delete(product);

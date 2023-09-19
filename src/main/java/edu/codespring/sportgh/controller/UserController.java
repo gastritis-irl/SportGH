@@ -21,17 +21,14 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public ResponseEntity<Collection<UserOutDTO>> findAll(
-            @RequestHeader("Authorization") String idToken
-    ) {
+    public ResponseEntity<Collection<UserOutDTO>> findAll() {
         Collection<User> users = userService.findAll();
         return new ResponseEntity<>(userMapper.usersToOuts(users), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{userId}")
     public ResponseEntity<UserOutDTO> findById(
-            @PathVariable Long userId,
-            @RequestHeader("Authorization") String idToken
+        @PathVariable Long userId
     ) {
         User user = userService.findById(userId);
         if (user == null) {
@@ -42,8 +39,7 @@ public class UserController {
 
     @DeleteMapping(path = "/{userId}")
     public ResponseEntity<?> deleteById(
-            @PathVariable Long userId,
-            @RequestHeader("Authorization") String idToken
+        @PathVariable Long userId
     ) {
         userService.deleteById(userId);
         return new ResponseEntity<>(HttpStatus.OK);

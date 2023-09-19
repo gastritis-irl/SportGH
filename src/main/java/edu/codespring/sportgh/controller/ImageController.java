@@ -27,8 +27,7 @@ public class ImageController {
 
     @GetMapping(path = "/{imageId}")
     public ResponseEntity<Image> findById(
-            @PathVariable Long imageId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long imageId
     ) {
         Image image = imageService.findById(imageId);
         if (image == null) {
@@ -39,8 +38,7 @@ public class ImageController {
 
     @GetMapping(path = "/file/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<Resource> getImageFile(
-            @PathVariable Long imageId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long imageId
     ) {
         Image image = imageService.findById(imageId);
         if (image == null) {
@@ -58,8 +56,7 @@ public class ImageController {
 
     @PostMapping
     public ResponseEntity<Image> save(
-            @RequestParam("image") MultipartFile file,
-            @RequestHeader("Authorization") String idToken
+            @RequestParam("image") MultipartFile file
     ) {
         if (!file.getContentType().startsWith("image/")) {
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
@@ -72,8 +69,7 @@ public class ImageController {
     @PutMapping(path = "/file/{imageId}")
     public ResponseEntity<Image> update(
             @PathVariable Long imageId,
-            @RequestParam("image") MultipartFile file,
-            @RequestHeader("Authorization") String idToken
+            @RequestParam("image") MultipartFile file
     ) {
         if (!file.getContentType().startsWith("image/")) {
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File must be an image");
@@ -93,8 +89,7 @@ public class ImageController {
     @Transactional
     @DeleteMapping(path = "/{imageId}")
     public ResponseEntity<?> deleteById(
-            @PathVariable Long imageId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long imageId
     ) {
         log.info("Deleting image with ID {}.", imageId);
         imageService.delete(imageId);

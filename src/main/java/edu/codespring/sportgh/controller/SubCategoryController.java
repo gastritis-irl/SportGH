@@ -36,8 +36,7 @@ public class SubCategoryController {
 
     @DeleteMapping(path = "/{subCategoryId}")
     public ResponseEntity<?> deleteById(
-            @PathVariable Long subCategoryId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable Long subCategoryId
     ) {
         log.info("Deleting subCategory with ID {}.", subCategoryId);
         subCategoryService.delete(subCategoryId);
@@ -48,8 +47,7 @@ public class SubCategoryController {
     @PutMapping(path = "/{subCategoryId}")
     public ResponseEntity<SubCategoryOutDTO> save(
             @RequestBody @Valid SubCategoryInDTO subCategoryInDTO,
-            @PathVariable(required = false) Long subCategoryId,
-            @RequestHeader("Authorization") String idToken
+            @PathVariable(required = false) Long subCategoryId
     ) {
         SubCategory subCategory;
         subCategory = subCategoryMapper.dtoToSubCategory(subCategoryInDTO);
