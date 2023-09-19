@@ -130,9 +130,6 @@ export class ProductEditComponent implements OnInit {
                     this.toastNotify.error(`Error loading images: ${error}`);
                 }
             },
-            error: (): void => {
-                this.toastNotify.warning(`No images found`);
-            }
         });
     }
 
