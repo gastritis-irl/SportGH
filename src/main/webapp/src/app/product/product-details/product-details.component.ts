@@ -3,8 +3,6 @@ import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { User } from '../../user/user.model';
-import { UserService } from '../../user/user.service';
 import { ViewportScroller } from '@angular/common';
 import { FirebaseIdTokenService } from '../../authentication/firebase-id-token.service';
 
@@ -16,13 +14,11 @@ import { FirebaseIdTokenService } from '../../authentication/firebase-id-token.s
 export class ProductDetailsComponent implements OnInit {
 
     product: Product = {};
-    productLender: User = {};
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
 
     constructor(
         private productService: ProductService,
-        private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
         private viewPortScroller: ViewportScroller,
@@ -45,10 +41,10 @@ export class ProductDetailsComponent implements OnInit {
         );
     }
 
-    getLoggedInUserEmail(): string | null {
-        const email: string | undefined = this.fbIdTokenService.getDecodedIdToken()?.email;
-        if (email != undefined) {
-            return email;
+    getLoggedInUserUid(): string | null {
+        const userId: string | undefined = this.fbIdTokenService.getDecodedIdToken()?.user_id;
+        if (userId != undefined) {
+            return userId;
         }
         return null;
     }
@@ -58,24 +54,10 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (data: Product): void => {
                     this.product = data;
-                    this.loadProductLender(this.product.userId ? this.product.userId : 0);
                 },
                 error: (error): void => {
                     console.error(error);
                     this.toastNotify.error(`Error fetching data`);
-                }
-            }
-        );
-    }
-
-    loadProductLender(userId: number): void {
-        this.userService.getById(userId).subscribe(
-            {
-                next: (resp: User): void => {
-                    this.productLender = resp;
-                },
-                error: (): void => {
-                    this.toastNotify.error(`Error loading lender info`);
                 }
             }
         );

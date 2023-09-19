@@ -21,10 +21,12 @@ export class AppService {
     }
 
     private setHeaders(): HttpHeaders {
-        return new HttpHeaders().set(
-            'Authorization',
-            `${this.fbIdTokenService.getIdToken()}`
-        );
+        const idToken: string | null = this.fbIdTokenService.getIdToken();
+        if (idToken == null || idToken == '') {
+            return new HttpHeaders();
+        } else {
+            return new HttpHeaders().set('Authorization', idToken);
+        }
     }
 
     httpGet<T>(url: string, options: Options = {}): Observable<T> {

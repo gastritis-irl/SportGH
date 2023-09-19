@@ -7,6 +7,8 @@ import { Category } from '../../category/category.model';
 import { CategoryService } from '../../category/category.service';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { SubcategoryService } from '../../subcategory/subcategory.service';
+import { FirebaseIdTokenService } from '../../authentication/firebase-id-token.service';
+import { IdToken } from '../../authentication/firebase-id-token.model';
 
 type ClickHandlerFunction = () => void;
 
@@ -30,6 +32,7 @@ export class ProductEditComponent implements OnInit {
         private productService: ProductService,
         private categoryService: CategoryService,
         private subcategoryService: SubcategoryService,
+        private fbIdTokenService: FirebaseIdTokenService,
         private router: Router,
         private route: ActivatedRoute,
         private toastNotify: ToastrService,
@@ -107,9 +110,13 @@ export class ProductEditComponent implements OnInit {
     }
 
     createProduct(): void {
+        const idToken: IdToken | null = this.fbIdTokenService.getDecodedIdToken();
+        if (!idToken) {
+            return;
+        } else {
+            this.product.userUid = idToken.user_id;
+        }
         this.buttonPushed = true;
-        this.product.userId = 1;
-        this.product.available = true;
 
         this.productService.create(this.product).subscribe(
             {

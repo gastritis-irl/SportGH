@@ -35,7 +35,7 @@ public class ProductInDTO {
 
     private String subCategoryName;
 
-    @Min(value = 1, message = "UserId must be greater than 1")
-    @NotNull(message = "Owner must be given")
     private Long userId;
+
+    private String userUid;
 }

@@ -12,7 +12,7 @@
             <div class="product-name-and-avail">
                 <div class="heading product-heading">
                     {{product.name}}
-                    <div *ngIf="productLender.email===getLoggedInUserEmail()" class="product-links buttons">
+                    <div *ngIf="product.userUid===getLoggedInUserUid()" class="product-links buttons">
                         <button class="product-edit-link button-default button-secondary"
                              routerLink="/products/{{product.id}}/edit">
                             Edit
@@ -88,13 +88,6 @@
             <div class="heading">Description</div>
             <div class="product-description-content">
                 {{product.description}}
-            </div>
-        </div>
-
-        <div class="product-lender-description product-details-item" id="prod-lend-desc">
-            <div class="heading">About lender</div>
-            <div class="product-lender-description-content">
-                {{productLender.username}}
             </div>
         </div>
 

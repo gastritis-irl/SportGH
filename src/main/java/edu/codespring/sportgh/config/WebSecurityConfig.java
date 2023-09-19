@@ -30,15 +30,12 @@ public class WebSecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                 // general restrictions
+                .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 .requestMatchers(HttpMethod.GET,
                     "/api/categories/**",
-                    "/api/categories",
                     "/api/subcategories/**",
-                    "/api/subcategories",
                     "/api/products/**",
-                    "/api/products",
-                    "/api/images/**",
-                    "/api/images"
+                    "/api/images/**"
                 ).permitAll()
                 // users
                 .requestMatchers(HttpMethod.GET, "/api/users/[0-9]+").hasRole("USER")
