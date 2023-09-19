@@ -21,6 +21,7 @@ $hover-bg-color: $border-color;
 $hover-icon-height: $category-icon-height;
 $hover-icon-filter: blur(1px);
 $hover-icon-opacity: 0.4;
+$padding-title: 30px;
 
 // Min and Max width for cards
 $card-max-width-medium: 300px; // 300px for tablet screens
@@ -35,17 +36,11 @@ $animation-translation: -20px;
 
     .category-heading {
         color: $color-main-1;
-        font-size: xxx-large;
+        font-size: xx-large;
         font-family: $font-default;
         font-weight: $font-weight-bold;
-        line-height: $heading-line-height;
         text-align: center;
-        margin-bottom: 30px;
-        padding-top: 30px;
-
-        @media (max-width: $breakpoint-medium) {
-            font-size: xx-large;
-        }
+        padding-block: $padding-title;
     }
 
     .categories {
