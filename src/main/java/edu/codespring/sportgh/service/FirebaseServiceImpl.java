@@ -81,9 +81,9 @@ public class FirebaseServiceImpl implements FirebaseService {
 
         // Create an Authentication object using the UserDetails
         return new UsernamePasswordAuthenticationToken(
-            "akos@test.com",
+            user.getEmail(),
             firebaseToken,
-            Collections.singleton(new SimpleGrantedAuthority("USER"))
+            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
         );
     }
 

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -34,6 +35,7 @@ public class SubCategoryController {
         return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @DeleteMapping(path = "/{subCategoryId}")
     public ResponseEntity<?> deleteById(
             @PathVariable Long subCategoryId
@@ -43,6 +45,7 @@ public class SubCategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @PostMapping(path = "/{subCategoryId}")
     @PutMapping(path = "/{subCategoryId}")
     public ResponseEntity<SubCategoryOutDTO> save(

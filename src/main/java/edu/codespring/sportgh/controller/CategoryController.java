@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,6 +54,7 @@ public class CategoryController {
         }
     }
 
+    @Secured({"ROLE_ADMIN"})
     @DeleteMapping(path = "/{categoryId}")
     public ResponseEntity<?> deleteById(
             @PathVariable Long categoryId
@@ -71,6 +73,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryOutDTO, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryOutDTO> update(
             @PathVariable Long categoryId,
@@ -86,6 +89,7 @@ public class CategoryController {
         return save(categoryInDTO);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<CategoryOutDTO> create(
             @RequestBody @Valid CategoryInDTO categoryInDTO

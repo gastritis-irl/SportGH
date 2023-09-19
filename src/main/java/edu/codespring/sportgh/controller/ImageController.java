@@ -10,6 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -53,7 +54,7 @@ public class ImageController {
                 .body(resource);
     }
 
-
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<Image> save(
             @RequestParam("image") MultipartFile file
@@ -65,6 +66,7 @@ public class ImageController {
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @Transactional
     @PutMapping(path = "/file/{imageId}")
     public ResponseEntity<Image> update(
@@ -86,6 +88,7 @@ public class ImageController {
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @Transactional
     @DeleteMapping(path = "/{imageId}")
     public ResponseEntity<?> deleteById(
