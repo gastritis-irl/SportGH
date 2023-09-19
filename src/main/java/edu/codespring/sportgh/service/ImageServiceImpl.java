@@ -6,10 +6,11 @@ import edu.codespring.sportgh.model.Image;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.repository.ImageRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,14 +31,24 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
-    private final ProductService productService;
 
     @Value("${file.storage.location}")
     private String storageLocation;
+
+    private ProductService productService;
+
+    @Autowired
+    public ImageServiceImpl(ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
+    }
+
+    @Autowired
+    public void setProductService(@Lazy ProductService productService) {
+        this.productService = productService;
+    }
 
     @Transactional
     @Override
