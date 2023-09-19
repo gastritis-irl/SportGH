@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink, UrlSegment } from '@angular/router';
+import { ActivatedRoute, Params, RouterLink, UrlSegment } from '@angular/router';
 import { NgForOf, NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../../product/product.model';
@@ -19,6 +19,7 @@ import { User } from '../../user/user.model';
 export class BreadcrumbComponent implements OnInit {
 
     url: string[] = [];
+    @Input() filter: Params | null = null;
     @Input() product: Product | null = null;
     @Input() user: User | null = null;
 

@@ -1,6 +1,6 @@
 <div class="breadcrumb">
     <!--    General-->
-    <div *ngIf="!user && !product">
+    <div *ngIf="!user && !product && !filter">
         <div routerLink="/">Home</div>
         <div class="routes" routerLink="/{{url.slice(0,i+1).join('/')}}" *ngFor="let urlSegment of url; let i = index">
             <div>
@@ -12,9 +12,48 @@
         </div>
     </div>
 
+    <!--    Product filter-->
+    <div *ngIf="filter" class="routes">
+        <div routerLink="/">
+            Home
+        </div>
+        <div>
+            >
+        </div>
+        <div routerLink="/products">
+            Products
+        </div>
+        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length==1">
+            >
+        </div>
+        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length==1"
+             [routerLink]="['/products']"
+             [queryParams]="{ Subcategory: filter['Subcategory']}"
+        >
+            {{filter['Subcategory']}}
+        </div>
+        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length>1">
+            >
+        </div>
+        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length>1"
+             [routerLink]="['/products']"
+             [queryParams]="{ Subcategory: filter['Subcategory'] }"
+        >
+            Selected subcategories
+        </div>
+    </div>
+
     <!--    Product-details-->
     <div *ngIf="product" class="routes">
-        <div routerLink="/">Home</div>
+        <div routerLink="/">
+            Home
+        </div>
+        <div>
+            >
+        </div>
+        <div routerLink="/products">
+            Products
+        </div>
         <div>
             >
         </div>
@@ -41,7 +80,7 @@
         <div>
             >
         </div>
-        <div>
+        <div routerLink="/users/{{user.username}}">
             {{user.username}}
         </div>
     </div>
