@@ -83,7 +83,7 @@ public class ImageController {
 
     @DeleteMapping(path = "/{imageId}")
     public ResponseEntity<?> deleteById(@PathVariable Long imageId) {
-        imageService.deleteImageById(imageId);
+        imageService.delete(imageId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -124,13 +124,6 @@ public class ImageServiceImpl implements ImageService {
         }
     }
 
-    @Transactional
-    @Override
-    public void deleteImageById(Long imageId) {
-        log.info("Deleting image with ID {}.", imageId);
-        delete(imageId);
-    }
-
     @Override
     public Image saveFileAndCreateDbInstance(MultipartFile file) {
 

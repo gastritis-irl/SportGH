@@ -30,6 +30,4 @@ public interface ImageService {
     Image updateImage(Long imageId, MultipartFile file, Long productId);
 
     List<ImageDTO> getImageFilesByProductId(Long productId);
-
-    void deleteImageById(Long imageId);
 }
