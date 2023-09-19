@@ -33,13 +33,14 @@ public class RentController {
         // @RequestHeader("Authorization") String idToken,
         @RequestParam Optional<Long> productId
     ) {
+        if (productId.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Long userId = 1L;   // = idToken.decode.userId
         // if (userId == null) {
         //     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         // }
-        if (productId.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
         Product product = productService.findById(productId.get());
         User user = userService.findById(userId);
@@ -73,17 +74,11 @@ public class RentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if (user != product.getUser()) {
+        if (!user.equals(product.getUser())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        if (Objects.equals(answer.get(), "accept")) {
-            rentRequest.setRequestStatus("accepted");
-        }
-        if (Objects.equals(answer.get(), "decline")) {
-            rentRequest.setRequestStatus("declined");
-        }
-
+        rentRequest.setRequestStatus("accept".equals(answer.get()) ? "accepted" : "declined");
         rentService.answerRentRequest(rentRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
