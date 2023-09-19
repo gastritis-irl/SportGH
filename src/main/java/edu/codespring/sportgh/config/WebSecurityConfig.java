@@ -41,16 +41,16 @@ public class WebSecurityConfig {
                 // users
                 .requestMatchers(
                     customRequestMatcher(HttpMethod.GET, "/api/users/[0-9]+")
-                ).hasRole("USER")
+                ).hasAnyRole("USER", "ADMIN")
                 .requestMatchers(
                     customRequestMatcher(HttpMethod.PUT, "/api/users/[0-9]+")
-                ).hasRole("USER")
+                ).hasAnyRole("USER", "ADMIN")
                 // products
-                .requestMatchers("/api/products/**").hasRole("USER")
+                .requestMatchers("/api/products/**").hasAnyRole("USER", "ADMIN")
                 // images
-                .requestMatchers("/api/images/**").hasRole("USER")
+                .requestMatchers("/api/images/**").hasAnyRole("USER", "ADMIN")
                 // rent
-                .requestMatchers("/api/rent/**").hasRole("USER")
+                .requestMatchers("/api/rent/**").hasAnyRole("USER", "ADMIN")
                 // admin
                 .requestMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
