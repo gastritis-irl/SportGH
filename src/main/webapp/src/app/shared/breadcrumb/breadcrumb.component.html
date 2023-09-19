@@ -20,7 +20,7 @@
         <div>
             >
         </div>
-        <div routerLink="/products">
+        <div routerLink="/products" (click)="breadcrumbEvent.emit()">
             Products
         </div>
         <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length==1">

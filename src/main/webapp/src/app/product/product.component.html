@@ -1,4 +1,4 @@
-<sgh-breadcrumb [filter]="filterParams"></sgh-breadcrumb>
+<sgh-breadcrumb [filter]="filterParams" (breadcrumbEvent)="ngOnInit()"></sgh-breadcrumb>
 <div class="product-holder">
     <sgh-product-filter class="product-filter"
                         [categories]="categories"

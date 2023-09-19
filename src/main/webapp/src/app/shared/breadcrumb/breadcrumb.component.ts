@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params, RouterLink, UrlSegment } from '@angular/router';
 import { NgForOf, NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +22,7 @@ export class BreadcrumbComponent implements OnInit {
     @Input() filter: Params | null = null;
     @Input() product: Product | null = null;
     @Input() user: User | null = null;
+    @Output() breadcrumbEvent: EventEmitter<undefined> = new EventEmitter<undefined>();
 
     constructor(
         private route: ActivatedRoute,
