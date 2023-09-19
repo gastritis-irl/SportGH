@@ -8,6 +8,8 @@ import { CategoryService } from '../../category/category.service';
 import { Category } from '../../category/category.model';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { FirebaseIdTokenService } from '../../authentication/firebase-id-token.service';
+import { IdToken } from '../../authentication/firebase-id-token.model';
 
 @Component({
     selector: 'sgh-navbar',
@@ -23,6 +25,7 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private categoryService: CategoryService,
+        private fbIdTokenService: FirebaseIdTokenService,
         private toastNotify: ToastrService,
         private router: Router,
     ) {
@@ -50,5 +53,11 @@ export class NavbarComponent implements OnInit {
             });
     }
 
-    protected readonly sessionStorage: Storage = sessionStorage;
+    checkIfLoggedIn(): boolean {
+        return !!this.getDecodedIdToken()?.user_id;
+    }
+
+    getDecodedIdToken(): IdToken | null {
+        return this.fbIdTokenService.getDecodedIdToken();
+    }
 }
