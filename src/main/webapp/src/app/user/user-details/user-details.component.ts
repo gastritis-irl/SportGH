@@ -28,7 +28,7 @@ export class UserDetailsComponent implements OnInit {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
-                    this.loadData(params['username']);
+                    this.loadData(params['email']);
                 },
                 error: (error): void => {
                     console.error(error);
@@ -38,9 +38,9 @@ export class UserDetailsComponent implements OnInit {
         );
     }
 
-    loadData(username: string | undefined): void {
-        if (username) {
-            this.userService.getByUsername(username).subscribe({
+    loadData(email: string | undefined): void {
+        if (email) {
+            this.userService.getByEmail(email).subscribe({
                 next: (data: User): void => {
                     this.user = data;
                     this.loadImage(data.imageId ? data.imageId : null);

@@ -26,17 +26,17 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<UserOutDTO> findByUsername(
-            @RequestParam("username") Optional<String> username,
+            @RequestParam("email") Optional<String> email,
             @RequestParam("userId") Optional<Long> userId
     ) {
 
-        if (username.isPresent() && userId.isPresent() || username.isEmpty() && userId.isEmpty()) {
+        if (email.isPresent() && userId.isPresent() || email.isEmpty() && userId.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } else {
             User user;
 
-            if (username.isPresent()) {
-                user = userService.findByUsername(username.get());
+            if (email.isPresent()) {
+                user = userService.findByEmail(email.get());
             } else {
                 user = userService.findById(userId.get());
             }
@@ -47,6 +47,15 @@ public class UserController {
 
             return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
         }
+    }
+
+    @GetMapping(path = "/{fbUid}")
+    public ResponseEntity<UserOutDTO> findByUserUid(@PathVariable String fbUid) {
+        User user = userService.findByFirebaseUid(fbUid);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{userId}")

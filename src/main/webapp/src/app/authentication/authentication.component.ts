@@ -19,6 +19,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
     loggedInUserEmail: string | null = null;
     loggedInUserName: string | null = null;
+    loggedInUserFirebaseId: string | null = null;
     showDropdown: boolean = false;
 
 

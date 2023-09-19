@@ -22,13 +22,18 @@ export class UserService extends AppService {
     }
 
     getById(userId: number): Observable<User> {
-        const url: string = `${this.baseUrl}/users/${userId}`;
+        const url: string = `${this.baseUrl}/users`;
+        return this.http.get<User>(url, { params: { userId: userId } });
+    }
+
+    getByUid(uid: string): Observable<User> {
+        const url: string = `${this.baseUrl}/users/${uid}`;
         return this.http.get<User>(url);
     }
 
-    getByUsername(username: string): Observable<User> {
+    getByEmail(email: string): Observable<User> {
         const url: string = `${this.baseUrl}/users`;
-        return this.http.get<User>(url,{params:{username:username}});
+        return this.http.get<User>(url,{params:{email: email}});
     }
 
     update(userId: number, user: User): Observable<User> {
