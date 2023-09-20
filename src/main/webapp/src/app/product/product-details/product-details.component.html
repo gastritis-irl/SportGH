@@ -6,7 +6,7 @@
             <div class="product-name-and-avail">
                 <div class="form-heading product-heading">
                     {{product.name}}
-                    <div *ngIf="product.userUid===getLoggedInUserUid()" class="product-links buttons">
+                    <div *ngIf="product.userUid && product.userUid===getLoggedInUserUid()" class="product-links buttons">
                         <div class="product-edit-link button-default button-primary"
                              routerLink="/products/{{product.id}}/edit">
                             Edit
