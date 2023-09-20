@@ -1,5 +1,7 @@
 package edu.codespring.sportgh.service;
 
+import edu.codespring.sportgh.dto.ProductInDTO;
+import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;

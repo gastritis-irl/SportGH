@@ -143,6 +143,7 @@ public class DataGenerator extends BaseDataGenerator {
                 20.0,
                 null,
                 null,
+                null,
                 null
             ),
             "Swimming",
@@ -155,6 +156,7 @@ public class DataGenerator extends BaseDataGenerator {
                 "Flip flops for easier swimming",
                 "Cluj-Napoca, Romania",
                 35.0,
+                null,
                 null,
                 null,
                 null
@@ -171,6 +173,7 @@ public class DataGenerator extends BaseDataGenerator {
                 100.0,
                 null,
                 null,
+                null,
                 null
             ),
             "Cycling",
@@ -183,6 +186,7 @@ public class DataGenerator extends BaseDataGenerator {
                 "Helmet for your protection",
                 "Cluj-Napoca, Romania",
                 18.0,
+                null,
                 null,
                 null,
                 null
@@ -200,6 +204,7 @@ public class DataGenerator extends BaseDataGenerator {
                 15.0,
                 null,
                 null,
+                null,
                 null
             ),
             "Cycling",
@@ -213,6 +218,7 @@ public class DataGenerator extends BaseDataGenerator {
                 "Bicycle lock for your bike's protection",
                 "Cluj-Napoca, Romania",
                 20.0,
+                null,
                 null,
                 null,
                 null
