@@ -77,10 +77,9 @@ public class RentController {
         }
 
         Long userId = 1L;   // = idToken.userId
-        User user = userService.findById(userId);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        // if (user == null) {
+        //     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        // }
 
         if (productId.isPresent()) {
             Product product = productService.findById(productId.get());
