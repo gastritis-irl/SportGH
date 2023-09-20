@@ -60,20 +60,13 @@ public class ProductController {
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
-    private ResponseEntity<ProductOutDTO> save(@Valid ProductInDTO productInDTO) {
-        Product product = productMapper.dtoToProduct(productInDTO);
-        productService.save(product);
-        ProductOutDTO productOutDTO = productMapper.productToOut(product);
-        return new ResponseEntity<>(productOutDTO, HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<ProductOutDTO> create(@RequestBody @Valid ProductInDTO productInDTO) {
         log.info("Creating product with name: {}.", productInDTO.getName());
         if (productInDTO.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return save(productInDTO);
+        return productService.saveInDTO(productInDTO);
     }
 
     @PutMapping(path = "/{productId}")
@@ -86,7 +79,8 @@ public class ProductController {
         if (!productService.existsById(productId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return save(productInDTO);
+
+        return productService.saveInDTO(productInDTO);
     }
 
     @PutMapping(path = "/{productId}/rent")
@@ -99,6 +93,10 @@ public class ProductController {
     @DeleteMapping(path = "/{productId}")
     public ResponseEntity<?> delete(@PathVariable Long productId) {
         Product product = productService.findById(productId);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
         productService.delete(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -1,7 +1,19 @@
 @use '../../../style-variables.scss' as *;
 
+$item-gap: 15px;
+
 .product-add-div {
     padding-inline: $main-padding-inline;
+
+    .images{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: $item-gap;
+        overflow-x: auto;
+        // left aligned
+
+    }
 
     .product-pricing {
         display: flex;

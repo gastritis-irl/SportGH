@@ -4,4 +4,8 @@ export interface Image {
     name?: string;
     url?: string;
     file?: File;
+    imageDataUrl?: string;
+    productId?: number;
+    data?: Uint8Array;
+    isUploaded?: boolean;
 }
