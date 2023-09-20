@@ -1,7 +1,5 @@
 @use '../../style-variables.scss' as *;
 
-$home-page-padding: 20px;
-
 $gap-small: 15px;
 $gap-medium: 30px;
 $gap-large: 50px;
@@ -21,8 +19,7 @@ $logo-small: 50px;
 .home-page {
     display: flex;
     flex-direction: column;
-    padding-inline: $main-page-padding;
-    padding-block: $home-page-padding;
+    padding-inline: $main-padding-inline;
     gap: $gap-medium;
 
     .home-page-info {
