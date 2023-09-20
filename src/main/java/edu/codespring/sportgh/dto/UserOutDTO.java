@@ -8,6 +8,7 @@ public class UserOutDTO {
     private Long id;
     private String username;
     private String email;
+    private String firebaseUid;
     private String fullName;
     private String bio;
     private String phoneNumber;

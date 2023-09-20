@@ -21,6 +21,9 @@ public class UserInDTO {
     @NotNull(message = "Email can't be empty")
     private String email;
 
+    @NotNull(message = "FirebaseUid can't be empty")
+    private String firebaseUid;
+
     private String fullName;
 
     private String phoneNumber;

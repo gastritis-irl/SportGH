@@ -33,7 +33,7 @@ export class UserEditComponent implements OnInit {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
-                    this.loadData(params['email']);
+                    this.loadData(params['uid']);
                 },
                 error: (error): void => {
                     console.error(error);
@@ -43,9 +43,9 @@ export class UserEditComponent implements OnInit {
         );
     }
 
-    loadData(email: string | undefined): void {
-        if (email) {
-            this.userService.getByEmail(email).subscribe({
+    loadData(uid: string | undefined): void {
+        if (uid) {
+            this.userService.getByUid(uid).subscribe({
                 next: (data: User): void => {
                     this.user = data;
                 },
@@ -72,13 +72,13 @@ export class UserEditComponent implements OnInit {
         if (this.newImageFile) {
             this.imageService.uploadImage(this.newImageFile).subscribe(
                 {
-                    next: (image: Image) => {
+                    next: (image: Image): void => {
                         if (image.id) {
                             this.user.imageId = image.id;
                         }
                         this.updateUserData();
                     },
-                    error: (error) => {
+                    error: (error): void => {
                         console.error(error);
                         this.toastNotify.error(`Error uploading new image ${error.error}`);
                     }

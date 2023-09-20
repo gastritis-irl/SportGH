@@ -40,6 +40,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         if (idToken) {
             this.loggedInUserEmail = idToken.email;
             this.loggedInUserName = this.loggedInUserEmail;
+            this.loggedInUserFirebaseId = idToken.user_id;
         }
     }
 
