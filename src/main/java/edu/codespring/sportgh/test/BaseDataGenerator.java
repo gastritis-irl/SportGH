@@ -90,7 +90,7 @@ public abstract class BaseDataGenerator {
         if (subCategory != null && productService.notExistsByNameAndUser(product.getName(), user)) {
             productService.save(new Product(true, product.getName(), product.getDescription(),
                 product.getLocation(), product.getRentPrice(),
-                subCategory, user));
+                subCategory, user, null));
         }
     }
 }

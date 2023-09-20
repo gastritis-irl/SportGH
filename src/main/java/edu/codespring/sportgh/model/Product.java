@@ -1,7 +1,11 @@
 package edu.codespring.sportgh.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
@@ -32,4 +36,12 @@ public class Product extends BaseEntity {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Image> images = new HashSet<>();
+
+    public void addImage(Image image) {
+        images.add(image);
+    }
 }
