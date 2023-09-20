@@ -8,6 +8,7 @@ interface Options {
 
     body?: unknown,
     params?: HttpParams | { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    responseType?: 'json' | undefined,
 }
 
 @Injectable({
@@ -20,7 +21,7 @@ export class AppService {
     constructor(protected http: HttpClient, protected fbIdTokenService: FirebaseIdTokenService) {
     }
 
-    private setHeaders(): HttpHeaders {
+    protected setHeaders(): HttpHeaders {
         const idToken: string | null = this.fbIdTokenService.getIdToken();
         if (idToken == null || idToken == '') {
             return new HttpHeaders();
@@ -34,6 +35,7 @@ export class AppService {
         return this.http.get<T>(url, {
             headers: header,
             params: options.params,
+            responseType: options.responseType
         });
     }
 
@@ -42,6 +44,7 @@ export class AppService {
         return this.http.post<T>(url, options.body, {
             headers: header,
             params: options.params,
+            responseType: options.responseType
         });
     }
 
@@ -50,6 +53,7 @@ export class AppService {
         return this.http.put<T>(url, options.body, {
             headers: header,
             params: options.params,
+            responseType: options.responseType
         });
     }
 
@@ -58,6 +62,7 @@ export class AppService {
         return this.http.delete<T>(url, {
             headers: header,
             params: options.params,
+            responseType: options.responseType
         });
     }
 }

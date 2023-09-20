@@ -18,7 +18,7 @@ type ClickHandlerFunction = () => void;
 @Component({
     selector: 'sgh-product-post',
     templateUrl: './product-edit.component.html',
-    styleUrls: [ './product-edit.component.scss' ],
+    styleUrls: ['./product-edit.component.scss'],
 })
 export class ProductEditComponent implements OnInit {
 
@@ -106,10 +106,9 @@ export class ProductEditComponent implements OnInit {
                             this.subcategoryDropdownDisabled = false;
                             this.getSubcategoriesByCategoryId();
                             // Call the loadProductImages method here
-                            if(data.id) {
+                            if (data.id) {
                                 this.loadProductImageIds(data.id);
-                            }
-                            else {
+                            } else {
                                 this.toastNotify.error(`Error loading images: ${data.id} is undefined`);
                             }
                         },
@@ -133,9 +132,10 @@ export class ProductEditComponent implements OnInit {
                     this.toastNotify.error(`Error loading images: ${error}`);
                 }
             },
+            error: (): void => {
+            }
         });
     }
-
 
 
     getSubcategoriesByCategoryId(): void {
@@ -173,7 +173,7 @@ export class ProductEditComponent implements OnInit {
                         }
                     }
 
-                    this.router.navigate([ `/products/${resp.id}` ])
+                    this.router.navigate([`/products/${resp.id}`])
                         .catch((error: string): void => {
                             console.error(error);
                             this.toastNotify.info('Error redirecting to page');
@@ -207,7 +207,7 @@ export class ProductEditComponent implements OnInit {
         this.productService.edit(this.product).subscribe(
             {
                 next: (resp: Product): void => {
-                    this.router.navigate([ `/products/${resp.id}` ])
+                    this.router.navigate([`/products/${resp.id}`])
                         .catch((error: string): void => {
                             console.error(error);
                             this.toastNotify.info('Error redirecting to page');
@@ -227,7 +227,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     cancelEdit(route: string): void {
-        this.router.navigate([ route ])
+        this.router.navigate([route])
             .catch((error): void => {
                 console.error(error);
                 this.toastNotify.error('Error redirecting to page');
