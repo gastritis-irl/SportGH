@@ -110,8 +110,7 @@ $icon-size: 50px;
                     object-fit: contain;
                     border-radius: $border-radius;
                     cursor: pointer;
-                    margin-left: 0;
-                    padding-left: 0;
+                    margin-left: -20px;
                 }
 
                 @media(max-width: $breakpoint-large) {
