@@ -5,20 +5,29 @@
         </div>
         <div class="info heading">
             <div class="username">{{ user.username }}</div>
-            <div class="email">{{ user.email }}</div>
-            <div class="bio">{{ user.bio }}</div>
+            <div class="buttons">
+                <div class="button-default button-primary" routerLink="/users/{{user.email}}/edit">Edit</div>
+            </div>
         </div>
     </div>
 
+    <div class="navigation-buttons buttons">
+        <div class="button-default button-secondary" (click)="scrollToPagePart('user-desc')">Bio</div>
+        <div class="button-default button-secondary" (click)="scrollToPagePart('user-products')">Products</div>
+    </div>
+
     <div class="user-details-area">
-        <div class="user-details-nav-btn buttons">
-            <div (click)="scrollToPagePart('user-desc')" class="button-default button-secondary">Profile</div>
-            <div (click)="scrollToPagePart('user-products')" class="button-default button-secondary">Products</div>
+        <div class="user-description user-details-item" id="user-desc">
+            <div class="form-heading">Bio</div>
+            <div class="bio-content">
+                Email: {{ user.email }} <br>
+                Bio: {{ user.bio }}
+            </div>
         </div>
 
-        <div class="user-description user-details-item" id="user-desc">
-            <div class="form-heading">Profile Details</div>
-            <div class="general-data-form">
+        <div class="user-description user-details-item" id="user-address">
+            <div class="form-heading">Address</div>
+            <div class="address-content">
                 Full Name: {{ user.fullName }} <br>
                 Phone: {{ user.phoneNumber }} <br>
                 Address: {{ user.address }}, {{ user.city }}, {{ user.country }}

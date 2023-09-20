@@ -49,7 +49,9 @@ export class UserDetailsComponent implements OnInit {
             this.userService.getByEmail(email).subscribe({
                 next: (data: User): void => {
                     this.user = data;
-                    this.loadImage(data.imageId ? data.imageId : null);
+                    if (data.imageId) {
+                        this.loadImage(data.imageId);
+                    }
                 },
                 error: (error): void => {
                     console.error(error);
@@ -59,7 +61,7 @@ export class UserDetailsComponent implements OnInit {
         }
     }
 
-    loadImage(imageId: number | null): void {
+    loadImage(imageId: number): void {
         if (imageId) {
             this.imageService.getImageFile(imageId).subscribe({
                 next: (blob: Blob): void => {

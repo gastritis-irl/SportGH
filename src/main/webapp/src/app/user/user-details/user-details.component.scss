@@ -3,23 +3,26 @@
 .user-container {
     display: flex;
     flex-direction: column;
-    background-color: $color-neutral-1;
-    border-radius: $border-radius;
+
     padding: $item-padding;
-    max-width: $card-min-width-large;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
 
     .user-header {
         display: flex;
         border-bottom: 1px solid $border-color;
         padding: $item-padding;
         align-items: center;
+        justify-content: space-between;
+        background-color: $color-neutral-1;
+        border-radius: $border-radius;
 
         .image-container {
-            border-radius: 50%;
             width: 100px;
             height: 100px;
             overflow: hidden;
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
 
             .image {
                 width: 100%;
@@ -32,18 +35,16 @@
             margin-left: $item-padding;
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
+            border-color: $color-main-2;
+
 
             .username {
                 font-family: $font-default;
                 font-weight: $font-weight-bold;
                 font-size: $size-h1;
-                color: $color-main-1;
-            }
-
-            .email,
-            .bio {
-                font-family: $font-default;
-                font-size: $size-h2;
                 color: $color-main-1;
             }
         }
@@ -52,23 +53,32 @@
     .user-details-area {
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 20px;
+        padding: $item-padding;
 
         .user-details-item {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            border-radius: $border-radius;
             background-color: $color-neutral-1;
+            border-radius: $border-radius;
             padding: $item-padding;
-        }
+            border-color: $color-main-2;
 
-        .user-details-nav-btn {
-            padding-top: $item-padding;
-            font-weight: $font-weight-medium;
+            .form-heading {
+                font-family: $font-default;
+                font-weight: $font-weight-bold;
+                font-size: $size-h2;
+                color: $color-main-1;
+                border-bottom: 5px solid $border-color;
+                padding-bottom: 10px;
+            }
 
-            .button-secondary {
-                border-color: $color-main-3;
+            .bio-content,
+            .address-content {
+                font-family: $font-default;
+                font-size: $size-h2;
+                color: $color-main-1;
+                background-color: $color-neutral-1;
+                border-radius: $border-radius;
+
             }
         }
     }
@@ -77,6 +87,8 @@
         display: flex;
         flex-direction: column;
         gap: 5px;
+        background-color: $color-neutral-1;
+        border-radius: $border-radius;
 
         .user-post {
             background-color: $color-main-3;
