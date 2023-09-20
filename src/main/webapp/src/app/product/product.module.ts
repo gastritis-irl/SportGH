@@ -11,6 +11,7 @@ import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-
 import { ImageComponent } from "../shared/image/image.component";
 import { ProductFilterComponent } from './product-filter/product-filter.component';
 import { TreeViewComponent } from '../shared/treeview/tree-view.component';
+import { PopoverDeleteComponent } from '../shared/popover/popover-delete.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         TreeViewComponent,
         ImageComponent,
         NgbModule,
+        PopoverDeleteComponent
     ],
     providers: [
         ProductComponent,

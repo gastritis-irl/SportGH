@@ -1,0 +1,68 @@
+<div class="category-edit-holder">
+    <div class="form-heading form-main-title">
+        {{editMode ? 'Edit' : 'Create'}} category
+    </div>
+    <div class="general-data">
+        <form class="general-data-form" (ngSubmit)="clickHandlerFunction()">
+            <div class="form-part">
+                <div class="form-heading">Details</div>
+                <div>
+                    <label class="form-part-label">Category name</label>
+                    <input class="form-part-input"
+                           type="text" name="name"
+                           [(ngModel)]="category.name"
+                           #name="ngModel"
+                    >
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                            *ngIf="name.dirty || name.touched || buttonPushed"
+                            [fieldName]="'Category name'"
+                            [required]="true"
+                            [length]="category.name?.length"
+                            [minlength]="4"
+                            [maxlength]="25"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-part-label">Description</label>
+                    <textarea class="description-area form-part-input"
+                              type="text" name="description"
+                              [(ngModel)]="category.description"
+                              #description="ngModel"
+                    ></textarea>
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                            *ngIf="description.dirty || description.touched || buttonPushed"
+                            [fieldName]="'Description'"
+                            [length]="category.description?.length"
+                            [maxlength]="1000"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+            </div>
+            <div class="form-part">
+                <div class="form-heading">Image</div>
+                <div>
+                    <sgh-image [imageIds]="[category.imageId]"
+                               [allowMultiple]="false"
+                               [mode]="paramCheck"
+                               (fileChange)="onFileChange($event)"
+                    ></sgh-image>
+                </div>
+            </div>
+
+            <div class="edit-btn-holder buttons">
+                <button
+                    class="button-primary button-default save-btn"
+                    type="submit">
+                    {{editMode ? "Save" : "Publish"}}
+                </button>
+                <button class="button-secondary button-default cancel-btn"
+                        routerLink="/admin/categories">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

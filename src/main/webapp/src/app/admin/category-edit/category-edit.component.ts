@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../category/category.service';
+import { CategoryService } from '../../category/category.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Category } from '../category/category.model';
+import { Category } from '../../category/category.model';
 import { ToastrService } from 'ngx-toastr';
-import { Image } from '../shared/image/image.model';
-import { ImageService } from '../shared/image/image.service';
+import { Image } from '../../shared/image/image.model';
+import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';
-import { ImageComponent } from '../shared/image/image.component';
+import { ImageComponent } from '../../shared/image/image.component';
 
 type ClickHandlerFunction = () => void;
 
 @Component({
     selector: 'sgh-category-edit',
     templateUrl: './category-edit.component.html',
-    styleUrls: ['./category-edit.component.scss']
+    styleUrls: [ './category-edit.component.scss' ]
 })
 export class CategoryEditComponent implements OnInit {
 
@@ -26,6 +26,8 @@ export class CategoryEditComponent implements OnInit {
     paramCheck: 'create' | 'edit' = 'create';
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
+    editMode: boolean = false;
+    buttonPushed: boolean = false;
 
     constructor(
         private categoryService: CategoryService,
@@ -59,11 +61,13 @@ export class CategoryEditComponent implements OnInit {
             if (param === 'new') {
                 this.paramCheck = 'create';
                 this.clickHandlerFunction = this.createCategory;
+                this.editMode = false;
             }
             const id: number = parseInt(param);
             if (!isNaN(id)) {
                 this.paramCheck = 'edit';
                 this.clickHandlerFunction = this.updateCategory;
+                this.editMode = true;
                 this.categoryService.getById(id).subscribe(
                     {
                         next: (data: Category) => {
@@ -179,7 +183,7 @@ export class CategoryEditComponent implements OnInit {
         this.categoryService.create(this.category).subscribe(
             {
                 next: (resp: Category): void => {
-                    this.router.navigate(['/admin/categories'])
+                    this.router.navigate([ '/admin/categories' ])
                         .then((): void => {
                             this.toastNotify.success(`Category "${resp.name}" successfully created!`);
                         })
@@ -204,7 +208,7 @@ export class CategoryEditComponent implements OnInit {
         this.categoryService.update(this.category.id, this.category).subscribe(
             {
                 next: (): void => {
-                    this.router.navigate(['/admin/categories'])
+                    this.router.navigate([ '/admin/categories' ])
                         .then((): void => {
                             this.toastNotify.success(`Category successfully updated!`);
                         })

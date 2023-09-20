@@ -23,7 +23,6 @@ $card-max-width-large: 280px;
 .product-list-holder {
     display: flex;
     flex-direction: column;
-    padding-bottom: $card-padding;
     gap: $product-gap;
 
     .product-list-info-holder {
@@ -176,7 +175,7 @@ $card-max-width-large: 280px;
                 object-fit: contain;
             }
 
-            .product-description {
+            .description-area {
                 display: -webkit-box;
                 flex-direction: column;
                 align-items: center;
@@ -204,7 +203,7 @@ $card-max-width-large: 280px;
     }
 
     .pagination-item-holder {
-        padding-right: $main-page-padding;
+        padding-right: $main-padding-inline;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;

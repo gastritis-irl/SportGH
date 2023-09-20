@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../category/category.service';
-import { Category } from '../category/category.model';
+import { CategoryService } from '../../category/category.service';
+import { Category } from '../../category/category.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ImageService } from '../shared/image/image.service';
+import { ImageService } from '../../shared/image/image.service';
 
 @Component({
     selector: 'sgh-admin',
-    templateUrl: './admin.component.html',
+    templateUrl: './category-list-manage.component.html',
+    styleUrls: [ './category-list-manage.component.scss' ],
 })
-export class AdminComponent implements OnInit {
+export class CategoryListManageComponent implements OnInit {
     categories: Category[] = [];
 
     constructor(
@@ -17,7 +18,8 @@ export class AdminComponent implements OnInit {
         private router: Router,
         private toastNotify: ToastrService,
         private imageService: ImageService,
-    ) { }
+    ) {
+    }
 
     ngOnInit(): void {
         this.categoryService.getAll().subscribe({
@@ -56,12 +58,12 @@ export class AdminComponent implements OnInit {
         });
     }
 
-    deleteCategory(categoryId: number | undefined, index: number): void {
-        this.categoryService.delete(categoryId).subscribe(
+    deleteCategory(categoryIdAndIndex: number[]): void {
+        this.categoryService.delete(categoryIdAndIndex[0]).subscribe(
             {
                 next: (): void => {
-                    this.categories.splice(index, 1);
-                    this.router.navigate(['/admin/categories'])
+                    this.categories.splice(categoryIdAndIndex[1], 1);
+                    this.router.navigate([ '/admin/categories' ])
                         .then((): void => {
                             this.toastNotify.success(`Category successfully deleted!`);
                         })
