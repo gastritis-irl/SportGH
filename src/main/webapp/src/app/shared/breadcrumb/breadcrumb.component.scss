@@ -1,11 +1,10 @@
 @use '../../../style-variables.scss' as *;
 
 $column-gap: 15px;
-$padding-block: 20px;
 
 .breadcrumb {
-    padding-left: $main-page-padding;
-    padding-block: $padding-block;
+    padding-left: $main-padding-inline;
+    padding-block: $main-padding-block;
     display: flex;
     flex-direction: row;
 
