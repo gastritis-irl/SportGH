@@ -5,10 +5,19 @@ import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -21,6 +30,22 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     static final int pageSize = 60;
+
+    private ImageService imageService;
+
+    @Autowired
+    public void setImageService(@Lazy ImageService imageService) {
+        this.imageService = imageService;
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<ProductOutDTO> saveInDTO(@Valid ProductInDTO productInDTO) {
+        Product product = productMapper.dtoToProduct(productInDTO);
+        save(product);
+        ProductOutDTO productOutDTO = productMapper.productToOut(product);
+        return new ResponseEntity<>(productOutDTO, HttpStatus.OK);
+    }
 
     private Specification<Product> filterByPrice(
         Double minPrice, Double maxPrice, Specification<Product> specification
@@ -131,8 +156,10 @@ public class ProductServiceImpl implements ProductService {
         log.info("Product saved successfully ({}) with ID: {}", product.getName(), product.getId());
     }
 
+    @Transactional
     @Override
     public void delete(Product product) {
+        imageService.deleteByProductId(product.getId());
         productRepository.delete(product);
     }
 }

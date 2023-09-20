@@ -17,4 +17,5 @@ public class ProductOutDTO {
     private String subCategoryName;
     private Long userId;
     private String username;
+    private Long[] imageIds;
 }

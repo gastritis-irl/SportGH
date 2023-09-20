@@ -38,4 +38,7 @@ public class ProductInDTO {
     @Min(value = 1, message = "UserId must be greater than 1")
     @NotNull(message = "Owner must be given")
     private Long userId;
+
+    @Size(max = 8, message = "Maximum 8 images can be uploaded")
+    private Long[] imageIds;
 }

@@ -1,8 +1,10 @@
 package edu.codespring.sportgh.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @ToString(callSuper = true)
@@ -37,4 +39,12 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product")
     private Set<RentRequest> requests;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Image> images = new HashSet<>();
+
+    public void addImage(Image image) {
+        images.add(image);
+    }
 }

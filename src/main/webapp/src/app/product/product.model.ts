@@ -12,4 +12,7 @@ export interface Product {
     subCategoryName?: string,
     userId?: number,
     username?: string,
+    imageIds?: number[],
+    imageDataUrls?: string[],
+    imagesLoaded?: boolean;
 }

@@ -7,10 +7,10 @@
             <div>
                 Order by
             </div>
-            <select class="order-by-select"
-                    [(ngModel)]="orderByElement" name="orderByElement"
-                    (ngModelChange)="orderBy()"
-            >
+            <select class="order-by-select" 
+                [(ngModel)]="orderByElement" 
+                name="orderByElement"
+                (ngModelChange)="orderBy()">
                 <option [ngValue]="'name#ASC'">Name A-Z</option>
                 <option [ngValue]="'name#DESC'">Name Z-A</option>
                 <option [ngValue]="'rentPrice#ASC'">Lowest price first</option>
@@ -49,8 +49,25 @@
     </div>
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
-            <img src="https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg" class="product-icon"
-                 alt="IMG"/>
+            <!-- Carousel for product images -->
+            <ngb-carousel 
+                *ngIf="product.imagesLoaded && product.imageDataUrls && product.imageDataUrls.length > 0"
+                [showNavigationArrows]="false"
+                [showNavigationIndicators]="false">
+                <ng-template ngbSlide *ngFor="let imageUrl of product.imageDataUrls; let isLast = last" class="carousel-item">
+                    <div style="height: 200px; background-size: cover; background-image: url('{{imageUrl}}'); border-radius: 5%;">
+                        <div class="carousel-item">
+                            <div *ngIf="isLast">Last slide</div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+
+            <!-- Default image when there are no product images -->
+            <img *ngIf="!product.imageDataUrls || product.imageDataUrls.length === 0"
+                src="https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png" class="product-icon"
+                alt="IMG" />
+
             <div class="product-name">{{ product.name }}</div>
             <div class="description-area">
                 {{ product.description }}
@@ -62,30 +79,30 @@
             </div>
         </div>
     </div>
+
     <div class="pagination-item-holder">
         <div *ngIf="currentPage>1" class="buttons">
             <div class="button-default button-primary" (click)="previousPage()">
-                <
+                < </div>
+            </div>
+            <div class="pagination-item buttons" *ngFor="let currentPageNumber of range(1,nrOfPages)">
+                <div *ngIf="currentPageNumber === currentPage"
+                    class="button-default button-primary pagination-item-current-page" disabled>
+                    {{currentPageNumber}}
+                </div>
+                <div *ngIf="currentPageNumber!=currentPage" class="button-default button-secondary"
+                    (click)="selectPage(currentPageNumber)">
+                    {{currentPageNumber}}
+                </div>
+            </div>
+            <div *ngIf="currentPage<nrOfPages" class="buttons">
+                <div class="button-default button-primary" (click)="nextPage()">
+                    >
+                </div>
             </div>
         </div>
-        <div class="pagination-item buttons" *ngFor="let currentPageNumber of range(1,nrOfPages)">
-            <div *ngIf="currentPageNumber==currentPage"
-                 class="button-default button-primary pagination-item-current-page" disabled>
-                {{currentPageNumber}}
-            </div>
-            <div *ngIf="currentPageNumber!=currentPage" class="button-default button-secondary"
-                 (click)="selectPage(currentPageNumber)">
-                {{currentPageNumber}}
-            </div>
-        </div>
-        <div *ngIf="currentPage<nrOfPages" class="buttons">
-            <div class="button-default button-primary" (click)="nextPage()">
-                >
-            </div>
+        <div *ngIf="products.length===0" class="no-item-found-img-holder">
+            <img class="no-item-found-img" src="https://saferoomdesigns.com/wp-content/uploads/2021/06/item_no.png"
+                alt="No item found">
         </div>
     </div>
-    <div *ngIf="products.length===0" class="no-item-found-img-holder">
-        <img class="no-item-found-img" src="https://saferoomdesigns.com/wp-content/uploads/2021/06/item_no.png"
-             alt="No item found">
-    </div>
-</div>

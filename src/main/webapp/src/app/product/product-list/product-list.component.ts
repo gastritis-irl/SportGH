@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../product.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { Category } from '../../category/category.model';
@@ -8,7 +8,7 @@ import { Category } from '../../category/category.model';
     templateUrl: './product-list.component.html',
     styleUrls: [ './product-list.component.scss' ],
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent{
 
     @Input() products: Product[] = [];
     @Input() categories: Category[] = [];
@@ -29,9 +29,6 @@ export class ProductListComponent implements OnInit {
     @Output() resetFilterEvent: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
-    }
-
-    ngOnInit(): void {
     }
 
     resetFilters(): void {

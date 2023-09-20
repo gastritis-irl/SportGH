@@ -5,6 +5,10 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../user/user.model';
 import { ViewportScroller } from '@angular/common';
+import { Image } from '../../shared/image/image.model';
+import { ImageService } from '../../shared/image/image.service';
+import { ViewChild } from '@angular/core';
+import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -14,8 +18,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProductDetailsComponent implements OnInit {
 
+    @ViewChild(NgbCarousel) carousel!: NgbCarousel;
+
     product: Product = {};
     owner: User = {};
+    imageDatas: Image[] = [];
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
 
@@ -25,8 +32,40 @@ export class ProductDetailsComponent implements OnInit {
         private router: Router,
         private viewPortScroller: ViewportScroller,
         private toastNotify: ToastrService,
+        private imageService: ImageService,
         private modalService: NgbModal,
     ) {
+    }
+
+    loadProductImages(productId: number): void {
+
+        this.imageService.getImageFilesByProductId(productId).subscribe({
+            next: async (response: {name:string, data:Uint8Array}[]) => {
+                try {
+                    const imageDTOs: Image[] = response;
+                    this.product.imageDataUrls = [];
+
+                    if (!imageDTOs || imageDTOs.length === 0) {
+                        return;
+                    }
+                    for (const imageDTO of imageDTOs) {
+                        if (!imageDTO.data) {
+                            continue;
+                        }
+
+                        const base64String = imageDTO.data
+                        const imageUrl = 'data:image/jpeg;base64,' + base64String;
+                        this.product.imageDataUrls.push(imageUrl);
+                    }
+
+                } catch (error) {
+                    this.toastNotify.error(`Error loading images: ${error}`);
+                }
+            },
+            error: (error) => {
+                this.toastNotify.error(`Error fetching images`, error);
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -48,6 +87,8 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (data: Product): void => {
                     this.product = data;
+                    this.loadProductImages(this.product.id ? this.product.id : 0);
+
                 },
                 error: (error): void => {
                     console.error(error);
