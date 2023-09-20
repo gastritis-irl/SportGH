@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -18,6 +20,16 @@ public class RentServiceImpl implements RentService {
     @Override
     public RentRequest findByRenterAndProduct(User renter, Product product) {
         return rentRepository.findByRenterAndProduct(renter, product);
+    }
+
+    @Override
+    public Collection<RentRequest> findByProduct(Product product) {
+        return rentRepository.findByProduct(product);
+    }
+
+    @Override
+    public Collection<RentRequest> findByOwnerId(Long ownerId) {
+        return rentRepository.findByProductOwnerId(ownerId);
     }
 
     @Override

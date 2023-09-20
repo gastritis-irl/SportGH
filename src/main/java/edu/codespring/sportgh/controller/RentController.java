@@ -1,6 +1,7 @@
 package edu.codespring.sportgh.controller;
 
-import edu.codespring.sportgh.dto.UserOutDTO;
+import edu.codespring.sportgh.dto.RentRequestOutDTO;
+import edu.codespring.sportgh.mapper.RentRequestMapper;
 import edu.codespring.sportgh.mapper.UserMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.RentRequest;
@@ -28,10 +29,10 @@ public class RentController {
     private final UserService userService;
     private final UserMapper userMapper;
     private final RentService rentService;
+    private final RentRequestMapper rentRequestMapper;
 
     @GetMapping
-    public ResponseEntity<?> getRentRequestsByProductOrOwner(
-        // @RequestHeader("Authorization") String idToken,
+    public ResponseEntity<Collection<RentRequestOutDTO>> getRentRequestsByProductOrOwner(
         @RequestParam("productId") Optional<Long> productId,
         @RequestParam("ownerId") Optional<Long> ownerId
     ) {
@@ -53,18 +54,24 @@ public class RentController {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
 
-            Collection<RentRequest> rentRequests;
+            return new ResponseEntity<>(
+                rentRequestMapper.rentRequestsToOuts(rentService.findByProduct(product)),
+                HttpStatus.OK
+            );
         } else {
             if (!userId.equals(ownerId.get())) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
+
+            return new ResponseEntity<>(
+                rentRequestMapper.rentRequestsToOuts(rentService.findByOwnerId(ownerId.get())),
+                HttpStatus.OK
+            );
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<UserOutDTO> createRentRequest(
-        // @RequestHeader("Authorization") String idToken,
+    public ResponseEntity<?> createRentRequest(
         @RequestParam Optional<Long> productId
     ) {
         if (productId.isEmpty()) {
@@ -85,8 +92,12 @@ public class RentController {
         if (product.isPublicContact()) {
             return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
         } else {
-            rentService.createRentRequest(user, product);
-            return new ResponseEntity<>(HttpStatus.OK);
+            if (rentService.findByRenterAndProduct(user, product) == null) {
+                rentService.createRentRequest(user, product);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }
     }
 
@@ -119,7 +130,6 @@ public class RentController {
 
     @PutMapping
     public ResponseEntity<?> answerRentRequest(
-        // @RequestHeader("Authorization") String idToken,
         @RequestParam Optional<Long> productId,
         @RequestParam Optional<Long> renterId,
         @RequestParam Optional<String> answer
