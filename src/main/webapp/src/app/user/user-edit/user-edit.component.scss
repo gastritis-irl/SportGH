@@ -1,75 +1,9 @@
-//user-edit desgin scss
-
-// Path: src/app/user/user-edit/user-edit.component.scss
-
-// Compare this snippet from src/app/user/user-details/user.component.scss:
-
 @use '../../../style-variables.scss' as *;
 
-.user-container {
-    align-items: center;
-    background-color: $color-main-3; 
-    padding: 2rem;
-    border-radius: $border-radius; // Using the border-radius variable defined in your global variables
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.holder {
+    padding-inline: $main-padding-inline;
 
-    .row {
-        margin: 0;
-
-        .col-md-6 {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            .user-header {
-                font-family: $font-default; // Using the font variable defined in your global variables
-                font-size: $heading-font-size; // Using the font size variable defined in your global variables
-                color: $color-main-1; // Using a color variable defined in your global variables
-                margin-bottom: 2rem;
-            }
-
-            form {
-                width: 100%;
-                max-width: 500px;
-
-                .form-group {
-                    margin-bottom: 1.5rem;
-
-                    label {
-                        display: block;
-                        margin-bottom: 0.5rem;
-                        font-weight: $font-weight-bold; // Using the font weight variable defined in your global variables
-                        color: $font-color-1; // Using the font color variable defined in your global variables
-                    }
-
-                    input {
-                        width: 100%;
-                        padding: 0.75rem;
-                        border: 1px solid $border-color; // Using the border color variable defined in your global variables
-                        border-radius: $border-radius; // Using the border-radius variable defined in your global variables
-                        font-family: $font-default; // Using the font variable defined in your global variables
-
-                        &:focus {
-                            outline: none;
-                            border-color: $color-main-1; // Using a color variable defined in your global variables
-                        }
-                    }
-                }
-
-                .btn-primary {
-                    padding: 0.75rem 1.5rem;
-                    font-size: 1rem;
-                    font-family: $font-default; // Using the font variable defined in your global variables
-                    background-color: $color-btn-2; // Using a color variable defined in your global variables
-                    color: $color-btn-1; // Using a color variable defined in your global variables
-                    border: none;
-                    border-radius: $border-radius; // Using the border-radius variable defined in your global variables
-
-                    &:hover {
-                        background-color: darken($color-btn-2, 10%);
-                    }
-                }
-            }
-        }
+    .form-main-title{
+        padding: 0;
     }
 }

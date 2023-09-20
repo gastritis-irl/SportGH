@@ -33,7 +33,7 @@ export class UserEditComponent implements OnInit {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
-                    this.loadData(params['user_id']);
+                    this.loadData(params['email']);
                 },
                 error: (error): void => {
                     console.error(error);
@@ -43,9 +43,9 @@ export class UserEditComponent implements OnInit {
         );
     }
 
-    loadData(user_id: string | undefined): void {
-        if (user_id) {
-            this.userService.getByUid(user_id).subscribe({
+    loadData(email: string | undefined): void {
+        if (email) {
+            this.userService.getByEmail(email).subscribe({
                 next: (data: User): void => {
                     this.user = data;
                 },

@@ -8,6 +8,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { RouterModule } from '@angular/router';
 import { UserRoute } from './user.route';
 import { ImageComponent } from '../shared/image/image.component';
+import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { ImageComponent } from '../shared/image/image.component';
         FormsModule,
         RouterModule,
         UserRoute,
-        ImageComponent
+        ImageComponent,
+        FormCheckLabelComponent
     ],
     exports: [
         UserDetailsComponent // If you want to use it in other modules

@@ -23,7 +23,6 @@ export class ProductDetailsComponent implements OnInit {
 
     product: Product = {};
     productLender: User = { id: undefined, username: '', email: '', phoneNumber: '', address: '', imageId: 0, imageDataUrl: undefined };
-    imageDatas: Image[] = [];
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
 
