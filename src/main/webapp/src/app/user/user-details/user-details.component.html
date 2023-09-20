@@ -17,8 +17,8 @@
         </div>
 
         <div class="user-description user-details-item" id="user-desc">
-            <div class="heading">Profile Details</div>
-            <div class="user-description-content">
+            <div class="form-heading">Profile Details</div>
+            <div class="general-data-form">
                 Full Name: {{ user.fullName }} <br>
                 Phone: {{ user.phoneNumber }} <br>
                 Address: {{ user.address }}, {{ user.city }}, {{ user.country }}
@@ -26,7 +26,7 @@
         </div>
 
         <div class="user-products user-details-item" id="user-products">
-            <div class="heading">Products</div>
+            <div class="form-heading">Products</div>
             <div class="user-products-content">
                 <div class="user-post" *ngFor="let post of user?.products">
                     <div>{{ post.description }}</div>
