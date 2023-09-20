@@ -16,7 +16,7 @@ import { IdToken } from '../../authentication/firebase-id-token.model';
     standalone: true,
     imports: [ NgbDropdownModule, RouterLink, AuthModule, NgForOf, NgIf, FormsModule ],
     templateUrl: './navbar.component.html',
-    styleUrls: [ './navbar.scss' ],
+    styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
 

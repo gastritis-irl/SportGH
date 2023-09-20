@@ -10,6 +10,8 @@ import { NgbCollapse, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
 import { ProductFilterComponent } from './product-filter/product-filter.component';
 import { TreeViewComponent } from '../shared/treeview/tree-view.component';
+import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
+import { PopoverDeleteComponent } from '../shared/popover/popover-delete.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +30,8 @@ import { TreeViewComponent } from '../shared/treeview/tree-view.component';
         FormCheckLabelComponent,
         NgbCollapse,
         TreeViewComponent,
+        BreadcrumbComponent,
+        PopoverDeleteComponent
     ],
     providers: [
         ProductComponent,

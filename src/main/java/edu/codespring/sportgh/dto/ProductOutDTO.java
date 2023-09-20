@@ -12,6 +12,7 @@ public class ProductOutDTO {
     private String location;
     private Double rentPrice;
     private Long categoryId;
+    private String categoryName;
     private Long subCategoryId;
     private String subCategoryName;
     private Long userId;

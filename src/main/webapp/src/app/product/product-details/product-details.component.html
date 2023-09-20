@@ -1,3 +1,4 @@
+<sgh-breadcrumb [product]="product"></sgh-breadcrumb>
 <ng-template #deletePopoverContent>
     <div class="buttons">
         <div (click)="deleteProduct()" class="button-default button-primary">
@@ -10,29 +11,22 @@
     <div class="product-main-area">
         <div class="heading-items">
             <div class="product-name-and-avail">
-                <div class="heading product-heading">
+                <div class="form-heading product-heading">
                     {{product.name}}
                     <div *ngIf="product.userUid===getLoggedInUserUid()" class="product-links buttons">
-                        <button class="product-edit-link button-default button-secondary"
+                        <div class="product-edit-link button-default button-secondary"
                              routerLink="/products/{{product.id}}/edit">
                             Edit
-                        </button>
-                        <button
-                            class="product-edit-link button-default button-primary"
-                            placement="bottom"
-                            [ngbPopover]="deletePopoverContent"
-                            popoverTitle="Are you sure?"
-                            [autoClose]="'outside'"
-                            triggers="manual"
-                            #p="ngbPopover"
-                            (click)="p.open()"
-                        >
-                            Delete
-                        </button>
+                        </div>
+                        <sgh-popover-delete
+                            [deleteData]="[]"
+                            (deleteEvent)="deleteProduct()"
+                        ></sgh-popover-delete>
                     </div>
                 </div>
-                <div *ngIf="product.available" class="product-avail-1 heading">Available</div>
-                <div *ngIf="!product.available" class="product-avail-0 heading">Currently unavailable</div>
+                <div class="product-category-and-subcategory">
+                    {{product.categoryName}} - {{product.subCategoryName}}
+                </div>
             </div>
         </div>
 
@@ -47,7 +41,7 @@
                 <img src="" alt="[Images]">
             </div>
             <div class="pricing">
-                <div class="heading">{{product.rentPrice}} RON / day</div>
+                <div class="form-heading">{{product.rentPrice}} RON / day</div>
 
                 <div class="rent-options">
                     <div class="rent-dates">
@@ -84,15 +78,15 @@
             <div (click)="scrollToPagePart('prod-loc')" class="button-default button-secondary">Location</div>
         </div>
 
-        <div class="product-description product-details-item" id="prod-desc">
-            <div class="heading">Description</div>
+        <div class="description-area product-details-item" id="prod-desc">
+            <div class="form-heading">Description</div>
             <div class="product-description-content">
                 {{product.description}}
             </div>
         </div>
 
         <div class="product-location product-details-item" id="prod-loc">
-            <div class="heading">Location</div>
+            <div class="form-heading">Location</div>
             <div class="product-location-content">
                 {{product.location}}
             </div>
