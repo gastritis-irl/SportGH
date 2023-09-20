@@ -39,8 +39,6 @@ public class UserController {
         if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals(user)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        // check if request is not accepted
-        // if request-not-accepted -> unauthorized
 
         return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
