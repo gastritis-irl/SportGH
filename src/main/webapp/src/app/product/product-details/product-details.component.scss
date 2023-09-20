@@ -25,6 +25,7 @@ $icon-size: 50px;
     .product-main-area {
         border-bottom: solid;
         border-color: $color-main-2;
+        padding-bottom: $row-padding;
 
         .heading-items {
             display: flex;
@@ -75,6 +76,7 @@ $icon-size: 50px;
 
                 .product-category-and-subcategory {
                     color: $color-main-2;
+                    padding-bottom: $item-gap-1;
                 }
             }
         }
@@ -206,7 +208,7 @@ $icon-size: 50px;
                     flex: 0 0 auto;
                     scroll-snap-align: start;
                     width: 600px;
-                    height: fit-content;
+                    height: 600px;
                     background-color: $color-neutral-1;
                     border: $border;
                     border-radius: $border-radius;
@@ -233,7 +235,7 @@ $icon-size: 50px;
                 border: $border;
                 padding: $item-padding;
                 gap: $item-gap-1;
-                max-height: fit-content;
+                height: fit-content;
 
                 .rent-options {
 
@@ -308,6 +310,7 @@ $icon-size: 50px;
     .product-details-area {
         display: flex;
         flex-direction: column;
+
         gap: $item-gap-1;
 
         .product-details-item {
