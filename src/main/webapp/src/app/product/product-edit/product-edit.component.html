@@ -80,8 +80,11 @@
             </div>
             <div class="images form-part">
                 <div class="form-heading">Images</div>
-                <sgh-image (fileChange)="onFileChange($event)" (fileRemoved)="onFileRemoved($event)" [imageIds]="_imageIds"
-                    [allowMultiple]="true" [mode]="modeParam">
+                <sgh-image (fileChange)="onFileChange($event)"
+                           (fileRemoved)="onFileRemoved($event)"
+                           [imageIds]="_imageIds"
+                           [allowMultiple]="true"
+                           [mode]="modeParam">
                 </sgh-image>
 
             </div>
@@ -91,10 +94,10 @@
                     <div>
                         <label class="form-part-label">Type address</label>
                         <input class="product-address-text form-part-input"
-                            type="text"
-                            name="location"
-                            [(ngModel)]="product.location"
-                            #location="ngModel">
+                               type="text"
+                               name="location"
+                               [(ngModel)]="product.location"
+                               #location="ngModel">
                         <div class="form-check-label">
                             <sgh-form-ch-lbl
                                 *ngIf="location.dirty || location.touched || buttonPushed"

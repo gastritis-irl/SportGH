@@ -8,10 +8,12 @@ $item-gap: 15px;
 
     .images{
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: flex-start;
         gap: $item-gap;
         overflow-x: auto;
+        // left aligned
+
     }
 
     .product-pricing {
