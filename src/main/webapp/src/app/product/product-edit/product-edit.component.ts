@@ -112,6 +112,7 @@ export class ProductEditComponent implements OnInit {
     createProduct(): void {
         const idToken: IdToken | null = this.fbIdTokenService.getDecodedIdToken();
         if (!idToken) {
+            this.toastNotify.warning('Please log in first.');
             return;
         } else {
             this.product.userUid = idToken.user_id;

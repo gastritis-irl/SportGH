@@ -1,11 +1,4 @@
 <sgh-breadcrumb [product]="product"></sgh-breadcrumb>
-<ng-template #deletePopoverContent>
-    <div class="buttons">
-        <div (click)="deleteProduct()" class="button-default button-primary">
-            Delete
-        </div>
-    </div>
-</ng-template>
 
 <div class="product-details">
     <div class="product-main-area">
@@ -14,7 +7,7 @@
                 <div class="form-heading product-heading">
                     {{product.name}}
                     <div *ngIf="product.userUid===getLoggedInUserUid()" class="product-links buttons">
-                        <div class="product-edit-link button-default button-secondary"
+                        <div class="product-edit-link button-default button-primary"
                              routerLink="/products/{{product.id}}/edit">
                             Edit
                         </div>
