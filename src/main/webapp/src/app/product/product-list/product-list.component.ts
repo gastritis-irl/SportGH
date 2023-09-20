@@ -1,18 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../product.model';
-import { ImageService } from '../../shared/image/image.service';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { Category } from '../../category/category.model';
-import { ToastrService } from 'ngx-toastr';
-import { ChangeDetectorRef } from '@angular/core';
-import { OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'sgh-product-list',
     templateUrl: './product-list.component.html',
     styleUrls: [ './product-list.component.scss' ],
 })
-export class ProductListComponent implements OnChanges {
+export class ProductListComponent{
 
     @Input() products: Product[] = [];
     @Input() categories: Category[] = [];
@@ -32,49 +28,7 @@ export class ProductListComponent implements OnChanges {
     @Output() clearFilterEvent: EventEmitter<string> = new EventEmitter<string>();
     @Output() resetFilterEvent: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private imageService: ImageService, private toastNotify: ToastrService, private cdr: ChangeDetectorRef) {
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['products'] && changes['products'].currentValue) {
-            this.loadProductImages(changes['products'].currentValue);
-        }
-    }
-
-
-    loadProductImages(products: Product[]): void {
-        for (const product of products) {
-
-            if (!product.id) {
-                continue;
-            }
-            this.imageService.getImageFilesByProductId(product.id).subscribe({
-                next: (response: { name: string, data: Uint8Array }[]) => {
-                    if (!response) {
-                        return;
-                    }
-                    try {
-                        product.imageDataUrls = [];
-                        for (const imageDTO of response) {
-                            if (!imageDTO.data) {
-                                continue;
-                            }
-
-                            const base64String = imageDTO.data;
-                            const imageUrl = 'data:image/jpeg;base64,' + base64String;
-                            product.imageDataUrls.push(imageUrl);
-                        }
-                        product.imagesLoaded = true;  
-                        this.cdr.markForCheck();
-                    } catch (error) {
-                        this.toastNotify.error(`Error loading images: ${error}`);
-                    }
-                },
-                error: (error) => {
-                    this.toastNotify.error(`Error fetching images`, error);
-                }
-            });
-        }
+    constructor() {
     }
 
     resetFilters(): void {
