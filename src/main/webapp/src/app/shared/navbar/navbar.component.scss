@@ -17,105 +17,109 @@ $row-gap-nav: 15px;
 $gap-nav-header-icon: 0.5em;
 
 /* ----------Nav (header, title, searchbar, login)---------- */
-.nav-header-frame {
-    background-color: $color-neutral-1;
-    padding-left: $main-page-padding;
-    padding-right: $main-page-padding;
+.nav-holder {
+    margin-bottom: $main-padding-block;
 
-    .nav-header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .nav-header-frame {
+        background-color: $color-neutral-1;
+        padding-left: $main-padding-inline;
+        padding-right: $main-padding-inline;
 
-        @media (max-width: $media-width-limit) {
-            flex-direction: column;
-            row-gap: $row-gap-nav;
-            padding-top: $padding-nav-vert;
-            padding-bottom: $padding-nav-vert;
-        }
-        @media(min-width: $media-width-limit) {
-            flex-direction: row;
-            height: $height-nav-header;
-            justify-content: space-between;
-            gap: $gap-nav-1
-        }
-
-        .nav-header-logo {
+        .nav-header-content {
             display: flex;
-            flex-direction: row;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: $gap-nav-header-icon;
 
-            &:hover {
-                cursor: pointer;
+            @media (max-width: $media-width-limit) {
+                flex-direction: column;
+                row-gap: $row-gap-nav;
+                padding-top: $padding-nav-vert;
+                padding-bottom: $padding-nav-vert;
             }
-
-            .nav-header-logo-icon {
-                content: $nav-header-logo-icon;
-                width: $height-nav-header;
+            @media(min-width: $media-width-limit) {
+                flex-direction: row;
                 height: $height-nav-header;
-                padding: 2%;
+                justify-content: space-between;
+                gap: $gap-nav-1
             }
 
-            .nav-header-logo-title {
-                font-size: $size-h1;
-                font-weight: bold;
-                color: $color-main-1;
+            .nav-header-logo {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: $gap-nav-header-icon;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                .nav-header-logo-icon {
+                    content: $nav-header-logo-icon;
+                    width: $height-nav-header;
+                    height: $height-nav-header;
+                    padding: 2%;
+                }
+
+                .nav-header-logo-title {
+                    font-size: $size-h1;
+                    font-weight: bold;
+                    color: $color-main-1;
+                }
             }
         }
     }
-}
 
 
-/* ----------Nav (with menu options)---------- */
-.nav-frame {
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    padding-left: $main-page-padding;
-    background-color: $color-main-1;
-
-    @media(min-width: $media-width-limit) {
-        height: $height-nav;
-    }
-
-    .nav-content {
-        display: flex;
-        font-size: $size-default;
-        color: $color-neutral-1;
-        background-color: $color-main-1;
+    /* ----------Nav (with menu options)---------- */
+    .nav-frame {
         position: relative;
+        display: flex;
+        justify-content: flex-start;
+        padding-left: $main-padding-inline;
+        background-color: $color-main-1;
 
-        @media (max-width: $media-width-limit) {
-            flex-direction: column;
-            row-gap: $gap-nav-2;
-            align-items: unset;
-        }
         @media(min-width: $media-width-limit) {
-            flex-direction: row;
-            gap: $gap-nav-1;
-            align-items: center;
+            height: $height-nav;
         }
 
-        .nav-content-link {
+        .nav-content {
+            display: flex;
             font-size: $size-default;
+            color: $color-neutral-1;
+            background-color: $color-main-1;
+            position: relative;
 
-            a {
-                color: $color-neutral-1;
-                text-decoration: none;
+            @media (max-width: $media-width-limit) {
+                flex-direction: column;
+                row-gap: $gap-nav-2;
+                align-items: unset;
             }
-        }
-
-        .nav-link-item {
-
-            &:hover {
-                background-color: $color-main-3;
+            @media(min-width: $media-width-limit) {
+                flex-direction: row;
+                gap: $gap-nav-1;
+                align-items: center;
             }
 
-            a {
-                color: $color-neutral-2;
-                text-decoration: none;
+            .nav-content-link {
+                font-size: $size-default;
+
+                a {
+                    color: $color-neutral-1;
+                    text-decoration: none;
+                }
+            }
+
+            .nav-link-item {
+
+                &:hover {
+                    background-color: $color-main-3;
+                }
+
+                a {
+                    color: $color-neutral-2;
+                    text-decoration: none;
+                }
             }
         }
     }

@@ -12,7 +12,7 @@ $date-picker-size: 140px;
 $border: 2px solid $color-main-3;
 $icon-size: 50px;
 
-.heading {
+.form-heading {
     color: $color-main-1;
     font-family: $font-default;
     font-weight: $font-weight-1;
@@ -20,13 +20,11 @@ $icon-size: 50px;
 }
 
 .product-details {
-    padding-left: $main-page-padding;
-    padding-right: $main-page-padding;
+    padding-inline: $main-page-padding;
 
     .product-main-area {
         border-bottom: solid;
         border-color: $color-main-2;
-        padding-bottom: $row-padding;
 
         .heading-items {
             display: flex;

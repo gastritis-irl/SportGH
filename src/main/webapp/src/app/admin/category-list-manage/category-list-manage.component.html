@@ -1,0 +1,39 @@
+<ng-template #deletePopoverContent>
+    <sgh-popover-delete
+            [deleteData]="[]"
+            (deleteEvent)="deleteCategory($event)"
+    >
+    </sgh-popover-delete>
+</ng-template>
+
+<div class="category-list-manage-holder">
+    <div class="category-list-manage">
+        <div class="title">
+            Categories
+        </div>
+        <div class="buttons">
+            <div class="button-default button-primary" routerLink="/admin/categories/new">Create new category +</div>
+        </div>
+        <div class="categories">
+            <div class="category" *ngFor="let category of categories; let i = index">
+                <div class="name row-item">
+                    {{category.name}}
+                </div>
+                <div class="image-holder row-item">
+                    <img class="image" src="{{category.imageDataUrl}}" alt="Category image">
+                </div>
+                <div class="row-item">
+                    <div class="buttons">
+                        <div class="button-default button-primary" routerLink="/admin/categories/{{category.id}}">
+                            Edit
+                        </div>
+                    </div>
+                    <sgh-popover-delete
+                        [deleteData]="[category.id?category.id:0, i]"
+                        (deleteEvent)="deleteCategory($event)"
+                    ></sgh-popover-delete>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

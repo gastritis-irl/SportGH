@@ -21,6 +21,7 @@ $hover-bg-color: $border-color;
 $hover-icon-height: $category-icon-height;
 $hover-icon-filter: blur(1px);
 $hover-icon-opacity: 0.4;
+$padding-title: 30px;
 
 // Min and Max width for cards
 $card-max-width-medium: 300px; // 300px for tablet screens
@@ -31,17 +32,15 @@ $animation-duration: 3s;
 $animation-translation: -20px;
 
 .category-list-holder {
-    padding-left: 10%;
+    padding-inline: $main-padding-inline;
 
     .category-heading {
         color: $color-main-1;
-        font-size: $heading-font-size;
+        font-size: xx-large;
         font-family: $font-default;
         font-weight: $font-weight-bold;
-        line-height: $heading-line-height;
-        text-align: start;
-        margin-bottom: $category-gap;
-        padding-top: $category-name-padding;
+        text-align: center;
+        padding-block: $padding-title;
     }
 
     .categories {
@@ -49,7 +48,7 @@ $animation-translation: -20px;
         flex-direction: row;
         flex-wrap: wrap;
         gap: $category-gap;
-        justify-content: flex-start;
+        justify-content: center;
 
         @media (max-width: $breakpoint-small) {
             flex-direction: column;

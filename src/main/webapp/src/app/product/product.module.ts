@@ -11,6 +11,7 @@ import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-
 import { ProductFilterComponent } from './product-filter/product-filter.component';
 import { TreeViewComponent } from '../shared/treeview/tree-view.component';
 import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
+import { PopoverDeleteComponent } from '../shared/popover/popover-delete.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
         NgbCollapse,
         TreeViewComponent,
         BreadcrumbComponent,
+        PopoverDeleteComponent
     ],
     providers: [
         ProductComponent,

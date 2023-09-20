@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin.component';
-import { CategoryEditComponent } from '../category-edit/category-edit.component';
+import { CategoryListManageComponent } from './category-list-manage/category-list-manage.component';
+import { CategoryEditComponent } from './category-edit/category-edit.component';
 
 const routes: Routes = [
     {
         path: 'admin/categories',
-        component: AdminComponent,
+        component: CategoryListManageComponent,
     },
     {
         path: 'admin/categories/:categoryId',
