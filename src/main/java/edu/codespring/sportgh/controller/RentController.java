@@ -96,7 +96,10 @@ public class RentController {
                 rentService.createRentRequest(user, product);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(
+                    "A request has already been sent to the owner. Please wait for their response.",
+                    HttpStatus.BAD_REQUEST
+                );
             }
         }
     }

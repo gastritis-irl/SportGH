@@ -107,7 +107,7 @@ export class ProductDetailsComponent implements OnInit {
                     this.toastNotify.info('Request sent successfully.');
                 },
                 error: (error): void => {
-                    console.error(error);
+                    this.toastNotify.warning(error.error);
                 }
             });
         }
