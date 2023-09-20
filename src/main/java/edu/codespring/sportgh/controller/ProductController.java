@@ -5,6 +5,7 @@ import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
+import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.ProductService;
 import edu.codespring.sportgh.service.UserService;
 import jakarta.validation.Valid;
@@ -12,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -28,6 +28,7 @@ public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
     private final UserService userService;
+    private final SecurityUtil securityUtil;
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
@@ -84,9 +85,8 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals(
-            productMapper.dtoToProduct(productInDTO).getUser())
-            && !"ADMIN".equals(productMapper.dtoToProduct(productInDTO).getUser().getRole())
+        if (!securityUtil.isCurrentlyLoggedIn(productMapper.dtoToProduct(productInDTO).getUser())
+                && !"ADMIN".equals(productMapper.dtoToProduct(productInDTO).getUser().getRole())
         ) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -107,8 +107,8 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals(product.getUser())
-            && !"ADMIN".equals(product.getUser().getRole())) {
+        if (!securityUtil.isCurrentlyLoggedIn(product.getUser())
+                && !"ADMIN".equals(product.getUser().getRole())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 

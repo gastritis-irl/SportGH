@@ -3,11 +3,11 @@ package edu.codespring.sportgh.controller;
 import edu.codespring.sportgh.dto.UserOutDTO;
 import edu.codespring.sportgh.mapper.UserMapper;
 import edu.codespring.sportgh.model.User;
+import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,6 +20,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final SecurityUtil securityUtil;
 
     @GetMapping
     public ResponseEntity<Collection<UserOutDTO>> findAll() {
@@ -34,7 +35,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals(user)) {
+        if (!securityUtil.isCurrentlyLoggedIn(user)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
