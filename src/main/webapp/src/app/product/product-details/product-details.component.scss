@@ -98,7 +98,7 @@ $icon-size: 50px;
 
             .images {
                 display: flex;
-                gap: $item-gap-1;
+                // gap: $item-gap-1;
                 margin-right: $item-gap-1;
                 flex-direction: row;
                 align-items: flex-start; 
@@ -110,6 +110,8 @@ $icon-size: 50px;
                     object-fit: contain;
                     border-radius: $border-radius;
                     cursor: pointer;
+                    margin-left: 0;
+                    padding-left: 0;
                 }
 
                 @media(max-width: $breakpoint-large) {
@@ -198,6 +200,7 @@ $icon-size: 50px;
                 border: $border;
                 padding: $item-padding;
                 gap: $item-gap-1;
+                max-height: fit-content;
 
                 .rent-options {
 
