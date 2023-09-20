@@ -55,10 +55,10 @@ public class RentController {
             return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
         } else {
             RentRequest rentRequest = rentService.findByRenterAndProduct(user, product);
-            if ("accepted".equals(rentRequest.getRequestStatus())) {
+            if (rentRequest != null && "accepted".equals(rentRequest.getRequestStatus())) {
                 return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
             } else {
-                if ("active".equals(rentRequest.getRequestStatus())) {
+                if (rentRequest != null && "active".equals(rentRequest.getRequestStatus())) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 } else {
                     return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
