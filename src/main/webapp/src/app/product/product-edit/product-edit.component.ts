@@ -29,7 +29,7 @@ export class ProductEditComponent implements OnInit {
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
     editMode: boolean = false;
-    modeParam: "create" | "edit" = "create";
+    modeParam: 'create' | 'edit' = 'create';
     buttonPushed: boolean = false;
     _imageIds?: number[];
     newImageFiles: File[] = [];
@@ -88,11 +88,11 @@ export class ProductEditComponent implements OnInit {
         if (!param) {
             this.clickHandlerFunction = this.createProduct;
             this.editMode = false;
-            this.modeParam = "create";
+            this.modeParam = 'create';
         } else {
             const id: number = parseInt(param);
             if (!isNaN(id)) {
-                this.modeParam = "edit";
+                this.modeParam = 'edit';
                 this.clickHandlerFunction = this.editProduct;
                 this.editMode = true;
 
