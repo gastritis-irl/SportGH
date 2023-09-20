@@ -1,3 +1,12 @@
+<sgh-breadcrumb [product]="product"></sgh-breadcrumb>
+<ng-template #deletePopoverContent>
+    <div class="buttons">
+        <div (click)="deleteProduct()" class="button-default button-primary">
+            Delete
+        </div>
+    </div>
+</ng-template>
+
 <div class="product-details">
     <div class="product-main-area">
         <div class="heading-items">
@@ -15,8 +24,9 @@
                         ></sgh-popover-delete>
                     </div>
                 </div>
-                <div *ngIf="product.available" class="product-avail-1 heading">Available</div>
-                <div *ngIf="!product.available" class="product-avail-0 heading">Currently unavailable</div>
+                <div class="product-category-and-subcategory">
+                    {{product.categoryName}} - {{product.subCategoryName}}
+                </div>
             </div>
         </div>
 
