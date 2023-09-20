@@ -14,7 +14,7 @@ import { User } from '../../user/user.model';
         NgIf
     ],
     templateUrl: './breadcrumb.component.html',
-    styleUrls: [ './breadcrumb.component.scss' ],
+    styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent implements OnInit {
 

@@ -1,7 +1,10 @@
 <div class="breadcrumb">
+    <div routerLink="/">
+        Home
+    </div>
+
     <!--    General-->
     <div *ngIf="!user && !product && !filter">
-        <div routerLink="/">Home</div>
         <div class="routes" routerLink="/{{url.slice(0,i+1).join('/')}}" *ngFor="let urlSegment of url; let i = index">
             <div>
                 >
@@ -14,28 +17,25 @@
 
     <!--    Product filter-->
     <div *ngIf="filter" class="routes">
-        <div routerLink="/">
-            Home
-        </div>
         <div>
             >
         </div>
         <div routerLink="/products" (click)="breadcrumbEvent.emit()">
             Products
         </div>
-        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length==1">
+        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length === 1">
             >
         </div>
-        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length==1"
+        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length === 1"
              [routerLink]="['/products']"
              [queryParams]="{ Subcategory: filter['Subcategory']}"
         >
             {{filter['Subcategory']}}
         </div>
-        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length>1">
+        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length > 1">
             >
         </div>
-        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length>1"
+        <div *ngIf="filter['Subcategory'] && filter['Subcategory'].length > 1"
              [routerLink]="['/products']"
              [queryParams]="{ Subcategory: filter['Subcategory'] }"
         >
@@ -45,9 +45,6 @@
 
     <!--    Product-details-->
     <div *ngIf="product" class="routes">
-        <div routerLink="/">
-            Home
-        </div>
         <div>
             >
         </div>
@@ -76,7 +73,6 @@
 
     <!--    User page-->
     <div *ngIf="user" class="routes">
-        <div routerLink="/">Home</div>
         <div>
             >
         </div>
