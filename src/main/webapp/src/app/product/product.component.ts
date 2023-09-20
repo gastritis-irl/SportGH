@@ -8,11 +8,12 @@ import { CategoryService } from '../category/category.service';
 import { SubcategoryService } from '../subcategory/subcategory.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ImageService } from '../shared/image/image.service';
 
 @Component({
     selector: 'sgh-product',
     templateUrl: './product.component.html',
-    styleUrls: [ './product.component.scss' ],
+    styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent implements OnInit {
 
@@ -49,6 +50,7 @@ export class ProductComponent implements OnInit {
         private toastNotify: ToastrService,
         private route: ActivatedRoute,
         private router: Router,
+        private imageService: ImageService,
     ) {
     }
 
@@ -83,7 +85,41 @@ export class ProductComponent implements OnInit {
         );
     }
 
-    changesEvent(changed: [ number, number, string ]): void {
+    loadProductImages(products: Product[]): void {
+        for (const product of products) {
+
+            if (!product.id) {
+                continue;
+            }
+            this.imageService.getImageFilesByProductId(product.id).subscribe({
+                next: (response: { name: string, data: Uint8Array }[]) => {
+                    if (!response) {
+                        return;
+                    }
+                    try {
+                        product.imageDataUrls = [];
+                        for (const imageDTO of response) {
+                            if (!imageDTO.data) {
+                                continue;
+                            }
+
+                            const base64String = imageDTO.data;
+                            const imageUrl = 'data:image/jpeg;base64,' + base64String;
+                            product.imageDataUrls.push(imageUrl);
+                        }
+                        product.imagesLoaded = true;
+                    } catch (error) {
+                        this.toastNotify.error(`Error loading images: ${error}`);
+                    }
+                },
+                error: (error) => {
+                    this.toastNotify.error(`Error fetching images`, error);
+                }
+            });
+        }
+    }
+
+    changesEvent(changed: [number, number, string]): void {
         this.minPrice = changed[0];
         this.maxPrice = changed[1];
         this.textSearch = changed[2];
@@ -208,6 +244,7 @@ export class ProductComponent implements OnInit {
             {
                 next: (data: ProductPage): void => {
                     this.products = data.products;
+                    this.loadProductImages(this.products);
                     this.nrOfPages = data.nrOfPages;
                     this.nrOfItems = data.nrOfElements;
                 },

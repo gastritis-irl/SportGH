@@ -34,9 +34,7 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/{categoryId}")
-    public ResponseEntity<CategoryOutDTO> findById(
-            @PathVariable Long categoryId
-    ) {
+    public ResponseEntity<CategoryOutDTO> findById(@PathVariable Long categoryId) {
         Category category = categoryService.findById(categoryId);
         if (category == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -44,20 +42,8 @@ public class CategoryController {
         return new ResponseEntity<>(categoryMapper.categoryToOut(category), HttpStatus.OK);
     }
 
-    public void deleteImageFileByCategoryId(Long categoryId) {
-        Category category = categoryService.findById(categoryId);
-        if (category == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } else if (category.getImage() != null) {
-            imageService.deleteFile(category.getImage().getId());
-        }
-    }
-
     @DeleteMapping(path = "/{categoryId}")
-    public ResponseEntity<?> deleteById(
-            @PathVariable Long categoryId
-    ) {
-        deleteImageFileByCategoryId(categoryId);
+    public ResponseEntity<?> deleteById(@PathVariable Long categoryId) {
         log.info("Deleting category with ID {}.", categoryId);
         categoryService.delete(categoryId);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -72,10 +58,8 @@ public class CategoryController {
     }
 
     @PutMapping(path = "/{categoryId}")
-    public ResponseEntity<CategoryOutDTO> update(
-            @PathVariable Long categoryId,
-            @RequestBody @Valid CategoryInDTO categoryInDTO
-    ) {
+    public ResponseEntity<CategoryOutDTO> update(@PathVariable Long categoryId,
+                                                 @RequestBody @Valid CategoryInDTO categoryInDTO) {
         log.info("Updating category with ID {}.", categoryId);
         if (!Objects.equals(categoryId, categoryInDTO.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -87,9 +71,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryOutDTO> create(
-            @RequestBody @Valid CategoryInDTO categoryInDTO
-    ) {
+    public ResponseEntity<CategoryOutDTO> create(@RequestBody @Valid CategoryInDTO categoryInDTO) {
         log.info("Creating category with name {}.", categoryInDTO.getName());
         if (categoryInDTO.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

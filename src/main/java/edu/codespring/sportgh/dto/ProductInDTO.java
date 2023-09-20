@@ -38,4 +38,7 @@ public class ProductInDTO {
     private Long userId;
 
     private String userUid;
+
+    @Size(max = 8, message = "Maximum 8 images can be uploaded")
+    private Long[] imageIds;
 }
