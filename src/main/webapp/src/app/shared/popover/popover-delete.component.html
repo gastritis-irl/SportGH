@@ -1,0 +1,22 @@
+<ng-template #deletePopoverContent>
+    <div class="buttons">
+        <div (click)="delete()" class="button-default button-primary">
+            Delete
+        </div>
+    </div>
+</ng-template>
+
+<div class="buttons">
+    <div
+            class="product-edit-link button-default button-secondary"
+            placement="bottom"
+            [ngbPopover]="deletePopoverContent"
+            popoverTitle="Are you sure?"
+            [autoClose]="'outside'"
+            triggers="manual"
+            #p="ngbPopover"
+            (click)="p.open()"
+    >
+        Delete
+    </div>
+</div>
