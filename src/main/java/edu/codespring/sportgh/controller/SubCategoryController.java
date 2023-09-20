@@ -25,9 +25,7 @@ public class SubCategoryController {
     private final SubCategoryMapper subCategoryMapper;
 
     @GetMapping
-    public ResponseEntity<Collection<SubCategoryOutDTO>> findAll(
-            @RequestParam("Category") Optional<Long> categoryId
-    ) {
+    public ResponseEntity<Collection<SubCategoryOutDTO>> findAll(@RequestParam("Category") Optional<Long> categoryId) {
         Collection<SubCategory> subCategories = categoryId.isPresent()
                 ? subCategoryService.findByCategoryId(categoryId.get()) : subCategoryService.findAll();
 
@@ -35,9 +33,7 @@ public class SubCategoryController {
     }
 
     @DeleteMapping(path = "/{subCategoryId}")
-    public ResponseEntity<?> deleteById(
-            @PathVariable Long subCategoryId
-    ) {
+    public ResponseEntity<?> deleteById(@PathVariable Long subCategoryId) {
         log.info("Deleting subCategory with ID {}.", subCategoryId);
         subCategoryService.delete(subCategoryId);
         return new ResponseEntity<>(HttpStatus.OK);

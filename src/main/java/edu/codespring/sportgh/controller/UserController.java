@@ -28,9 +28,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/{userId}")
-    public ResponseEntity<UserOutDTO> findById(
-        @PathVariable Long userId
-    ) {
+    public ResponseEntity<UserOutDTO> findById(@PathVariable Long userId) {
         User user = userService.findById(userId);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -44,9 +42,7 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/{userId}")
-    public ResponseEntity<?> deleteById(
-        @PathVariable Long userId
-    ) {
+    public ResponseEntity<?> deleteById(@PathVariable Long userId) {
         userService.deleteById(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
