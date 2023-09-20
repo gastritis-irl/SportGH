@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -91,6 +92,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         log.warn(e.toString());
         return handleExceptionInternal(e, e.getMessage(),
             new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler({
+            AccessDeniedException.class,
+    })
+    protected ResponseEntity<Object> handleAccessDenied(RuntimeException e,WebRequest request) {
+        log.warn(e.toString());
+        return handleExceptionInternal(e, e.getMessage(),
+                new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
     }
 
     @ExceptionHandler({
