@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     imports: [ NgbDropdownModule, RouterLink, AuthModule, NgForOf, NgIf, FormsModule ],
     templateUrl: './navbar.component.html',
-    styleUrls: [ './navbar.component.scss' ],
+    styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
 

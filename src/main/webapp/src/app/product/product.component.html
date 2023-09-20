@@ -1,4 +1,4 @@
-<button routerLink="/">&larr;Go back</button>
+<sgh-breadcrumb [filter]="filterParams" (breadcrumbEvent)="ngOnInit()"></sgh-breadcrumb>
 <div class="product-holder">
     <sgh-product-filter class="product-filter"
                         [categories]="categories"

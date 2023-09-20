@@ -1,0 +1,24 @@
+<div>
+    <div>
+        <button routerLink="/admin/categories/new">Create new category</button>
+    </div>
+    <table>
+        <tr>
+            <td></td>
+            <td>Image</td>
+            <td>Name</td>
+        </tr>
+        <tr *ngFor="let category of categories; let i = index">
+            <td>
+                <button (click)="deleteCategory(category.id, i)">Delete</button>
+                <button routerLink="/admin/categories/{{category.id}}">Edit</button>
+            </td>
+            <td>
+                <img width="100" height="auto"
+                    [src]="category.imageDataUrl ? category.imageDataUrl : 'https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png'"
+                    alt="Error loading img">
+            </td>
+            <td>{{category.name}}</td>
+        </tr>
+    </table>
+</div>

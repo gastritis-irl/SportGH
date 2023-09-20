@@ -92,56 +92,81 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
+    selectAllSubCatOfCat(categoryIndex: number): void {
+        if (categoryIndex != -1) {
+            this.categorySelected[categoryIndex] = true;
+        }
+        for (let i: number = 0; i < this.subcategories.length; i++) {
+            if (this.subcategories[i].categoryId === this.categories[categoryIndex].id) {
+                this.subcategorySelected[i] = true;
+            }
+        }
+    }
+
     getQueryParams(): void {
         this.route.queryParams.subscribe(
             {
                 next: (params: Params): void => {
                     for (const paramName of this.filterParamNames) {
                         if (params[paramName] && params[paramName] != 0) {
-                            if (paramName == 'Subcategory') {
-                                for (let i: number = 0; i < params[paramName].length; i++) {
+                            if (paramName === 'Subcategory') {
+                                if (typeof params[paramName] === 'string') {
                                     for (let j: number = 0; j < this.subcategories.length; j++) {
-                                        if (this.subcategories[j].name == params[paramName][i]) {
+                                        if (this.subcategories[j].name === params[paramName]) {
                                             this.subcategorySelected[j] = true;
+                                        }
+                                    }
+                                } else {
+                                    for (let i: number = 0; i < params[paramName].length; i++) {
+                                        for (let j: number = 0; j < this.subcategories.length; j++) {
+                                            if (this.subcategories[j].name === params[paramName][i]) {
+                                                this.subcategorySelected[j] = true;
+                                            }
                                         }
                                     }
                                 }
                             } else {
                                 this.filterParams[paramName] = params[paramName];
                             }
-                            if (paramName == 'Category') {
-                                let catInd: number = -1;
-                                for (let i: number = 0; i < this.categories.length; i++) {
-                                    if (this.categories[i].name == params[paramName]) {
-                                        catInd = i;
-                                        break;
+                            if (paramName === 'Category') {
+                                if (typeof params[paramName] === 'string') {
+                                    let catInd: number = -1;
+                                    for (let i: number = 0; i < this.categories.length; i++) {
+                                        if (this.categories[i].name === params[paramName]) {
+                                            catInd = i;
+                                            break;
+                                        }
                                     }
-                                }
-                                if (catInd != -1) {
-                                    this.categorySelected[catInd] = true;
-                                }
-                                for (let i: number = 0; i < this.subcategories.length; i++) {
-                                    if (this.subcategories[i].categoryId == this.categories[catInd].id) {
-                                        this.subcategorySelected[i] = true;
+                                    this.selectAllSubCatOfCat(catInd);
+                                } else {
+                                    for (let j: number = 0; j < params[paramName].length; j++) {
+                                        let catInd: number = -1;
+                                        for (let i: number = 0; i < this.categories.length; i++) {
+                                            if (this.categories[i].name === params[paramName][j]) {
+                                                catInd = i;
+                                                break;
+                                            }
+                                        }
+                                        this.selectAllSubCatOfCat(catInd);
                                     }
                                 }
                             }
-                            if (paramName == 'pageNumber') {
+                            if (paramName === 'pageNumber') {
                                 this.currentPage = params[paramName];
                             }
-                            if (paramName == 'orderBy') {
+                            if (paramName === 'orderBy') {
                                 this.orderByParam = params[paramName];
                             }
-                            if (paramName == 'direction') {
+                            if (paramName === 'direction') {
                                 this.direction = params[paramName];
                             }
-                            if (paramName == 'TextSearch') {
+                            if (paramName === 'TextSearch') {
                                 this.textSearch = params[paramName];
                             }
-                            if (paramName == 'MinPrice') {
+                            if (paramName === 'MinPrice') {
                                 this.minPrice = params[paramName];
                             }
-                            if (paramName == 'MaxPrice') {
+                            if (paramName === 'MaxPrice') {
                                 this.maxPrice = params[paramName];
                             }
                         }
@@ -213,13 +238,13 @@ export class ProductComponent implements OnInit {
     }
 
     clearFilter(paramName: string): void {
-        if (paramName == 'TextSearch') {
+        if (paramName === 'TextSearch') {
             this.textSearch = '';
         }
-        if (paramName == 'MinPrice') {
+        if (paramName === 'MinPrice') {
             this.minPrice = 0;
         }
-        if (paramName == 'MaxPrice') {
+        if (paramName === 'MaxPrice') {
             this.maxPrice = 0;
         }
         this.setParams();
