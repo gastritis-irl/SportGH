@@ -37,8 +37,11 @@ export class ProductService extends AppService {
     }
 
     getOwnerInfo(product: Product): Observable<User> {
-        const url: string = `${this.baseUrl}/users/${product.userId}`;
-        return this.http.get<User>(url);
+        const url: string = `${this.baseUrl}/rent/user`;
+        const params: Params = {
+            productId: product.id,
+        };
+        return this.http.get<User>(url, { params: params });
     }
 
     sendContactRequest(product: Product): Observable<void> {

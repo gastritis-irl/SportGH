@@ -1,9 +1,5 @@
-<ng-template #deletePopoverContent>
-    <div class="buttons">
-        <div (click)="deleteProduct()" class="button-default button-primary">
-            Delete
-        </div>
-    </div>
+<ng-template #ownerModalContent>
+    {{owner}}
 </ng-template>
 
 <div class="product-details">
@@ -18,8 +14,8 @@
                             Edit
                         </div>
                         <sgh-popover-delete
-                                [deleteData]="[]"
-                                (deleteEvent)="deleteProduct()"
+                            [deleteData]="[]"
+                            (deleteEvent)="deleteProduct()"
                         ></sgh-popover-delete>
                     </div>
                 </div>
@@ -63,7 +59,9 @@
                     </div>
 
                     <div class="rent-button-holder buttons">
-                        <button class="rent-button button-default button-primary" (click)="getOwnerInfo()">Get Contact</button>
+                        <button class="rent-button button-default button-primary"
+                                (click)="getOwnerInfo(ownerModalContent)">Get Contact
+                        </button>
                     </div>
                 </div>
             </div>

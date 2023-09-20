@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../user/user.model';
 import { ViewportScroller } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'sgh-product-details',
     templateUrl: './product-details.component.html',
-    styleUrls: [ './product-details.component.scss' ],
+    styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
 
     product: Product = {};
+    owner: User = {};
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
 
@@ -23,6 +25,7 @@ export class ProductDetailsComponent implements OnInit {
         private router: Router,
         private viewPortScroller: ViewportScroller,
         private toastNotify: ToastrService,
+        private modalService: NgbModal,
     ) {
     }
 
@@ -90,27 +93,30 @@ export class ProductDetailsComponent implements OnInit {
         this.viewPortScroller.scrollToAnchor(elementId);
     }
 
-    getOwnerInfo(): void {
-        if (this.product.publicContact) {
-            // load modal with owner's data
-            this.productService.getOwnerInfo(this.product).subscribe({
-                next: (user: User): void => {
-                    this.toastNotify.success(`Owner info: ${user.username}`);
-                },
-                error: (error): void => {
+    getOwnerInfo(modalContent: TemplateRef<string>): void {
+        // load modal with owner's data
+        this.productService.getOwnerInfo(this.product).subscribe({
+            next: (user: User): void => {
+                this.owner = user;
+                this.modalService.dismissAll();
+                this.modalService.open(modalContent, { centered: true, scrollable: true, animation: true });
+                this.toastNotify.success(`Owner info: ${user.username}`);
+            },
+            error: (error): void => {
+                if (error.statusText === 'Unauthorized') {
+                    this.productService.sendContactRequest(this.product).subscribe({
+                        next: (): void => {
+                            this.toastNotify.info('Request sent successfully.');
+                        },
+                        error: (error): void => {
+                            this.toastNotify.warning(error.error);
+                        }
+                    });
+                } else {
                     this.toastNotify.error(error.error);
                 }
-            });
-        } else {
-            this.productService.sendContactRequest(this.product).subscribe({
-                next: (): void => {
-                    this.toastNotify.info('Request sent successfully.');
-                },
-                error: (error): void => {
-                    this.toastNotify.warning(error.error);
-                }
-            });
-        }
+            }
+        });
     }
 
     deleteProduct(): void {
@@ -118,7 +124,7 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (): void => {
                     this.toastNotify.success(`Product ${this.product.name} successfully deleted!`);
-                    this.router.navigate([ `/products` ])
+                    this.router.navigate([`/products`])
                         .catch((error): void => {
                             console.error(error);
                             this.toastNotify.error('Error redirecting to page');

@@ -1,6 +1,7 @@
 package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.dto.RentRequestOutDTO;
+import edu.codespring.sportgh.dto.UserOutDTO;
 import edu.codespring.sportgh.mapper.RentRequestMapper;
 import edu.codespring.sportgh.mapper.UserMapper;
 import edu.codespring.sportgh.model.Product;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -30,6 +32,40 @@ public class RentController {
     private final UserMapper userMapper;
     private final RentService rentService;
     private final RentRequestMapper rentRequestMapper;
+
+    @GetMapping("/user")
+    public ResponseEntity<UserOutDTO> getProductOwnerInfo(
+        @RequestParam("productId") Optional<Long> productId
+    ) {
+        if (productId.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Product product = productService.findById(productId.get());
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (product.isPublicContact()) {
+            return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
+        } else {
+            RentRequest rentRequest = rentService.findByRenterAndProduct(user, product);
+            if ("accepted".equals(rentRequest.getRequestStatus())) {
+                return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
+            } else {
+                if ("active".equals(rentRequest.getRequestStatus())) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                }
+            }
+        }
+    }
 
     @GetMapping
     public ResponseEntity<Collection<RentRequestOutDTO>> getRentRequestsByProductOrOwner(
