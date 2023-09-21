@@ -95,9 +95,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler({
-            AccessDeniedException.class,
+        AccessDeniedException.class,
     })
-    protected ResponseEntity<Object> handleAccessDenied(RuntimeException e,WebRequest request) {
+    protected ResponseEntity<Object> handleAccessDenied(RuntimeException e, WebRequest request) {
         log.warn(e.toString());
         return handleExceptionInternal(e, e.getMessage(),
                 new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
