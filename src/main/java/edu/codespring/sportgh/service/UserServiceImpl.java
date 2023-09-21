@@ -24,12 +24,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User signup(String email, String firebaseUid) {
+    public User signup(String email, String firebaseUid, String role) {
         User user = new User();
 
         user.setEmail(email);
         user.setUsername(email);
         user.setFirebaseUid(firebaseUid);
+        user.setRole(role);
         userRepository.save(user);
         log.info("Signup successful ({}).", user);
         return user;

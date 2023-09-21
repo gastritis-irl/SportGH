@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface UserService {
 
-    User signup(String userName, String firebaseUid);
+    User signup(String email, String firebaseUid, String role);
 
     User update(User user);
 

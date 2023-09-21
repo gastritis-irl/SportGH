@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SecurityUtil {
 
+    public static final String ROLE_USER = "USER";
+    public static final String ROLE_ADMIN = "ADMIN";
+
     public boolean isCurrentlyLoggedIn(User user) {
         return SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals(user);
     }
