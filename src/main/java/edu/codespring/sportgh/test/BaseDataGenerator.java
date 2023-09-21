@@ -60,9 +60,12 @@ public abstract class BaseDataGenerator {
 
         Collection<User> userListFB = firebaseService.getUsers();
         for (User user : userListFB) {
-            if (userService.findByFirebaseUid(user.getFirebaseUid()) == null
-                && userService.findByUsername(user.getEmail()) == null) {
+            User localUser = userService.findByEmail(user.getEmail());
+            if (localUser == null) {
                 userService.signup(user.getEmail(), user.getFirebaseUid(), SecurityUtil.ROLE_USER);
+            } else {
+                localUser.setFirebaseUid(user.getFirebaseUid());
+                userService.update(localUser);
             }
         }
 
@@ -99,8 +102,8 @@ public abstract class BaseDataGenerator {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
         if (subCategory != null && productService.notExistsByNameAndUser(product.getName(), user)) {
             productService.save(new Product(true, product.getName(), product.getDescription(),
-                product.getLocation(), product.getRentPrice(),
-                subCategory, user, null));
+                    product.getLocation(), product.getRentPrice(),
+                    subCategory, user, null));
         }
     }
 }

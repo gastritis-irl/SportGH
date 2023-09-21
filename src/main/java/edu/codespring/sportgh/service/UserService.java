@@ -16,6 +16,8 @@ public interface UserService {
 
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
     void deleteById(Long userId);
 
     User findByFirebaseUid(String firebaseUid);

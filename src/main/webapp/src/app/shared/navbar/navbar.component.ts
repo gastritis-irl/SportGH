@@ -14,7 +14,7 @@ import { IdToken } from '../../auth-and-token/firebase-id-token.model';
 @Component({
     selector: 'sgh-navbar',
     standalone: true,
-    imports: [ NgbDropdownModule, RouterLink, AuthModule, NgForOf, NgIf, FormsModule ],
+    imports: [NgbDropdownModule, RouterLink, AuthModule, NgForOf, NgIf, FormsModule],
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
 })
@@ -46,7 +46,7 @@ export class NavbarComponent implements OnInit {
     }
 
     searchForText(): void {
-        this.router.navigate([ '/products' ], { queryParams: { pageNumber: 1, TextSearch: this.textSearch } })
+        this.router.navigate(['/products'], { queryParams: { pageNumber: 1, TextSearch: this.textSearch } })
             .catch(error => {
                 console.error(error);
                 this.toastNotify.error(`Error searching for ${this.textSearch}`);
@@ -58,8 +58,8 @@ export class NavbarComponent implements OnInit {
     }
 
     checkIfAdmin(): boolean {
-        return false;
-        // return this.getDecodedIdToken().role=='admin';
+        return this.getDecodedIdToken()?.email === 'admin@test.com';
+        // return this.getDecodedIdToken().role === 'admin';
     }
 
     getDecodedIdToken(): IdToken | null {
