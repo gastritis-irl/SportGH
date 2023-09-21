@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @PreAuthorize("authentication.principal.id == #productInDTO.userId or hasRole('ADMIN')")
-    @PostAuthorize("returnObject.body.userId == authentication.principal.id")
+    @PostAuthorize("returnObject.body.userId == authentication.principal.id or hasRole('ADMIN')")
     @Override
     @Transactional
     public ResponseEntity<ProductOutDTO> saveInDTO(@Valid ProductInDTO productInDTO) {
