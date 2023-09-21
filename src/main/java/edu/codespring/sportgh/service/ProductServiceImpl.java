@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @PreAuthorize("authentication.principal.id == #productInDTO.userId or hasRole('ADMIN')")
+    @PostAuthorize("returnObject.body.userId == authentication.principal.id")
     @Override
     @Transactional
     public ResponseEntity<ProductOutDTO> saveInDTO(@Valid ProductInDTO productInDTO) {

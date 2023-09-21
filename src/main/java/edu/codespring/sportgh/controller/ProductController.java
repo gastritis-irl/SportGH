@@ -78,8 +78,7 @@ public class ProductController {
     public ResponseEntity<ProductOutDTO> update(@RequestBody @Valid ProductInDTO productInDTO,
                                                 @PathVariable Long productId) {
         log.info("Updating product with ID {}.", productId);
-        Product product = productService.findById(productId);
-        if (!Objects.equals(product, productMapper.dtoToProduct(productInDTO))) {
+        if (!Objects.equals(productId, productInDTO.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if (!productService.existsById(productId)) {
