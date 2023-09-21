@@ -4,7 +4,7 @@ import { ProductService } from '../product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ViewportScroller } from '@angular/common';
-import { FirebaseIdTokenService } from '../../authentication/firebase-id-token.service';
+import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.service';
 import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';

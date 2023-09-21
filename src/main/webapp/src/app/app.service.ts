@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from './environment';
 import { Observable } from 'rxjs';
-import { FirebaseIdTokenService } from './authentication/firebase-id-token.service';
+import { FirebaseIdTokenService } from './auth-and-token/firebase-id-token.service';
 
 interface Options {
 

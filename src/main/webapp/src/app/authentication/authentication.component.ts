@@ -5,8 +5,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../user/user.model';
-import { FirebaseIdTokenService } from './firebase-id-token.service';
-import { IdToken } from './firebase-id-token.model';
+import { FirebaseIdTokenService } from '../auth-and-token/firebase-id-token.service';
+import { IdToken } from '../auth-and-token/firebase-id-token.model';
 
 @Component({
     selector: 'sgh-authentication',

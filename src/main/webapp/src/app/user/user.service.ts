@@ -5,7 +5,7 @@ import { User } from './user.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
 import { getIdToken } from '@angular/fire/auth';
-import { FirebaseIdTokenService } from '../authentication/firebase-id-token.service';
+import { FirebaseIdTokenService } from '../auth-and-token/firebase-id-token.service';
 
 
 @Injectable({

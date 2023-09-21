@@ -8,8 +8,8 @@ import { CategoryService } from '../../category/category.service';
 import { Category } from '../../category/category.model';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
-import { FirebaseIdTokenService } from '../../authentication/firebase-id-token.service';
-import { IdToken } from '../../authentication/firebase-id-token.model';
+import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.service';
+import { IdToken } from '../../auth-and-token/firebase-id-token.model';
 
 @Component({
     selector: 'sgh-navbar',
