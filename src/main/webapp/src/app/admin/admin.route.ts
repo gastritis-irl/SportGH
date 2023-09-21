@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryListManageComponent } from './category-list-manage/category-list-manage.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
-import { isLoggedIn } from '../auth-and-token/auth-guard.service';
+import { isAdmin } from '../auth-and-token/auth-guard.service';
 
 const routes: Routes = [
     {
         path: 'admin/categories',
         component: CategoryListManageComponent,
-        canActivate: [isLoggedIn]
+        canActivate: [isAdmin]
     },
     {
         path: 'admin/categories/:categoryId',
         component: CategoryEditComponent,
-        canActivate: [isLoggedIn]
+        canActivate: [isAdmin]
     },
 ];
 

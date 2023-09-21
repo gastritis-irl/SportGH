@@ -1,11 +1,11 @@
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { FirebaseIdTokenService } from './firebase-id-token.service';
 import { ProductService } from '../product/product.service';
 import { Product } from '../product/product.model';
 
 export const isLoggedIn: CanActivateFn = (): boolean => {
-    if (!!inject(FirebaseIdTokenService).getDecodedIdToken()?.user_id) {
+    if (inject(FirebaseIdTokenService).getDecodedIdToken()?.user_id) {
         return true;
     } else {
         inject(Router).navigate(['']);
@@ -14,15 +14,10 @@ export const isLoggedIn: CanActivateFn = (): boolean => {
 };
 
 export const isAdmin: CanActivateFn = (): boolean => {
-    // first add role field to idToken
-    // if (!!inject(FirebaseIdTokenService).getDecodedIdToken().role === 'ADMIN') {
-    //     return true;
-    // }
-    return false;
+    return inject(FirebaseIdTokenService).getDecodedIdToken()?.email === 'admin@test.com';
 };
 
-export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot,
-                                              state: RouterStateSnapshot): boolean => {
+export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot): boolean => {
     return !!inject(ProductService).getById(route.params['productId']).subscribe({
         next: (product: Product): boolean => {
             return product.userUid === inject(FirebaseIdTokenService).getDecodedIdToken()?.user_id;
