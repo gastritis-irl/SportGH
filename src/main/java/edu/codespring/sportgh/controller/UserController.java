@@ -7,14 +7,11 @@ import edu.codespring.sportgh.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 
-@EnableMethodSecurity
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
@@ -29,7 +26,6 @@ public class UserController {
         return new ResponseEntity<>(userMapper.usersToOuts(users), HttpStatus.OK);
     }
 
-    @PreAuthorize("authentication.principal.id == #userId or hasRole('ADMIN')")
     @GetMapping(path = "/{userId}")
     public ResponseEntity<UserOutDTO> findById(@PathVariable Long userId) {
         User user = userService.findById(userId);

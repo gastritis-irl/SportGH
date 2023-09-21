@@ -13,15 +13,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
 import java.util.Optional;
 
-@EnableMethodSecurity
 @RestController
 @RequestMapping("api/products")
 @RequiredArgsConstructor
@@ -77,12 +74,12 @@ public class ProductController {
         return productService.saveInDTO(productInDTO);
     }
 
-    @PreAuthorize("authentication.principal.id == #productInDTO.userId or hasRole('ADMIN')")
     @PutMapping(path = "/{productId}")
     public ResponseEntity<ProductOutDTO> update(@RequestBody @Valid ProductInDTO productInDTO,
                                                 @PathVariable Long productId) {
         log.info("Updating product with ID {}.", productId);
-        if (!Objects.equals(productId, productInDTO.getId())) {
+        Product product = productService.findById(productId);
+        if (!Objects.equals(product, productMapper.dtoToProduct(productInDTO))) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if (!productService.existsById(productId)) {
@@ -99,7 +96,6 @@ public class ProductController {
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping(path = "/{productId}")
     public ResponseEntity<?> delete(@PathVariable Long productId) {
         Product product = productService.findById(productId);

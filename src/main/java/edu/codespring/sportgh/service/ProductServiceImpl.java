@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -41,6 +42,7 @@ public class ProductServiceImpl implements ProductService {
         this.imageService = imageService;
     }
 
+    @PreAuthorize("authentication.principal.id == #productInDTO.userId or hasRole('ADMIN')")
     @Override
     @Transactional
     public ResponseEntity<ProductOutDTO> saveInDTO(@Valid ProductInDTO productInDTO) {
@@ -169,6 +171,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @PreAuthorize("#product.user.id == authentication.principal.id or hasRole('ADMIN')")
     @Transactional
     @Override
     public void delete(Product product) {
