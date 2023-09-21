@@ -3,12 +3,11 @@
 // Path: src/app/user/user-edit/user-edit.component.ts
 
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ImageService } from '../../shared/image/image.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
-import { ViewChild } from '@angular/core';
 import { ImageComponent } from '../../shared/image/image.component';
 import { Image } from '../../shared/image/image.model';
 
@@ -20,13 +19,27 @@ import { Image } from '../../shared/image/image.model';
 })
 export class UserEditComponent implements OnInit {
 
-    @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
+    @ViewChild(ImageComponent, {static: false}) imageComponent?: ImageComponent;
 
     username: string = '';
-    user: User = { id: undefined, username: '', email: '', phoneNumber: '', address: '', imageId: 0, imageDataUrl: undefined };
+    user: User = {
+        id: undefined,
+        username: '',
+        email: '',
+        phoneNumber: '',
+        address: '',
+        imageId: 0,
+        imageDataUrl: undefined
+    };
     newImageFile?: File;
+    mode: 'edit' | 'create' = 'edit';
 
-    constructor(private userService: UserService, private toastNotify: ToastrService, private route: ActivatedRoute, private imageService: ImageService) {
+    constructor(
+        private userService: UserService,
+        private toastNotify: ToastrService,
+        private route: ActivatedRoute,
+        private imageService: ImageService,
+        private router: Router) {
     }
 
     ngOnInit(): void {
@@ -41,6 +54,14 @@ export class UserEditComponent implements OnInit {
                 }
             }
         );
+    }
+
+    cancelEdit(route: string): void {
+        this.router.navigate([route])
+            .catch((error): void => {
+                console.error(error);
+                this.toastNotify.error('Error redirecting to page');
+            });
     }
 
     loadData(uid: string | undefined): void {

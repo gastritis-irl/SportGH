@@ -31,7 +31,7 @@
                     <sgh-image (fileChange)="onFileChange($event)"
                                [imageIds]="[user.imageId]"
                                [allowMultiple]="false"
-                               [mode]="'edit'">
+                               [mode]="mode">
                     </sgh-image>
                 </div>
 
@@ -176,8 +176,8 @@
                     </sgh-form-ch-lbl>
                 </div>
 
-                <div class="publish-btn-holder">
-                    <button type="submit" class="publish-btn button-default button-primary">Submit</button>
+                <div class="buttons">
+                    <button type="submit" class=" button-default button-primary">Submit</button>
                 </div>
             </div>
         </div>

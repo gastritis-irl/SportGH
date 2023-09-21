@@ -13,9 +13,9 @@
         border-bottom: 1px solid $border-color;
         padding: $item-padding;
         align-items: center;
-        justify-content: space-between;
         background-color: $color-neutral-1;
         border-radius: $border-radius;
+        justify-content: flex-start;
 
         .image-container {
             width: 100px;
