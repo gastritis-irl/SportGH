@@ -1,6 +1,44 @@
 <sgh-breadcrumb [product]="product"></sgh-breadcrumb>
 <ng-template #ownerModalContent>
-    {{owner}}
+    <div class="owner-data-holder">
+        <div class="owner-image">
+            <img src="" alt="[OWNER_PROFILE_IMAGE]">
+        </div>
+        <div class="owner-data">
+            <div class="data-part">
+                <div class="label">
+                    Username
+                </div>
+                <div class="data">
+                    {{owner.username}}
+                </div>
+            </div>
+            <div class="data-part">
+                <div class="label">
+                    Email
+                </div>
+                <div class="data">
+                    {{owner.email}}
+                </div>
+            </div>
+            <div class="data-part">
+                <div class="label">
+                    Phone number
+                </div>
+                <div class="data">
+                    +40712345678
+                </div>
+            </div>
+            <div class="data-part">
+                <div class="label">
+                    Address
+                </div>
+                <div class="data">
+                    Romania, Cluj-Napoca, Str Constantin Brancoveanu 98
+                </div>
+            </div>
+        </div>
+    </div>
 </ng-template>
 
 <div class="product-details">
@@ -36,13 +74,14 @@
             <div class="images">
                 <div class="image-thumbnails">
                     <div *ngFor="let imageUrl of product.imageDataUrls; let i = index" class="thumbnail"
-                        (click)="carousel.select('slide-' + i)">
+                         (click)="carousel.select('slide-' + i)">
                         <img [src]="imageUrl" alt="Thumbnail Image">
                     </div>
                 </div>
                 <div *ngIf="product.imageDataUrls && product.imageDataUrls.length > 0; else defaultImage">
                     <ngb-carousel #carousel>
-                        <ng-template ngbSlide *ngFor="let imageUrl of product.imageDataUrls; let i = index" [id]="'slide-' + i">
+                        <ng-template ngbSlide *ngFor="let imageUrl of product.imageDataUrls; let i = index"
+                                     [id]="'slide-' + i">
                             <div class="carousel-item">
                                 <img [src]="imageUrl" alt="Product Image">
                             </div>
@@ -50,7 +89,8 @@
                     </ngb-carousel>
                 </div>
                 <ng-template #defaultImage>
-                    <img src="https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png" alt="Default Image">
+                    <img src="https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png"
+                         alt="Default Image">
                 </ng-template>
             </div>
 

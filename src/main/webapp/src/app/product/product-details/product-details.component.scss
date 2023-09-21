@@ -19,6 +19,42 @@ $icon-size: 50px;
     font-size: $size-h2;
 }
 
+.owner-data-holder {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: $color-main-3;
+
+    .owner-image {
+        width: 100%;
+
+    }
+
+    .owner-data {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .data-part {
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
+            padding: 10px;
+
+            .label {
+                color: $color-main-2;
+                font-size: $size-default;
+            }
+
+            .data {
+                color: $color-main-1;
+                font-size: $size-h2;
+            }
+        }
+    }
+}
+
 .product-details {
     padding-inline: $main-padding-inline;
 
