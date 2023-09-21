@@ -20,7 +20,8 @@ public interface ProductService {
         String[] subcategoryNames,
         Double minPrice,
         Double maxPrice,
-        String textSearch
+        String textSearch,
+        Long userId
     );
 
     boolean notExistsByNameAndUser(String name, User user);

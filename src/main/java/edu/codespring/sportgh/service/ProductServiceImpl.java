@@ -94,6 +94,18 @@ public class ProductServiceImpl implements ProductService {
         return spec;
     }
 
+    private Specification<Product> filterByUserId(
+        Long userId, Specification<Product> specification
+    ) {
+        Specification<Product> spec = specification;
+        if (userId != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("user").get("id"), userId)
+            );
+        }
+        return spec;
+    }
+
     @Override
     public ProductPageOutDTO findPageByParams(
         String orderBy,
@@ -102,7 +114,8 @@ public class ProductServiceImpl implements ProductService {
         String[] subcategoryNames,
         Double minPrice,
         Double maxPrice,
-        String textSearch
+        String textSearch,
+        Long userId
     ) {
         Specification<Product> specification = Specification.where(null);
 
@@ -125,6 +138,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
+        specification = filterByUserId(userId, specification);
         specification = filterByCategoriesAndSubcategories(subcategoryNames, specification);
         specification = filterByPrice(minPrice, maxPrice, specification);
         specification = filterByTextInNameOrDescription(textSearch, specification);

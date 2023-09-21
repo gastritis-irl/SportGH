@@ -6,7 +6,7 @@
             <div class="general-data-form">
 
                 <div class="form-part">
-                    <label for="username" class="form-part-label">Username</label>
+                    <label for="username" class="form-part-label creative-label">Username</label>
                     <input type="text"
                            id="username"
                            name="username"
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="form-part">
-                    <label for="email" class="form-part-label">Email</label>
+                    <label for="email" class="form-part-label creative-label">Email</label>
                     <input type="email"
                            id="email" name="email"
                            [(ngModel)]="user.email"
@@ -44,7 +44,8 @@
                            required
                            minlength="5"
                            maxlength="100"
-                           class="form-part-input"/>
+                           class="form-part-input"
+                           disabled="true"/>
 
                     <sgh-form-ch-lbl [fieldName]="'Email'"
                                      [required]="true"
@@ -57,7 +58,7 @@
                 </div>
 
                 <div class="form-part">
-                    <label for="fullName" class="form-part-label">Full Name</label>
+                    <label for="fullName" class="form-part-label creative-label">Full Name</label>
                     <input type="text"
                            id="fullName"
                            name="fullName"
@@ -76,68 +77,73 @@
                     </sgh-form-ch-lbl>
                 </div>
 
-                <div class="form-part">
-                    <label for="address" class="form-part-label">Address</label>
-                    <input type="text"
-                           id="adress"
-                           name="adress"
-                           [(ngModel)]="user.address"
-                           #adress="ngModel"
-                           minlength="5"
-                           maxlength="100"
-                           class="form-part-input"/>
+                <div class="address-group">
+                    <span class="location-header">Location:</span>
+                    <div class="fields-group">
+                        <div class="form-part">
+                            <label for="address" class="form-part-label creative-label">Address</label>
+                            <input type="text"
+                                   id="address"
+                                   name="address"
+                                   [(ngModel)]="user.address"
+                                   #address="ngModel"
+                                   minlength="5"
+                                   maxlength="100"
+                                   class="form-part-input"/>
 
-                    <sgh-form-ch-lbl [fieldName]="'Address'"
-                                     [minlength]="5" [
-                                     maxlength]="100"
-                                     [length]="adress.value.length"
-                                     *ngIf="adress.invalid && (adress.dirty || adress.touched)"
-                                     class="form-check-label">
-                    </sgh-form-ch-lbl>
+                            <sgh-form-ch-lbl [fieldName]="'Address'"
+                                             [minlength]="5"
+                                             [maxlength]="100"
+                                             [length]="address.value.length"
+                                             *ngIf="address.invalid && (address.dirty || address.touched)"
+                                             class="form-check-label">
+                            </sgh-form-ch-lbl>
+                        </div>
+
+
+                            <div class="form-part">
+                                <label for="city" class="form-part-label creative-label">City</label>
+                                <input type="text"
+                                       id="city"
+                                       name="city"
+                                       [(ngModel)]="user.city"
+                                       #city="ngModel"
+                                       minlength="5"
+                                       maxlength="100"
+                                       class="form-part-input"/>
+
+                                <sgh-form-ch-lbl [fieldName]="'City'"
+                                                 [minlength]="5"
+                                                 [maxlength]="100"
+                                                 [length]="city.value.length"
+                                                 *ngIf="city.invalid && (city.dirty || city.touched)"
+                                                 class="form-check-label">
+                                </sgh-form-ch-lbl>
+                            </div>
+
+                            <div class="form-part">
+                                <label for="country" class="form-part-label creative-label">Country</label>
+                                <input type="text"
+                                       id="country"
+                                       name="country"
+                                       [(ngModel)]="user.country"
+                                       #country="ngModel"
+                                       minlength="5"
+                                       maxlength="100"
+                                       class="form-part-input"/>
+
+                                <sgh-form-ch-lbl [fieldName]="'Country'"
+                                                 [minlength]="5"
+                                                 [maxlength]="100"
+                                                 [length]="country.value.length"
+                                                 *ngIf="country.invalid && (country.dirty || country.touched)"
+                                                 class="form-check-label">
+                                </sgh-form-ch-lbl>
+                        </div>
+                    </div>
                 </div>
-
                 <div class="form-part">
-                    <label for="city" class="form-part-label">City</label>
-                    <input type="text"
-                           id="city"
-                           name="city"
-                           [(ngModel)]="user.city"
-                           #city="ngModel"
-                           minlength="5"
-                           maxlength="100"
-                           class="form-part-input"/>
-
-                    <sgh-form-ch-lbl [fieldName]="'City'"
-                                     [minlength]="5"
-                                     [maxlength]="100"
-                                     [length]="city.value.length"
-                                     *ngIf="city.invalid && (city.dirty || city.touched)"
-                                     class="form-check-label">
-                    </sgh-form-ch-lbl>
-                </div>
-
-                <div class="form-part">
-                    <label for="country" class="form-part-label">Country</label>
-                    <input type="text"
-                           id="country"
-                           name="country"
-                           [(ngModel)]="user.country"
-                           #country="ngModel"
-                           minlength="5"
-                           maxlength="100"
-                           class="form-part-input"/>
-
-                    <sgh-form-ch-lbl [fieldName]="'Country'"
-                                     [minlength]="5"
-                                     [maxlength]="100"
-                                     [length]="country.value.length"
-                                     *ngIf="country.invalid && (country.dirty || country.touched)"
-                                     class="form-check-label">
-                    </sgh-form-ch-lbl>
-                </div>
-
-                <div class="form-part">
-                    <label for="phone" class="form-part-label">Phone</label>
+                    <label for="phone" class="form-part-label creative-label">Phone</label>
                     <input type="text"
                            id="phone"
                            name="phone"
@@ -157,7 +163,7 @@
                 </div>
 
                 <div class="form-part">
-                    <label for="bio" class="form-part-label">Bio</label>
+                    <label for="bio" class="form-part-label creative-label">Bio</label>
                     <textarea id="bio"
                               name="bio"
                               [(ngModel)]="user.bio"
@@ -177,7 +183,15 @@
                 </div>
 
                 <div class="buttons">
-                    <button type="submit" class=" button-default button-primary">Submit</button>
+                    <button
+                        class="button-primary button-default save-btn"
+                        type="submit">
+                        Update Profile
+                    </button>
+                    <button class="button-secondary button-default cancel-btn"
+                            (click)="cancelEdit( '/users/' + user.firebaseUid)">
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>

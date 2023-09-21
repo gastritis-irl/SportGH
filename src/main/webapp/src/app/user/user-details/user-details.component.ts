@@ -5,6 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ImageService } from '../../shared/image/image.service';
 import { ViewportScroller } from '@angular/common';
+import { Product } from "../../product/product.model";
+import { ProductService } from "../../product/product.service";
+import { ProductPage } from "../../product/product-page.model";
 
 @Component({
     selector: 'sgh-user',
@@ -16,6 +19,8 @@ export class UserDetailsComponent implements OnInit {
     username: string = '';
     user: User = { id: undefined, username: '', email: '', phoneNumber: '', address: '', imageId: 0, imageDataUrl: undefined };
     image: string = '';
+    products: Product[] = [];
+    nrOfItems: number = 0;
 
     constructor(
         private userService: UserService,
@@ -23,6 +28,7 @@ export class UserDetailsComponent implements OnInit {
         private route: ActivatedRoute,
         private imageService: ImageService,
         private viewPortScroller: ViewportScroller,
+        private productService: ProductService
     ) {
     }
 
@@ -50,8 +56,20 @@ export class UserDetailsComponent implements OnInit {
                 next: (data: User): void => {
                     this.user = data;
                     if (data.imageId) {
+                        this.toastNotify.info(`Loading image with id ${data.imageId}`);
                         this.loadImage(data.imageId);
                     }
+                    const params: Params = { userId: data.id };
+                    this.productService.getAllByParams(params).subscribe({
+                        next: (data: ProductPage): void => {
+                            this.products = data.products;
+                            this.nrOfItems = data.nrOfElements;
+                        },
+                        error: (error): void => {
+                            console.error(error);
+                            this.toastNotify.error(`Error fetching data`);
+                        }
+                    });
                 },
                 error: (error): void => {
                     console.error(error);
@@ -65,7 +83,13 @@ export class UserDetailsComponent implements OnInit {
         if (imageId) {
             this.imageService.getImageFile(imageId).subscribe({
                 next: (blob: Blob): void => {
-                    this.image = this.imageService.readImageBlob(blob);
+                    const reader: FileReader = new FileReader();
+                    reader.onload = (): void => {
+                        this.user.imageDataUrl = reader.result as string;
+                    };
+                    if (blob) {
+                        reader.readAsDataURL(blob);
+                    }
                 },
                 error: (error): void => {
                     this.toastNotify.error(`Error fetching image`, error);

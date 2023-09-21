@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { UserRoute } from './user.route';
 import { ImageComponent } from '../shared/image/image.component';
 import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
+import { ProductModule } from "../product/product.module";
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-
         RouterModule,
         UserRoute,
         ImageComponent,
-        FormCheckLabelComponent
+        FormCheckLabelComponent,
+        ProductModule
     ],
     exports: [
         UserDetailsComponent // If you want to use it in other modules

@@ -34,7 +34,8 @@ public class ProductController {
             @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
             @RequestParam("MinPrice") Optional<Double> minPrice,
             @RequestParam("MaxPrice") Optional<Double> maxPrice,
-            @RequestParam("TextSearch") Optional<String> textSearch
+            @RequestParam("TextSearch") Optional<String> textSearch,
+            @RequestParam("userId")Optional<Long> userId
     ) {
         return new ResponseEntity<>(
                 productService.findPageByParams(
@@ -44,7 +45,8 @@ public class ProductController {
                         subcategoryNames.orElse(null),
                         minPrice.orElse(null),
                         maxPrice.orElse(null),
-                        textSearch.orElse(null)
+                        textSearch.orElse(null),
+                        userId.orElse(null)
                 ),
                 HttpStatus.OK
         );

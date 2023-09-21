@@ -41,6 +41,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         ProductComponent,
     ],
     bootstrap: [],
+    exports: [
+        ProductListComponent
+    ]
 })
 export class ProductModule {
 
