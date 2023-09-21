@@ -41,26 +41,25 @@ public class RentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
         Product product = productService.findById(productId.get());
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         if (product.isPublicContact()) {
-            return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
+            return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
         } else {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             RentRequest rentRequest = rentService.findByRenterAndProduct(user, product);
             if (rentRequest != null && "accepted".equals(rentRequest.getRequestStatus())) {
+                // request accepted
                 return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
             } else {
                 if (rentRequest != null && "active".equals(rentRequest.getRequestStatus())) {
+                    // request already in database
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 } else {
+                    // request declined/not yet in database
                     return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
                 }
             }
