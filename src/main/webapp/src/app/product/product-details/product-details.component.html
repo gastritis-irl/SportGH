@@ -1,11 +1,14 @@
 <sgh-breadcrumb [product]="product"></sgh-breadcrumb>
 <ng-template #ownerModalContent>
     <div class="owner-data-holder">
-        <div class="owner-image">
+        <div class="form-heading">
+            Contact Info
+        </div>
+        <div *ngIf="false" class="owner-image">
             <img src="" alt="[OWNER_PROFILE_IMAGE]">
         </div>
         <div class="owner-data">
-            <div class="data-part">
+            <div *ngIf="owner.username" class="data-part">
                 <div class="label">
                     Username
                 </div>
@@ -13,7 +16,7 @@
                     {{owner.username}}
                 </div>
             </div>
-            <div class="data-part">
+            <div *ngIf="owner.email" class="data-part">
                 <div class="label">
                     Email
                 </div>
@@ -21,20 +24,12 @@
                     {{owner.email}}
                 </div>
             </div>
-            <div class="data-part">
+            <div *ngIf="owner" class="data-part">
                 <div class="label">
                     Phone number
                 </div>
                 <div class="data">
                     +40712345678
-                </div>
-            </div>
-            <div class="data-part">
-                <div class="label">
-                    Address
-                </div>
-                <div class="data">
-                    Romania, Cluj-Napoca, Str Constantin Brancoveanu 98
                 </div>
             </div>
         </div>
