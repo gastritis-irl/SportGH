@@ -42,7 +42,7 @@ export class ProductDetailsComponent implements OnInit {
     loadProductImages(productId: number): void {
 
         this.imageService.getImageFilesByProductId(productId).subscribe({
-            next: async (response: {name:string, data:Uint8Array}[]) => {
+            next: async (response: { name: string, data: Uint8Array }[]) => {
                 try {
                     const imageDTOs: Image[] = response;
                     this.product.imageDataUrls = [];
@@ -55,7 +55,7 @@ export class ProductDetailsComponent implements OnInit {
                             continue;
                         }
 
-                        const base64String = imageDTO.data
+                        const base64String = imageDTO.data;
                         const imageUrl = 'data:image/jpeg;base64,' + base64String;
                         this.product.imageDataUrls.push(imageUrl);
                     }
@@ -152,7 +152,11 @@ export class ProductDetailsComponent implements OnInit {
                 this.modalService.open(modalContent, { centered: true, scrollable: true, animation: true });
             },
             error: (error): void => {
-                if (error.statusText === 'Unauthorized') {
+                if (error.status === 401) { // Unauthorized
+                    this.toastNotify.warning('Please log in first, to get contact information.');
+                    return;
+                }
+                if (error.statusText === 'requestFirst') {
                     this.productService.sendContactRequest(this.product).subscribe({
                         next: (): void => {
                             this.toastNotify.info('Request sent successfully.');
@@ -161,9 +165,10 @@ export class ProductDetailsComponent implements OnInit {
                             this.toastNotify.warning(error.error);
                         }
                     });
-                } else {
-                    this.toastNotify.error(error.error);
+                    return;
                 }
+                console.error(error);
+                this.toastNotify.error('Error fetching data');
             }
         });
     }

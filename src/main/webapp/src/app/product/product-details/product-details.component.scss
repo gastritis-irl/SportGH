@@ -334,6 +334,10 @@ $icon-size: 50px;
                         .rent-button {
                             width: 100%;
                             justify-content: center;
+
+                            &:disabled {
+                                background-color: $color-main-2;
+                            }
                         }
                     }
                 }
