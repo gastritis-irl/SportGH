@@ -6,12 +6,16 @@ import edu.codespring.sportgh.service.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Collection;
 
 @Slf4j
 @RequiredArgsConstructor
 public abstract class BaseDataGenerator {
+
+    @Value("${test.file.storage.location}")
+    protected String testFileStorageLocation;
 
     protected final UserService userService;
     protected final CategoryService categoryService;

@@ -23,7 +23,7 @@ public class DummyDataGenerator extends BaseDataGenerator {
         saveCategory(
             "DummyCategory",
             "",
-            ""
+            testFileStorageLocation + "/waterSports.png"
         );
     }
 

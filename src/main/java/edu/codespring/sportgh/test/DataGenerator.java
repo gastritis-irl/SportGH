@@ -5,7 +5,6 @@ import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.service.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +13,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class DataGenerator extends BaseDataGenerator {
-
-    @Value("${test.file.storage.location}")
-    private String testFileStorageLocation;
 
     public DataGenerator(UserService userService, CategoryService categoryService,
                          SubCategoryService subCategoryService, ProductService productService,
