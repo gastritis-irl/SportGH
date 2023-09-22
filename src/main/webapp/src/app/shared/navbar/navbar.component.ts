@@ -8,11 +8,13 @@ import { CategoryService } from '../../category/category.service';
 import { Category } from '../../category/category.model';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.service';
+import { IdToken } from '../../auth-and-token/firebase-id-token.model';
 
 @Component({
     selector: 'sgh-navbar',
     standalone: true,
-    imports: [ NgbDropdownModule, RouterLink, AuthModule, NgForOf, NgIf, FormsModule ],
+    imports: [NgbDropdownModule, RouterLink, AuthModule, NgForOf, NgIf, FormsModule],
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
 })
@@ -23,6 +25,7 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private categoryService: CategoryService,
+        private fbIdTokenService: FirebaseIdTokenService,
         private toastNotify: ToastrService,
         private router: Router,
     ) {
@@ -43,12 +46,23 @@ export class NavbarComponent implements OnInit {
     }
 
     searchForText(): void {
-        this.router.navigate([ '/products' ], { queryParams: { pageNumber: 1, TextSearch: this.textSearch } })
+        this.router.navigate(['/products'], { queryParams: { pageNumber: 1, TextSearch: this.textSearch } })
             .catch(error => {
                 console.error(error);
                 this.toastNotify.error(`Error searching for ${this.textSearch}`);
             });
     }
 
-    protected readonly sessionStorage: Storage = sessionStorage;
+    checkIfLoggedIn(): boolean {
+        return !!this.getDecodedIdToken()?.user_id;
+    }
+
+    checkIfAdmin(): boolean {
+        return this.getDecodedIdToken()?.email === 'admin@test.com';
+        // return this.getDecodedIdToken().role === 'admin';
+    }
+
+    getDecodedIdToken(): IdToken | null {
+        return this.fbIdTokenService.getDecodedIdToken();
+    }
 }

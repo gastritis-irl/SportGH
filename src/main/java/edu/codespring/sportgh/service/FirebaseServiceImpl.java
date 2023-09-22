@@ -10,11 +10,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 @Service
 @Slf4j
@@ -68,6 +69,9 @@ public class FirebaseServiceImpl implements FirebaseService {
 
         // Extract the UID from the FirebaseToken
         String uid = firebaseToken.getUid();
+        if (uid == null) {
+            throw new BadRequestException("Missing UID from firebase token.");
+        }
 
         // Look up the user in your own database using the UID
         User user = userRepository.findByFirebaseUid(uid);
@@ -75,17 +79,11 @@ public class FirebaseServiceImpl implements FirebaseService {
             throw new BadRequestException("User not found with Firebase UID: " + uid);
         }
 
-        // Create a UserDetails object using Spring Security's User class
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
-            .roles(user.getRole())
-            .accountExpired(false)
-            .accountLocked(false)
-            .credentialsExpired(false)
-            .disabled(false)
-            .build();
-
-        // Create an Authentication object using the UserDetails
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(
+            user,
+            firebaseToken,
+            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
+        );
     }
 
     @Override

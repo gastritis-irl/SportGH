@@ -7,7 +7,11 @@ import { Injectable } from '@angular/core';
 })
 export class FirebaseIdTokenService {
 
-    getIdToken(): IdToken | null {
+    getIdToken(): string | null {
+        return sessionStorage.getItem('firebaseIdToken');
+    }
+
+    getDecodedIdToken(): IdToken | null {
         const firebaseIdToken: string | null = sessionStorage.getItem('firebaseIdToken');
         if (firebaseIdToken) {
             return jwtDecode(firebaseIdToken);

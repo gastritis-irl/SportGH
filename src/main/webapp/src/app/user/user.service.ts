@@ -5,6 +5,7 @@ import { User } from './user.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
 import { getIdToken } from '@angular/fire/auth';
+import { FirebaseIdTokenService } from '../auth-and-token/firebase-id-token.service';
 
 
 @Injectable({
@@ -12,18 +13,18 @@ import { getIdToken } from '@angular/fire/auth';
 })
 export class UserService extends AppService {
 
-    constructor(private afAuth: AngularFireAuth, http: HttpClient,) {
-        super(http);
+    constructor(private afAuth: AngularFireAuth, http: HttpClient, fbIdTokenService: FirebaseIdTokenService) {
+        super(http, fbIdTokenService);
     }
 
     getAll(): Observable<User[]> {
         const url: string = `${this.baseUrl}/users`;
-        return this.http.get<User[]>(url);
+        return this.httpGet<User[]>(url);
     }
 
     getById(userId: number): Observable<User> {
         const url: string = `${this.baseUrl}/users/${userId}`;
-        return this.http.get<User>(url);
+        return this.httpGet<User>(url);
     }
 
     async signInWithFirebase(email: string, password: string): Promise<void> {

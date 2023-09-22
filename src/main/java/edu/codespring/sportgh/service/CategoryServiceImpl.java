@@ -45,12 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteAll() {
-        int rowsAffected = categoryRepository.deleteAllWithCount();
-        log.info("All categories deleted successfully. Rows affected: {}.", rowsAffected);
-    }
-
-    @Override
     public boolean existsById(Long categoryID) {
         return categoryRepository.existsById(categoryID);
     }
@@ -58,11 +52,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean existsByName(String categoryName) {
         return categoryRepository.existsByName(categoryName);
-    }
-
-    @Override
-    public Long count() {
-        return categoryRepository.count();
     }
 
     @Override

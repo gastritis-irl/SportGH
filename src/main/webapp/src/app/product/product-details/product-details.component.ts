@@ -3,12 +3,10 @@ import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { User } from '../../user/user.model';
-import { UserService } from '../../user/user.service';
 import { ViewportScroller } from '@angular/common';
+import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.service';
 import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
-
 import { ViewChild } from '@angular/core';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 
@@ -22,19 +20,17 @@ export class ProductDetailsComponent implements OnInit {
     @ViewChild(NgbCarousel) carousel!: NgbCarousel;
 
     product: Product = {};
-    productLender: User = {};
     imageDatas: Image[] = [];
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
 
-
     constructor(
         private productService: ProductService,
-        private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
         private viewPortScroller: ViewportScroller,
         private toastNotify: ToastrService,
+        private fbIdTokenService: FirebaseIdTokenService,
         private imageService: ImageService,
     ) {
     }
@@ -84,33 +80,24 @@ export class ProductDetailsComponent implements OnInit {
         );
     }
 
+    getLoggedInUserUid(): string | null {
+        const userId: string | undefined = this.fbIdTokenService.getDecodedIdToken()?.user_id;
+        if (userId != undefined) {
+            return userId;
+        }
+        return null;
+    }
+
     loadProduct(productId: number): void {
         this.productService.getById(productId).subscribe(
             {
                 next: (data: Product): void => {
                     this.product = data;
-                    this.loadProductLender(this.product.userId ? this.product.userId : 0);
-
                     this.loadProductImages(this.product.id ? this.product.id : 0);
-
                 },
                 error: (error): void => {
                     console.error(error);
                     this.toastNotify.error(`Error fetching data`);
-                }
-            }
-        );
-    }
-
-
-    loadProductLender(userId: number): void {
-        this.userService.getById(userId).subscribe(
-            {
-                next: (resp: User): void => {
-                    this.productLender = resp;
-                },
-                error: (): void => {
-                    this.toastNotify.error(`Error loading lender info`);
                 }
             }
         );

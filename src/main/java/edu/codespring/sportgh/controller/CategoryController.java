@@ -49,12 +49,6 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteAll() {
-        categoryService.deleteAll();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     private ResponseEntity<CategoryOutDTO> save(@Valid CategoryInDTO categoryInDTO) {
         Category category = categoryMapper.dtoToCategory(categoryInDTO);
         category.setImage(imageService.findById(categoryInDTO.getImageId()));
@@ -83,11 +77,6 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return save(categoryInDTO);
-    }
-
-    @GetMapping(path = "/count")
-    public ResponseEntity<Long> count() {
-        return new ResponseEntity<>(categoryService.count(), HttpStatus.OK);
     }
 }
 

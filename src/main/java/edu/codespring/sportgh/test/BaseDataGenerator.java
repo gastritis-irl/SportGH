@@ -2,6 +2,7 @@ package edu.codespring.sportgh.test;
 
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.*;
+import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -48,11 +49,23 @@ public abstract class BaseDataGenerator {
     public abstract void initProducts();
 
     public void initUsers() {
+        final String adminEmail = "admin@test.com";
+        if (userService.findByUsername(adminEmail) == null) {
+            userService.signup(adminEmail, null, SecurityUtil.ROLE_ADMIN);
+        } else {
+            User admin = userService.findByUsername(adminEmail);
+            admin.setRole(SecurityUtil.ROLE_ADMIN);
+            userService.update(admin);
+        }
+
         Collection<User> userListFB = firebaseService.getUsers();
         for (User user : userListFB) {
-            if (userService.findByFirebaseUid(user.getFirebaseUid()) == null
-                && userService.findByUsername(user.getEmail()) == null) {
-                userService.signup(user.getEmail(), user.getFirebaseUid());
+            User localUser = userService.findByEmail(user.getEmail());
+            if (localUser == null) {
+                userService.signup(user.getEmail(), user.getFirebaseUid(), SecurityUtil.ROLE_USER);
+            } else {
+                localUser.setFirebaseUid(user.getFirebaseUid());
+                userService.update(localUser);
             }
         }
 
@@ -89,8 +102,8 @@ public abstract class BaseDataGenerator {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
         if (subCategory != null && productService.notExistsByNameAndUser(product.getName(), user)) {
             productService.save(new Product(true, product.getName(), product.getDescription(),
-                product.getLocation(), product.getRentPrice(),
-                subCategory, user, null));
+                    product.getLocation(), product.getRentPrice(),
+                    subCategory, user, null));
         }
     }
 }
