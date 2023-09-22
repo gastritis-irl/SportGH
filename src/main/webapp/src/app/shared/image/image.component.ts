@@ -47,6 +47,12 @@ export class ImageComponent implements OnInit {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length) {
             const newImageFiles = Array.from(input.files);
+
+            if (!this.allowMultiple) {
+                this.imageFiles = [];
+                this.imageDataArray = [];
+            }
+
             this.fileChange.emit(newImageFiles);
             newImageFiles.forEach((file) => {
                 const reader = new FileReader();
@@ -58,6 +64,7 @@ export class ImageComponent implements OnInit {
             this.imageFiles = [...this.imageFiles, ...newImageFiles];
         }
     }
+
 
 
     deleteImage(index: number): void {
