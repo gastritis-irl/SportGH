@@ -12,13 +12,9 @@ public interface CategoryService {
 
     void delete(Long categoryID);
 
-    void deleteAll();
-
     boolean existsById(Long categoryID);
 
     boolean existsByName(String categoryName);
-
-    Long count();
 
     Collection<Category> findAll();
 

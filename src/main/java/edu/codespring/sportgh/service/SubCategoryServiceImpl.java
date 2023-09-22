@@ -28,12 +28,6 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
     @Override
-    public void deleteAll() {
-        int rowsAffected = subCategoryRepository.deleteAllWithCount();
-        log.info("All categories deleted successfully. Rows affected: {}.", rowsAffected);
-    }
-
-    @Override
     public boolean existsById(Long subCategoryID) {
         return subCategoryRepository.existsById(subCategoryID);
     }
@@ -54,18 +48,8 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
     @Override
-    public Long count() {
-        return subCategoryRepository.count();
-    }
-
-    @Override
     public Collection<SubCategory> findAll() {
         return subCategoryRepository.findAll();
-    }
-
-    @Override
-    public Collection<SubCategory> findByIds(Collection<Long> subCategoryIDs) {
-        return subCategoryRepository.findByIdIn(subCategoryIDs);
     }
 
     @Override

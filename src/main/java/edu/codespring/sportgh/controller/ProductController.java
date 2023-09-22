@@ -5,7 +5,9 @@ import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
+import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.ProductService;
+import edu.codespring.sportgh.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,8 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductMapper productMapper;
+    private final UserService userService;
+    private final SecurityUtil securityUtil;
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
@@ -63,9 +67,10 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductOutDTO> create(@RequestBody @Valid ProductInDTO productInDTO) {
         log.info("Creating product with name: {}.", productInDTO.getName());
-        if (productInDTO.getId() != null) {
+        if (productInDTO.getUserId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        productInDTO.setUserId(userService.findByFirebaseUid(productInDTO.getUserUid()).getId());
         return productService.saveInDTO(productInDTO);
     }
 
@@ -88,6 +93,10 @@ public class ProductController {
         Product product = productService.findById(productId);
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        if (!securityUtil.isCurrentlyLoggedIn(product.getUser())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 
         productService.delete(product);

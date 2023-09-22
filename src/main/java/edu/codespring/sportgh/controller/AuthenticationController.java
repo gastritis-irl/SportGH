@@ -1,6 +1,7 @@
 package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.model.User;
+import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.FirebaseService;
 import edu.codespring.sportgh.service.UserService;
 import edu.codespring.sportgh.dto.auth.SignupRequest;
@@ -21,7 +22,7 @@ public class AuthenticationController {
     public ResponseEntity<User> signup(@RequestBody SignupRequest request) {
         String firebaseUid = firebaseService.getFirebaseUidFromToken(request.getIdToken());
         return new ResponseEntity<>(
-            userService.signup(request.getEmail(), firebaseUid),
+            userService.signup(request.getEmail(), firebaseUid, SecurityUtil.ROLE_USER),
             HttpStatus.OK
         );
     }

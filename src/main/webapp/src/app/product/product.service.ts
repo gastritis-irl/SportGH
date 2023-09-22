@@ -13,27 +13,27 @@ export class ProductService extends AppService {
 
     getAllByParams(filterParams: Params): Observable<ProductPage> {
         const url: string = `${this.baseUrl}/products`;
-        return this.http.get<ProductPage>(url, { params: filterParams });
+        return this.httpGet<ProductPage>(url, { params: filterParams });
     }
 
     getById(id: number): Observable<Product> {
         const url: string = `${this.baseUrl}/products/${id}`;
-        return this.http.get<Product>(url);
+        return this.httpGet<Product>(url);
     }
 
     create(product: Product): Observable<Product> {
         const url: string = `${this.baseUrl}/products`;
-        return this.http.post(url, product);
+        return this.httpPost(url, { body: product });
     }
 
     edit(product: Product): Observable<Product> {
         const url: string = `${this.baseUrl}/products/${product.id}`;
-        return this.http.put(url, product);
+        return this.httpPut(url, { body: product });
     }
 
     delete(productId: number): Observable<Product> {
         const url: string = `${this.baseUrl}/products/${productId}`;
-        return this.http.delete(url);
+        return this.httpDelete(url);
     }
 
     getOwnerInfo(product: Product): Observable<User> {

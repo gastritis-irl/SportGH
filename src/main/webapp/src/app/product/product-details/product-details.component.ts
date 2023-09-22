@@ -5,6 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../user/user.model';
 import { ViewportScroller } from '@angular/common';
+import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.service';
 import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';
@@ -32,6 +33,7 @@ export class ProductDetailsComponent implements OnInit {
         private router: Router,
         private viewPortScroller: ViewportScroller,
         private toastNotify: ToastrService,
+        private fbIdTokenService: FirebaseIdTokenService,
         private imageService: ImageService,
         private modalService: NgbModal,
     ) {
@@ -82,13 +84,20 @@ export class ProductDetailsComponent implements OnInit {
         );
     }
 
+    getLoggedInUserUid(): string | null {
+        const userId: string | undefined = this.fbIdTokenService.getDecodedIdToken()?.user_id;
+        if (userId != undefined) {
+            return userId;
+        }
+        return null;
+    }
+
     loadProduct(productId: number): void {
         this.productService.getById(productId).subscribe(
             {
                 next: (data: Product): void => {
                     this.product = data;
                     this.loadProductImages(this.product.id ? this.product.id : 0);
-
                 },
                 error: (error): void => {
                     console.error(error);

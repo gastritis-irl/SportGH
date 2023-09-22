@@ -20,6 +20,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -40,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
         this.imageService = imageService;
     }
 
+    @PreAuthorize("authentication.principal.id == #productInDTO.userId or hasRole('ADMIN')")
+    @PostAuthorize("returnObject.body.userId == authentication.principal.id or hasRole('ADMIN')")
     @Override
     @Transactional
     public ResponseEntity<ProductOutDTO> saveInDTO(@Valid ProductInDTO productInDTO) {
@@ -66,8 +70,8 @@ public class ProductServiceImpl implements ProductService {
         return spec;
     }
 
-    private Specification<Product> filterByCategoriesAndSubcategories(
-        String[] subcategoryNames, Specification<Product> specification
+    private Specification<Product> filterBySubcategories(
+            String[] subcategoryNames, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
 
@@ -124,7 +128,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        specification = filterByCategoriesAndSubcategories(subcategoryNames, specification);
+        specification = filterBySubcategories(subcategoryNames, specification);
         specification = filterByPrice(minPrice, maxPrice, specification);
         specification = filterByTextInNameOrDescription(textSearch, specification);
 

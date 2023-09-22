@@ -32,19 +32,13 @@ public class UserController {
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{userId}")
     public ResponseEntity<?> deleteById(@PathVariable Long userId) {
         userService.deleteById(userId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-
-    @DeleteMapping
-    public ResponseEntity<?> deleteAll() {
-        userService.deleteAll();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
