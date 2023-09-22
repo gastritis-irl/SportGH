@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -48,26 +47,26 @@ public class RentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if (securityUtil.isLoggedIn()) {
-            if (product.isPublicContact()) {
-                return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
-            } else {
-                User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                RentRequest rentRequest = rentService.findByRenterAndProduct(user, product);
-                if (rentRequest != null && "accepted".equals(rentRequest.getRequestStatus())) {
-                    // request accepted
-                    return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
-                } else {
-                    if (rentRequest != null && "active".equals(rentRequest.getRequestStatus())) {
-                        // request already in database
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                    } else {
-                        // request declined/not yet in database
-                        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-                    }
-                }
-            }
-        }
+        // if (securityUtil.isLoggedIn()) {
+        if (product.isPublicContact() && securityUtil.isLoggedIn()) {
+            return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
+        } // else {
+        //     User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //     RentRequest rentRequest = rentService.findByRenterAndProduct(user, product);
+        //     if (rentRequest != null && "accepted".equals(rentRequest.getRequestStatus())) {
+        //         // request accepted
+        //         return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
+        //     } else {
+        //         if (rentRequest != null && "active".equals(rentRequest.getRequestStatus())) {
+        //             // request already in database
+        //             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        //         } else {
+        //             // request declined/not yet in database
+        //             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        //         }
+        //     }
+        // }
+        // }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
