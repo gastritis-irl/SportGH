@@ -56,7 +56,6 @@ export class UserDetailsComponent implements OnInit {
                 next: (data: User): void => {
                     this.user = data;
                     if (data.imageId) {
-                        this.toastNotify.info(`Loading image with id ${data.imageId}`);
                         this.loadImage(data.imageId);
                     }
                     const params: Params = { userId: data.id };
@@ -65,14 +64,12 @@ export class UserDetailsComponent implements OnInit {
                             this.products = data.products;
                             this.nrOfItems = data.nrOfElements;
                         },
-                        error: (error): void => {
-                            console.error(error);
+                        error: (): void => {
                             this.toastNotify.error(`Error fetching data`);
                         }
                     });
                 },
-                error: (error): void => {
-                    console.error(error);
+                error: (): void => {
                     this.toastNotify.error(`Error fetching data`);
                 }
             });

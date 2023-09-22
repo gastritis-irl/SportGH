@@ -2,7 +2,10 @@
     <div class="user-container">
         <div class="left-card">
             <div class="image-container">
-                <img class="image" src="{{ user.imageDataUrl }}" alt="user image"/>
+                <img *ngIf="user.imageDataUrl" class="image" src="{{ user.imageDataUrl }}" alt="user image"/>
+                <img *ngIf="!user.imageDataUrl"
+                     src="https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png" class="image"
+                     alt="IMG" />
             </div>
             <div class="name-container">
                 <div class="username">{{ user.username }}</div>

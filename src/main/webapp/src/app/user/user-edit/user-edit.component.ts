@@ -1,7 +1,3 @@
-//user-edit.component.ts
-
-// Path: src/app/user/user-edit/user-edit.component.ts
-
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ImageService } from '../../shared/image/image.service';
@@ -10,7 +6,6 @@ import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { ImageComponent } from '../../shared/image/image.component';
 import { Image } from '../../shared/image/image.model';
-
 
 @Component({
     selector: 'sgh-user-edit',
@@ -70,8 +65,7 @@ export class UserEditComponent implements OnInit {
                 next: (data: User): void => {
                     this.user = data;
                 },
-                error: (error): void => {
-                    console.error(error);
+                error: (): void => {
                     this.toastNotify.error(`Error fetching data`);
                 }
             });
@@ -100,7 +94,6 @@ export class UserEditComponent implements OnInit {
                         this.updateUserData();
                     },
                     error: (error): void => {
-                        console.error(error);
                         this.toastNotify.error(`Error uploading new image ${error.error}`);
                     }
                 }
