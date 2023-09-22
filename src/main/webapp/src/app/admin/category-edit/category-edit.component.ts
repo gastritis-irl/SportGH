@@ -13,7 +13,7 @@ type ClickHandlerFunction = () => void;
 @Component({
     selector: 'sgh-category-edit',
     templateUrl: './category-edit.component.html',
-    styleUrls: [ './category-edit.component.scss' ]
+    styleUrls: ['./category-edit.component.scss']
 })
 export class CategoryEditComponent implements OnInit {
 
@@ -183,7 +183,7 @@ export class CategoryEditComponent implements OnInit {
         this.categoryService.create(this.category).subscribe(
             {
                 next: (resp: Category): void => {
-                    this.router.navigate([ '/admin/categories' ])
+                    this.router.navigate(['/admin/categories'])
                         .then((): void => {
                             this.toastNotify.success(`Category "${resp.name}" successfully created!`);
                         })
@@ -192,7 +192,11 @@ export class CategoryEditComponent implements OnInit {
                         });
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error creating category: ${error.error}`);
+                    if (error.status === 0) {
+                        this.toastNotify.error('Error creating category: unauthorized');
+                    } else {
+                        this.toastNotify.error(`Error creating category: ${error.error}`);
+                    }
 
                     // Delete the image if it was created
                     if (this.category.imageId) {
@@ -208,7 +212,7 @@ export class CategoryEditComponent implements OnInit {
         this.categoryService.update(this.category.id, this.category).subscribe(
             {
                 next: (): void => {
-                    this.router.navigate([ '/admin/categories' ])
+                    this.router.navigate(['/admin/categories'])
                         .then((): void => {
                             this.toastNotify.success(`Category successfully updated!`);
                         })
@@ -217,7 +221,11 @@ export class CategoryEditComponent implements OnInit {
                         });
                 },
                 error: (error): void => {
-                    this.toastNotify.error(`Error updating category: ${error.error}`);
+                    if (error.status === 0) {
+                        this.toastNotify.error('Error creating category: unauthorized');
+                    } else {
+                        this.toastNotify.error(`Error creating category: ${error.error}`);
+                    }
                 }
             }
         );

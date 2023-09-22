@@ -55,6 +55,7 @@ public class UserController {
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
     }
 
@@ -77,11 +78,5 @@ public class UserController {
         User user = userMapper.dtoToUser(userInDTO);
         User updatedUser = userService.update(user);
         return new ResponseEntity<>(userMapper.userToOut(updatedUser), HttpStatus.OK);
-    }
-
-    @DeleteMapping
-    public ResponseEntity<?> deleteAll() {
-        userService.deleteAll();
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
