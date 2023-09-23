@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    private boolean available = true;
+    private boolean publicContact = true;
 
     @Column(length = 50)
     private String name;
@@ -36,6 +36,9 @@ public class Product extends BaseEntity {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "product")
+    private Set<RentRequest> requests;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference

@@ -93,11 +93,12 @@ public class FirebaseServiceImpl implements FirebaseService {
             ListUsersPage listUsersPage = FirebaseAuth.getInstance().listUsers(null);
             for (ExportedUserRecord i : listUsersPage.getValues()) {
                 users.add(new User(
-                    i.getEmail(),
-                    i.getEmail(),
-                    i.getUid(),
-                    "USER",
-                    null)
+                        i.getEmail(),
+                        i.getEmail(),
+                        i.getUid(),
+                        "USER",
+                        null,
+                        null)
                 );
             }
         } catch (FirebaseAuthException e) {

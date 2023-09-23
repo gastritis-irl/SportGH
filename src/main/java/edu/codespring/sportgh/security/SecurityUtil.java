@@ -15,4 +15,13 @@ public class SecurityUtil {
     public boolean isCurrentlyLoggedIn(User user) {
         return SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals(user);
     }
+
+    public boolean isLoggedIn() {
+        try {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return user != null;
+        } catch (ClassCastException e) {
+            return false;
+        }
+    }
 }

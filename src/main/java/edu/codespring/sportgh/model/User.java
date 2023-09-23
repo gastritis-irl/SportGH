@@ -35,5 +35,9 @@ public class User extends BaseEntity {
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "user")
     private Set<Product> products;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "renter")
+    private Set<RentRequest> myRequests;
 }
 

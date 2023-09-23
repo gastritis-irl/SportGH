@@ -1,7 +1,7 @@
 export interface Product {
 
     id?: number,
-    available?: boolean,
+    publicContact?: boolean,
     name?: string,
     description?: string,
     location?: string,
