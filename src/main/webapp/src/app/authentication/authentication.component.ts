@@ -86,7 +86,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 // Use the email directly here before clearing the form
                 this.loggedInUserEmail = this.email;
                 this.loggedInUserName = this.loggedInUserEmail;
-                const idToken: IdToken | null = this.firebaseIdTokenService.getIdToken();
+                const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
                 if (idToken) {
                     this.loggedInUserFirebaseId = idToken?.user_id;
                 }
@@ -107,7 +107,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                     this.loggedInUserEmail = this.email;
                     this.loggedInUserName = this.loggedInUserEmail;
 
-                    const idToken: IdToken | null = this.firebaseIdTokenService.getIdToken();
+                    const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
                     if (idToken) {
                         this.loggedInUserFirebaseId = idToken?.user_id;
                     }
