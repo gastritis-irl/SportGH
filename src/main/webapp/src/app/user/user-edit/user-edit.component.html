@@ -78,7 +78,9 @@
                 </div>
 
                 <div class="address-group">
-                    <span class="location-header">Location:</span>
+                    <div class="location-header">
+                        <div class="form-heading">Location</div>
+                    </div>
                     <div class="fields-group">
                         <div class="form-part">
                             <label for="address" class="form-part-label creative-label">Address</label>
@@ -101,44 +103,44 @@
                         </div>
 
 
-                            <div class="form-part">
-                                <label for="city" class="form-part-label creative-label">City</label>
-                                <input type="text"
-                                       id="city"
-                                       name="city"
-                                       [(ngModel)]="user.city"
-                                       #city="ngModel"
-                                       minlength="5"
-                                       maxlength="100"
-                                       class="form-part-input"/>
+                        <div class="form-part">
+                            <label for="city" class="form-part-label creative-label">City</label>
+                            <input type="text"
+                                   id="city"
+                                   name="city"
+                                   [(ngModel)]="user.city"
+                                   #city="ngModel"
+                                   minlength="5"
+                                   maxlength="100"
+                                   class="form-part-input"/>
 
-                                <sgh-form-ch-lbl [fieldName]="'City'"
-                                                 [minlength]="5"
-                                                 [maxlength]="100"
-                                                 [length]="city.value.length"
-                                                 *ngIf="city.invalid && (city.dirty || city.touched)"
-                                                 class="form-check-label">
-                                </sgh-form-ch-lbl>
-                            </div>
+                            <sgh-form-ch-lbl [fieldName]="'City'"
+                                             [minlength]="5"
+                                             [maxlength]="100"
+                                             [length]="city.value.length"
+                                             *ngIf="city.invalid && (city.dirty || city.touched)"
+                                             class="form-check-label">
+                            </sgh-form-ch-lbl>
+                        </div>
 
-                            <div class="form-part">
-                                <label for="country" class="form-part-label creative-label">Country</label>
-                                <input type="text"
-                                       id="country"
-                                       name="country"
-                                       [(ngModel)]="user.country"
-                                       #country="ngModel"
-                                       minlength="5"
-                                       maxlength="100"
-                                       class="form-part-input"/>
+                        <div class="form-part">
+                            <label for="country" class="form-part-label creative-label">Country</label>
+                            <input type="text"
+                                   id="country"
+                                   name="country"
+                                   [(ngModel)]="user.country"
+                                   #country="ngModel"
+                                   minlength="5"
+                                   maxlength="100"
+                                   class="form-part-input"/>
 
-                                <sgh-form-ch-lbl [fieldName]="'Country'"
-                                                 [minlength]="5"
-                                                 [maxlength]="100"
-                                                 [length]="country.value.length"
-                                                 *ngIf="country.invalid && (country.dirty || country.touched)"
-                                                 class="form-check-label">
-                                </sgh-form-ch-lbl>
+                            <sgh-form-ch-lbl [fieldName]="'Country'"
+                                             [minlength]="5"
+                                             [maxlength]="100"
+                                             [length]="country.value.length"
+                                             *ngIf="country.invalid && (country.dirty || country.touched)"
+                                             class="form-check-label">
+                            </sgh-form-ch-lbl>
                         </div>
                     </div>
                 </div>

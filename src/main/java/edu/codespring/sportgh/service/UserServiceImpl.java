@@ -39,6 +39,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User update(User user) {
+        if (user.getImage() == null) {
+            user.setImage(null);
+        }
         userRepository.save(user);
         return user;
     }

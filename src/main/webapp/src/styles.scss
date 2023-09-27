@@ -412,6 +412,7 @@ $description-textarea-height: 200px;
             padding: $form-part-padding;
             background-color: $color-neutral-1;
             border-radius: $border-radius;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             gap: $item-gap;
 
             .form-part-label {

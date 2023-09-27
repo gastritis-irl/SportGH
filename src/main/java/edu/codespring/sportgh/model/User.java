@@ -51,7 +51,7 @@ public class User extends BaseEntity {
     private String role = "USER";
 
     @ToString.Exclude
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private Image image;
 

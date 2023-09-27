@@ -113,5 +113,10 @@ export class UserEditComponent implements OnInit {
 
     onSubmit(): void {
         this.updateUser();
+        this.router.navigate(['/users', this.user.firebaseUid])
+            .catch((error): void => {
+                console.error(error);
+                this.toastNotify.error('Error redirecting to page');
+            });
     }
 }

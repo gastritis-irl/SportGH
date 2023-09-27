@@ -8,10 +8,10 @@
     }
 
     .location-header {
-        font-size: $size-h2;
+        font-size: $name-font-size;
         color: $color-main-1;
         font-weight: $font-weight-bold;
-        margin-bottom: 1%;
-        padding: 20px;
+        margin-left: inherit;
+        padding-left: 20px;
     }
 }

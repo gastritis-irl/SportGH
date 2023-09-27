@@ -42,10 +42,10 @@ public class WebSecurityConfig {
                 ).permitAll()
                 // users
                 .requestMatchers(
-                    customRequestMatcher(HttpMethod.GET, "/api/users/[0-9]+")
+                    HttpMethod.GET, "/api/users/**"
                 ).hasAnyRole("USER", "ADMIN")
                 .requestMatchers(
-                    customRequestMatcher(HttpMethod.PUT, "/api/users/[0-9]+")
+                    HttpMethod.PUT, "/api/users/**"
                 ).hasAnyRole("USER", "ADMIN")
                 // products
                 .requestMatchers("/api/products/**").hasAnyRole("USER", "ADMIN")
