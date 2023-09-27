@@ -95,11 +95,18 @@ public class FirebaseServiceImpl implements FirebaseService {
                 users.add(new User(
                         i.getEmail(),
                         i.getEmail(),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
                         i.getUid(),
                         "USER",
                         null,
-                        null)
-                );
+                        null,
+                        null
+                ));
             }
         } catch (FirebaseAuthException e) {
             throw new ServiceException("[FbService] listUsers failed!", e);

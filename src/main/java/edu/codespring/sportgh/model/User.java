@@ -25,12 +25,35 @@ public class User extends BaseEntity {
     @Column(name = "email", unique = true, length = 64)
     private String email;
 
+    @Column(name = "full_name", length = 64)
+    private String fullName;
+
+    @Column(name = "phone_number", length = 12)
+    private String phoneNumber;
+
+    @Column(name = "bio", length = 600)
+    private String bio;
+
+    @Column(name = "address", length = 100)
+    private String address;
+
+    @Column(name = "city", length = 64)
+    private String city;
+
+    @Column(name = "country", length = 64)
+    private String country;
+
     @EqualsAndHashCode.Include
     @Column(name = "firebase_uid", unique = true, length = 128)
     private String firebaseUid;
 
     @Column(name = "role", length = 25)
     private String role = "USER";
+
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "user")

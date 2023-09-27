@@ -22,7 +22,7 @@ export class ProductDetailsComponent implements OnInit {
     @ViewChild(NgbCarousel) carousel!: NgbCarousel;
 
     product: Product = {};
-    owner: User = {};
+    owner: User = { imageId: 0};
     imageDatas: Image[] = [];
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');

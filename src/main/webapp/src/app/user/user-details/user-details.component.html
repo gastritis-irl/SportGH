@@ -1,0 +1,40 @@
+<div class="user-page-container">
+    <div class="user-container">
+        <div class="left-card">
+            <div class="image-container">
+                <img *ngIf="user.imageDataUrl" class="image" src="{{ user.imageDataUrl }}" alt="user image"/>
+                <img *ngIf="!user.imageDataUrl"
+                     src="https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png" class="image"
+                     alt="IMG" />
+            </div>
+            <div class="name-container">
+                <div class="username">{{ user.username }}</div>
+                <div class="full-name">{{user.fullName}}</div>
+            </div>
+            <div class="buttons card-button">
+                <div class="button-default button-primary" routerLink="/users/{{user.firebaseUid}}/edit">Edit</div>
+            </div>
+        </div>
+        <div class="right-card">
+            <div class="user-details-area">
+                <div class="user-description user-details-item" id="user-desc">
+                    <div class="form-main-title">About me:</div>
+                    <div class="form-heading creative-label">
+                        Email:
+                    </div>
+                    <div class="bio-content">{{ user.email }}</div>
+
+                    <div class="form-heading creative-label">
+                        Bio:
+                    </div>
+                    <div class="bio-content">{{ user.bio }}</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-list-holder">
+        <div class="product-list-title">Products</div>
+        <sgh-product-list [products]="products" [nrOfItems]="nrOfItems"></sgh-product-list>
+    </div>
+</div>

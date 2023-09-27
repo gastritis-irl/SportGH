@@ -32,25 +32,27 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
-        @RequestParam("orderBy") Optional<String> orderBy,
-        @RequestParam("direction") Optional<String> direction,
-        @RequestParam("pageNumber") Optional<Integer> pageNumber,
-        @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
-        @RequestParam("MinPrice") Optional<Double> minPrice,
-        @RequestParam("MaxPrice") Optional<Double> maxPrice,
-        @RequestParam("TextSearch") Optional<String> textSearch
+            @RequestParam("orderBy") Optional<String> orderBy,
+            @RequestParam("direction") Optional<String> direction,
+            @RequestParam("pageNumber") Optional<Integer> pageNumber,
+            @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
+            @RequestParam("MinPrice") Optional<Double> minPrice,
+            @RequestParam("MaxPrice") Optional<Double> maxPrice,
+            @RequestParam("TextSearch") Optional<String> textSearch,
+            @RequestParam("userId")Optional<Long> userId
     ) {
         return new ResponseEntity<>(
-            productService.findPageByParams(
-                orderBy.orElse(null),
-                direction.orElse(null),
-                pageNumber.orElse(1),
-                subcategoryNames.orElse(null),
-                minPrice.orElse(null),
-                maxPrice.orElse(null),
-                textSearch.orElse(null)
-            ),
-            HttpStatus.OK
+                productService.findPageByParams(
+                        orderBy.orElse(null),
+                        direction.orElse(null),
+                        pageNumber.orElse(1),
+                        subcategoryNames.orElse(null),
+                        minPrice.orElse(null),
+                        maxPrice.orElse(null),
+                        textSearch.orElse(null),
+                        userId.orElse(null)
+                ),
+                HttpStatus.OK
         );
 
     }

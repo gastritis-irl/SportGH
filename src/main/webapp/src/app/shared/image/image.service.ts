@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Image } from './image.model';
 import { AppService } from '../../app.service';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class ImageService extends AppService {

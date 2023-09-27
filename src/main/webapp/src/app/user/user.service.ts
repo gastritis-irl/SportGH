@@ -23,8 +23,23 @@ export class UserService extends AppService {
     }
 
     getById(userId: number): Observable<User> {
-        const url: string = `${this.baseUrl}/users/${userId}`;
+        const url: string = `${this.baseUrl}/users`;
+        return this.httpGet<User>(url, { params: { userId: userId } });
+    }
+
+    getByUid(uid: string): Observable<User> {
+        const url: string = `${this.baseUrl}/users/${uid}`;
         return this.httpGet<User>(url);
+    }
+
+    getByEmail(email: string): Observable<User> {
+        const url: string = `${this.baseUrl}/users`;
+        return this.httpGet<User>(url,{params:{email: email}});
+    }
+
+    update(userId: number, user: User): Observable<User> {
+        const url: string = `${this.baseUrl}/users/${userId}`;
+        return this.httpPut<User>(url, { body: user});
     }
 
     async signInWithFirebase(email: string, password: string): Promise<void> {

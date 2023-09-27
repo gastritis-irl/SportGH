@@ -1,0 +1,17 @@
+@use '../../../style-variables.scss' as *;
+
+.holder {
+    padding-inline: $main-padding-inline;
+
+    .form-main-title {
+        padding: 0;
+    }
+
+    .location-header {
+        font-size: $name-font-size;
+        color: $color-main-1;
+        font-weight: $font-weight-bold;
+        margin-left: inherit;
+        padding-left: 20px;
+    }
+}

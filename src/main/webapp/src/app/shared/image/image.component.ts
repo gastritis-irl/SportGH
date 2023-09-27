@@ -3,8 +3,7 @@ import { Image } from './image.model';
 import { ImageService } from './image.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
-import { forkJoin, Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
     selector: 'sgh-image',
@@ -48,6 +47,12 @@ export class ImageComponent implements OnInit {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length) {
             const newImageFiles = Array.from(input.files);
+
+            if (!this.allowMultiple) {
+                this.imageFiles = [];
+                this.imageDataArray = [];
+            }
+
             this.fileChange.emit(newImageFiles);
             newImageFiles.forEach((file) => {
                 const reader = new FileReader();
@@ -59,6 +64,7 @@ export class ImageComponent implements OnInit {
             this.imageFiles = [...this.imageFiles, ...newImageFiles];
         }
     }
+
 
 
     deleteImage(index: number): void {
@@ -87,46 +93,6 @@ export class ImageComponent implements OnInit {
                 this.toastNotify.success('Image deleted successfully');
             }
         }
-    }
-
-
-    upload(): void {
-        if (this.imageFiles.length === 0) {
-            this.toastNotify.warning(`No image selected`);
-            return;
-        }
-
-        this.imageFiles.forEach((file: File, index: number): void => {
-            if (!file) {
-                this.imageService.uploadImage(file).subscribe({
-                    next: (response: Image): void => {
-                        this.imageDataArray[index] = response;
-                    },
-                    error: (error): void => {
-                        this.toastNotify.error(`Error uploading image`, error);
-                    }
-                });
-            }
-        });
-    }
-
-    uploadImages(): Observable<Image[]> {
-        if (this.imageFiles.length === 0) {
-            return of([]);
-        }
-
-        const uploadObservables: Observable<Image>[] = this.imageFiles.map((file: File) => this.imageService.uploadImage(file));
-
-        return forkJoin(uploadObservables).pipe(
-            tap({
-                next: (responses: Image[]): void => {
-                    this.imageDataArray = responses;
-                },
-                error: (error: undefined):void => {
-                    this.toastNotify.error('Error uploading images', error);
-                }
-            })
-        );
     }
 
     loadImageFiles(ids: number[]): void {

@@ -11,13 +11,17 @@ import { IdToken } from '../auth-and-token/firebase-id-token.model';
 @Component({
     selector: 'sgh-authentication',
     templateUrl: './authentication.component.html',
-    styleUrls: [ './authentication.component.scss' ]
+    styleUrls: ['./authentication.component.scss']
 })
 export class AuthenticationComponent implements OnInit, OnDestroy {
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
 
     loggedInUserEmail: string | null = null;
+    loggedInUserName: string | null = null;
+    loggedInUserFirebaseId: string | null = null;
+    showDropdown: boolean = false;
+
 
     email: string = '';
     password: string = '';
@@ -35,6 +39,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
         if (idToken) {
             this.loggedInUserEmail = idToken.email;
+            this.loggedInUserName = this.loggedInUserEmail;
+            this.loggedInUserFirebaseId = idToken.user_id;
         }
     }
 
@@ -46,6 +52,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     logout(): void {
         this.afAuth.signOut().then((): void => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
+            this.loggedInUserName = this.loggedInUserEmail;
+            this.loggedInUserFirebaseId = null;
             this.toastNotify.success('Successfully logged out');
         }).catch(error => {
             console.error('Error during logout', error);
@@ -55,9 +63,13 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         indexedDB.deleteDatabase('firebaseLocalStorageDb');
     }
 
+    toggleDropdown(): void {
+        this.showDropdown = !this.showDropdown;
+    }
+
     openModal(content: TemplateRef<string>): void {
         this.closeModal(); // Close any open modal
-        this.modalService.open(content, { centered: true, scrollable: true, animation: true });
+        this.modalService.open(content, {centered: true, scrollable: true, animation: true});
     }
 
     closeModal(): void {
@@ -73,6 +85,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             .then((): void => {
                 // Use the email directly here before clearing the form
                 this.loggedInUserEmail = this.email;
+                this.loggedInUserName = this.loggedInUserEmail;
+                const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
+                if (idToken) {
+                    this.loggedInUserFirebaseId = idToken?.user_id;
+                }
 
                 this.toastNotify.success(`Successfully logged in as ${this.email}`);
                 this.closeModal(); // Close the modal
@@ -88,6 +105,12 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 next: (): void => {
                     // Use the email directly here before clearing the form
                     this.loggedInUserEmail = this.email;
+                    this.loggedInUserName = this.loggedInUserEmail;
+
+                    const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
+                    if (idToken) {
+                        this.loggedInUserFirebaseId = idToken?.user_id;
+                    }
 
                     this.toastNotify.success('Registration successful');
                     this.closeModal(); // Close the modal
