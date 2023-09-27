@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Configuration
 @EnableMethodSecurity
@@ -64,9 +63,5 @@ public class WebSecurityConfig {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(fbAuthProvider);
-    }
-
-    private RegexRequestMatcher customRequestMatcher(HttpMethod method, String pattern) {
-        return new RegexRequestMatcher(pattern, method.name());
     }
 }
