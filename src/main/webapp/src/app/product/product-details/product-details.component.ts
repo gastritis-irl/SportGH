@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../../user/user.model';
 import { ViewportScroller } from '@angular/common';
 import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.service';
 import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'sgh-product-details',
@@ -20,6 +22,7 @@ export class ProductDetailsComponent implements OnInit {
     @ViewChild(NgbCarousel) carousel!: NgbCarousel;
 
     product: Product = {};
+    owner: User = {};
     imageDatas: Image[] = [];
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
@@ -32,13 +35,14 @@ export class ProductDetailsComponent implements OnInit {
         private toastNotify: ToastrService,
         private fbIdTokenService: FirebaseIdTokenService,
         private imageService: ImageService,
+        private modalService: NgbModal,
     ) {
     }
 
     loadProductImages(productId: number): void {
 
         this.imageService.getImageFilesByProductId(productId).subscribe({
-            next: async (response: {name:string, data:Uint8Array}[]) => {
+            next: async (response: { name: string, data: Uint8Array }[]) => {
                 try {
                     const imageDTOs: Image[] = response;
                     this.product.imageDataUrls = [];
@@ -51,7 +55,7 @@ export class ProductDetailsComponent implements OnInit {
                             continue;
                         }
 
-                        const base64String = imageDTO.data
+                        const base64String = imageDTO.data;
                         const imageUrl = 'data:image/jpeg;base64,' + base64String;
                         this.product.imageDataUrls.push(imageUrl);
                     }
@@ -139,18 +143,34 @@ export class ProductDetailsComponent implements OnInit {
         this.viewPortScroller.scrollToAnchor(elementId);
     }
 
-    rentProduct(): void {
-        this.productService.rent(this.product.id ? this.product.id : 0).subscribe(
-            {
-                next: (data: Product): void => {
-                    this.product = data;
-                    this.toastNotify.success(`Product successfully rented`);
-                },
-                error: (error): void => {
-                    this.toastNotify.error(`Error renting product: ${error.error}`);
+    getOwnerInfo(modalContent: TemplateRef<string>): void {
+        // load modal with owner's data
+        this.productService.getOwnerInfo(this.product).subscribe({
+            next: (user: User): void => {
+                this.owner = user;
+                this.modalService.dismissAll();
+                this.modalService.open(modalContent, { centered: true, scrollable: true, animation: true });
+            },
+            error: (error): void => {
+                if (error.status === 401) { // Unauthorized
+                    this.toastNotify.warning('Please log in first, to get contact information.');
+                    return;
                 }
+                if (error.statusText === 'requestFirst') {
+                    this.productService.sendContactRequest(this.product).subscribe({
+                        next: (): void => {
+                            this.toastNotify.info('Request sent successfully.');
+                        },
+                        error: (error): void => {
+                            this.toastNotify.warning(error.error);
+                        }
+                    });
+                    return;
+                }
+                console.error(error);
+                this.toastNotify.error('Error fetching data');
             }
-        );
+        });
     }
 
     deleteProduct(): void {

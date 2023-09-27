@@ -1,4 +1,40 @@
 <sgh-breadcrumb [product]="product"></sgh-breadcrumb>
+<ng-template #ownerModalContent>
+    <div class="owner-data-holder">
+        <div class="form-heading">
+            Contact Info
+        </div>
+        <div *ngIf="false" class="owner-image">
+            <img src="" alt="[OWNER_PROFILE_IMAGE]">
+        </div>
+        <div class="owner-data">
+            <div *ngIf="owner.username" class="data-part">
+                <div class="label">
+                    Username
+                </div>
+                <div class="data">
+                    {{owner.username}}
+                </div>
+            </div>
+            <div *ngIf="owner.email" class="data-part">
+                <div class="label">
+                    Email
+                </div>
+                <div class="data">
+                    {{owner.email}}
+                </div>
+            </div>
+            <div *ngIf="owner" class="data-part">
+                <div class="label">
+                    Phone number
+                </div>
+                <div class="data">
+                    +40712345678
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
 
 <div class="product-details">
     <div class="product-main-area">
@@ -75,7 +111,10 @@
                     </div>
 
                     <div class="rent-button-holder buttons">
-                        <button class="rent-button button-default button-primary" (click)="rentProduct()">Rent</button>
+                        <button class="rent-button button-default button-primary"
+                                [disabled]="getLoggedInUserUid()===null"
+                                (click)="getOwnerInfo(ownerModalContent)">Get Contact
+                        </button>
                     </div>
                 </div>
             </div>

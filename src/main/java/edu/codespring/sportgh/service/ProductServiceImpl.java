@@ -3,7 +3,6 @@ package edu.codespring.sportgh.service;
 import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
-import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.mapper.ProductMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
@@ -177,17 +176,6 @@ public class ProductServiceImpl implements ProductService {
         log.info("Product saved successfully ({}) with ID: {}", product.getName(), product.getId());
     }
 
-    @Override
-    public void rent(Product product) {
-        if (product.isAvailable()) {
-            product.setAvailable(false);
-            save(product);
-        } else {
-            throw new BadRequestException("This product is currently unavailable.");
-        }
-    }
-
-    @PreAuthorize("#product.user.id == authentication.principal.id or hasRole('ADMIN')")
     @Transactional
     @Override
     public void delete(Product product) {

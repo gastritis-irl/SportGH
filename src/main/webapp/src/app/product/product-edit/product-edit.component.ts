@@ -137,7 +137,6 @@ export class ProductEditComponent implements OnInit {
         });
     }
 
-
     getSubcategoriesByCategoryId(): void {
         this.subcategoryService.getByCategoryId(this.product.categoryId ? this.product.categoryId : 0).subscribe(
             {
@@ -162,6 +161,7 @@ export class ProductEditComponent implements OnInit {
             this.product.userUid = idToken.user_id;
         }
         this.buttonPushed = true;
+        this.product.publicContact = true;
 
         this.productService.create(this.product).subscribe(
             {

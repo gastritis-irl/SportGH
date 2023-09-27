@@ -90,13 +90,6 @@ public class ProductController {
         return productService.saveInDTO(productInDTO);
     }
 
-    @PutMapping(path = "/{productId}/rent")
-    public ResponseEntity<ProductOutDTO> rent(@PathVariable Long productId) {
-        Product product = productService.findById(productId);
-        productService.rent(product);
-        return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
-    }
-
     @DeleteMapping(path = "/{productId}")
     public ResponseEntity<?> delete(@PathVariable Long productId) {
         Product product = productService.findById(productId);
