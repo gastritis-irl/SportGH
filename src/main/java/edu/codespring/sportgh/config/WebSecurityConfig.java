@@ -41,6 +41,9 @@ public class WebSecurityConfig {
                 ).permitAll()
                 // users
                 .requestMatchers(
+                    HttpMethod.POST, "/api/auth/signup"
+                ).permitAll()
+                .requestMatchers(
                     HttpMethod.GET, "/api/users/**"
                 ).hasAnyRole("USER", "ADMIN")
                 .requestMatchers(
