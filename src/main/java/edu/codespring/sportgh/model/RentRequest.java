@@ -24,6 +24,7 @@ public class RentRequest extends BaseEntity {
         ACCEPTED,
         DECLINED
     }
+
     private Status requestStatus;
 }
 
