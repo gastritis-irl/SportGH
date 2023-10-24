@@ -153,15 +153,15 @@ export class ProductDetailsComponent implements OnInit {
             },
             error: (error): void => {
                 switch (error.status) {
-                    case 429: { // Too many requests / Pending
+                    case 302: { // Found / Pending
                         this.toastNotify.info('Request has already been sent.');
                         break;
                     }
-                    case 423: { // Locked / Declined
+                    case 303: { // See other / Declined
                         this.toastNotify.success('Request sent successfully!');
                         break;
                     }
-                    case 418: { // I'm a teapot / Created
+                    case 301: { // Moved permanently / Created
                         this.toastNotify.success('Request sent successfully!');
                         break;
                     }

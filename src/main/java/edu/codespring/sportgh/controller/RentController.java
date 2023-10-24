@@ -55,7 +55,7 @@ public class RentController {
         if (rentRequest == null) {
             // create rent request
             rentService.createRentRequest(user, product);
-            return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+            return new ResponseEntity<>(HttpStatus.MOVED_PERMANENTLY);
         } else {
             switch (rentRequest.getRequestStatus()) {
                 case ACCEPTED: {
@@ -65,11 +65,11 @@ public class RentController {
                     );
                 }
                 case PENDING: {
-                    return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
+                    return new ResponseEntity<>(HttpStatus.FOUND);
                 }
                 case DECLINED: {
                     rentService.resendRentRequest(user, product);
-                    return new ResponseEntity<>(HttpStatus.LOCKED);
+                    return new ResponseEntity<>(HttpStatus.SEE_OTHER);
                 }
             }
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
