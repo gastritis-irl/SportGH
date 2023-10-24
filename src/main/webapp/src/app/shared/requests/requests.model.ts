@@ -1,4 +1,4 @@
-enum Status {
+export enum Status {
     PENDING,
     ACCEPTED,
     DECLINED
@@ -6,6 +6,7 @@ enum Status {
 
 export interface Request {
 
+    requestId?: number,
     renterName?: string,
     productName?: string,
     productId?: number,

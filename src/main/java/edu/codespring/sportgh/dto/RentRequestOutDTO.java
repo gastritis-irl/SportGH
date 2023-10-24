@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class RentRequestOutDTO {
 
+    private Long requestId;
     private String renterName;
     private String productName;
     private Long productId;

@@ -1,4 +1,37 @@
+<ng-template #requestsModalContent>
+    <div class="requests-holder">
+        <div class="request" *ngFor="let request of requests">
+            <div class="renter-name">
+                {{request.renterName}}
+            </div>
+            <div class="product-name">
+                {{request.productName}}
+            </div>
+            <div class="request-status">
+                <div>
+                    <div class="buttons">
+                        <div class="button-default button-primary"
+                             (click)="answerRequest(request.requestId,'accept')">
+                            Accept
+                        </div>
+                        <div class="button-default button-secondary"
+                             (click)="answerRequest(request.requestId,'decline')">
+                            Decline
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="request.requestStatus === Status.ACCEPTED">
+                    Accepted
+                </div>
+                <div *ngIf="request.requestStatus === Status.DECLINED">
+                    Declined
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
 <div class="notification">
-    <div>Requests</div>
+    <div (click)="openRequestsModal(requestsModalContent)">Requests</div>
     <div class="badge">{{requests.length}}</div>
 </div>

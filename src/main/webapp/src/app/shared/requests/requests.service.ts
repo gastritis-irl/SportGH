@@ -12,4 +12,9 @@ export class RequestsService extends AppService {
         const url: string = `${this.baseUrl}/rent`;
         return this.httpGet<Request[]>(url);
     }
+
+    answerRequest(requestId: number, answer: string): Observable<void> {
+        const url: string = `${this.baseUrl}/rent?requestId=${requestId}&answer=${answer}`;
+        return this.httpPut(url);
+    }
 }

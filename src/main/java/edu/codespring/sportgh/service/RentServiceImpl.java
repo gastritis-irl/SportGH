@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -20,6 +21,11 @@ public class RentServiceImpl implements RentService {
     @Override
     public RentRequest findByRenterAndProduct(User renter, Product product) {
         return rentRepository.findByRenterAndProduct(renter, product);
+    }
+
+    @Override
+    public Optional<RentRequest> findById(Long requestId) {
+        return rentRepository.findById(requestId);
     }
 
     @Override
@@ -40,9 +46,9 @@ public class RentServiceImpl implements RentService {
     @Override
     public void resendRentRequest(User user, Product product) {
         rentRepository.updateRentRequestStatus(
-                user.getId(),
-                product.getId(),
-                RentRequest.Status.PENDING
+            user.getId(),
+            product.getId(),
+            RentRequest.Status.PENDING
         );
     }
 

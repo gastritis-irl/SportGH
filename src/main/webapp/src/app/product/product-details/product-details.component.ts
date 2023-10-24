@@ -149,7 +149,6 @@ export class ProductDetailsComponent implements OnInit {
                 this.owner = user;
                 this.modalService.dismissAll();
                 this.modalService.open(modalContent, { centered: true, scrollable: true, animation: true });
-
             },
             error: (error): void => {
                 switch (error.status) {

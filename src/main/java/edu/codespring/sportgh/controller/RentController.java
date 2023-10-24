@@ -9,7 +9,6 @@ import edu.codespring.sportgh.model.RentRequest;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.service.ProductService;
 import edu.codespring.sportgh.service.RentService;
-import edu.codespring.sportgh.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -28,7 +28,6 @@ import java.util.Optional;
 public class RentController {
 
     private final ProductService productService;
-    private final UserService userService;
     private final UserMapper userMapper;
     private final RentService rentService;
     private final RentRequestMapper rentRequestMapper;
@@ -60,8 +59,8 @@ public class RentController {
             switch (rentRequest.getRequestStatus()) {
                 case ACCEPTED: {
                     return new ResponseEntity<>(
-                            userMapper.userToOut(rentRequest.getProduct().getUser()),
-                            HttpStatus.OK
+                        userMapper.userToOut(rentRequest.getProduct().getUser()),
+                        HttpStatus.OK
                     );
                 }
                 case PENDING: {
@@ -83,42 +82,38 @@ public class RentController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return new ResponseEntity<>(
-                rentRequestMapper.rentRequestsToOuts(rentService.findByOwnerId(user.getId())),
-                HttpStatus.OK
+            rentRequestMapper.rentRequestsToOuts(rentService.findByOwnerId(user.getId())),
+            HttpStatus.OK
         );
     }
 
     private ResponseEntity<?> answerRequest(User user,
-                                            Optional<Long> productId,
-                                            Optional<Long> renterId,
+                                            Optional<Long> requestId,
                                             Optional<String> answer) {
-        if (renterId.isEmpty() || productId.isEmpty() || answer.isEmpty()) {
+        if (requestId.isEmpty() || answer.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User renter = userService.findById(renterId.get());
-        Product product = productService.findById(productId.get());
-        RentRequest rentRequest = rentService.findByRenterAndProduct(renter, product);
+        RentRequest rentRequest = rentService.findById(requestId.get()).orElse(null);
         if (rentRequest == null || rentRequest.getRequestStatus() != RentRequest.Status.PENDING || user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if (!user.equals(product.getUser())) {
+        if (!user.equals(rentRequest.getProduct().getUser()) && !(Objects.equals(user.getRole(), "ADMIN"))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         rentRequest.setRequestStatus(
-                "accept".equals(answer.get()) ? RentRequest.Status.ACCEPTED : RentRequest.Status.DECLINED
+            "accept".equals(answer.get()) ? RentRequest.Status.ACCEPTED : RentRequest.Status.DECLINED
         );
         rentService.answerRentRequest(rentRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<?> answerRentRequest(@RequestParam Optional<Long> productId,
-                                               @RequestParam Optional<Long> renterId,
+    public ResponseEntity<?> answerRentRequest(@RequestParam Optional<Long> requestId,
                                                @RequestParam Optional<String> answer) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return answerRequest(user, productId, renterId, answer);
+        return answerRequest(user, requestId, answer);
     }
 }

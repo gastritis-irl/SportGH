@@ -10,6 +10,7 @@ import java.util.Collection;
 @Mapper(componentModel = "spring")
 public interface RentRequestMapper {
 
+    @Mapping(source = "id", target = "requestId")
     @Mapping(source = "renter.username", target = "renterName")
     @Mapping(source = "product.name", target = "productName")
     @Mapping(source = "product.id", target = "productId")
