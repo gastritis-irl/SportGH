@@ -1,0 +1,25 @@
+@use '../../../style-variables.scss' as *;
+
+.notification {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    border-radius: 3px;
+    font-size: $size-default;
+    font-weight: $font-weight-bold;
+}
+
+.notification .badge {
+    position: absolute;
+    top: -5px;
+    right: 80px;
+    padding: 5px;
+    border-radius: 50%;
+    background: red;
+    color: white;;
+    font-size: $size-default;
+    font-weight: $font-weight-bold;
+}

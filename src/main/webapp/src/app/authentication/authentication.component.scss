@@ -5,6 +5,12 @@ $padding-left-welcome-message: 1em;
 $padding-right-welcome-message: 2.5em;
 $btn-height: 100%;
 
+.auth-buttons {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+}
+
 .buttons {
     display: flex;
     justify-content: flex-end;
@@ -129,19 +135,19 @@ $btn-height: 100%;
             border: 1px solid rgba(105, 105, 105, 0.397);
             border-radius: round($number: 2em);
 
-            &:placeholder-shown+span {
+            &:placeholder-shown + span {
                 top: 15px;
                 font-size: 0.9em;
             }
 
-            &:focus+span,
-            &:valid+span {
+            &:focus + span,
+            &:valid + span {
                 top: 30px;
                 font-size: 0.7em;
                 font-weight: $font-weight-bold;
             }
 
-            &:valid+span {
+            &:valid + span {
                 color: green;
             }
         }
@@ -158,7 +164,6 @@ $btn-height: 100%;
         }
     }
 }
-
 
 
 .button-default {

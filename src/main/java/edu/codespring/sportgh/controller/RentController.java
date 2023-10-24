@@ -60,8 +60,8 @@ public class RentController {
             switch (rentRequest.getRequestStatus()) {
                 case ACCEPTED: {
                     return new ResponseEntity<>(
-                        userMapper.userToOut(rentRequest.getProduct().getUser()),
-                        HttpStatus.OK
+                            userMapper.userToOut(rentRequest.getProduct().getUser()),
+                            HttpStatus.OK
                     );
                 }
                 case PENDING: {
@@ -78,82 +78,20 @@ public class RentController {
         }
     }
 
-    private ResponseEntity<Collection<RentRequestOutDTO>> getRentRequestByProduct(Long productId, User user) {
-        Product product = productService.findById(productId);
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!product.getUser().getId().equals(user.getId())) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<>(
-            rentRequestMapper.rentRequestsToOuts(rentService.findByProduct(product)),
-            HttpStatus.OK
-        );
-    }
-
-    private ResponseEntity<Collection<RentRequestOutDTO>> getRentRequestByOwner(Long ownerId, User user) {
-        if (!user.getId().equals(ownerId)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<>(
-            rentRequestMapper.rentRequestsToOuts(rentService.findByOwnerId(ownerId)),
-            HttpStatus.OK
-        );
-    }
-
     @GetMapping
-    public ResponseEntity<Collection<RentRequestOutDTO>> getRentRequestsByProductOrOwner(
-        @RequestParam("productId") Optional<Long> productId,
-        @RequestParam("ownerId") Optional<Long> ownerId
-    ) {
+    public ResponseEntity<Collection<RentRequestOutDTO>> getRentRequests() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (productId.isPresent() && ownerId.isPresent() || productId.isEmpty() && ownerId.isEmpty() || user == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
-        return productId.isPresent() ? getRentRequestByProduct(productId.get(), user)
-            : getRentRequestByOwner(ownerId.get(), user);
+        return new ResponseEntity<>(
+                rentRequestMapper.rentRequestsToOuts(rentService.findByOwnerId(user.getId())),
+                HttpStatus.OK
+        );
     }
 
-    @PostMapping
-    public ResponseEntity<?> createRentRequest(
-        @RequestParam Optional<Long> productId
-    ) {
-        if (productId.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Product product = productService.findById(productId.get());
-        if (product == null || user == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (product.isPublicContact()) {
-            return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
-        } else {
-            if (rentService.findByRenterAndProduct(user, product) == null) {
-                rentService.createRentRequest(user, product);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(
-                    "A request has already been sent to the owner. Please wait for their response.",
-                    HttpStatus.BAD_REQUEST
-                );
-            }
-        }
-    }
-
-    private ResponseEntity<?> answerRequest(
-        Long ownerId,
-        Optional<Long> productId,
-        Optional<Long> renterId,
-        Optional<String> answer
-    ) {
+    private ResponseEntity<?> answerRequest(User user,
+                                            Optional<Long> productId,
+                                            Optional<Long> renterId,
+                                            Optional<String> answer) {
         if (renterId.isEmpty() || productId.isEmpty() || answer.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -161,7 +99,6 @@ public class RentController {
         User renter = userService.findById(renterId.get());
         Product product = productService.findById(productId.get());
         RentRequest rentRequest = rentService.findByRenterAndProduct(renter, product);
-        User user = userService.findById(ownerId);
         if (rentRequest == null || rentRequest.getRequestStatus() != RentRequest.Status.PENDING || user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -171,19 +108,17 @@ public class RentController {
         }
 
         rentRequest.setRequestStatus(
-            "accept".equals(answer.get()) ? RentRequest.Status.ACCEPTED : RentRequest.Status.DECLINED
+                "accept".equals(answer.get()) ? RentRequest.Status.ACCEPTED : RentRequest.Status.DECLINED
         );
         rentService.answerRentRequest(rentRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<?> answerRentRequest(
-        @RequestParam Optional<Long> productId,
-        @RequestParam Optional<Long> renterId,
-        @RequestParam Optional<String> answer
-    ) {
-        Long userId = 1L;   // = idToken.decode.userId
-        return answerRequest(userId, productId, renterId, answer);
+    public ResponseEntity<?> answerRentRequest(@RequestParam Optional<Long> productId,
+                                               @RequestParam Optional<Long> renterId,
+                                               @RequestParam Optional<String> answer) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return answerRequest(user, productId, renterId, answer);
     }
 }
