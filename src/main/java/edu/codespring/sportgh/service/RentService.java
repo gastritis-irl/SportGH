@@ -16,5 +16,7 @@ public interface RentService {
 
     void createRentRequest(User renter, Product product);
 
+    void resendRentRequest(User renter, Product product);
+
     void answerRentRequest(RentRequest rentRequest);
 }

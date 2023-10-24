@@ -34,7 +34,16 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public void createRentRequest(User renter, Product product) {
-        rentRepository.save(new RentRequest(renter, product, "active"));
+        rentRepository.save(new RentRequest(renter, product, RentRequest.Status.PENDING));
+    }
+
+    @Override
+    public void resendRentRequest(User user, Product product) {
+        rentRepository.updateRentRequestStatus(
+                user.getId(),
+                product.getId(),
+                RentRequest.Status.PENDING
+        );
     }
 
     @Override

@@ -19,7 +19,11 @@ public class RentRequest extends BaseEntity {
     @ManyToOne
     private Product product;
 
-    // { active, closed, accepted, declined }
-    private String requestStatus;
+    public enum Status {
+        PENDING,
+        ACCEPTED,
+        DECLINED
+    }
+    private Status requestStatus;
 }
 

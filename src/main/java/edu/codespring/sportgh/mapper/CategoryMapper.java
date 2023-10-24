@@ -17,5 +17,6 @@ public interface CategoryMapper {
     Collection<CategoryOutDTO> categoriesToOuts(Collection<Category> categories);
 
     @Mapping(source = "imageId", target = "image.id")
+    @Mapping(target = "subCategories", ignore = true)
     Category dtoToCategory(CategoryInDTO categoryInDTO);
 }
