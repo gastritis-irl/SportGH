@@ -14,10 +14,9 @@ public interface RentRepository extends BaseRepository<RentRequest> {
 
     RentRequest findByRenterAndProduct(User renter, Product product);
 
-    Collection<RentRequest> findByProduct(Product product);
+    Collection<RentRequest> findByProductUserId(Long ownerId);
 
-    @Query("select rr from RentRequest rr where rr.product.user.id = :ownerId")
-    Collection<RentRequest> findByProductOwnerId(@Param("ownerId") Long ownerId);
+    Collection<RentRequest> findByRenterId(Long renterId);
 
     @Modifying(clearAutomatically = true)
     @Transactional

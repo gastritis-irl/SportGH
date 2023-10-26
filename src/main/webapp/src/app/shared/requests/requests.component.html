@@ -1,43 +1,85 @@
 <ng-template #requestsModalContent>
-    <div class="requests-holder">
-        <div class="form-heading">
-            Requests sent to you
-        </div>
-        <div *ngIf="requests.length === 0">
-            <img class="no-requests-found" alt="You can continue browsing, there are no requests waiting for you :)">
-        </div>
-        <div class="request" *ngFor="let request of requests">
-            <div class="renter-name">
-                {{request.renterName}}
-            </div>
-            <div class="product-name">
-                {{request.productName}}
-            </div>
-            <div class="request-status" *ngIf="request.requestStatus">
-                <div *ngIf="request.requestStatus.toString() === Status[Status.PENDING]">
-                    <div class="buttons">
-                        <div class="button-default button-primary"
-                             (click)="answerRequest(request.requestId,'accept')">
-                            Accept
+    <div class="modal-holder">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+            <li ngbNavItem>
+                <a ngbNavLink>Requests sent to you</a>
+                <ng-template ngbNavContent>
+                    <div class="requests-holder">
+                        <div *ngIf="requestsByOthers.length === 0">
+                            <img class="no-requests-found"
+                                 alt="There are no requests waiting for you :)">
                         </div>
-                        <div class="button-default button-secondary"
-                             (click)="answerRequest(request.requestId,'decline')">
-                            Decline
+                        <div class="request" *ngFor="let request of requestsByOthers">
+                            <div>
+                                {{request.renterName}}
+                            </div>
+                            <div class="product-name" routerLink="/products/{{request.productId}}">
+                                {{request.productName}}
+                            </div>
+                            <div class="request-status" *ngIf="request.requestStatus">
+                                <div *ngIf="request.requestStatus.toString() === Status[Status.PENDING]">
+                                    <div class="buttons">
+                                        <div class="button-default button-primary"
+                                             (click)="answerRequest(request.requestId,'accept')">
+                                            Accept
+                                        </div>
+                                        <div class="button-default button-secondary"
+                                             (click)="answerRequest(request.requestId,'decline')">
+                                            Decline
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accepted"
+                                     *ngIf="request.requestStatus.toString() === Status[Status.ACCEPTED]">
+                                    Accepted
+                                </div>
+                                <div class="declined"
+                                     *ngIf="request.requestStatus.toString() === Status[Status.DECLINED]">
+                                    Declined
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="accepted" *ngIf="request.requestStatus.toString() === Status[Status.ACCEPTED]">
-                    Accepted
-                </div>
-                <div class="declined" *ngIf="request.requestStatus.toString() === Status[Status.DECLINED]">
-                    Declined
-                </div>
-            </div>
-        </div>
+                </ng-template>
+            </li>
+
+            <li ngbNavItem>
+                <a ngbNavLink>Your requests</a>
+                <ng-template ngbNavContent>
+                    <div class="requests-holder">
+                        <div *ngIf="myRequests.length === 0">
+                            <img class="no-requests-found"
+                                 alt="No requests sent yet.">
+                        </div>
+                        <div class="request" *ngFor="let request of myRequests">
+                            <div class="product-name" routerLink="/products/{{request.productId}}">
+                                {{request.productName}}
+                            </div>
+                            <div class="pending"
+                                 *ngIf="request.requestStatus && request.requestStatus.toString() === Status[Status.PENDING]">
+                                Pending
+                            </div>
+                            <div class="accepted"
+                                 *ngIf="request.requestStatus && request.requestStatus.toString() === Status[Status.ACCEPTED]">
+                                Accepted
+                            </div>
+                            <div class="declined"
+                                 *ngIf="request.requestStatus && request.requestStatus.toString() === Status[Status.DECLINED]">
+                                Declined
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav"></div>
     </div>
 </ng-template>
 
+
 <div class="notification">
     <div (click)="openRequestsModal(requestsModalContent)">Requests</div>
-    <div *ngIf="requests.length>0" class="badge">{{requests.length}}</div>
+    <div *ngIf="nrOfPendingRequests>0"
+         class="badge">{{nrOfPendingRequests}}</div>
 </div>

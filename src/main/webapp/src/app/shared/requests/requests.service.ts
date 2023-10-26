@@ -8,8 +8,13 @@ import { Request } from './requests.model';
 })
 export class RequestsService extends AppService {
 
+    getOthersRequests(): Observable<Request[]> {
+        const url: string = `${this.baseUrl}/rent/owned`;
+        return this.httpGet<Request[]>(url);
+    }
+
     getMyRequests(): Observable<Request[]> {
-        const url: string = `${this.baseUrl}/rent`;
+        const url: string = `${this.baseUrl}/rent/sent`;
         return this.httpGet<Request[]>(url);
     }
 

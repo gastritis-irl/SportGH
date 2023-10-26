@@ -30,49 +30,52 @@
 $item-padding: 20px;
 $item-gap: 10px;
 
-.requests-holder {
-    display: flex;
-    flex-direction: column;
-    padding: $item-gap;
-    gap: $item-gap;
+.modal-holder {
+    padding: $item-padding;
 
-    .form-heading {
-        padding: $item-padding;
-        background-color: $color-main-3;
-        border-radius: $border-radius;
-    }
-
-    .no-requests-found {
-        width: 50%;
-    }
-
-    .request {
-        color: $color-main-1;
-        font-weight: $font-weight-bold;
+    .requests-holder {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: $item-padding;
-        background-color: $color-main-3;
-        border-radius: $border-radius;
+        flex-direction: column;
+        padding: $item-gap;
+        gap: $item-gap;
 
-        .renter-name {
+        .no-requests-found {
+            width: 50%;
         }
 
-        .product-name {
-        }
+        .request {
+            color: $color-main-1;
+            font-weight: $font-weight-bold;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: $item-padding;
+            background-color: $color-main-3;
+            border-radius: $border-radius;
 
-        .request-status {
+            .product-name {
 
-            .accepted {
-                color: green;
+                &:hover {
+                    cursor: pointer;
+                    text-decoration-line: underline;
+                }
             }
 
-            .declined {
-                color: red;
+            .request-status {
+
+                .pending {
+                    color: $color-main-2;
+                }
+
+                .accepted {
+                    color: green;
+                }
+
+                .declined {
+                    color: red;
+                }
             }
         }
-
-
     }
 }

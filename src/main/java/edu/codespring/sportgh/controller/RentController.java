@@ -76,12 +76,22 @@ public class RentController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<RentRequestOutDTO>> getRentRequests() {
+    @GetMapping("/owned")
+    public ResponseEntity<Collection<RentRequestOutDTO>> getOthersRequestsForMe() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return new ResponseEntity<>(
             rentRequestMapper.rentRequestsToOuts(rentService.findByOwnerId(user.getId())),
+            HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/sent")
+    public ResponseEntity<Collection<RentRequestOutDTO>> getMyRequests() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return new ResponseEntity<>(
+            rentRequestMapper.rentRequestsToOuts(rentService.findByRenterId(user.getId())),
             HttpStatus.OK
         );
     }

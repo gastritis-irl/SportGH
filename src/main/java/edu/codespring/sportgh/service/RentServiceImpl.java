@@ -29,13 +29,13 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public Collection<RentRequest> findByProduct(Product product) {
-        return rentRepository.findByProduct(product);
+    public Collection<RentRequest> findByOwnerId(Long ownerId) {
+        return rentRepository.findByProductUserId(ownerId);
     }
 
     @Override
-    public Collection<RentRequest> findByOwnerId(Long ownerId) {
-        return rentRepository.findByProductOwnerId(ownerId);
+    public Collection<RentRequest> findByRenterId(Long renterId){
+        return rentRepository.findByRenterId(renterId);
     }
 
     @Override

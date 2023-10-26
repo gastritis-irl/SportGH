@@ -11,11 +11,11 @@ public interface RentService {
 
     RentRequest findByRenterAndProduct(User renter, Product product);
 
-    Collection<RentRequest> findByProduct(Product product);
-
     Optional<RentRequest> findById(Long requestId);
 
     Collection<RentRequest> findByOwnerId(Long ownerId);
+
+    Collection<RentRequest> findByRenterId(Long renterId);
 
     void createRentRequest(User renter, Product product);
 
