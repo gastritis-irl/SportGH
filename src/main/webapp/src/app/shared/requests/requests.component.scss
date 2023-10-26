@@ -1,5 +1,6 @@
 @use '../../../style-variables.scss' as *;
 
+// Requests/Notifications button
 .notification {
     width: 100%;
     padding: 10px;
@@ -24,4 +25,54 @@
     font-weight: $font-weight-bold;
 }
 
+// Requests/Notifications modal
 
+$item-padding: 20px;
+$item-gap: 10px;
+
+.requests-holder {
+    display: flex;
+    flex-direction: column;
+    padding: $item-gap;
+    gap: $item-gap;
+
+    .form-heading {
+        padding: $item-padding;
+        background-color: $color-main-3;
+        border-radius: $border-radius;
+    }
+
+    .no-requests-found {
+        width: 50%;
+    }
+
+    .request {
+        color: $color-main-1;
+        font-weight: $font-weight-bold;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: $item-padding;
+        background-color: $color-main-3;
+        border-radius: $border-radius;
+
+        .renter-name {
+        }
+
+        .product-name {
+        }
+
+        .request-status {
+
+            .accepted {
+                color: green;
+            }
+
+            .declined {
+                color: red;
+            }
+        }
+
+
+    }
+}

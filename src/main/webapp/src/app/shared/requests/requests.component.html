@@ -1,5 +1,11 @@
 <ng-template #requestsModalContent>
     <div class="requests-holder">
+        <div class="form-heading">
+            Requests sent to you
+        </div>
+        <div *ngIf="requests.length === 0">
+            <img class="no-requests-found" alt="You can continue browsing, there are no requests waiting for you :)">
+        </div>
         <div class="request" *ngFor="let request of requests">
             <div class="renter-name">
                 {{request.renterName}}
@@ -7,8 +13,8 @@
             <div class="product-name">
                 {{request.productName}}
             </div>
-            <div class="request-status">
-                <div>
+            <div class="request-status" *ngIf="request.requestStatus">
+                <div *ngIf="request.requestStatus.toString() === Status[Status.PENDING]">
                     <div class="buttons">
                         <div class="button-default button-primary"
                              (click)="answerRequest(request.requestId,'accept')">
@@ -20,10 +26,10 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="request.requestStatus === Status.ACCEPTED">
+                <div class="accepted" *ngIf="request.requestStatus.toString() === Status[Status.ACCEPTED]">
                     Accepted
                 </div>
-                <div *ngIf="request.requestStatus === Status.DECLINED">
+                <div class="declined" *ngIf="request.requestStatus.toString() === Status[Status.DECLINED]">
                     Declined
                 </div>
             </div>
@@ -33,5 +39,5 @@
 
 <div class="notification">
     <div (click)="openRequestsModal(requestsModalContent)">Requests</div>
-    <div class="badge">{{requests.length}}</div>
+    <div *ngIf="requests.length>0" class="badge">{{requests.length}}</div>
 </div>

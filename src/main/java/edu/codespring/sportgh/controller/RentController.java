@@ -48,7 +48,6 @@ public class RentController {
         }
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        log.info("A user has sent a request: {}", user);
 
         RentRequest rentRequest = rentService.findByRenterAndProduct(user, product);
         if (rentRequest == null) {
@@ -67,7 +66,7 @@ public class RentController {
                     return new ResponseEntity<>(HttpStatus.FOUND);
                 }
                 case DECLINED: {
-                    rentService.resendRentRequest(user, product);
+                    rentService.resendRentRequest(rentRequest);
                     return new ResponseEntity<>(HttpStatus.SEE_OTHER);
                 }
                 default: {

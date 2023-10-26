@@ -26,11 +26,10 @@ export class RequestsComponent implements OnInit {
     ) {
     }
 
-    ngOnInit(): void {
+    getMyRequests(): void {
         this.requestsService.getMyRequests().subscribe({
             next: (requests: Request[]): void => {
                 this.requests = requests;
-                console.log(requests);
             },
             error: (): void => {
                 this.toastNotify.error('Error fetching data');
@@ -38,10 +37,15 @@ export class RequestsComponent implements OnInit {
         });
     }
 
+    ngOnInit(): void {
+        this.getMyRequests();
+    }
+
     answerRequest(requestId: number | undefined, answer: string): void {
         if (requestId) {
             this.requestsService.answerRequest(requestId, answer).subscribe({
                 next: (): void => {
+                    this.getMyRequests();
                 },
                 error: (): void => {
                     this.toastNotify.error('Error answering request.');
@@ -54,7 +58,7 @@ export class RequestsComponent implements OnInit {
 
     openRequestsModal(modalContent: TemplateRef<string>): void {
         this.modalService.dismissAll();
-        this.modalService.open(modalContent, { centered: true, scrollable: true, animation: true });
+        this.modalService.open(modalContent, { size: 'xl', centered: true, scrollable: true, animation: true });
     }
 
     protected readonly Status = Status;
