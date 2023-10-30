@@ -6,7 +6,6 @@ import edu.codespring.sportgh.model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
@@ -18,8 +17,7 @@ public interface RentRepository extends BaseRepository<RentRequest> {
 
     Collection<RentRequest> findByRenterId(Long renterId);
 
-    @Modifying(clearAutomatically = true)
-    @Transactional
+    @Modifying
     @Query("update RentRequest rr"
         + " set rr.requestStatus = :status"
         + " where rr.id = :rentRequestId")
