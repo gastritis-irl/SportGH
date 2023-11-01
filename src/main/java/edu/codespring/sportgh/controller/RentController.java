@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -32,9 +31,31 @@ public class RentController {
     private final RentService rentService;
     private final RentRequestMapper rentRequestMapper;
 
+    private ResponseEntity<UserOutDTO> checkRentRequest(RentRequest rentRequest) {
+        switch (rentRequest.getRequestStatus()) {
+            case ACCEPTED: {
+                return new ResponseEntity<>(
+                    userMapper.userToOut(rentRequest.getProduct().getUser()),
+                    HttpStatus.OK
+                );
+            }
+            case PENDING: {
+                return new ResponseEntity<>(HttpStatus.FOUND);
+            }
+            case DECLINED: {
+                rentService.resendRentRequest(rentRequest);
+                return new ResponseEntity<>(HttpStatus.SEE_OTHER);
+            }
+            default: {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
+
     @GetMapping("/user")
     public ResponseEntity<UserOutDTO> getProductOwnerInfo(@RequestParam("productId") Optional<Long> productId) {
-        if (productId.isEmpty()) {
+        User user = SecurityUtil.getCurrentUser();
+        if (productId.isEmpty() || user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -47,35 +68,13 @@ public class RentController {
             return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
         }
 
-        User user = SecurityUtil.getCurrentUser();
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
         RentRequest rentRequest = rentService.findByRenterAndProduct(user, product);
         if (rentRequest == null) {
             // create rent request
             rentService.createRentRequest(user, product);
             return new ResponseEntity<>(HttpStatus.MOVED_PERMANENTLY);
         } else {
-            switch (rentRequest.getRequestStatus()) {
-                case ACCEPTED: {
-                    return new ResponseEntity<>(
-                        userMapper.userToOut(rentRequest.getProduct().getUser()),
-                        HttpStatus.OK
-                    );
-                }
-                case PENDING: {
-                    return new ResponseEntity<>(HttpStatus.FOUND);
-                }
-                case DECLINED: {
-                    rentService.resendRentRequest(rentRequest);
-                    return new ResponseEntity<>(HttpStatus.SEE_OTHER);
-                }
-                default: {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-                }
-            }
+            return checkRentRequest(rentRequest);
         }
     }
 

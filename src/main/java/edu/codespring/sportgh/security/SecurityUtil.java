@@ -15,11 +15,7 @@ public class SecurityUtil {
     public static final String ROLE_ADMIN = "ADMIN";
 
     public static User getCurrentUser() {
-        try {
-            return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        } catch (NullPointerException e) {
-            return null;
-        }
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     public boolean isCurrentlyLoggedIn(User user) {
