@@ -7,13 +7,13 @@ import edu.codespring.sportgh.mapper.UserMapper;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.RentRequest;
 import edu.codespring.sportgh.model.User;
+import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.ProductService;
 import edu.codespring.sportgh.service.RentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -47,7 +47,10 @@ public class RentController {
             return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
         }
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = SecurityUtil.getCurrentUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         RentRequest rentRequest = rentService.findByRenterAndProduct(user, product);
         if (rentRequest == null) {
@@ -78,7 +81,10 @@ public class RentController {
 
     @GetMapping("/owned")
     public ResponseEntity<Collection<RentRequestOutDTO>> getOthersRequestsForMe() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = SecurityUtil.getCurrentUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         return new ResponseEntity<>(
             rentRequestMapper.rentRequestsToOuts(rentService.findByOwnerId(user.getId())),
@@ -88,7 +94,10 @@ public class RentController {
 
     @GetMapping("/sent")
     public ResponseEntity<Collection<RentRequestOutDTO>> getMyRequests() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = SecurityUtil.getCurrentUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         return new ResponseEntity<>(
             rentRequestMapper.rentRequestsToOuts(rentService.findByRenterId(user.getId())),
@@ -122,7 +131,10 @@ public class RentController {
     @PutMapping
     public ResponseEntity<?> answerRentRequest(@RequestParam Optional<Long> requestId,
                                                @RequestParam Optional<String> answer) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = SecurityUtil.getCurrentUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         return answerRequest(user, requestId, answer);
     }
 }

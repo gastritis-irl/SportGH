@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { RequestsService } from './requests.service';
 import { Request, Status } from './requests.model';
 import { ToastrService } from 'ngx-toastr';
-import { NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf, NgIf, TitleCasePipe } from '@angular/common';
 import {
     NgbModal,
     NgbNav,
@@ -27,11 +27,14 @@ import { RouterLink } from '@angular/router';
         NgbNavItem,
         NgbNavLink,
         RouterLink,
-        NgbNavOutlet
+        NgbNavOutlet,
+        NgClass,
+        TitleCasePipe
     ]
 })
 export class RequestsComponent implements OnInit {
 
+    protected readonly Status = Status;
     requestsByOthers: Request[] = [];
     myRequests: Request[] = [];
     nrOfPendingRequests: number = 0;
@@ -106,6 +109,4 @@ export class RequestsComponent implements OnInit {
         this.navService.roles = false;
         this.modalService.open(modalContent, { size: 'xl', centered: true, scrollable: true, animation: true });
     }
-
-    protected readonly Status = Status;
 }
