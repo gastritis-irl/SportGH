@@ -40,7 +40,8 @@ $item-gap: 10px;
         gap: $item-gap;
 
         .no-requests-found {
-            width: 50%;
+            width: 20%;
+            content: $requests-no;
         }
 
         .request {
@@ -63,18 +64,6 @@ $item-gap: 10px;
             }
 
             .request-status {
-
-                .pending {
-                    color: $color-main-2;
-                }
-
-                .accepted {
-                    color: green;
-                }
-
-                .declined {
-                    color: red;
-                }
             }
         }
     }

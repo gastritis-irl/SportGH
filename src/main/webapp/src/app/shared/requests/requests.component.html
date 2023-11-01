@@ -29,13 +29,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accepted"
-                                     *ngIf="request.requestStatus.toString() === Status[Status.ACCEPTED]">
-                                    Accepted
-                                </div>
-                                <div class="declined"
-                                     *ngIf="request.requestStatus.toString() === Status[Status.DECLINED]">
-                                    Declined
+                                <div [ngClass]="request.requestStatus.toString().toLowerCase()">
+                                    {{ request.requestStatus.toString() | titlecase }}
                                 </div>
                             </div>
                         </div>
