@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Collection;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -46,11 +47,11 @@ public abstract class BaseDataGenerator {
         log.info("Generating products: OK");
     }
 
-    public abstract void initCategories();
+    public abstract void initCategories(List<Category> categories);
 
-    public abstract void initSubCategories();
+    public abstract void initSubCategories(List<SubCategory> subcategories);
 
-    public abstract void initProducts();
+    public abstract void initProducts(List<Product> products);
 
     public void initUsers() {
         final String adminEmail = "admin@test.com";

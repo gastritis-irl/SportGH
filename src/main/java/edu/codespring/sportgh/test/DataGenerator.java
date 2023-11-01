@@ -18,11 +18,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-
 @Profile("data-gen")
 @Slf4j
 @Component
 public class DataGenerator extends BaseDataGenerator {
+
+    @Value("${data.storage.location}")
+    private String storageLocation;
+
+    @Value("${test.file.storage.location}")
+    private String fileStorageLocation;
 
     public DataGenerator(UserService userService, CategoryService categoryService,
                          SubCategoryService subCategoryService, ProductService productService,
@@ -30,229 +35,46 @@ public class DataGenerator extends BaseDataGenerator {
         super(userService, categoryService, subCategoryService, productService, firebaseService, imageService);
     }
 
-    private List<Category> categories;
-    private List<SubCategory> subcategories;
-
-    @Value("${data.storage.location}")
-    private String storageLocation;
-
     @PostConstruct
-    public void loadDataFromFile() {
+    public void initData() {
         ObjectMapper objectMapper = new ObjectMapper();
         try (InputStream is = new ClassPathResource(storageLocation).getInputStream()) {
             DataInitialization data = objectMapper.readValue(is, DataInitialization.class);
-            this.categories = data.getCategories();
-            this.subcategories = data.getSubcategories();
+
+            initCategories(data.getCategories());
+            initSubCategories(data.getSubcategories());
+            initProducts(data.getProducts());
+
         } catch (IOException e) {
             log.error("Failed to load data from JSON file.", e);
         }
     }
 
-    @Override
-    public void initCategories() {
-        saveCategory(
-            "Water sports",
-            "Water sports are sports which are played in water.",
-            testFileStorageLocation + "/waterSports.png"
-
-        );
-        saveCategory(
-            "Combat sports",
-            "Combat sports, or fighting sports, are competitive sports "
-                + "in which two people engage in combat.",
-            testFileStorageLocation + "/combatSports.png"
-
-        );
-        saveCategory(
-            "Extreme sports",
-            "Extreme sports are recreational "
-                + "activities perceived as involving a high degree of risk.",
-            testFileStorageLocation + "/extremeSports.png"
-
-        );
-        saveCategory(
-            "Team sports",
-            "Team sports are sports played by teams with some "
-                + "members not participating directly with the opponents.    ",
-            testFileStorageLocation + "/teamSports.png"
-
-        );
-        saveCategory(
-            "Winter sports",
-            "Winter sports or winter activities are competitive sports or "
-                + "non-competitive recreational activities which are played on snow or ice.",
-            testFileStorageLocation + "/winterSports.png"
-
-        );
-        saveCategory(
-            "Track & Field",
-            "Track and field is a sport which includes athletic contests established "
-                + "on the skills of running, jumping, and throwing.",
-            testFileStorageLocation + "/trackAndField.png"
-
-        );
-        saveCategory(
-            "Other",
-            "Other sports",
-            testFileStorageLocation + "/otherSports.png"
-
-        );
+    public void initCategories(List<Category> categories) {
+        categories.forEach(category -> {
+            String name = category.getName();
+            String description = category.getDescription();
+            String imageUrl = fileStorageLocation + category.getImage().getUrl();
+            saveCategory(name, description, imageUrl);
+        });
     }
 
-    @Override
-    public void initSubCategories() {
-        saveSubcategory(
-            "Swimming",
-            "Water sports"
-        );
-        saveSubcategory(
-            "Surfing",
-            "Water sports"
-        );
-        saveSubcategory(
-            "Boxing",
-            "Combat sports"
-        );
-        saveSubcategory(
-            "Judo",
-            "Combat sports"
-        );
-        saveSubcategory(
-            "Rock Climbing",
-            "Extreme sports"
-        );
-        saveSubcategory(
-            "Skydiving",
-            "Extreme sports"
-        );
-        saveSubcategory(
-            "Soccer (football)",
-            "Team sports"
-        );
-        saveSubcategory(
-            "Basketball",
-            "Team sports"
-        );
-        saveSubcategory(
-            "Skiing",
-            "Winter sports"
-        );
-        saveSubcategory(
-            "Ice Hockey",
-            "Winter sports"
-        );
-        saveSubcategory(
-            "Running",
-            "Track & Field"
-        );
-        saveSubcategory(
-            "Cycling",
-            "Track & Field"
-        );
-        saveSubcategory(
-                "Other",
-                "Other"
-        );
+    public void initSubCategories(List<SubCategory> subcategories) {
+        subcategories.forEach(subcategory -> {
+            String name = subcategory.getName();
+            String categoryName = subcategory.getCategory().getName();
+            saveSubcategory(name, categoryName);
+        });
     }
 
-    @Override
-    public void initProducts() {
-        User user = userService.findByUsername("akos@test.com");
-        if (user == null) {
-            throw new ServiceException("User doesn't exist.");
-        }
-
-        saveProduct(
-            new Product(
-                true,
-                "Swimming goggles",
-                "Goggles for swimming",
-                "Cluj-Napoca, Romania",
-                20.0,
-                null,
-                null,
-                null,
-                null
-            ),
-            "Swimming",
-            user
-        );
-        saveProduct(
-            new Product(
-                true,
-                "Flip flops",
-                "Flip flops for easier swimming",
-                "Cluj-Napoca, Romania",
-                35.0,
-                null,
-                null,
-                null,
-                null
-            ),
-            "Swimming",
-            user
-        );
-        saveProduct(
-            new Product(
-                true,
-                "Bike",
-                "Bike for cycling",
-                "Cluj-Napoca, Romania",
-                100.0,
-                null,
-                null,
-                null,
-                null
-            ),
-            "Cycling",
-            user
-        );
-        saveProduct(
-            new Product(
-                true,
-                "Helmet",
-                "Helmet for your protection",
-                "Cluj-Napoca, Romania",
-                18.0,
-                null,
-                null,
-                null,
-                null
-            ),
-            "Cycling",
-            user
-
-        );
-        saveProduct(
-            new Product(
-                true,
-                "Flashlight",
-                "Flashlight for better visibility",
-                "Cluj-Napoca, Romania",
-                15.0,
-                null,
-                null,
-                null,
-                null
-            ),
-            "Cycling",
-            user
-
-        );
-        saveProduct(
-            new Product(
-                true,
-                "Bicycle lock",
-                "Bicycle lock for your bike's protection",
-                "Cluj-Napoca, Romania",
-                20.0,
-                null,
-                null,
-                null,
-                null
-            ),
-            "Cycling",
-            user
-        );
+    public void initProducts(List<Product> products) {
+        products.forEach(product -> {
+            User user = userService.findByUsername(product.getUser().getUsername());
+            if (user == null) {
+                throw new ServiceException("User doesn't exist.");
+            }
+            saveProduct(product, product.getSubCategory().getName(), user);
+        });
     }
+
 }
