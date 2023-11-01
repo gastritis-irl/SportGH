@@ -5,6 +5,8 @@ export interface Product {
     name?: string,
     description?: string,
     location?: string,
+    locationLng?: number,
+    locationLat?: number,
     rentPrice?: number,
     categoryId?: number,
     categoryName?: string,

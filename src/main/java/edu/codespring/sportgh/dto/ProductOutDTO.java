@@ -10,6 +10,8 @@ public class ProductOutDTO {
     private String name;
     private String description;
     private String location;
+    private Double locationLng;
+    private Double locationLat;
     private Double rentPrice;
     private Long categoryId;
     private String categoryName;

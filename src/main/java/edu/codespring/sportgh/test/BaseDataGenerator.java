@@ -106,8 +106,8 @@ public abstract class BaseDataGenerator {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
         if (subCategory != null && productService.notExistsByNameAndUser(product.getName(), user)) {
             productService.save(new Product(true, product.getName(), product.getDescription(),
-                product.getLocation(), product.getRentPrice(),
-                subCategory, user, null, null));
+                    product.getLocation(), null, null, product.getRentPrice(),
+                    subCategory, user, null, null));
         }
     }
 }
