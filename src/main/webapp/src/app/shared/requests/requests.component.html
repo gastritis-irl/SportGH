@@ -1,6 +1,6 @@
 <ng-template #requestsModalContent>
     <div class="modal-holder">
-        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs" (navChange)="reloadData()">
             <li ngbNavItem>
                 <a ngbNavLink>Requests sent to you</a>
                 <ng-template ngbNavContent>

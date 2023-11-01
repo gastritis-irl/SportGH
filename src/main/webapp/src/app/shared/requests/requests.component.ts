@@ -47,7 +47,7 @@ export class RequestsComponent implements OnInit {
     ) {
     }
 
-    reloadData():void{
+    reloadData(): void {
         this.getMyRequests();
         this.getOthersRequests();
         this.getNumberOfPendingRequests();
