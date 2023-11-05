@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.*;
 import edu.codespring.sportgh.security.SecurityUtil;
@@ -8,7 +9,10 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,8 +30,25 @@ public abstract class BaseDataGenerator {
     protected final FirebaseService firebaseService;
     protected final ImageService imageService;
 
+    @Value("${data.storage.location}")
+    private String storageLocation;
+
     @PostConstruct
     public void init() {
+        List<Category> categories;
+        List<SubCategory> subcategories;
+        List<Product> products;
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try (InputStream is = new ClassPathResource(storageLocation).getInputStream()) {
+            DataInitialization data = objectMapper.readValue(is, DataInitialization.class);
+            categories = data.getCategories();
+            subcategories = data.getSubcategories();
+            products = data.getProducts();
+        } catch (IOException e) {
+            log.error("Failed to load data from JSON file.", e);
+            return;
+        }
 
         try {
             initUsers();
@@ -37,13 +58,13 @@ public abstract class BaseDataGenerator {
             log.warn(e.getMessage());
         }
 
-        initCategories();
+        initCategories(categories);
         log.info("Generating categories: OK");
 
-        initSubCategories();
+        initSubCategories(subcategories);
         log.info("Generating subcategories: OK");
 
-        initProducts();
+        initProducts(products);
         log.info("Generating products: OK");
     }
 

@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 
-public interface RentRepository extends BaseRepository<RentRequest> {
+public interface  RentRepository extends BaseRepository<RentRequest> {
 
     RentRequest findByRenterAndProduct(User renter, Product product);
 
