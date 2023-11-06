@@ -99,8 +99,7 @@ public abstract class BaseDataGenerator {
         for (User firebaseUser : firebaseUsers) {
             User localUser = userService.findByEmail(firebaseUser.getEmail());
             if (localUser == null) {
-                localUser = userService.signup(firebaseUser.getEmail(), firebaseUser.getFirebaseUid(), SecurityUtil.ROLE_USER);
-                log.warn("{},{}", localUser.getUsername(), localUser.getFirebaseUid());
+                userService.signup(firebaseUser.getEmail(), firebaseUser.getFirebaseUid(), SecurityUtil.ROLE_USER);
             } else {
                 localUser.setFirebaseUid(firebaseUser.getFirebaseUid());
                 userService.update(localUser);
