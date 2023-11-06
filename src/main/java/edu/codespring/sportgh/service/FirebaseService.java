@@ -10,8 +10,6 @@ public interface FirebaseService {
 
     String signupUserToFirebase(User user, String password);
 
-    String updateUserToFirebase(User user, String password);
-
     FirebaseTokenHolder verifyTokenAndReturnTokenHolder(String idToken);
 
     String getFirebaseUidFromToken(String idToken);
