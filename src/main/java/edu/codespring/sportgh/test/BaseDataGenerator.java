@@ -46,7 +46,7 @@ public abstract class BaseDataGenerator {
             categories = data.getCategories();
             subcategories = data.getSubcategories();
             products = data.getProducts();
-            users = data.getUsers(); // Assuming DataInitialization has a getUsers method
+            users = data.getUsers();
         } catch (IOException e) {
             log.error("Failed to load data from JSON file.", e);
             return;
