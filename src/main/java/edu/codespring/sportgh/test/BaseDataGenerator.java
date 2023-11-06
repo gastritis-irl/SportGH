@@ -78,48 +78,30 @@ public abstract class BaseDataGenerator {
     public abstract void initProducts(List<Product> products);
 
     public void initUsers(List<User> usersFromJson) {
-        // First, we'll ensure that the admin user is always present
-        final String adminEmail = "admin@test.com";
-        User admin = userService.findByUsername(adminEmail);
-        if (admin == null) {
-            admin = userService.signup(adminEmail, null, SecurityUtil.ROLE_ADMIN);
-        } else {
-            admin.setRole(SecurityUtil.ROLE_ADMIN);
-            userService.update(admin);
-        }
 
-        // Create or update users from JSON
         for (User userJson : usersFromJson) {
-            User user = userService.findByUsername(userJson.getUsername());
+            User user = userService.findByEmail(userJson.getEmail());
             if (user == null) {
-                // Create user in local database and Firebase
-                user = userService.signup(userJson.getEmail(), null, userJson.getRole());
-                String firebaseUid = firebaseService.signupUserToFirebase(user, "password");
-                user.setFirebaseUid(firebaseUid);
-                userService.update(user);
+                userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
             } else {
-                // Update existing user details
                 user.setRole(userJson.getRole());
                 userService.update(user);
 
-                // Update Firebase UID if necessary
-                if (!user.getFirebaseUid().equals(userJson.getFirebaseUid())) {
-                    String firebaseUid = firebaseService.updateUserToFirebase(user, "password");
+                if (user.getFirebaseUid() == null || !user.getFirebaseUid().equals(userJson.getFirebaseUid())) {
+                    String firebaseUid = firebaseService.signupUserToFirebase(user, "password");
                     user.setFirebaseUid(firebaseUid);
                     userService.update(user);
                 }
             }
         }
 
-        // Sync users from Firebase
         Collection<User> firebaseUsers = firebaseService.getUsers();
         for (User firebaseUser : firebaseUsers) {
             User localUser = userService.findByEmail(firebaseUser.getEmail());
             if (localUser == null) {
-                // User is in Firebase but not in local DB, so we create the user locally
                 localUser = userService.signup(firebaseUser.getEmail(), firebaseUser.getFirebaseUid(), SecurityUtil.ROLE_USER);
+                log.warn("{},{}", localUser.getUsername(), localUser.getFirebaseUid());
             } else {
-                // User is in both systems, we ensure Firebase UID is up-to-date locally
                 localUser.setFirebaseUid(firebaseUser.getFirebaseUid());
                 userService.update(localUser);
             }

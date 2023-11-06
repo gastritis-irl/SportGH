@@ -29,14 +29,14 @@ public class FirebaseServiceImpl implements FirebaseService {
         try {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             UserRecord userRecord = firebaseAuth.createUser(
-                new UserRecord.CreateRequest()
-                    .setEmail(user.getEmail())
-                    .setPassword(password)
+                    new UserRecord.CreateRequest()
+                            .setEmail(user.getEmail())
+                            .setPassword(password)
             );
             return userRecord.getUid();
 
         } catch (FirebaseAuthException e) {
-            throw new ServiceException("Failed to add user to firebase", e);
+            throw new ServiceException("Failed to add user " + user.getEmail() + " to firebase", e);
         }
     }
 
@@ -45,9 +45,9 @@ public class FirebaseServiceImpl implements FirebaseService {
         try {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             UserRecord userRecord = firebaseAuth.updateUser(
-                new UserRecord.UpdateRequest(user.getFirebaseUid())
-                    .setEmail(user.getEmail())
-                    .setPassword(password)
+                    new UserRecord.UpdateRequest(user.getFirebaseUid())
+                            .setEmail(user.getEmail())
+                            .setPassword(password)
             );
             return userRecord.getUid();
 
@@ -107,9 +107,9 @@ public class FirebaseServiceImpl implements FirebaseService {
         }
 
         return new UsernamePasswordAuthenticationToken(
-            user,
-            firebaseToken,
-            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
+                user,
+                firebaseToken,
+                Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
         );
     }
 

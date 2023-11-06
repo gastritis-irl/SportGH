@@ -5,8 +5,7 @@
       "description": "Water sports are sports which are played in water.",
       "image": {
         "id": 1,
-        "url": "waterSports.png",
-        "description": "Image for water sports"
+        "url": "waterSports.png"
       }
     },
     {
@@ -14,8 +13,7 @@
       "description": "Combat sports, or fighting sports, are competitive sports in which two people engage in combat.",
       "image": {
         "id": 2,
-        "url": "combatSports.png",
-        "description": "Image for combat sports"
+        "url": "combatSports.png"
       }
     },
     {
@@ -23,8 +21,7 @@
       "description": "Extreme sports are recreational activities perceived as involving a high degree of risk.",
       "image": {
         "id": 3,
-        "url": "extremeSports.png",
-        "description": "Image for extreme sports"
+        "url": "extremeSports.png"
       }
     },
     {
@@ -32,8 +29,7 @@
       "description": "Team sports are sports played by teams with some members not participating directly with the opponents.",
       "image": {
         "id": 4,
-        "url": "teamSports.png",
-        "description": "Image for team sports"
+        "url": "teamSports.png"
       }
     },
     {
@@ -41,8 +37,7 @@
       "description": "Winter sports or winter activities are competitive sports or non-competitive recreational activities which are played on snow or ice.",
       "image": {
         "id": 5,
-        "url": "winterSports.png",
-        "description": "Image for winter sports"
+        "url": "winterSports.png"
       }
     },
     {
@@ -50,8 +45,7 @@
       "description": "Track and field is a sport which includes athletic contests established on the skills of running, jumping, and throwing.",
       "image": {
         "id": 6,
-        "url": "trackAndField.png",
-        "description": "Image for track & field"
+        "url": "trackAndField.png"
       }
     },
     {
@@ -59,17 +53,7 @@
       "description": "Racquet sports are sports in which players use racquets to hit a ball or other object.",
       "image": {
         "id": 7,
-        "url": "racquetSports.png",
-        "description": "Image for racquet sports"
-      }
-    },
-    {
-      "name": "Outdoor Sports",
-      "description": "Outdoor sports include activities that are carried out in the open air.",
-      "image": {
-        "id": 8,
-        "url": "outdoorSports.png",
-        "description": "Image for outdoor sports"
+        "url": "racquetSports.png"
       }
     },
     {
@@ -77,8 +61,7 @@
       "description": "Fitness & Gym includes equipment for exercise and physical fitness.",
       "image": {
         "id": 9,
-        "url": "fitnessAndGym.png",
-        "description": "Image for fitness & gym"
+        "url": "fitnessAndGym.png"
       }
     },
     {
@@ -86,8 +69,7 @@
       "description": "Other sports",
       "image": {
         "id": 10,
-        "url": "otherSports.png",
-        "description": "Image for other sports"
+        "url": "otherSports.png"
       }
     }
   ],
@@ -279,36 +261,6 @@
       }
     },
     {
-      "name": "Golf",
-      "category": {
-        "name": "Outdoor Sports"
-      }
-    },
-    {
-      "name": "Archery",
-      "category": {
-        "name": "Outdoor Sports"
-      }
-    },
-    {
-      "name": "Camping",
-      "category": {
-        "name": "Outdoor Sports"
-      }
-    },
-    {
-      "name": "Fishing",
-      "category": {
-        "name": "Outdoor Sports"
-      }
-    },
-    {
-      "name": "Hiking",
-      "category": {
-        "name": "Outdoor Sports"
-      }
-    },
-    {
       "name": "Weightlifting",
       "category": {
         "name": "Fitness & Gym"
@@ -344,7 +296,7 @@
       "name": "Swimming goggles",
       "description": "Goggles for swimming",
       "location": "Cluj-Napoca, Romania",
-      "price": 20.0,
+      "rentPrice": 20.0,
       "subCategory": {
         "name": "Swimming"
       },
@@ -356,7 +308,7 @@
       "name": "Flip flops",
       "description": "Flip flops for easier swimming",
       "location": "Cluj-Napoca, Romania",
-      "price": 35.0,
+      "rentPrice": 35.0,
       "subCategory": {
         "name": "Swimming"
       },
@@ -368,7 +320,7 @@
       "name": "Bike",
       "description": "Bike for cycling",
       "location": "Cluj-Napoca, Romania",
-      "price": 100.0,
+      "rentPrice": 100.0,
       "subCategory": {
         "name": "Cycling"
       },
@@ -380,7 +332,7 @@
       "name": "Helmet",
       "description": "Helmet for your protection",
       "location": "Cluj-Napoca, Romania",
-      "price": 18.0,
+      "rentPrice": 18.0,
       "subCategory": {
         "name": "Cycling"
       },
@@ -392,7 +344,7 @@
       "name": "Flashlight",
       "description": "Flashlight for better visibility",
       "location": "Cluj-Napoca, Romania",
-      "price": 15.0,
+      "rentPrice": 15.0,
       "subCategory": {
         "name": "Cycling"
       },
@@ -404,7 +356,7 @@
       "name": "Bicycle lock",
       "description": "Bicycle lock for your bike's protection",
       "location": "Cluj-Napoca, Romania",
-      "price": 20.0,
+      "rentPrice": 20.0,
       "subCategory": {
         "name": "Cycling"
       },
@@ -416,7 +368,7 @@
       "name": "Boxing gloves",
       "description": "Gloves for boxing",
       "location": "New York, USA",
-      "price": 50.0,
+      "rentPrice": 50.0,
       "subCategory": {
         "name": "Boxing"
       },
@@ -428,7 +380,7 @@
       "name": "Judo uniform",
       "description": "Uniform for Judo practice",
       "location": "Tokyo, Japan",
-      "price": 75.0,
+      "rentPrice": 75.0,
       "subCategory": {
         "name": "Judo"
       },
@@ -440,7 +392,7 @@
       "name": "Tennis racket",
       "description": "Racket for tennis",
       "location": "London, UK",
-      "price": 120.0,
+      "rentPrice": 120.0,
       "subCategory": {
         "name": "Tennis"
       },
@@ -452,7 +404,7 @@
       "name": "Golf clubs",
       "description": "Set of golf clubs",
       "location": "Paris, France",
-      "price": 300.0,
+      "rentPrice": 300.0,
       "subCategory": {
         "name": "Golf"
       },
@@ -464,7 +416,7 @@
       "name": "Yoga mat",
       "description": "Comfortable yoga mat",
       "location": "Berlin, Germany",
-      "price": 25.0,
+      "rentPrice": 25.0,
       "subCategory": {
         "name": "Yoga"
       },
@@ -476,7 +428,7 @@
       "name": "Fishing rod",
       "description": "Rod for fishing",
       "location": "Sydney, Australia",
-      "price": 40.0,
+      "rentPrice": 40.0,
       "subCategory": {
         "name": "Fishing"
       },
@@ -487,7 +439,46 @@
   ],
   "users": [
     {
-      "username": "akos@test.com",
-
-
+      "username": "Akos",
+      "email": "akos@test.com",
+      "firebaseUid": "2oONJKqW6ZeNwVDD1zQ2CCM42dx2",
+      "role": "USER"
+    },
+    {
+      "username": "Csabi",
+      "email": "csabi@test.com",
+      "firebaseUid": "T5dVJRFwy5Xd1gmG0FAhDJwAWUc2",
+      "role": "USER"
+    },
+    {
+      "username": "Beni",
+      "email": "beni@test.com",
+      "firebaseUid": "8qTypiOnWkbtIPyVEid4VvExFD62",
+      "role": "USER"
+    },
+    {
+      "username": "Huni",
+      "email": "huni@test.com",
+      "firebaseUid": "48R7OD3j54g6dc4uIqkb8yeF6n52",
+      "role": "USER"
+    },
+    {
+      "username": "Anita",
+      "email": "anita@test.com",
+      "firebaseUid": "jaEbPJbOFrTgugS8z21ELnD42BV2",
+      "role": "USER"
+    },
+    {
+      "username": "Ancsa",
+      "email": "aniko@test.com",
+      "firebaseUid": "FmPW3nJEbOWAnxbZD6XDPMi5a7W2",
+      "role": "USER"
+    },
+    {
+      "username": "ADMIN",
+      "email": "admin@test.com",
+      "firebaseUid": "WOSZGOExwhbMGTwO9DZMUIULfYO2",
+      "role": "ADMIN"
+    }
+  ]
 }
