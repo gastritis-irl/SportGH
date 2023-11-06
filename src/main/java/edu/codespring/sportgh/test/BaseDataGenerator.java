@@ -41,8 +41,8 @@ public abstract class BaseDataGenerator {
         List<User> users;
 
         ObjectMapper objectMapper = new ObjectMapper();
-        try (InputStream is = new ClassPathResource(storageLocation).getInputStream()) {
-            DataInitialization data = objectMapper.readValue(is, DataInitialization.class);
+        try (InputStream inputStream = new ClassPathResource(storageLocation).getInputStream()) {
+            DataInitialization data = objectMapper.readValue(inputStream, DataInitialization.class);
             categories = data.getCategories();
             subcategories = data.getSubcategories();
             products = data.getProducts();
@@ -78,24 +78,46 @@ public abstract class BaseDataGenerator {
     public abstract void initProducts(List<Product> products);
 
     public void initUsers(List<User> usersFromJson) {
+        processUsersFromJson(usersFromJson);
 
+        syncUsersWithFirebase();
+    }
+
+    private void processUsersFromJson(List<User> usersFromJson) {
         for (User userJson : usersFromJson) {
             User user = userService.findByEmail(userJson.getEmail());
             if (user == null) {
-                userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
+                signUpAndSyncWithFirebase(userJson);
             } else {
-                user.setRole(userJson.getRole());
-                userService.update(user);
-
-                if (user.getFirebaseUid() == null || !user.getFirebaseUid().equals(userJson.getFirebaseUid())) {
-                    String firebaseUid = firebaseService.signupUserToFirebase(user, "password");
-                    user.setFirebaseUid(firebaseUid);
-                    userService.update(user);
-                }
+                updateAndSyncUser(user, userJson);
             }
         }
+    }
 
+    private void signUpAndSyncWithFirebase(User userJson) {
+        User newUser = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
+        String firebaseUid = firebaseService.signupUserToFirebase(newUser, "password"); // use real password logic
+        newUser.setFirebaseUid(firebaseUid);
+        userService.update(newUser);
+    }
+
+    private void updateAndSyncUser(User existingUser, User userJson) {
+        existingUser.setRole(userJson.getRole());
+        userService.update(existingUser);
+        if (existingUser.getFirebaseUid() == null || !existingUser.getFirebaseUid().equals(userJson.getFirebaseUid())) {
+            String firebaseUid = firebaseService.signupUserToFirebase(existingUser, "password"); // use real password logic
+            existingUser.setFirebaseUid(firebaseUid);
+            userService.update(existingUser);
+        }
+    }
+
+    private void syncUsersWithFirebase() {
         Collection<User> firebaseUsers = firebaseService.getUsers();
+        syncFirebaseUsersToLocal(firebaseUsers);
+        syncLocalUsersToFirebase();
+    }
+
+    private void syncFirebaseUsersToLocal(Collection<User> firebaseUsers) {
         for (User firebaseUser : firebaseUsers) {
             User localUser = userService.findByEmail(firebaseUser.getEmail());
             if (localUser == null) {
@@ -105,17 +127,18 @@ public abstract class BaseDataGenerator {
                 userService.update(localUser);
             }
         }
+    }
 
+    private void syncLocalUsersToFirebase() {
         Collection<User> localUsers = userService.findAll();
         for (User localUser : localUsers) {
             if (localUser.getFirebaseUid() == null || !firebaseService.userExistsInFirebase(localUser.getEmail())) {
-                String firebaseUid = firebaseService.signupUserToFirebase(localUser, "password");
+                String firebaseUid = firebaseService.signupUserToFirebase(localUser, "password"); // use real password logic
                 localUser.setFirebaseUid(firebaseUid);
                 userService.update(localUser);
             }
         }
     }
-
 
     public void saveCategory(String name, String description, String imageUrl) {
         if (!categoryService.existsByName(name)) {
