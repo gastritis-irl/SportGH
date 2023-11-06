@@ -78,45 +78,65 @@ public abstract class BaseDataGenerator {
     public abstract void initProducts(List<Product> products);
 
     public void initUsers(List<User> usersFromJson) {
-        for (User userJson : usersFromJson) {
-            User user = userService.findByUsername(userJson.getUsername());
-            if (user == null) {
-                userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
-            } else {
-                user.setRole(userJson.getRole());
-                userService.update(user);
-            }
-        }
+        // First, we'll ensure that the admin user is always present
         final String adminEmail = "admin@test.com";
-        if (userService.findByUsername(adminEmail) == null) {
-            userService.signup(adminEmail, null, SecurityUtil.ROLE_ADMIN);
+        User admin = userService.findByUsername(adminEmail);
+        if (admin == null) {
+            admin = userService.signup(adminEmail, null, SecurityUtil.ROLE_ADMIN);
         } else {
-            User admin = userService.findByUsername(adminEmail);
             admin.setRole(SecurityUtil.ROLE_ADMIN);
             userService.update(admin);
         }
 
-        Collection<User> userListFB = firebaseService.getUsers();
-        for (User user : userListFB) {
-            User localUser = userService.findByEmail(user.getEmail());
-            if (localUser == null) {
-                userService.signup(user.getEmail(), user.getFirebaseUid(), SecurityUtil.ROLE_USER);
+        // Create or update users from JSON
+        for (User userJson : usersFromJson) {
+            User user = userService.findByUsername(userJson.getUsername());
+            if (user == null) {
+                // Create user in local database and Firebase
+                user = userService.signup(userJson.getEmail(), null, userJson.getRole());
+                String firebaseUid = firebaseService.signupUserToFirebase(user, "defaultPassword"); // Replace with actual password logic
+                user.setFirebaseUid(firebaseUid);
+                userService.update(user);
             } else {
-                localUser.setFirebaseUid(user.getFirebaseUid());
+                // Update existing user details
+                user.setRole(userJson.getRole());
+                userService.update(user);
+
+                // Update Firebase UID if necessary
+                if (!user.getFirebaseUid().equals(userJson.getFirebaseUid())) {
+                    String firebaseUid = firebaseService.updateUserToFirebase(user, "defaultPassword"); // Replace with actual password logic
+                    user.setFirebaseUid(firebaseUid);
+                    userService.update(user);
+                }
+            }
+        }
+
+        // Sync users from Firebase
+        Collection<User> firebaseUsers = firebaseService.getUsers();
+        for (User firebaseUser : firebaseUsers) {
+            User localUser = userService.findByEmail(firebaseUser.getEmail());
+            if (localUser == null) {
+                // User is in Firebase but not in local DB, so we create the user locally
+                localUser = userService.signup(firebaseUser.getEmail(), firebaseUser.getFirebaseUid(), SecurityUtil.ROLE_USER);
+            } else {
+                // User is in both systems, we ensure Firebase UID is up-to-date locally
+                localUser.setFirebaseUid(firebaseUser.getFirebaseUid());
                 userService.update(localUser);
             }
         }
 
-        Collection<User> userListDB = userService.findAll();
-        for (User user : userListDB) {
-            if (!userListFB.contains(user)) {
-                String firebaseUid = firebaseService.signupUserToFirebase(user, "password");
-                user.setFirebaseUid(firebaseUid);
-                userService.update(user);
-                log.info("User {} successfully updated and registered to firebase.", user);
+        // Ensure all local users are in Firebase
+        Collection<User> localUsers = userService.findAll();
+        for (User localUser : localUsers) {
+            if (localUser.getFirebaseUid() == null || !firebaseService.userExistsInFirebase(localUser.getEmail())) {
+                // User exists locally but not in Firebase, so we add them to Firebase
+                String firebaseUid = firebaseService.signupUserToFirebase(localUser, "defaultPassword"); // Replace with actual password logic
+                localUser.setFirebaseUid(firebaseUid);
+                userService.update(localUser);
             }
         }
     }
+
 
     public void saveCategory(String name, String description, String imageUrl) {
         if (!categoryService.existsByName(name)) {
@@ -140,8 +160,8 @@ public abstract class BaseDataGenerator {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
         if (subCategory != null && productService.notExistsByNameAndUser(product.getName(), user)) {
             productService.save(new Product(true, product.getName(), product.getDescription(),
-                product.getLocation(), product.getRentPrice(),
-                subCategory, user, null, null));
+                    product.getLocation(), product.getRentPrice(),
+                    subCategory, user, null, null));
         }
     }
 }

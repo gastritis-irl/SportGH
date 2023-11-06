@@ -57,6 +57,17 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
+    public boolean userExistsInFirebase(String email) {
+        try {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            UserRecord userRecord = firebaseAuth.getUserByEmail(email);
+            return userRecord != null;
+        } catch (FirebaseAuthException e) {
+            throw new ServiceException("Failed to check if user exists in firebase", e);
+        }
+    }
+
+    @Override
     public String getFirebaseUidFromToken(String idToken) {
         FirebaseTokenHolder tokenHolder = verifyTokenAndReturnTokenHolder(idToken);
         return tokenHolder.getUid();

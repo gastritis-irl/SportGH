@@ -19,4 +19,6 @@ public interface FirebaseService {
     Authentication getAuthentication(String idToken);
 
     Collection<User> getUsers();
+
+    boolean userExistsInFirebase(String email);
 }
