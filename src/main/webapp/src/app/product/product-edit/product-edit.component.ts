@@ -48,7 +48,6 @@ export class ProductEditComponent implements OnInit {
         zoom: 10,
         center: L.latLng(46.770439, 23.591423)
     };
-
     marker: L.Marker | undefined;
     map: L.Map | undefined;
 
@@ -66,7 +65,6 @@ export class ProductEditComponent implements OnInit {
     moveMarkerToNewPosition(event: L.LeafletMouseEvent): void {
         if (this.marker) {
             this.marker.setLatLng(L.latLng(event.latlng.lat, event.latlng.lng));
-            console.log(this.marker);
         }
     }
 
