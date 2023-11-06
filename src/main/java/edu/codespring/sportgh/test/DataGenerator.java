@@ -38,8 +38,8 @@ public class DataGenerator extends BaseDataGenerator {
     @PostConstruct
     public void initData() {
         ObjectMapper objectMapper = new ObjectMapper();
-        try (InputStream is = new ClassPathResource(storageLocation).getInputStream()) {
-            DataInitialization data = objectMapper.readValue(is, DataInitialization.class);
+        try (InputStream inputStream = new ClassPathResource(storageLocation).getInputStream()) {
+            DataInitialization data = objectMapper.readValue(inputStream, DataInitialization.class);
 
             initCategories(data.getCategories());
             initSubCategories(data.getSubcategories());
@@ -50,6 +50,7 @@ public class DataGenerator extends BaseDataGenerator {
         }
     }
 
+    @Override
     public void initCategories(List<Category> categories) {
         categories.forEach(category -> {
             String name = category.getName();
@@ -59,6 +60,7 @@ public class DataGenerator extends BaseDataGenerator {
         });
     }
 
+    @Override
     public void initSubCategories(List<SubCategory> subcategories) {
         subcategories.forEach(subcategory -> {
             String name = subcategory.getName();
@@ -67,6 +69,7 @@ public class DataGenerator extends BaseDataGenerator {
         });
     }
 
+    @Override
     public void initProducts(List<Product> products) {
         products.forEach(product -> {
             User user = userService.findByUsername(product.getUser().getUsername());
