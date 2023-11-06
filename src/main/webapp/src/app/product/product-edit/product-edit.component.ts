@@ -48,12 +48,12 @@ export class ProductEditComponent implements OnInit {
         zoom: 10,
         center: L.latLng(46.770439, 23.591423)
     };
-    marker: L.Marker | undefined;
+    marker: L.Marker = new L.Marker([51.505, -0.09]);
     map: L.Map | undefined;
 
     onMapReady(map: L.Map): void {
         this.map = map;
-        this.marker = new L.Marker([51.505, -0.09], {
+        this.marker = new L.Marker(this.marker.getLatLng(), {
             icon: L.icon({
                 iconUrl: 'assets/blue-marker.svg',
                 iconSize: [32, 32],
@@ -63,8 +63,12 @@ export class ProductEditComponent implements OnInit {
     }
 
     moveMarkerToNewPosition(event: L.LeafletMouseEvent): void {
-        if (this.marker) {
-            this.marker.setLatLng(L.latLng(event.latlng.lat, event.latlng.lng));
+        this.marker.setLatLng(L.latLng(event.latlng.lat, event.latlng.lng));
+        if (this.product.locationLngLat) {
+            this.product.locationLngLat.x = event.latlng.lng;
+            this.product.locationLngLat.y = event.latlng.lat;
+        } else {
+            this.product.locationLngLat = new L.Point(event.latlng.lng, event.latlng.lat);
         }
     }
 
@@ -134,6 +138,11 @@ export class ProductEditComponent implements OnInit {
                     {
                         next: (data: Product): void => {
                             this.product = data;
+
+                            if (data.locationLngLat) {
+                                this.marker.setLatLng(new L.LatLng(data.locationLngLat.y, data.locationLngLat.x));
+                            }
+
                             this.subcategoryDropdownDisabled = false;
                             this.getSubcategoriesByCategoryId();
                             // Call the loadProductImages method here

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 
 @Valid
 @Data
@@ -25,9 +26,7 @@ public class ProductInDTO {
     @Size(max = 100, message = "Product location must be between 0-100 characters")
     private String location;
 
-    private Double locationLng;
-
-    private Double locationLat;
+    private Point locationLngLat;
 
     @Min(value = 0, message = "Rent price must be a positive value")
     @NotNull(message = "Rend price can't be empty")
