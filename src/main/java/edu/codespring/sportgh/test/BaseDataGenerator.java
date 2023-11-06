@@ -96,7 +96,7 @@ public abstract class BaseDataGenerator {
 
     private void signUpAndSyncWithFirebase(User userJson) {
         User newUser = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
-        String firebaseUid = firebaseService.signupUserToFirebase(newUser, "password"); // use real password logic
+        String firebaseUid = firebaseService.signupUserToFirebase(newUser, "password");
         newUser.setFirebaseUid(firebaseUid);
         userService.update(newUser);
     }
@@ -105,7 +105,7 @@ public abstract class BaseDataGenerator {
         existingUser.setRole(userJson.getRole());
         userService.update(existingUser);
         if (existingUser.getFirebaseUid() == null || !existingUser.getFirebaseUid().equals(userJson.getFirebaseUid())) {
-            String firebaseUid = firebaseService.signupUserToFirebase(existingUser, "password"); // use real password logic
+            String firebaseUid = firebaseService.signupUserToFirebase(existingUser, "password");
             existingUser.setFirebaseUid(firebaseUid);
             userService.update(existingUser);
         }
@@ -133,7 +133,7 @@ public abstract class BaseDataGenerator {
         Collection<User> localUsers = userService.findAll();
         for (User localUser : localUsers) {
             if (localUser.getFirebaseUid() == null || !firebaseService.userExistsInFirebase(localUser.getEmail())) {
-                String firebaseUid = firebaseService.signupUserToFirebase(localUser, "password"); // use real password logic
+                String firebaseUid = firebaseService.signupUserToFirebase(localUser, "password");
                 localUser.setFirebaseUid(firebaseUid);
                 userService.update(localUser);
             }
