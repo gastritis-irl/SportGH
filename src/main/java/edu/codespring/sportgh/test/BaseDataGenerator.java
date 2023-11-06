@@ -94,7 +94,7 @@ public abstract class BaseDataGenerator {
             if (user == null) {
                 // Create user in local database and Firebase
                 user = userService.signup(userJson.getEmail(), null, userJson.getRole());
-                String firebaseUid = firebaseService.signupUserToFirebase(user, "defaultPassword"); // Replace with actual password logic
+                String firebaseUid = firebaseService.signupUserToFirebase(user, "password");
                 user.setFirebaseUid(firebaseUid);
                 userService.update(user);
             } else {
@@ -104,7 +104,7 @@ public abstract class BaseDataGenerator {
 
                 // Update Firebase UID if necessary
                 if (!user.getFirebaseUid().equals(userJson.getFirebaseUid())) {
-                    String firebaseUid = firebaseService.updateUserToFirebase(user, "defaultPassword"); // Replace with actual password logic
+                    String firebaseUid = firebaseService.updateUserToFirebase(user, "password");
                     user.setFirebaseUid(firebaseUid);
                     userService.update(user);
                 }
@@ -130,7 +130,7 @@ public abstract class BaseDataGenerator {
         for (User localUser : localUsers) {
             if (localUser.getFirebaseUid() == null || !firebaseService.userExistsInFirebase(localUser.getEmail())) {
                 // User exists locally but not in Firebase, so we add them to Firebase
-                String firebaseUid = firebaseService.signupUserToFirebase(localUser, "defaultPassword"); // Replace with actual password logic
+                String firebaseUid = firebaseService.signupUserToFirebase(localUser, "password");
                 localUser.setFirebaseUid(firebaseUid);
                 userService.update(localUser);
             }
