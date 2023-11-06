@@ -12,6 +12,7 @@ import { IdToken } from '../../auth-and-token/firebase-id-token.model';
 import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ImageComponent } from '../../shared/image/image.component';
+import * as L from 'leaflet';
 
 type ClickHandlerFunction = () => void;
 
@@ -36,6 +37,38 @@ export class ProductEditComponent implements OnInit {
     _imageIds?: number[];
     newImageFiles: File[] = [];
     imageDatas: Image[] = [];
+
+    options: L.MapOptions = {
+        layers: [
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap contributors'
+            })
+        ],
+        zoom: 10,
+        center: L.latLng(46.770439, 23.591423)
+    };
+
+    marker: L.Marker | undefined;
+    map: L.Map | undefined;
+
+    onMapReady(map: L.Map): void {
+        this.map = map;
+        this.marker = new L.Marker([51.505, -0.09], {
+            icon: L.icon({
+                iconUrl: 'assets/blue-marker.svg',
+                iconSize: [32, 32],
+                iconAnchor: [16, 32]
+            })
+        }).addTo(map);
+    }
+
+    moveMarkerToNewPosition(event: L.LeafletMouseEvent): void {
+        if (this.marker) {
+            this.marker.setLatLng(L.latLng(event.latlng.lat, event.latlng.lng));
+            console.log(this.marker);
+        }
+    }
 
     constructor(
         private productService: ProductService,

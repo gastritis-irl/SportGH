@@ -14,7 +14,7 @@ import { TreeViewComponent } from '../shared/treeview/tree-view.component';
 import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
 import { PopoverDeleteComponent } from '../shared/popover/popover-delete.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { GoogleMapsModule } from '@angular/google-maps';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
     declarations: [
@@ -37,7 +37,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
         NgbModule,
         BreadcrumbComponent,
         PopoverDeleteComponent,
-        GoogleMapsModule
+        LeafletModule
     ],
     providers: [
         ProductComponent,

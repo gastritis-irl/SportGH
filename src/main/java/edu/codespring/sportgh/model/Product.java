@@ -3,6 +3,7 @@ package edu.codespring.sportgh.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.locationtech.jts.geom.Point;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,9 +28,8 @@ public class Product extends BaseEntity {
     @Column(length = 100)
     private String location;
 
-    private Double locationLng;
-
-    private Double locationLat;
+    @Column(columnDefinition = "POINT")
+    private Point locationLngLat;
 
     private Double rentPrice;
 

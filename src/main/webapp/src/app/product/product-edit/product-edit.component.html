@@ -110,8 +110,12 @@
                     or<br>
                     <div>
                         <label class="form-part-label">Choose on map</label>
-                        <div class="product-address-map">
-                            <google-map></google-map>
+                        <div class="product-address-map"
+                             leaflet
+                             [leafletOptions]="options"
+                             (leafletMapReady)="onMapReady($event)"
+                             (leafletClick)="moveMarkerToNewPosition($event)"
+                        >
                         </div>
                     </div>
                 </div>

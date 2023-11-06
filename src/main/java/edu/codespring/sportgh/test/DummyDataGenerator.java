@@ -50,7 +50,6 @@ public class DummyDataGenerator extends BaseDataGenerator {
                     "",
                     "",
                     null,
-                    null,
                     10.0 + i,
                     null,
                     null,
