@@ -106,11 +106,9 @@ public abstract class BaseDataGenerator {
             }
         }
 
-        // Ensure all local users are in Firebase
         Collection<User> localUsers = userService.findAll();
         for (User localUser : localUsers) {
             if (localUser.getFirebaseUid() == null || !firebaseService.userExistsInFirebase(localUser.getEmail())) {
-                // User exists locally but not in Firebase, so we add them to Firebase
                 String firebaseUid = firebaseService.signupUserToFirebase(localUser, "password");
                 localUser.setFirebaseUid(firebaseUid);
                 userService.update(localUser);
