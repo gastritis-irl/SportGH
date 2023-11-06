@@ -38,6 +38,7 @@ public abstract class BaseDataGenerator {
         List<Category> categories;
         List<SubCategory> subcategories;
         List<Product> products;
+        List<User> users;
 
         ObjectMapper objectMapper = new ObjectMapper();
         try (InputStream is = new ClassPathResource(storageLocation).getInputStream()) {
@@ -45,13 +46,15 @@ public abstract class BaseDataGenerator {
             categories = data.getCategories();
             subcategories = data.getSubcategories();
             products = data.getProducts();
+            users = data.getUsers(); // Assuming DataInitialization has a getUsers method
         } catch (IOException e) {
             log.error("Failed to load data from JSON file.", e);
             return;
         }
 
+
         try {
-            initUsers();
+            initUsers(users);
             log.info("{} Generating users: OK", this.getClass().getSimpleName());
         } catch (ServiceException e) {
             log.warn("Generating users: FAILED");
@@ -74,7 +77,16 @@ public abstract class BaseDataGenerator {
 
     public abstract void initProducts(List<Product> products);
 
-    public void initUsers() {
+    public void initUsers(List<User> usersFromJson) {
+        for (User userJson : usersFromJson) {
+            User user = userService.findByUsername(userJson.getUsername());
+            if (user == null) {
+                userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
+            } else {
+                user.setRole(userJson.getRole());
+                userService.update(user);
+            }
+        }
         final String adminEmail = "admin@test.com";
         if (userService.findByUsername(adminEmail) == null) {
             userService.signup(adminEmail, null, SecurityUtil.ROLE_ADMIN);
