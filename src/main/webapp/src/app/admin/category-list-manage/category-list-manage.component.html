@@ -19,6 +19,14 @@
                 <div class="name row-item">
                     {{category.name}}
                 </div>
+                <div ngbDropdown class="name row-item">
+                    <button type="button" class="nav-link" ngbDropdownToggle>Subcategories</button>
+                    <div ngbDropdownMenu>
+                        <div *ngFor="let subCategory of subCategories">
+                            <div class="nav-link-item" *ngIf="category.id === subCategory.categoryId" ngbDropdownItem>{{subCategory.name}}</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image-holder row-item">
                     <img class="image" src="{{category.imageDataUrl}}" alt="Category image">
                 </div>

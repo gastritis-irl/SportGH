@@ -4,6 +4,8 @@ import { Category } from '../../category/category.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ImageService } from '../../shared/image/image.service';
+import { Subcategory } from '../../subcategory/subcategory.model';
+import { SubcategoryService } from '../../subcategory/subcategory.service';
 
 @Component({
     selector: 'sgh-admin',
@@ -12,9 +14,10 @@ import { ImageService } from '../../shared/image/image.service';
 })
 export class CategoryListManageComponent implements OnInit {
     categories: Category[] = [];
-
+    subCategories: Subcategory[] = [];
     constructor(
         private categoryService: CategoryService,
+        private subcategoryService: SubcategoryService,
         private router: Router,
         private toastNotify: ToastrService,
         private imageService: ImageService,
@@ -30,6 +33,15 @@ export class CategoryListManageComponent implements OnInit {
                         this.loadCategoryImage(category.imageId, category);
                     }
                 });
+            },
+            error: (error) => {
+                console.error(error);
+                this.toastNotify.error(`Error fetching data`);
+            }
+        });
+        this.subcategoryService.getAll().subscribe({
+            next: (data: Subcategory[]) => {
+                this.subCategories = data;
             },
             error: (error) => {
                 console.error(error);

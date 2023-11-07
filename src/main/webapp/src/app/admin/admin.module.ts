@@ -8,7 +8,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { ImageComponent } from "../shared/image/image.component";
 import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
 import { PopoverDeleteComponent } from '../shared/popover/popover-delete.component';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -26,7 +26,11 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
         ImageComponent,
         FormCheckLabelComponent,
         PopoverDeleteComponent,
-        NgbPopover
+        NgbPopover,
+        NgbDropdownItem,
+        NgbDropdownMenu,
+        NgbDropdown,
+        NgbDropdownToggle
     ]
 })
 export class AdminModule {
