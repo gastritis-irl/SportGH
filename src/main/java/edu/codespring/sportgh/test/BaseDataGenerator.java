@@ -1,6 +1,7 @@
 package edu.codespring.sportgh.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.codespring.sportgh.dto.DataInitDTO;
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.*;
 import edu.codespring.sportgh.security.SecurityUtil;
@@ -30,8 +31,8 @@ public abstract class BaseDataGenerator {
     protected final FirebaseService firebaseService;
     protected final ImageService imageService;
 
-    @Value("${data.storage.location}")
-    private String storageLocation;
+    @Value("${data.init.location}")
+    private String dataInitLocation;
 
     @PostConstruct
     public void init() {
@@ -41,8 +42,8 @@ public abstract class BaseDataGenerator {
         List<User> users;
 
         ObjectMapper objectMapper = new ObjectMapper();
-        try (InputStream inputStream = new ClassPathResource(storageLocation).getInputStream()) {
-            DataInitialization data = objectMapper.readValue(inputStream, DataInitialization.class);
+        try (InputStream inputStream = new ClassPathResource(dataInitLocation).getInputStream()) {
+            DataInitDTO data = objectMapper.readValue(inputStream, DataInitDTO.class);
             categories = data.getCategories();
             subcategories = data.getSubcategories();
             products = data.getProducts();

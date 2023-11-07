@@ -1,4 +1,4 @@
-package edu.codespring.sportgh.test;
+package edu.codespring.sportgh.dto;
 
 import edu.codespring.sportgh.model.Category;
 import edu.codespring.sportgh.model.Product;
@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class DataInitialization {
+public class DataInitDTO {
 
     private List<Category> categories;
     private List<SubCategory> subcategories;
