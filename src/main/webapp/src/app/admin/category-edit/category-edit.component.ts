@@ -7,6 +7,8 @@ import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';
 import { ImageComponent } from '../../shared/image/image.component';
+import {SubcategoryService} from "../../subcategory/subcategory.service";
+import {Subcategory} from "../../subcategory/subcategory.model";
 
 type ClickHandlerFunction = () => void;
 
@@ -21,6 +23,7 @@ export class CategoryEditComponent implements OnInit {
 
     category: Category
         = { id: undefined, name: '', description: '', imageId: 0, imageDataUrl: undefined };
+    subcategories: Subcategory[] = []
     newImageFile?: File;
     imageData?: Image;
     paramCheck: 'create' | 'edit' = 'create';
@@ -31,6 +34,7 @@ export class CategoryEditComponent implements OnInit {
 
     constructor(
         private categoryService: CategoryService,
+        private subcategoryService: SubcategoryService,
         private router: Router,
         private route: ActivatedRoute,
         private toastNotify: ToastrService,
@@ -75,6 +79,17 @@ export class CategoryEditComponent implements OnInit {
                             if (data.imageId !== undefined) {
                                 this.loadCategoryImage(data.imageId);
                             }
+                        },
+                        error: (error) => {
+                            console.error(error);
+                            this.toastNotify.error(`Error fetching data`);
+                        }
+                    }
+                );
+                this.subcategoryService.getByCategoryId(id).subscribe(
+                    {
+                        next: (data: Subcategory[]) => {
+                            this.subcategories = data;
                         },
                         error: (error) => {
                             console.error(error);
@@ -230,4 +245,5 @@ export class CategoryEditComponent implements OnInit {
             }
         );
     }
+
 }

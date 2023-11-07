@@ -14,7 +14,8 @@ import { SubcategoryService } from '../../subcategory/subcategory.service';
 })
 export class CategoryListManageComponent implements OnInit {
     categories: Category[] = [];
-    subCategories: Subcategory[] = [];
+    subcategories: Subcategory[] = [];
+
     constructor(
         private categoryService: CategoryService,
         private subcategoryService: SubcategoryService,
@@ -41,7 +42,7 @@ export class CategoryListManageComponent implements OnInit {
         });
         this.subcategoryService.getAll().subscribe({
             next: (data: Subcategory[]) => {
-                this.subCategories = data;
+                this.subcategories = data;
             },
             error: (error) => {
                 console.error(error);

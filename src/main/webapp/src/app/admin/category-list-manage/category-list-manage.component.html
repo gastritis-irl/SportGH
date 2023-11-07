@@ -22,8 +22,8 @@
                 <div ngbDropdown class="name row-item">
                     <button type="button" class="nav-link" ngbDropdownToggle>Subcategories</button>
                     <div ngbDropdownMenu>
-                        <div *ngFor="let subCategory of subCategories">
-                            <div class="nav-link-item" *ngIf="category.id === subCategory.categoryId" ngbDropdownItem>{{subCategory.name}}</div>
+                        <div *ngFor="let subcategory of subcategories">
+                            <div class="nav-link-item" *ngIf="category.id === subcategory.categoryId" ngbDropdownItem>{{subcategory.name}}</div>
                         </div>
                     </div>
                 </div>
