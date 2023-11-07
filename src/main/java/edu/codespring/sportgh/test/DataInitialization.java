@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class DataInitialization {
+
     private List<Category> categories;
     private List<SubCategory> subcategories;
     private List<Product> products;

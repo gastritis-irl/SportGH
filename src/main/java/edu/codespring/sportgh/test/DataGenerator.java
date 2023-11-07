@@ -72,7 +72,7 @@ public class DataGenerator extends BaseDataGenerator {
     @Override
     public void initProducts(List<Product> products) {
         products.forEach(product -> {
-            User user = userService.findByUsername(product.getUser().getUsername());
+            User user = userService.findByEmail(product.getUser().getEmail());
             if (user == null) {
                 throw new ServiceException("User doesn't exist.");
             }

@@ -86,9 +86,7 @@ public abstract class BaseDataGenerator {
     private void processUsersFromJson(List<User> usersFromJson) {
         for (User userJson : usersFromJson) {
             User user = userService.findByEmail(userJson.getEmail());
-            if (user == null) {
-                signUpAndSyncWithFirebase(userJson);
-            } else {
+            if (user != null) {
                 updateAndSyncUser(user, userJson);
             }
         }
@@ -105,9 +103,7 @@ public abstract class BaseDataGenerator {
         existingUser.setRole(userJson.getRole());
         userService.update(existingUser);
         if (existingUser.getFirebaseUid() == null || !existingUser.getFirebaseUid().equals(userJson.getFirebaseUid())) {
-            String firebaseUid = firebaseService.signupUserToFirebase(existingUser, "password");
-            existingUser.setFirebaseUid(firebaseUid);
-            userService.update(existingUser);
+            signUpAndSyncWithFirebase(existingUser);
         }
     }
 

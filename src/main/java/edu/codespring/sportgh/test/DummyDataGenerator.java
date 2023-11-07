@@ -39,7 +39,7 @@ public class DummyDataGenerator extends BaseDataGenerator {
 
     @Override
     public void initProducts(List<Product> products) {
-        User user = userService.findByUsername("akos@test.com");
+        User user = userService.findByEmail("akos@test.com");
         if (user == null) {
             throw new ServiceException("User doesn't exist.");
         }

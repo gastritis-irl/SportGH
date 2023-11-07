@@ -301,7 +301,7 @@
         "name": "Swimming"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -313,7 +313,7 @@
         "name": "Swimming"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -325,7 +325,7 @@
         "name": "Cycling"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -337,7 +337,7 @@
         "name": "Cycling"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -349,7 +349,7 @@
         "name": "Cycling"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -361,7 +361,7 @@
         "name": "Cycling"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -373,7 +373,7 @@
         "name": "Boxing"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -385,7 +385,7 @@
         "name": "Judo"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -397,7 +397,7 @@
         "name": "Tennis"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -409,7 +409,7 @@
         "name": "Golf"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -421,7 +421,7 @@
         "name": "Yoga"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     },
     {
@@ -433,7 +433,7 @@
         "name": "Fishing"
       },
       "user": {
-        "username": "akos@test.com"
+        "email": "akos@test.com"
       }
     }
   ],
