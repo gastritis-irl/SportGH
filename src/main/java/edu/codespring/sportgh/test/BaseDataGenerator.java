@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.codespring.sportgh.dto.DataInitDTO;
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.*;
-import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -36,40 +35,30 @@ public abstract class BaseDataGenerator {
 
     @PostConstruct
     public void init() {
-        List<Category> categories;
-        List<SubCategory> subcategories;
-        List<Product> products;
-        List<User> users;
 
         ObjectMapper objectMapper = new ObjectMapper();
         try (InputStream inputStream = new ClassPathResource(dataInitLocation).getInputStream()) {
             DataInitDTO data = objectMapper.readValue(inputStream, DataInitDTO.class);
-            categories = data.getCategories();
-            subcategories = data.getSubcategories();
-            products = data.getProducts();
-            users = data.getUsers();
+
+            try {
+                initUsers(data.getUsers());
+                log.info("{} Generating users: OK", this.getClass().getSimpleName());
+            } catch (ServiceException e) {
+                log.warn("{} Generating users: FAILED - {}", this.getClass().getSimpleName(), e.getMessage());
+            }
+
+            initCategories(data.getCategories());
+            log.info("{} Generating categories: OK", this.getClass().getSimpleName());
+
+            initSubCategories(data.getSubcategories());
+            log.info("{} Generating subcategories: OK", this.getClass().getSimpleName());
+
+            initProducts(data.getProducts());
+            log.info("{} Generating products: OK", this.getClass().getSimpleName());
+
         } catch (IOException e) {
-            log.error("Failed to load data from JSON file.", e);
-            return;
+            log.error(this.getClass().getSimpleName() + "Failed to load data from JSON file.", e);
         }
-
-
-        try {
-            initUsers(users);
-            log.info("{} Generating users: OK", this.getClass().getSimpleName());
-        } catch (ServiceException e) {
-            log.warn("Generating users: FAILED");
-            log.warn(e.getMessage());
-        }
-
-        initCategories(categories);
-        log.info("Generating categories: OK");
-
-        initSubCategories(subcategories);
-        log.info("Generating subcategories: OK");
-
-        initProducts(products);
-        log.info("Generating products: OK");
     }
 
     public abstract void initCategories(List<Category> categories);
@@ -79,61 +68,45 @@ public abstract class BaseDataGenerator {
     public abstract void initProducts(List<Product> products);
 
     public void initUsers(List<User> usersFromJson) {
-        processUsersFromJson(usersFromJson);
+        updateLocalUsers(usersFromJson);
 
-        syncUsersWithFirebase();
+        syncLocalUsersWithFirebase();
     }
 
-    private void processUsersFromJson(List<User> usersFromJson) {
+    private void updateLocalUsers(List<User> usersFromJson) {
         for (User userJson : usersFromJson) {
-            User user = userService.findByEmail(userJson.getEmail());
-            if (user != null) {
-                updateAndSyncUser(user, userJson);
-            }
-        }
-    }
+            User localUser = userService.findByEmail(userJson.getEmail());
 
-    private void signUpAndSyncWithFirebase(User userJson) {
-        User newUser = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
-        String firebaseUid = firebaseService.signupUserToFirebase(newUser, "password");
-        newUser.setFirebaseUid(firebaseUid);
-        userService.update(newUser);
-    }
-
-    private void updateAndSyncUser(User existingUser, User userJson) {
-        existingUser.setRole(userJson.getRole());
-        userService.update(existingUser);
-        if (existingUser.getFirebaseUid() == null || !existingUser.getFirebaseUid().equals(userJson.getFirebaseUid())) {
-            signUpAndSyncWithFirebase(existingUser);
-        }
-    }
-
-    private void syncUsersWithFirebase() {
-        Collection<User> firebaseUsers = firebaseService.getUsers();
-        syncFirebaseUsersToLocal(firebaseUsers);
-        syncLocalUsersToFirebase();
-    }
-
-    private void syncFirebaseUsersToLocal(Collection<User> firebaseUsers) {
-        for (User firebaseUser : firebaseUsers) {
-            User localUser = userService.findByEmail(firebaseUser.getEmail());
             if (localUser == null) {
-                userService.signup(firebaseUser.getEmail(), firebaseUser.getFirebaseUid(), SecurityUtil.ROLE_USER);
+                localUser = userService.signup(userJson.getEmail(), null, userJson.getRole());
+                syncUserWithFirebase(localUser);
             } else {
-                localUser.setFirebaseUid(firebaseUser.getFirebaseUid());
-                userService.update(localUser);
+                localUser.setRole(userJson.getRole());
+                if (needsFirebaseSync(localUser, userJson)) {
+                    syncUserWithFirebase(localUser);
+                } else {
+                    userService.update(localUser);
+                }
             }
         }
     }
 
-    private void syncLocalUsersToFirebase() {
+    private boolean needsFirebaseSync(User localUser, User userJson) {
+        return localUser.getFirebaseUid() == null || !localUser.getFirebaseUid().equals(userJson.getFirebaseUid());
+    }
+
+    private void syncUserWithFirebase(User user) {
+        if (user.getFirebaseUid() == null || !firebaseService.userExistsInFirebase(user.getEmail())) {
+            String firebaseUid = firebaseService.signupUserToFirebase(user, "password");
+            user.setFirebaseUid(firebaseUid);
+        }
+        userService.update(user);
+    }
+
+    private void syncLocalUsersWithFirebase() {
         Collection<User> localUsers = userService.findAll();
         for (User localUser : localUsers) {
-            if (localUser.getFirebaseUid() == null || !firebaseService.userExistsInFirebase(localUser.getEmail())) {
-                String firebaseUid = firebaseService.signupUserToFirebase(localUser, "password");
-                localUser.setFirebaseUid(firebaseUid);
-                userService.update(localUser);
-            }
+            syncUserWithFirebase(localUser);
         }
     }
 
