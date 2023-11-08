@@ -40,8 +40,11 @@ $item-gap: 10px;
         gap: $item-gap;
 
         .no-requests-found {
-            width: 20%;
-            content: $requests-no;
+            font-weight: $font-weight-bold;
+            color: $color-main-1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .request {

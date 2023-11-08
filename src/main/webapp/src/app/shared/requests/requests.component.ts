@@ -47,14 +47,10 @@ export class RequestsComponent implements OnInit {
     ) {
     }
 
-    reloadData(): void {
+    ngOnInit(): void {
         this.getMyRequests();
         this.getOthersRequests();
         this.getNumberOfPendingRequests();
-    }
-
-    ngOnInit(): void {
-        this.reloadData();
     }
 
     getMyRequests(): void {
@@ -92,7 +88,8 @@ export class RequestsComponent implements OnInit {
         if (requestId) {
             this.requestsService.answerRequest(requestId, answer).subscribe({
                 next: (): void => {
-                    this.reloadData();
+                    this.getOthersRequests();
+                    this.getNumberOfPendingRequests();
                 },
                 error: (): void => {
                     this.toastNotify.error('Error answering request.');

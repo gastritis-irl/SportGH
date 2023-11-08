@@ -18,11 +18,11 @@ public class SecurityUtil {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public boolean isCurrentlyLoggedIn(User user) {
+    public static boolean isCurrentlyLoggedIn(User user) {
         return Objects.equals(getCurrentUser(), user);
     }
 
-    public boolean isLoggedIn() {
+    public static boolean isLoggedIn() {
         try {
             User user = getCurrentUser();
             return user != null;

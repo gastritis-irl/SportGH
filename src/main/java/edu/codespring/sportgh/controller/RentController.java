@@ -31,27 +31,6 @@ public class RentController {
     private final RentService rentService;
     private final RentRequestMapper rentRequestMapper;
 
-    private ResponseEntity<UserOutDTO> checkRentRequest(RentRequest rentRequest) {
-        switch (rentRequest.getRequestStatus()) {
-            case ACCEPTED: {
-                return new ResponseEntity<>(
-                    userMapper.userToOut(rentRequest.getProduct().getUser()),
-                    HttpStatus.OK
-                );
-            }
-            case PENDING: {
-                return new ResponseEntity<>(HttpStatus.FOUND);
-            }
-            case DECLINED: {
-                rentService.resendRentRequest(rentRequest);
-                return new ResponseEntity<>(HttpStatus.SEE_OTHER);
-            }
-            default: {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        }
-    }
-
     @GetMapping("/user")
     public ResponseEntity<UserOutDTO> getProductOwnerInfo(@RequestParam("productId") Optional<Long> productId) {
         User user = SecurityUtil.getCurrentUser();
@@ -104,6 +83,37 @@ public class RentController {
         );
     }
 
+    @PutMapping
+    public ResponseEntity<?> answerRentRequest(@RequestParam Optional<Long> requestId,
+                                               @RequestParam Optional<String> answer) {
+        User user = SecurityUtil.getCurrentUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return answerRequest(user, requestId, answer);
+    }
+
+    private ResponseEntity<UserOutDTO> checkRentRequest(RentRequest rentRequest) {
+        switch (rentRequest.getRequestStatus()) {
+            case ACCEPTED: {
+                return new ResponseEntity<>(
+                    userMapper.userToOut(rentRequest.getProduct().getUser()),
+                    HttpStatus.OK
+                );
+            }
+            case PENDING: {
+                return new ResponseEntity<>(HttpStatus.FOUND);
+            }
+            case DECLINED: {
+                rentService.resendRentRequest(rentRequest);
+                return new ResponseEntity<>(HttpStatus.SEE_OTHER);
+            }
+            default: {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
+
     private ResponseEntity<?> answerRequest(User user,
                                             Optional<Long> requestId,
                                             Optional<String> answer) {
@@ -125,15 +135,5 @@ public class RentController {
         );
         rentService.answerRentRequest(rentRequest);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PutMapping
-    public ResponseEntity<?> answerRentRequest(@RequestParam Optional<Long> requestId,
-                                               @RequestParam Optional<String> answer) {
-        User user = SecurityUtil.getCurrentUser();
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        return answerRequest(user, requestId, answer);
     }
 }
