@@ -48,7 +48,7 @@ public class DummyDataGenerator extends BaseDataGenerator {
                     true,
                     String.format("Product%d", i),
                     "",
-                    "",
+                    null,
                     null,
                     10.0 + i,
                     null,

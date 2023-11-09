@@ -91,23 +91,23 @@
             <div class="location form-part">
                 <div class="form-heading">Location</div>
                 <div class="product-location">
-                    <div>
-                        <label class="form-part-label">Type address</label>
-                        <input class="product-address-text form-part-input"
-                               type="text"
-                               name="location"
-                               [(ngModel)]="product.location"
-                               #location="ngModel">
-                        <div class="form-check-label">
-                            <sgh-form-ch-lbl
-                                *ngIf="location.dirty || location.touched || buttonPushed"
-                                [fieldName]="'Location'"
-                                [length]="product.location?.length"
-                                [maxlength]="100"
-                            ></sgh-form-ch-lbl>
-                        </div>
-                    </div>
-                    or<br>
+                    <!--                    <div>-->
+                    <!--                        <label class="form-part-label">Type address</label>-->
+                    <!--                        <input class="product-address-text form-part-input"-->
+                    <!--                               type="text"-->
+                    <!--                               name="location"-->
+                    <!--                               [(ngModel)]="product.location"-->
+                    <!--                               #location="ngModel">-->
+                    <!--                        <div class="form-check-label">-->
+                    <!--                            <sgh-form-ch-lbl-->
+                    <!--                                *ngIf="location.dirty || location.touched || buttonPushed"-->
+                    <!--                                [fieldName]="'Location'"-->
+                    <!--                                [length]="product.location?.length"-->
+                    <!--                                [maxlength]="100"-->
+                    <!--                            ></sgh-form-ch-lbl>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <!--                    or<br>-->
                     <div>
                         <label class="form-part-label">Choose on map</label>
                         <div class="product-address-map"

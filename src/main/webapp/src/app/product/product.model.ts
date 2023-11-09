@@ -1,13 +1,11 @@
-import { Point } from 'leaflet';
-
 export interface Product {
 
     id?: number,
     publicContact?: boolean,
     name?: string,
     description?: string,
-    location?: string,
-    locationLngLat?: Point,
+    locationLng?: number,
+    locationLat?: number,
     rentPrice?: number,
     categoryId?: number,
     categoryName?: string,

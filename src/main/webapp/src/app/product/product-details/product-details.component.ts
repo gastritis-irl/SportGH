@@ -11,6 +11,8 @@ import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as L from 'leaflet';
+import { LatLng } from 'leaflet';
 
 @Component({
     selector: 'sgh-product-details',
@@ -22,10 +24,22 @@ export class ProductDetailsComponent implements OnInit {
     @ViewChild(NgbCarousel) carousel!: NgbCarousel;
 
     product: Product = {};
-    owner: User = { imageId: 0};
+    owner: User = { imageId: 0 };
     imageDatas: Image[] = [];
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
+
+    marker: L.Marker = new L.Marker([45.9442858, 25.0094303]);
+    map: L.Map | undefined;
+    options: L.MapOptions = {
+        layers: [
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+            })
+        ],
+        zoom: 10,
+        center: L.latLng(this.marker.getLatLng().lat, this.marker.getLatLng().lng)
+    };
 
     constructor(
         private productService: ProductService,
@@ -37,6 +51,24 @@ export class ProductDetailsComponent implements OnInit {
         private imageService: ImageService,
         private modalService: NgbModal,
     ) {
+    }
+
+    resetMarkerAndMap(): void {
+        if (this.product.locationLat && this.product.locationLng) {
+            this.marker.setLatLng(new LatLng(this.product.locationLat, this.product.locationLng));
+        }
+        this.map?.setView(this.marker.getLatLng());
+    }
+
+    onMapReady(map: L.Map): void {
+        this.map = map;
+        this.marker = new L.Marker(this.marker.getLatLng(), {
+            icon: L.icon({
+                iconUrl: 'assets/blue-marker.svg',
+                iconSize: [32, 32],
+                iconAnchor: [16, 32]
+            })
+        }).addTo(map);
     }
 
     loadProductImages(productId: number): void {
@@ -97,6 +129,7 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (data: Product): void => {
                     this.product = data;
+                    this.resetMarkerAndMap();
                     this.loadProductImages(this.product.id ? this.product.id : 0);
                 },
                 error: (error): void => {

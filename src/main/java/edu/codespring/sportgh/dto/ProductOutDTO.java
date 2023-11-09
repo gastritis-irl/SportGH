@@ -1,7 +1,6 @@
 package edu.codespring.sportgh.dto;
 
 import lombok.Data;
-import org.locationtech.jts.geom.Point;
 
 @Data
 public class ProductOutDTO {
@@ -10,8 +9,8 @@ public class ProductOutDTO {
     private boolean publicContact;
     private String name;
     private String description;
-    private String location;
-    private Point locationLngLat;
+    private Double locationLat;
+    private Double locationLng;
     private Double rentPrice;
     private Long categoryId;
     private String categoryName;

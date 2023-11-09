@@ -13,6 +13,7 @@ import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ImageComponent } from '../../shared/image/image.component';
 import * as L from 'leaflet';
+import { LatLng } from 'leaflet';
 
 type ClickHandlerFunction = () => void;
 
@@ -38,18 +39,17 @@ export class ProductEditComponent implements OnInit {
     newImageFiles: File[] = [];
     imageDatas: Image[] = [];
 
+    marker: L.Marker = new L.Marker([45.9442858, 25.0094303]);
+    map: L.Map | undefined;
     options: L.MapOptions = {
         layers: [
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,
-                attribution: '© OpenStreetMap contributors'
             })
         ],
         zoom: 10,
-        center: L.latLng(46.770439, 23.591423)
+        center: L.latLng(this.marker.getLatLng().lat, this.marker.getLatLng().lng)
     };
-    marker: L.Marker = new L.Marker([51.505, -0.09]);
-    map: L.Map | undefined;
 
     onMapReady(map: L.Map): void {
         this.map = map;
@@ -62,14 +62,18 @@ export class ProductEditComponent implements OnInit {
         }).addTo(map);
     }
 
+    resetMarkerAndMap(): void {
+        if (this.product.locationLat && this.product.locationLng) {
+            this.marker.setLatLng(new LatLng(this.product.locationLat, this.product.locationLng));
+        }
+        this.map?.setView(this.marker.getLatLng());
+    }
+
     moveMarkerToNewPosition(event: L.LeafletMouseEvent): void {
         this.marker.setLatLng(L.latLng(event.latlng.lat, event.latlng.lng));
-        if (this.product.locationLngLat) {
-            this.product.locationLngLat.x = event.latlng.lng;
-            this.product.locationLngLat.y = event.latlng.lat;
-        } else {
-            this.product.locationLngLat = new L.Point(event.latlng.lng, event.latlng.lat);
-        }
+        this.product.locationLat = this.marker.getLatLng().lat;
+        this.product.locationLng = this.marker.getLatLng().lng;
+        this.resetMarkerAndMap();
     }
 
     constructor(
@@ -138,11 +142,10 @@ export class ProductEditComponent implements OnInit {
                     {
                         next: (data: Product): void => {
                             this.product = data;
-
-                            if (data.locationLngLat) {
-                                this.marker.setLatLng(new L.LatLng(data.locationLngLat.y, data.locationLngLat.x));
+                            if (data.locationLat && data.locationLng) {
+                                this.marker.setLatLng(new L.LatLng(data.locationLat, data.locationLng));
+                                this.resetMarkerAndMap();
                             }
-
                             this.subcategoryDropdownDisabled = false;
                             this.getSubcategoriesByCategoryId();
                             // Call the loadProductImages method here
