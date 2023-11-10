@@ -18,4 +18,14 @@ export class SubcategoryService extends AppService {
         const url: string = `${this.baseUrl}/subcategories?Category=${categoryId}`;
         return this.httpGet<Subcategory[]>(url);
     }
+
+    create(data: Subcategory): Observable<Subcategory> {
+        const url: string = `${this.baseUrl}/subcategories`;
+        return this.httpPost<Subcategory>(url, { body: data });
+    }
+
+    delete(subcategoryId: number | undefined): Observable<void> {
+        const url: string = `${this.baseUrl}/subcategories/${subcategoryId}`;
+        return this.httpDelete<void>(url);
+    }
 }

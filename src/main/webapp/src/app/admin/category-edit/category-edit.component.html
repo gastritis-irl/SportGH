@@ -52,25 +52,29 @@
                 </div>
             </div>
             <div class="form-part">
-                <div class="form-heading">Subcategories</div>
-                <div class="buttons">
-                    <div class="button-default button-primary" routerLink="">Create new subcategory +</div>
-                </div>
-                <div class="categories">
-                    <div class="category" *ngFor="let subcategory of subcategories; let i = index">
-                        <div class="name row-item">
-                            {{subcategory.name}}
+                <div class="list-manage-holder">
+                    <div class="list-manage">
+                        <div class="title">Subcategories</div>
+                        <div class="buttons">
+                            <div class="button-default button-primary" routerLink="/admin/subcategories/new">Create new subcategory +</div>
                         </div>
-                        <div class="row-item">
-                            <div class="buttons">
-                                <div class="button-default button-primary" routerLink="">
-                                    Edit
+                        <div class="list-elements">
+                            <div class="list-element" *ngFor="let subcategory of subcategories; let i = index">
+                                <div class="name row-item">
+                                    {{subcategory.name}}
+                                </div>
+                                <div class="row-item">
+                                    <div class="buttons">
+                                        <div class="button-default button-primary" routerLink="">
+                                            Edit
+                                        </div>
+                                    </div>
+                                    <sgh-popover-delete
+                                            [deleteData]="[subcategory.id?subcategory.id:0, i]"
+                                            (deleteEvent)="deleteSubcategory($event, subcategory.categoryId)"
+                                    ></sgh-popover-delete>
                                 </div>
                             </div>
-<!--                            <sgh-popover-delete-->
-<!--                                    [deleteData]="[subcategory.id?subcategory.id:0, i]"-->
-<!--                                    (deleteEvent)="deleteSubcategory($event)"-->
-<!--                            ></sgh-popover-delete>-->
                         </div>
                     </div>
                 </div>

@@ -246,4 +246,23 @@ export class CategoryEditComponent implements OnInit {
         );
     }
 
+    deleteSubcategory(subcategoryIdAndIndex: number[], categoryId: number | undefined): void {
+        this.subcategoryService.delete(subcategoryIdAndIndex[0]).subscribe(
+            {
+                next: (): void => {
+                    this.subcategories.splice(subcategoryIdAndIndex[1], 1);
+                    this.router.navigate(['/admin/categories/{}', categoryId])
+                        .then((): void => {
+                            this.toastNotify.success(`Subcategory successfully deleted!`);
+                        })
+                        .catch((): void => {
+                            this.toastNotify.error('Error redirecting to route /admin/categories');
+                        });
+                },
+                error: (error): void => {
+                    this.toastNotify.error(`Error deleting category: ${error.error}`);
+                }
+            }
+        );
+    }
 }
