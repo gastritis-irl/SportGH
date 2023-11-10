@@ -97,6 +97,19 @@ public class FirebaseServiceImpl implements FirebaseService {
         );
     }
 
+    public void syncUserToFirebase(User localUser, Collection<User> firebaseUsers) {
+        User firebaseUser = findFirebaseUserByEmail(firebaseUsers, localUser.getEmail());
+        if (firebaseUser == null || !firebaseUser.getFirebaseUid().equals(localUser.getFirebaseUid())) {
+            String firebaseUid = signupUserToFirebase(localUser, "password");
+            localUser.setFirebaseUid(firebaseUid);
+            userRepository.save(localUser);
+        }
+    }
+
+    public User findFirebaseUserByEmail(Collection<User> firebaseUsers, String email) {
+        return firebaseUsers.stream().filter(u -> u.getEmail().equals(email)).findFirst().orElse(null);
+    }
+
     @Override
     public Collection<User> getUsers() {
         Collection<User> users = new ArrayList<>();

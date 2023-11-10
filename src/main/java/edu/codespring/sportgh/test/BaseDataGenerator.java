@@ -23,11 +23,11 @@ public abstract class BaseDataGenerator {
     @Value("${test.file.storage.location}")
     protected String testFileStorageLocation;
 
-    protected final UserService userService;
+    public final UserService userService;
     protected final CategoryService categoryService;
     protected final SubCategoryService subCategoryService;
     protected final ProductService productService;
-    protected final FirebaseService firebaseService;
+    public final FirebaseService firebaseService;
     protected final ImageService imageService;
 
     @Value("${data.init.location}")
@@ -81,25 +81,18 @@ public abstract class BaseDataGenerator {
     }
 
     private void processUser(User userJson, User localUser, Collection<User> firebaseUsers) {
-        boolean notInFirebase = isNotInFirebase(firebaseUsers, userJson.getEmail());
         if (localUser == null) {
             localUser = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
-        }
-        if (notInFirebase) {
-            localUser.setFirebaseUid(firebaseService.signupUserToFirebase(localUser, "password"));
+        } else {
+            localUser.setRole(userJson.getRole());
             userService.update(localUser);
         }
-    }
-
-    private boolean isNotInFirebase(Collection<User> firebaseUsers, String email) {
-        return firebaseUsers.stream().noneMatch(u -> u.getEmail().equals(email));
+        firebaseService.syncUserToFirebase(localUser, firebaseUsers);
     }
 
     private void syncLocalUsersToFirebase(Collection<User> localUsers, Collection<User> firebaseUsers) {
         for (User localUser : localUsers) {
-            if (isNotInFirebase(firebaseUsers, localUser.getEmail())) {
-                firebaseService.signupUserToFirebase(localUser, "password");
-            }
+            firebaseService.syncUserToFirebase(localUser, firebaseUsers);
         }
     }
 

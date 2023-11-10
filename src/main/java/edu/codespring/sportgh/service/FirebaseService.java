@@ -19,4 +19,8 @@ public interface FirebaseService {
     Collection<User> getUsers();
 
     boolean userExistsInFirebase(String email);
+
+    void syncUserToFirebase(User localUser, Collection<User> firebaseUsers);
+
+    User findFirebaseUserByEmail(Collection<User> firebaseUsers, String email);
 }
