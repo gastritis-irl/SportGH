@@ -47,6 +47,7 @@ export class NavbarComponent implements OnInit {
 
     searchForText(): void {
         this.router.navigate(['/products'], { queryParams: { pageNumber: 1, TextSearch: this.textSearch } })
+            .then(() => this.textSearch = '')
             .catch(error => {
                 console.error(error);
                 this.toastNotify.error(`Error searching for ${this.textSearch}`);
