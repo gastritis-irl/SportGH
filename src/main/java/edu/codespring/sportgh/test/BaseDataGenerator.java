@@ -68,45 +68,43 @@ public abstract class BaseDataGenerator {
     public abstract void initProducts(List<Product> products);
 
     public void initUsers(List<User> usersFromJson) {
-        updateLocalUsers(usersFromJson);
+        try {
+            Collection<User> firebaseUsers = firebaseService.getUsers();
+            Collection<User> localUsers = userService.findAll();
 
-        syncLocalUsersWithFirebase();
-    }
-
-    private void updateLocalUsers(List<User> usersFromJson) {
-        for (User userJson : usersFromJson) {
-            User localUser = userService.findByEmail(userJson.getEmail());
-
-            if (localUser == null) {
-                localUser = userService.signup(userJson.getEmail(), null, userJson.getRole());
-                syncUserWithFirebase(localUser);
-            } else {
-                localUser.setRole(userJson.getRole());
-                if (needsFirebaseSync(localUser, userJson)) {
-                    syncUserWithFirebase(localUser);
-                } else {
-                    userService.update(localUser);
-                }
+            for (User userJson : usersFromJson) {
+                User localUser = userService.findByEmail(userJson.getEmail());
+                processUser(userJson, localUser, firebaseUsers);
             }
+
+            syncLocalUsersToFirebase(localUsers, firebaseUsers);
+
+            log.info("{} Generating users: OK", this.getClass().getSimpleName());
+        } catch (ServiceException e) {
+            log.warn("{} Generating users: FAILED - {}", this.getClass().getSimpleName(), e.getMessage());
         }
     }
 
-    private boolean needsFirebaseSync(User localUser, User userJson) {
-        return localUser.getFirebaseUid() == null || !localUser.getFirebaseUid().equals(userJson.getFirebaseUid());
-    }
-
-    private void syncUserWithFirebase(User user) {
-        if (user.getFirebaseUid() == null || !firebaseService.userExistsInFirebase(user.getEmail())) {
-            String firebaseUid = firebaseService.signupUserToFirebase(user, "password");
-            user.setFirebaseUid(firebaseUid);
+    private void processUser(User userJson, User localUser, Collection<User> firebaseUsers) {
+        boolean notInFirebase = isNotInFirebase(firebaseUsers, userJson.getEmail());
+        if (localUser == null) {
+            localUser = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
         }
-        userService.update(user);
+        if (notInFirebase) {
+            localUser.setFirebaseUid(firebaseService.signupUserToFirebase(localUser, "password"));
+            userService.update(localUser);
+        }
     }
 
-    private void syncLocalUsersWithFirebase() {
-        Collection<User> localUsers = userService.findAll();
+    private boolean isNotInFirebase(Collection<User> firebaseUsers, String email) {
+        return firebaseUsers.stream().noneMatch(u -> u.getEmail().equals(email));
+    }
+
+    private void syncLocalUsersToFirebase(Collection<User> localUsers, Collection<User> firebaseUsers) {
         for (User localUser : localUsers) {
-            syncUserWithFirebase(localUser);
+            if (isNotInFirebase(firebaseUsers, localUser.getEmail())) {
+                firebaseService.signupUserToFirebase(localUser, "password");
+            }
         }
     }
 
