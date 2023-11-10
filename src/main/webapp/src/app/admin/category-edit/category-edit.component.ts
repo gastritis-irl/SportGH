@@ -25,7 +25,7 @@ export class CategoryEditComponent implements OnInit {
         = { id: undefined, name: '', description: '', imageId: 0, imageDataUrl: undefined };
     subcategories: Subcategory[] = []
     newImageFile?: File;
-    imageData?: Image;
+    // imageData?: Image;
     paramCheck: 'create' | 'edit' = 'create';
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
@@ -251,7 +251,7 @@ export class CategoryEditComponent implements OnInit {
             {
                 next: (): void => {
                     this.subcategories.splice(subcategoryIdAndIndex[1], 1);
-                    this.router.navigate(['/admin/categories/{}', categoryId])
+                    this.router.navigate([`/admin/categories/${categoryId}`])
                         .then((): void => {
                             this.toastNotify.success(`Subcategory successfully deleted!`);
                         })

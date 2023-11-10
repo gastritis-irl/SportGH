@@ -9,11 +9,13 @@ import { ImageComponent } from "../shared/image/image.component";
 import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
 import { PopoverDeleteComponent } from '../shared/popover/popover-delete.component';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
+import {SubcategoryEditComponent} from "./subcategory-edit/subcategory-edit.component";
 
 @NgModule({
     declarations: [
         CategoryListManageComponent,
         CategoryEditComponent,
+        SubcategoryEditComponent,
     ],
     providers: [],
     bootstrap: [],

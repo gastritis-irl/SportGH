@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -30,6 +31,15 @@ public class SubCategoryController {
                 ? subCategoryService.findByCategoryId(categoryId.get()) : subCategoryService.findAll();
 
         return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/{categoryId}")
+    public ResponseEntity<SubCategoryOutDTO> findById(@PathVariable Long categoryId) {
+        SubCategory subcategory = subCategoryService.findById(categoryId);
+        if (subcategory == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(subCategoryMapper.subCategoryToOut(subcategory), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{subCategoryId}")

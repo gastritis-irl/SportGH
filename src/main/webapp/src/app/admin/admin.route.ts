@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CategoryListManageComponent } from './category-list-manage/category-list-manage.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { isAdmin } from '../auth-and-token/auth-guard.service';
+import { SubcategoryEditComponent } from './subcategory-edit/subcategory-edit.component';
 
 const routes: Routes = [
     {
@@ -13,6 +14,11 @@ const routes: Routes = [
     {
         path: 'admin/categories/:categoryId',
         component: CategoryEditComponent,
+        canActivate: [isAdmin]
+    },
+    {
+        path: 'admin/subcategories/:categoryId',
+        component: SubcategoryEditComponent,
         canActivate: [isAdmin]
     },
 ];

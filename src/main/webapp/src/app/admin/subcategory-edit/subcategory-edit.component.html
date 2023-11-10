@@ -1,0 +1,42 @@
+<div class="category-edit-holder">
+    <div class="form-heading form-main-title">
+        {{editMode ? 'Edit' : 'Create'}} subcategory
+    </div>
+    <div class="general-data">
+        <form class="general-data-form" (ngSubmit)="clickHandlerFunction()">
+            <div class="form-part">
+                <div class="form-heading">Details</div>
+                <div>
+                    <label class="form-part-label">Subcategory name</label>
+                    <input class="form-part-input"
+                           type="text" name="name"
+                           [(ngModel)]="subcategory.name"
+                           #name="ngModel"
+                    >
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                                *ngIf="name.dirty || name.touched || buttonPushed"
+                                [fieldName]="'Subategory name'"
+                                [required]="true"
+                                [length]="subcategory.name?.length"
+                                [minlength]="4"
+                                [maxlength]="25"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit-btn-holder buttons">
+                <button
+                        class="button-primary button-default save-btn"
+                        type="submit">
+                    {{editMode ? "Save" : "Publish"}}
+                </button>
+                <button class="button-secondary button-default cancel-btn"
+                        routerLink="/admin/categories/{{subcategory.categoryId}}">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
