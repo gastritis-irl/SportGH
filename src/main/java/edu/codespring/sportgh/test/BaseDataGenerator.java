@@ -40,12 +40,7 @@ public abstract class BaseDataGenerator {
         try (InputStream inputStream = new ClassPathResource(dataInitLocation).getInputStream()) {
             DataInitDTO data = objectMapper.readValue(inputStream, DataInitDTO.class);
 
-            try {
-                initUsers(data.getUsers());
-                log.info("{} Generating users: OK", this.getClass().getSimpleName());
-            } catch (ServiceException e) {
-                log.warn("{} Generating users: FAILED - {}", this.getClass().getSimpleName(), e.getMessage());
-            }
+            initUsers(data.getUsers());
 
             initCategories(data.getCategories());
             log.info("{} Generating categories: OK", this.getClass().getSimpleName());
