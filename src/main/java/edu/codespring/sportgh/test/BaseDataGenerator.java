@@ -81,13 +81,15 @@ public abstract class BaseDataGenerator {
     }
 
     private void processUser(User userJson, User localUser, Collection<User> firebaseUsers) {
-        if (localUser == null) {
-            localUser = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
+
+        User user = localUser;
+        if (user == null) {
+            user = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
         } else {
-            localUser.setRole(userJson.getRole());
-            userService.update(localUser);
+            user.setRole(userJson.getRole());
+            userService.update(user);
         }
-        firebaseService.syncUserToFirebase(localUser, firebaseUsers);
+        firebaseService.syncUserToFirebase(user, firebaseUsers);
     }
 
     private void syncLocalUsersToFirebase(Collection<User> localUsers, Collection<User> firebaseUsers) {

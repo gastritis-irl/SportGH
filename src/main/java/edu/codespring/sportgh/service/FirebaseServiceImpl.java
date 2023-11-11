@@ -97,6 +97,7 @@ public class FirebaseServiceImpl implements FirebaseService {
         );
     }
 
+    @Override
     public void syncUserToFirebase(User localUser, Collection<User> firebaseUsers) {
         User firebaseUser = findFirebaseUserByEmail(firebaseUsers, localUser.getEmail());
         if (firebaseUser == null || !firebaseUser.getFirebaseUid().equals(localUser.getFirebaseUid())) {
@@ -106,8 +107,9 @@ public class FirebaseServiceImpl implements FirebaseService {
         }
     }
 
+    @Override
     public User findFirebaseUserByEmail(Collection<User> firebaseUsers, String email) {
-        return firebaseUsers.stream().filter(u -> u.getEmail().equals(email)).findFirst().orElse(null);
+        return firebaseUsers.stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null);
     }
 
     @Override
