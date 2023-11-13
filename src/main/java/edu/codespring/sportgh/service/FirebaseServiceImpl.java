@@ -16,6 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
@@ -122,7 +123,7 @@ public class FirebaseServiceImpl implements FirebaseService {
             String uid = decodedToken.getUid();
             User user = userRepository.findByFirebaseUid(uid);
 
-            Map<String, Object> customClaimsMap = new HashMap<>();
+            Map<String, Object> customClaimsMap = new ConcurrentHashMap<>();
             customClaimsMap.put("role", user.getRole());
 
             UpdateRequest updateRequest = new UpdateRequest(uid).setCustomClaims(customClaimsMap);
