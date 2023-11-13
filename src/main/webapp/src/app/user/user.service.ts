@@ -17,42 +17,29 @@ export class UserService extends AppService {
         super(http, fbIdTokenService);
     }
 
-    getAll(): Observable<User[]> {
-        const url: string = `${this.baseUrl}/users`;
-        return this.httpGet<User[]>(url);
-    }
-
-    getById(userId: number): Observable<User> {
-        const url: string = `${this.baseUrl}/users`;
-        return this.httpGet<User>(url, { params: { userId: userId } });
-    }
-
     getByUid(uid: string): Observable<User> {
         const url: string = `${this.baseUrl}/users/${uid}`;
         return this.httpGet<User>(url);
     }
 
-    getByEmail(email: string): Observable<User> {
-        const url: string = `${this.baseUrl}/users`;
-        return this.httpGet<User>(url,{params:{email: email}});
-    }
-
     update(userId: number, user: User): Observable<User> {
         const url: string = `${this.baseUrl}/users/${userId}`;
-        return this.httpPut<User>(url, { body: user});
+        return this.httpPut<User>(url, { body: user });
     }
 
-    async signInWithFirebase(email: string, password: string): Promise<void> {
+    async signInWithFirebase(email: string, password: string): Promise<Observable<string>> {
         const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
         const idToken: string = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
+        const url: string = `${this.baseUrl}/auth/login`;
+        return this.http.post<string>(url, { email, idToken });
     }
 
-    async signUpWithFirebase(email: string, password: string): Promise<Observable<User>> {
+    async signUpWithFirebase(email: string, password: string): Promise<Observable<string>> {
         const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
         const idToken: string = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/signup`;
-        return this.http.post<User>(url, { email, idToken });
+        return this.http.post<string>(url, { email, idToken });
     }
 }

@@ -17,4 +17,6 @@ public interface FirebaseService {
     Authentication getAuthentication(String idToken);
 
     Collection<User> getUsers();
+
+    String getFirebaseIdTokenWithCustomClaims(String idToken);
 }

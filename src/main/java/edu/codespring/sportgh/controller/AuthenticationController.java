@@ -1,6 +1,5 @@
 package edu.codespring.sportgh.controller;
 
-import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.FirebaseService;
 import edu.codespring.sportgh.service.UserService;
@@ -19,11 +18,22 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody SignupRequest request) {
+    public ResponseEntity<String> signup(@RequestBody SignupRequest request) {
         String firebaseUid = firebaseService.getFirebaseUidFromToken(request.getIdToken());
+        userService.signup(request.getEmail(), firebaseUid, SecurityUtil.ROLE_USER);
+        String idTokenWithCustomFields = firebaseService.getFirebaseIdTokenWithCustomClaims(request.getIdToken());
         return new ResponseEntity<>(
-            userService.signup(request.getEmail(), firebaseUid, SecurityUtil.ROLE_USER),
-            HttpStatus.OK
+                idTokenWithCustomFields,
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody SignupRequest request) {
+        String idTokenWithCustomFields = firebaseService.getFirebaseIdTokenWithCustomClaims(request.getIdToken());
+        return new ResponseEntity<>(
+                idTokenWithCustomFields,
+                HttpStatus.OK
         );
     }
 }

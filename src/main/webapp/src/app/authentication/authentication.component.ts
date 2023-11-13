@@ -4,7 +4,6 @@ import { UserService } from '../user/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { User } from '../user/user.model';
 import { FirebaseIdTokenService } from '../auth-and-token/firebase-id-token.service';
 import { IdToken } from '../auth-and-token/firebase-id-token.model';
 
@@ -69,7 +68,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
     openModal(content: TemplateRef<string>): void {
         this.closeModal(); // Close any open modal
-        this.modalService.open(content, {centered: true, scrollable: true, animation: true});
+        this.modalService.open(content, { centered: true, scrollable: true, animation: true });
     }
 
     closeModal(): void {
@@ -81,28 +80,40 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
 
     login(): void {
-        this.userService.signInWithFirebase(this.email, this.password)
-            .then((): void => {
-                // Use the email directly here before clearing the form
-                this.loggedInUserEmail = this.email;
-                this.loggedInUserName = this.loggedInUserEmail;
-                const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
-                if (idToken) {
-                    this.loggedInUserFirebaseId = idToken?.user_id;
-                }
+        this.userService.signInWithFirebase(this.email, this.password).then((respObservable: Observable<string>): void => {
+            respObservable.subscribe({
+                next: (response: string): void => {
+                    // sessionStorage.setItem('firebaseIdToken', response);
+                    console.log(response);
 
-                this.toastNotify.success(`Successfully logged in as ${this.email}`);
-                this.closeModal(); // Close the modal
-            })
-            .catch((error: string): void => {
-                this.toastNotify.warning(`Error logging in: ${this.getErrorMessageInfo(error)}`);
+                    // Use the email directly here before clearing the form
+                    this.loggedInUserEmail = this.email;
+                    this.loggedInUserName = this.loggedInUserEmail;
+                    const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
+                    if (idToken) {
+                        this.loggedInUserFirebaseId = idToken?.user_id;
+                    }
+
+                    this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                    this.closeModal(); // Close the modal
+                },
+                error: (error): void => {
+                    console.log(error);
+                    this.toastNotify.warning(`Error logging in`);
+                }
             });
+        }).catch((error: string): void => {
+            this.toastNotify.warning(`Error logging in: ${this.getErrorMessageInfo(error)}`);
+        });
     }
 
     register(): void {
-        this.userService.signUpWithFirebase(this.email, this.password).then((userObservable: Observable<User>): void => {
-            userObservable.subscribe({
-                next: (): void => {
+        this.userService.signUpWithFirebase(this.email, this.password).then((respObservable: Observable<string>): void => {
+            respObservable.subscribe({
+                next: (response: string): void => {
+                    // sessionStorage.setItem('firebaseIdToken', response);
+                    console.log(response);
+
                     // Use the email directly here before clearing the form
                     this.loggedInUserEmail = this.email;
                     this.loggedInUserName = this.loggedInUserEmail;
