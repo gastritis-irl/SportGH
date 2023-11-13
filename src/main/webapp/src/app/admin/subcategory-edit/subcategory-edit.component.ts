@@ -13,7 +13,7 @@ type ClickHandlerFunction = () => void;
 })
 export class SubcategoryEditComponent implements OnInit {
 
-    subcategory: Subcategory = { id: undefined, name: '',};
+    subcategory: Subcategory = { id: undefined, name: '', categoryId: undefined};
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
     editMode: boolean = false;
@@ -46,10 +46,10 @@ export class SubcategoryEditComponent implements OnInit {
     }
 
     loadData(param: string | undefined): void {
-        console.log(param);
         if (param) {
-            if (param === 'new') {
+            if (param.startsWith('new')) {
                 this.paramCheck = 'create';
+                this.subcategory.categoryId = parseInt(param.slice(3));
                 this.clickHandlerFunction = this.createSubcategoryData;
                 this.editMode = false;
             }

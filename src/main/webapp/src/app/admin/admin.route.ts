@@ -17,7 +17,7 @@ const routes: Routes = [
         canActivate: [isAdmin]
     },
     {
-        path: 'admin/subcategories/:categoryId',
+        path: 'admin/subcategories/:subcategoryId',
         component: SubcategoryEditComponent,
         canActivate: [isAdmin]
     },
