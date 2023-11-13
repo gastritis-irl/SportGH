@@ -72,7 +72,6 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     loadProductImages(productId: number): void {
-
         this.imageService.getImageFilesByProductId(productId).subscribe({
             next: async (response: { name: string, data: Uint8Array }[]) => {
                 try {
@@ -180,28 +179,30 @@ export class ProductDetailsComponent implements OnInit {
         // load modal with owner's data
         this.productService.getOwnerInfo(this.product).subscribe({
             next: (user: User): void => {
+                // 200 Ok / Accepted
                 this.owner = user;
                 this.modalService.dismissAll();
                 this.modalService.open(modalContent, { centered: true, scrollable: true, animation: true });
             },
             error: (error): void => {
-                if (error.status === 401) { // Unauthorized
-                    this.toastNotify.warning('Please log in first, to get contact information.');
-                    return;
+                switch (error.status) {
+                    case 302: { // Found / Pending
+                        this.toastNotify.info('Request has already been sent.');
+                        break;
+                    }
+                    case 303: { // See other / Declined
+                        this.toastNotify.success('Request sent successfully!');
+                        break;
+                    }
+                    case 301: { // Moved permanently / Created
+                        this.toastNotify.success('Request sent successfully!');
+                        break;
+                    }
+                    default: {  // Error
+                        this.toastNotify.error(`Error fetching data: ${error.statusText}`);
+                        this.toastNotify.error('Please try again.');
+                    }
                 }
-                if (error.statusText === 'requestFirst') {
-                    this.productService.sendContactRequest(this.product).subscribe({
-                        next: (): void => {
-                            this.toastNotify.info('Request sent successfully.');
-                        },
-                        error: (error): void => {
-                            this.toastNotify.warning(error.error);
-                        }
-                    });
-                    return;
-                }
-                console.error(error);
-                this.toastNotify.error('Error fetching data');
             }
         });
     }

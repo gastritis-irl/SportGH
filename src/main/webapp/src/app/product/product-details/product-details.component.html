@@ -24,12 +24,12 @@
                     {{owner.email}}
                 </div>
             </div>
-            <div *ngIf="owner" class="data-part">
+            <div *ngIf="owner.phoneNumber" class="data-part">
                 <div class="label">
                     Phone number
                 </div>
                 <div class="data">
-                    +40712345678
+                    {{owner.phoneNumber}}
                 </div>
             </div>
         </div>

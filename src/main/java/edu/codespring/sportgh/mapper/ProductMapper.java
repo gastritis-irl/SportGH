@@ -38,6 +38,8 @@ public abstract class ProductMapper {
     @Mapping(source = "subCategoryId", target = "subCategory.id")
     @Mapping(source = "subCategoryName", target = "subCategory.name")
     @Mapping(source = "userId", target = "user.id")
+    @Mapping(target = "requests", ignore = true)
+    @Mapping(target = "images", ignore = true)
     public abstract Product dtoToProduct(ProductInDTO productInDTO);
 
     @AfterMapping

@@ -170,6 +170,10 @@ export class ProductEditComponent implements OnInit {
         this.newImageFiles = this.newImageFiles.filter(f => f !== file);
     }
 
+    checkEvent(isChecked: boolean): void {
+        this.product.publicContact = isChecked;
+    }
+
     loadDataByParam(): void {
         this.route.params.subscribe(
             {

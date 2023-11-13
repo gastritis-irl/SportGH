@@ -22,6 +22,7 @@ public abstract class SubCategoryMapper {
     public abstract SubCategoryOutDTO subCategoryToOut(SubCategory subCategory);
 
     @Mapping(source = "categoryId", target = "category.id")
+    @Mapping(target = "products", ignore = true)
     public abstract SubCategory dtoToSubCategory(SubCategoryInDTO subCategoryInDTO);
 
     public abstract Collection<SubCategoryOutDTO> subCategoriesToOuts(Collection<SubCategory> subCategories);

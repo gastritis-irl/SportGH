@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -23,18 +24,28 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public Collection<RentRequest> findByProduct(Product product) {
-        return rentRepository.findByProduct(product);
+    public Optional<RentRequest> findById(Long requestId) {
+        return rentRepository.findById(requestId);
     }
 
     @Override
     public Collection<RentRequest> findByOwnerId(Long ownerId) {
-        return rentRepository.findByProductOwnerId(ownerId);
+        return rentRepository.findByProductUserId(ownerId);
+    }
+
+    @Override
+    public Collection<RentRequest> findByRenterId(Long renterId) {
+        return rentRepository.findByRenterId(renterId);
     }
 
     @Override
     public void createRentRequest(User renter, Product product) {
-        rentRepository.save(new RentRequest(renter, product, "active"));
+        rentRepository.save(new RentRequest(renter, product, RentRequest.Status.PENDING));
+    }
+
+    @Override
+    public void resendRentRequest(RentRequest rentRequest) {
+        rentRepository.updateRentRequestStatus(rentRequest.getId(), RentRequest.Status.PENDING);
     }
 
     @Override
