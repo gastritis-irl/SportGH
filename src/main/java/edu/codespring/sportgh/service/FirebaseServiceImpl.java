@@ -29,9 +29,9 @@ public class FirebaseServiceImpl implements FirebaseService {
         try {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             UserRecord userRecord = firebaseAuth.createUser(
-                new UserRecord.CreateRequest()
-                    .setEmail(user.getEmail())
-                    .setPassword(password)
+                    new UserRecord.CreateRequest()
+                            .setEmail(user.getEmail())
+                            .setPassword(password)
             );
             return userRecord.getUid();
 
@@ -80,9 +80,9 @@ public class FirebaseServiceImpl implements FirebaseService {
         }
 
         return new UsernamePasswordAuthenticationToken(
-            user,
-            firebaseToken,
-            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
+                user,
+                firebaseToken,
+                Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
         );
     }
 

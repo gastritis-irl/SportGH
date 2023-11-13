@@ -80,58 +80,66 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
 
     login(): void {
-        this.userService.signInWithFirebase(this.email, this.password).then((respObservable: Observable<string>): void => {
-            respObservable.subscribe({
-                next: (response: string): void => {
-                    // sessionStorage.setItem('firebaseIdToken', response);
-                    console.log(response);
+        this.userService.signInWithFirebase(this.email, this.password)
+            .then((respObservable: Observable<{ idToken: string }>): void => {
+                respObservable.subscribe({
+                    next: (idTokenWithCustomFields: { idToken: string }): void => {
+                        this.userService.signInForCustomClaims(idTokenWithCustomFields.idToken)
+                            .then((): void => {
+                                // Use the email directly here before clearing the form
+                                this.loggedInUserEmail = this.email;
+                                this.loggedInUserName = this.loggedInUserEmail;
+                                const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
+                                if (idToken) {
+                                    this.loggedInUserFirebaseId = idToken?.user_id;
+                                }
 
-                    // Use the email directly here before clearing the form
-                    this.loggedInUserEmail = this.email;
-                    this.loggedInUserName = this.loggedInUserEmail;
-                    const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
-                    if (idToken) {
-                        this.loggedInUserFirebaseId = idToken?.user_id;
+                                this.toastNotify.success(`Successfully logged in as ${this.email}`);
+                                this.closeModal(); // Close the modal
+                            }).catch((error): void => {
+                            console.log(error);
+                            this.toastNotify.warning(`Error logging in`);
+                        });
+                    },
+                    error: (error): void => {
+                        console.log(error);
+                        this.toastNotify.warning(`Error logging in`);
                     }
-
-                    this.toastNotify.success(`Successfully logged in as ${this.email}`);
-                    this.closeModal(); // Close the modal
-                },
-                error: (error): void => {
-                    console.log(error);
-                    this.toastNotify.warning(`Error logging in`);
-                }
-            });
-        }).catch((error: string): void => {
+                });
+            }).catch((error: string): void => {
             this.toastNotify.warning(`Error logging in: ${this.getErrorMessageInfo(error)}`);
         });
     }
 
     register(): void {
-        this.userService.signUpWithFirebase(this.email, this.password).then((respObservable: Observable<string>): void => {
-            respObservable.subscribe({
-                next: (response: string): void => {
-                    // sessionStorage.setItem('firebaseIdToken', response);
-                    console.log(response);
+        this.userService.signUpWithFirebase(this.email, this.password)
+            .then((respObservable: Observable<{ idToken: string }>): void => {
+                respObservable.subscribe({
+                    next: (idTokenWithCustomFields: { idToken: string }): void => {
+                        this.userService.signInForCustomClaims(idTokenWithCustomFields.idToken)
+                            .then((): void => {
+                                // Use the email directly here before clearing the form
+                                this.loggedInUserEmail = this.email;
+                                this.loggedInUserName = this.loggedInUserEmail;
 
-                    // Use the email directly here before clearing the form
-                    this.loggedInUserEmail = this.email;
-                    this.loggedInUserName = this.loggedInUserEmail;
+                                const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
+                                if (idToken) {
+                                    this.loggedInUserFirebaseId = idToken?.user_id;
+                                }
 
-                    const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
-                    if (idToken) {
-                        this.loggedInUserFirebaseId = idToken?.user_id;
+                                this.toastNotify.success('Registration successful');
+                                this.closeModal(); // Close the modal
+                            }).catch((error): void => {
+                            console.log(error);
+                            this.toastNotify.warning(`Error logging in`);
+                        });
+                    },
+                    error: (error): void => {
+                        console.log(error);
+                        this.toastNotify.warning(`Error registering`);
                     }
-
-                    this.toastNotify.success('Registration successful');
-                    this.closeModal(); // Close the modal
-                },
-                error: (error): void => {
-                    console.log(error);
-                    this.toastNotify.warning(`Error registering`);
-                }
-            });
-        }).catch((error: string): void => {
+                });
+            }).catch((error: string): void => {
             this.toastNotify.warning(`Error registering: ${this.getErrorMessageInfo(error)}`);
         });
     }

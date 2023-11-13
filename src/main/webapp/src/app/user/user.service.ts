@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import { getIdToken } from '@angular/fire/auth';
 import { FirebaseIdTokenService } from '../auth-and-token/firebase-id-token.service';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -27,19 +26,25 @@ export class UserService extends AppService {
         return this.httpPut<User>(url, { body: user });
     }
 
-    async signInWithFirebase(email: string, password: string): Promise<Observable<string>> {
+    async signInWithFirebase(email: string, password: string): Promise<Observable<{ idToken: string }>> {
         const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
         const idToken: string = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/login`;
-        return this.http.post<string>(url, { email, idToken });
+        return this.http.post<{ idToken: string }>(url, { email, idToken });
     }
 
-    async signUpWithFirebase(email: string, password: string): Promise<Observable<string>> {
+    async signUpWithFirebase(email: string, password: string): Promise<Observable<{ idToken: string }>> {
         const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
         const idToken: string = await getIdToken(userCredential.user!);
         sessionStorage.setItem('firebaseIdToken', idToken);
         const url: string = `${this.baseUrl}/auth/signup`;
-        return this.http.post<string>(url, { email, idToken });
+        return this.http.post<{ idToken: string }>(url, { email, idToken });
+    }
+
+    async signInForCustomClaims(customToken: string): Promise<void> {
+        const userCredentials = await this.afAuth.signInWithCustomToken(customToken);
+        const idToken: string = await getIdToken(userCredentials.user!);
+        sessionStorage.setItem('firebaseIdToken', idToken);
     }
 }
