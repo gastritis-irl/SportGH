@@ -137,8 +137,9 @@
             </div>
         </div>
 
-        <div class="product-location product-details-item" id="prod-loc">
+        <div *ngIf="product.locationLat && product.locationLng" class="product-location product-details-item" id="prod-loc">
             <div class="form-heading">Location</div>
+            <div>{{location}}</div>
             <div class="product-location-content">
                 <div class="product-address-map"
                      leaflet

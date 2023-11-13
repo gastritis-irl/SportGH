@@ -13,6 +13,32 @@ import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as L from 'leaflet';
 import { LatLng } from 'leaflet';
+import * as opencage from 'opencage-api-client';
+import { environment } from '../../environment';
+
+type GeocodeResponse = {
+    results: {
+        components: {
+            _category?: string;
+            _type?: string;
+            continent?: string;
+            country?: string;
+            country_code?: string;
+            county?: string;
+            political_union?: string;
+            postcode?: string;
+            road?: string;
+            road_reference?: string;
+            road_type?: string;
+            village?: string;
+        },
+        formatted: string,
+        geometry: {
+            lat: number;
+            lng: number;
+        },
+    }[];
+}
 
 @Component({
     selector: 'sgh-product-details',
@@ -25,12 +51,12 @@ export class ProductDetailsComponent implements OnInit {
 
     product: Product = {};
     owner: User = { imageId: 0 };
-    imageDatas: Image[] = [];
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
 
     marker: L.Marker = new L.Marker([45.9442858, 25.0094303]);
-    map: L.Map | undefined;
+    location: string = '';
+    map?: L.Map;
     options: L.MapOptions = {
         layers: [
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -53,9 +79,24 @@ export class ProductDetailsComponent implements OnInit {
     ) {
     }
 
-    resetMarkerAndMap(): void {
+    ngOnInit(): void {
+        this.route.params.subscribe(
+            {
+                next: (params: Params): void => {
+                    this.loadProduct(params['productId']);
+                },
+                error: (error): void => {
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
+                }
+            }
+        );
+    }
+
+    resetMarkerOnMap(): void {
         if (this.product.locationLat && this.product.locationLng) {
             this.marker.setLatLng(new LatLng(this.product.locationLat, this.product.locationLng));
+            this.getLocationAddress();
         }
         this.map?.setView(this.marker.getLatLng());
     }
@@ -101,18 +142,19 @@ export class ProductDetailsComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {
-        this.route.params.subscribe(
-            {
-                next: (params: Params): void => {
-                    this.loadProduct(params['productId']);
-                },
-                error: (error): void => {
-                    console.error(error);
-                    this.toastNotify.error(`Error fetching data`);
-                }
-            }
-        );
+    getLocationAddress(): void {
+        opencage.geocode({
+            q: `${this.marker.getLatLng().lat}, ${this.marker.getLatLng().lng}`,
+            key: environment.geocodingApiKey,
+            language: 'en'
+        })
+            .then((data: GeocodeResponse): void => {
+                this.location = data.results[0].formatted;
+            })
+            .catch((error): void => {
+                console.error(error);
+                this.toastNotify.error('Error fetching location');
+            });
     }
 
     getLoggedInUserUid(): string | null {
@@ -128,7 +170,7 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (data: Product): void => {
                     this.product = data;
-                    this.resetMarkerAndMap();
+                    this.resetMarkerOnMap();
                     this.loadProductImages(this.product.id ? this.product.id : 0);
                 },
                 error: (error): void => {
@@ -179,7 +221,6 @@ export class ProductDetailsComponent implements OnInit {
         // load modal with owner's data
         this.productService.getOwnerInfo(this.product).subscribe({
             next: (user: User): void => {
-                // 200 Ok / Accepted
                 this.owner = user;
                 this.modalService.dismissAll();
                 this.modalService.open(modalContent, { centered: true, scrollable: true, animation: true });
