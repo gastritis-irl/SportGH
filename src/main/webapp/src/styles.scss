@@ -32,9 +32,10 @@ body {
 
 /* Container */
 .app-root {
-    width: 90%;
-    margin: auto;
-    max-width: 1200px;
+    height: 100vh;
+    display: flex;
+    min-width: 100%;
+    flex-direction: column;
 }
 
 /* Headers */
