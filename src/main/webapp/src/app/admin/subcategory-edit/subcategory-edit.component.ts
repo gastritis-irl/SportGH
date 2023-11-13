@@ -63,7 +63,7 @@ export class SubcategoryEditComponent implements OnInit {
                         next: (data: Subcategory) => {
                             this.subcategory = data;
                         },
-                        error: (error: any) => {
+                        error: (error) => {
                             console.error(error);
                             this.toastNotify.error(`Error fetching data`);
                         }
@@ -108,7 +108,7 @@ export class SubcategoryEditComponent implements OnInit {
                             this.toastNotify.error(`Error redirecting to route /admin/categories`);
                         });
                 },
-                error: (error: { status: number; error: any; }): void => {
+                error: (error: { status: number; error: undefined }): void => {
                     if (error.status === 0) {
                         this.toastNotify.error('Error creating category: unauthorized');
                     } else {
