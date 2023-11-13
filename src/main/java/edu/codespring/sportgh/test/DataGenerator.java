@@ -133,23 +133,6 @@ public class DataGenerator extends BaseDataGenerator {
         if (user == null) {
             throw new ServiceException("User doesn't exist.");
         }
-
-        saveProduct(
-            new Product(
-                true,
-                "Swimming goggles",
-                "Goggles for swimming",
-                null,
-                null,
-                20.0,
-                null,
-                null,
-                null,
-                null
-            ),
-            "Swimming",
-            user
-        );
         saveProduct(
             new Product(
                 true,
@@ -197,7 +180,6 @@ public class DataGenerator extends BaseDataGenerator {
             ),
             "Cycling",
             user
-
         );
         saveProduct(
             new Product(
@@ -214,7 +196,6 @@ public class DataGenerator extends BaseDataGenerator {
             ),
             "Cycling",
             user
-
         );
         saveProduct(
             new Product(
