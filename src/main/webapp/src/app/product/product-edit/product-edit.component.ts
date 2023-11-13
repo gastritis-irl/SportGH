@@ -13,9 +13,34 @@ import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ImageComponent } from '../../shared/image/image.component';
 import * as L from 'leaflet';
-import { LatLng } from 'leaflet';
+import * as opencage from 'opencage-api-client';
+import { environment } from '../../environment';
 
 type ClickHandlerFunction = () => void;
+
+type GeocodeResponse = {
+    results: {
+        components: {
+            _category?: string;
+            _type?: string;
+            continent?: string;
+            country?: string;
+            country_code?: string;
+            county?: string;
+            political_union?: string;
+            postcode?: string;
+            road?: string;
+            road_reference?: string;
+            road_type?: string;
+            village?: string;
+        },
+        formatted: string,
+        geometry: {
+            lat: number;
+            lng: number;
+        },
+    }[];
+}
 
 @Component({
     selector: 'sgh-product-post',
@@ -40,6 +65,7 @@ export class ProductEditComponent implements OnInit {
     imageDatas: Image[] = [];
 
     marker: L.Marker = new L.Marker([45.9442858, 25.0094303]);
+    markerAddress: string = 'Romania,Cluj-Napoca';
     map: L.Map | undefined;
     options: L.MapOptions = {
         layers: [
@@ -50,31 +76,6 @@ export class ProductEditComponent implements OnInit {
         zoom: 10,
         center: L.latLng(this.marker.getLatLng().lat, this.marker.getLatLng().lng)
     };
-
-    onMapReady(map: L.Map): void {
-        this.map = map;
-        this.marker = new L.Marker(this.marker.getLatLng(), {
-            icon: L.icon({
-                iconUrl: 'assets/blue-marker.svg',
-                iconSize: [32, 32],
-                iconAnchor: [16, 32]
-            })
-        }).addTo(map);
-    }
-
-    resetMarkerAndMap(): void {
-        if (this.product.locationLat && this.product.locationLng) {
-            this.marker.setLatLng(new LatLng(this.product.locationLat, this.product.locationLng));
-        }
-        this.map?.setView(this.marker.getLatLng());
-    }
-
-    moveMarkerToNewPosition(event: L.LeafletMouseEvent): void {
-        this.marker.setLatLng(L.latLng(event.latlng.lat, event.latlng.lng));
-        this.product.locationLat = this.marker.getLatLng().lat;
-        this.product.locationLng = this.marker.getLatLng().lng;
-        this.resetMarkerAndMap();
-    }
 
     constructor(
         private productService: ProductService,
@@ -103,6 +104,64 @@ export class ProductEditComponent implements OnInit {
         this.loadDataByParam();
     }
 
+    onMapReady(map: L.Map): void {
+        this.map = map;
+        this.marker = new L.Marker(this.marker.getLatLng(), {
+            icon: L.icon({
+                iconUrl: 'assets/blue-marker.svg',
+                iconSize: [32, 32],
+                iconAnchor: [16, 32]
+            })
+        }).addTo(map);
+    }
+
+    resetMarkerOnMap(): void {
+        if (this.product.locationLat && this.product.locationLng) {
+            this.marker.setLatLng(new L.LatLng(this.product.locationLat, this.product.locationLng));
+        }
+        this.map?.setView(this.marker.getLatLng());
+    }
+
+    moveMarkerToNewPosition(event: L.LeafletMouseEvent): void {
+        this.marker.setLatLng(L.latLng(event.latlng.lat, event.latlng.lng));
+        this.product.locationLat = this.marker.getLatLng().lat;
+        this.product.locationLng = this.marker.getLatLng().lng;
+        this.resetMarkerOnMap();
+    }
+
+    getLocationAddress(): void {
+        opencage.geocode({
+            q: `${this.marker.getLatLng().lat}, ${this.marker.getLatLng().lng}`,
+            key: environment.geocodingApiKey,
+            language: 'en'
+        })
+            .then((data: GeocodeResponse): void => {
+                this.markerAddress = data.results[0].formatted;
+            })
+            .catch((error): void => {
+                console.error(error);
+                this.toastNotify.error('Error fetching location');
+            });
+    }
+
+    getLocationCoordinates(): void {
+        opencage.geocode({
+            q: this.markerAddress,
+            key: environment.geocodingApiKey,
+            language: 'en'
+        })
+            .then((data: GeocodeResponse): void => {
+                this.product.locationLat = data.results[0].geometry.lat;
+                this.product.locationLng = data.results[0].geometry.lng;
+                this.marker.setLatLng(new L.LatLng(this.product.locationLat, this.product.locationLng));
+                this.resetMarkerOnMap();
+            })
+            .catch((error): void => {
+                console.error(error);
+                this.toastNotify.error('Error fetching location');
+            });
+    }
+
     onFileChange(files: File[]): void {
         this.newImageFiles = files;
     }
@@ -110,7 +169,6 @@ export class ProductEditComponent implements OnInit {
     onFileRemoved(file: File): void {
         this.newImageFiles = this.newImageFiles.filter(f => f !== file);
     }
-
 
     loadDataByParam(): void {
         this.route.params.subscribe(
@@ -144,7 +202,7 @@ export class ProductEditComponent implements OnInit {
                             this.product = data;
                             if (data.locationLat && data.locationLng) {
                                 this.marker.setLatLng(new L.LatLng(data.locationLat, data.locationLng));
-                                this.resetMarkerAndMap();
+                                this.resetMarkerOnMap();
                             }
                             this.subcategoryDropdownDisabled = false;
                             this.getSubcategoriesByCategoryId();
