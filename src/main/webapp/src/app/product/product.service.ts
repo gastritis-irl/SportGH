@@ -43,12 +43,4 @@ export class ProductService extends AppService {
         };
         return this.httpGet<User>(url, { params: params });
     }
-
-    sendContactRequest(product: Product): Observable<void> {
-        const url: string = `${this.baseUrl}/rent`;
-        const params: Params = {
-            productId: product.id
-        };
-        return this.httpPost<void>(url, { params: params });
-    }
 }

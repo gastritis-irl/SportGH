@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationComponent } from './authentication.component';
 import { RouterModule } from '@angular/router';
+import { RequestsComponent } from '../shared/requests/requests.component';
 
 @NgModule({
     declarations: [
@@ -11,7 +12,8 @@ import { RouterModule } from '@angular/router';
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        RequestsComponent
     ],
     exports: [
         AuthenticationComponent

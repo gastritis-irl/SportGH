@@ -230,6 +230,7 @@ $card-max-width-large: 280px;
 
         .no-item-found-img {
             width: 50%;
+            content: $item-no;
         }
     }
 }
