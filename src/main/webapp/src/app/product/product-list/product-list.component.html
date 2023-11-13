@@ -7,8 +7,8 @@
             <div>
                 Order by
             </div>
-            <select class="order-by-select" 
-                [(ngModel)]="orderByElement" 
+            <select class="order-by-select"
+                [(ngModel)]="orderByElement"
                 name="orderByElement"
                 (ngModelChange)="orderBy()">
                 <option [ngValue]="'name#ASC'">Name A-Z</option>
@@ -50,7 +50,7 @@
     <div class="products">
         <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
             <!-- Carousel for product images -->
-            <ngb-carousel 
+            <ngb-carousel
                 *ngIf="product.imagesLoaded && product.imageDataUrls && product.imageDataUrls.length > 0"
                 [showNavigationArrows]="false"
                 [showNavigationIndicators]="false">
@@ -102,7 +102,7 @@
             </div>
         </div>
         <div *ngIf="products.length===0" class="no-item-found-img-holder">
-            <img class="no-item-found-img" src="https://saferoomdesigns.com/wp-content/uploads/2021/06/item_no.png"
+            <img class="no-item-found-img"
                 alt="No item found">
         </div>
     </div>
