@@ -15,7 +15,6 @@ type ClickHandlerFunction = () => void;
 @Component({
     selector: 'sgh-category-edit',
     templateUrl: './category-edit.component.html',
-    styleUrls: ['./category-edit.component.scss']
 })
 export class CategoryEditComponent implements OnInit {
 

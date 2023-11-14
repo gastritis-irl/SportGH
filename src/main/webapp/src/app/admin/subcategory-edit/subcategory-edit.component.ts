@@ -9,7 +9,6 @@ type ClickHandlerFunction = () => void;
 @Component({
     selector: 'sgh-subcategory-edit',
     templateUrl: './subcategory-edit.component.html',
-    styleUrls: ['./subcategory-edit.component.scss']
 })
 export class SubcategoryEditComponent implements OnInit {
 
