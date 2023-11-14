@@ -126,11 +126,11 @@
 
     <div class="product-details-area">
         <div class="product-details-nav-btn buttons">
-            <div *ngIf="product.description && product.description.length>0" (click)="scrollToPagePart('prod-desc')" class="button-default button-secondary">Description</div>
-            <div *ngIf="product.locationLat && product.locationLng && product.publicContact" (click)="scrollToPagePart('prod-loc')" class="button-default button-secondary">Location</div>
+            <div *ngIf="product.description && product.description.length > 0" (click)="scrollToPagePart('prod-desc')" class="button-default button-secondary">Description</div>
+            <div *ngIf="product.locationLat && product.locationLng" (click)="scrollToPagePart('prod-loc')" class="button-default button-secondary">Location</div>
         </div>
 
-        <div *ngIf="product.description && product.description.length>0" class="description-area product-details-item" id="prod-desc">
+        <div *ngIf="product.description && product.description.length > 0" class="description-area product-details-item" id="prod-desc">
             <div class="form-heading">Description</div>
             <div class="product-description-content">
                 {{product.description}}

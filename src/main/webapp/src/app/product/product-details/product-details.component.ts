@@ -16,6 +16,12 @@ import { LatLng } from 'leaflet';
 import * as opencage from 'opencage-api-client';
 import { environment } from '../../environment';
 
+// opencage geocode api
+// q: request param / query param (coordinates or address)
+// key: api key from opencage
+// language: address format
+
+// opencage geocode api response format part
 type GeocodeResponse = {
     results: {
         components: {
@@ -93,6 +99,7 @@ export class ProductDetailsComponent implements OnInit {
         );
     }
 
+    // recenter map to marker (setView to marker's position)
     resetMarkerOnMap(): void {
         if (this.product.locationLat && this.product.locationLng) {
             this.marker.setLatLng(new LatLng(this.product.locationLat, this.product.locationLng));
@@ -101,11 +108,12 @@ export class ProductDetailsComponent implements OnInit {
         this.map?.setView(this.marker.getLatLng());
     }
 
+    // sync with leaflet 'map' after it has been loaded and add marker to map
     onMapReady(map: L.Map): void {
         this.map = map;
         this.marker = new L.Marker(this.marker.getLatLng(), {
             icon: L.icon({
-                iconUrl: 'assets/blue-marker.svg',
+                iconUrl: 'main/webapp/src/assets/blue-marker.svg',
                 iconSize: [32, 32],
                 iconAnchor: [16, 32]
             })
@@ -142,6 +150,7 @@ export class ProductDetailsComponent implements OnInit {
         });
     }
 
+    // request address by coordinates (opencage geocode api)
     getLocationAddress(): void {
         opencage.geocode({
             q: `${this.marker.getLatLng().lat}, ${this.marker.getLatLng().lng}`,
