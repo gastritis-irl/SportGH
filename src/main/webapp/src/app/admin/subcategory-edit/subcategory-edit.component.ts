@@ -35,7 +35,7 @@ export class SubcategoryEditComponent implements OnInit {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
-                    this.loadData(params['subcategoryId']);
+                    this.loadData([params['categoryId'], params['subcategoryId']]);
                 },
                 error: (error): void => {
                     console.error(error);
@@ -45,30 +45,34 @@ export class SubcategoryEditComponent implements OnInit {
         );
     }
 
-    loadData(param: string | undefined): void {
-        if (param) {
-            if (param.startsWith('new')) {
+    loadData(params: (string | undefined)[]): void {
+        if (params) {
+            if (params[1] === 'new') {
                 this.paramCheck = 'create';
-                this.subcategory.categoryId = parseInt(param.slice(3));
+                if (params[0]) {
+                    this.subcategory.categoryId = parseInt(params[0]);
+                }
                 this.clickHandlerFunction = this.createSubcategoryData;
                 this.editMode = false;
             }
-            const id: number = parseInt(param);
-            if (!isNaN(id)) {
-                this.paramCheck = 'edit';
-                this.clickHandlerFunction = this.updateSubcategoryData;
-                this.editMode = true;
-                this.subcategoryService.getById(id).subscribe(
-                    {
-                        next: (data: Subcategory) => {
-                            this.subcategory = data;
-                        },
-                        error: (error) => {
-                            console.error(error);
-                            this.toastNotify.error(`Error fetching data`);
+            if(params[1]) {
+                const id: number = parseInt(params[1]);
+                if (!isNaN(id)) {
+                    this.paramCheck = 'edit';
+                    this.clickHandlerFunction = this.updateSubcategoryData;
+                    this.editMode = true;
+                    this.subcategoryService.getById(id).subscribe(
+                        {
+                            next: (data: Subcategory) => {
+                                this.subcategory = data;
+                            },
+                            error: (error) => {
+                                console.error(error);
+                                this.toastNotify.error(`Error fetching data`);
+                            }
                         }
-                    }
-                );
+                    );
+                }
             }
         }
     }

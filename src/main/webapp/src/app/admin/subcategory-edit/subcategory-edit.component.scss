@@ -1,1 +1,5 @@
 @use '../../../style-variables.scss' as *;
+
+.category-edit-holder {
+    padding-inline: $main-padding-inline;
+}

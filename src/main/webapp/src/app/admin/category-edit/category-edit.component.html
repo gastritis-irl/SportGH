@@ -56,7 +56,7 @@
                     <div class="list-manage">
                         <div class="title">Subcategories</div>
                         <div class="buttons">
-                            <div class="button-default button-primary" routerLink="/admin/subcategories/new{{category.id}}">Create new subcategory +</div>
+                            <div class="button-default button-primary" routerLink="/admin/categories/{{category.id}}/subcategories/new">Create new subcategory +</div>
                         </div>
                         <div class="list-elements">
                             <div class="list-element" *ngFor="let subcategory of subcategories; let i = index">
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="row-item">
                                     <div class="buttons">
-                                        <div class="button-default button-primary" routerLink="/admin/subcategories/{{subcategory.id}}">
+                                        <div class="button-default button-primary" routerLink="/admin/categories/{{category.id}}/subcategories/{{subcategory.id}}">
                                             Edit
                                         </div>
                                     </div>
