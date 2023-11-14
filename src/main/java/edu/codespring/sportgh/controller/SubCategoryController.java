@@ -59,7 +59,7 @@ public class SubCategoryController {
 
     @PostMapping
     public ResponseEntity<SubCategoryOutDTO> create(@RequestBody @Valid SubCategoryInDTO subCategoryInDTO) {
-        log.info("Creating subcategory with ID {}. {}", subCategoryInDTO.getId(), subCategoryInDTO.getCategoryId());
+        log.info("Creating subcategory with ID {}. ", subCategoryInDTO.getName());
         if (subCategoryInDTO.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -518,6 +518,10 @@ $item-gap: 10px;
 $image-max-height: 100px;
 $item-max-width: 200px;
 
+.category-edit-holder {
+    padding-inline: $main-padding-inline;
+}
+
 .list-manage-holder {
     color: $color-main-1;
     padding-inline: $main-padding-inline;

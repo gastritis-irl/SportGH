@@ -25,7 +25,6 @@ export class CategoryEditComponent implements OnInit {
         = { id: undefined, name: '', description: '', imageId: 0, imageDataUrl: undefined };
     subcategories: Subcategory[] = []
     newImageFile?: File;
-    // imageData?: Image;
     paramCheck: 'create' | 'edit' = 'create';
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
