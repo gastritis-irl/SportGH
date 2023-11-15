@@ -11,40 +11,7 @@ import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as L from 'leaflet';
-import { LatLng } from 'leaflet';
-import * as opencage from 'opencage-api-client';
-import { environment } from '../../environment';
-
-// opencage geocode api
-// q: request param / query param (coordinates or address)
-// key: api key from opencage
-// language: address format
-
-// opencage geocode api response format part
-type GeocodeResponse = {
-    results: {
-        components: {
-            _category?: string;
-            _type?: string;
-            continent?: string;
-            country?: string;
-            country_code?: string;
-            county?: string;
-            political_union?: string;
-            postcode?: string;
-            road?: string;
-            road_reference?: string;
-            road_type?: string;
-            village?: string;
-        },
-        formatted: string,
-        geometry: {
-            lat: number;
-            lng: number;
-        },
-    }[];
-}
+import { GeocodeResponse, MapService } from '../../shared/map/map.service';
 
 @Component({
     selector: 'sgh-product-details',
@@ -59,19 +26,7 @@ export class ProductDetailsComponent implements OnInit {
     owner: User = { imageId: 0 };
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
-
-    marker: L.Marker = new L.Marker([45.9442858, 25.0094303]);
-    location: string = '';
-    map?: L.Map;
-    options: L.MapOptions = {
-        layers: [
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-            })
-        ],
-        zoom: 10,
-        center: L.latLng(this.marker.getLatLng().lat, this.marker.getLatLng().lng)
-    };
+    address: string = '';
 
     constructor(
         private productService: ProductService,
@@ -82,6 +37,7 @@ export class ProductDetailsComponent implements OnInit {
         private fbIdTokenService: FirebaseIdTokenService,
         private imageService: ImageService,
         private modalService: NgbModal,
+        private mapService: MapService
     ) {
     }
 
@@ -97,27 +53,6 @@ export class ProductDetailsComponent implements OnInit {
                 }
             }
         );
-    }
-
-    // recenter map to marker (setView to marker's position)
-    resetMarkerOnMap(): void {
-        if (this.product.locationLat && this.product.locationLng) {
-            this.marker.setLatLng(new LatLng(this.product.locationLat, this.product.locationLng));
-            this.getLocationAddress();
-        }
-        this.map?.setView(this.marker.getLatLng());
-    }
-
-    // sync with leaflet 'map' after it has been loaded and add marker to map
-    onMapReady(map: L.Map): void {
-        this.map = map;
-        this.marker = new L.Marker(this.marker.getLatLng(), {
-            icon: L.icon({
-                iconUrl: 'main/webapp/src/assets/blue-marker.svg',
-                iconSize: [32, 32],
-                iconAnchor: [16, 32]
-            })
-        }).addTo(map);
     }
 
     loadProductImages(productId: number): void {
@@ -150,22 +85,6 @@ export class ProductDetailsComponent implements OnInit {
         });
     }
 
-    // request address by coordinates (opencage geocode api)
-    getLocationAddress(): void {
-        opencage.geocode({
-            q: `${this.marker.getLatLng().lat}, ${this.marker.getLatLng().lng}`,
-            key: environment.geocodingApiKey,
-            language: 'en'
-        })
-            .then((data: GeocodeResponse): void => {
-                this.location = data.results[0].formatted;
-            })
-            .catch((error): void => {
-                console.error(error);
-                this.toastNotify.error('Error fetching location');
-            });
-    }
-
     getLoggedInUserUid(): string | null {
         const userId: string | undefined = this.fbIdTokenService.getDecodedIdToken()?.user_id;
         if (userId != undefined) {
@@ -179,7 +98,16 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (data: Product): void => {
                     this.product = data;
-                    this.resetMarkerOnMap();
+                    if (data.locationLat && data.locationLng) {
+                        this.mapService.getLocationAddress(data.locationLat, data.locationLng)
+                            .then((result: GeocodeResponse): void => {
+                                const data = result.results[0].components;
+                                this.address = `${data.county}, ${data.village ? data.village : data.city ? data.city : data.town ? data.town : ''} ${data.postcode}, ${data.country}`;
+                            })
+                            .catch((error): void => {
+                                console.error(error);
+                            });
+                    }
                     this.loadProductImages(this.product.id ? this.product.id : 0);
                 },
                 error: (error): void => {

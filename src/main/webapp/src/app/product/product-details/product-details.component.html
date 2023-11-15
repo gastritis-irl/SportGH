@@ -60,11 +60,11 @@
             </div>
         </div>
 
-        <!--        <div class="ad-info-and-location">-->
-        <!--            <div class="location">-->
-        <!--                {{product.location}}-->
-        <!--            </div>-->
-        <!--        </div>-->
+        <div *ngIf="address.length>0" class="ad-info-and-location">
+            <div class="location">
+                {{address}}
+            </div>
+        </div>
 
         <div class="images-and-pricing">
             <div class="images">
@@ -126,27 +126,16 @@
 
     <div class="product-details-area">
         <div class="product-details-nav-btn buttons">
-            <div *ngIf="product.description && product.description.length > 0" (click)="scrollToPagePart('prod-desc')" class="button-default button-secondary">Description</div>
-            <div *ngIf="product.locationLat && product.locationLng" (click)="scrollToPagePart('prod-loc')" class="button-default button-secondary">Location</div>
-        </div>
-
-        <div *ngIf="product.description && product.description.length > 0" class="description-area product-details-item" id="prod-desc">
-            <div class="form-heading">Description</div>
-            <div class="product-description-content">
-                {{product.description}}
+            <div *ngIf="product.description && product.description.length > 0" (click)="scrollToPagePart('prod-desc')"
+                 class="button-default button-secondary">Description
             </div>
         </div>
 
-        <div *ngIf="product.locationLat && product.locationLng" class="product-location product-details-item" id="prod-loc">
-            <div class="form-heading">Location</div>
-            <div>{{location}}</div>
-            <div class="product-location-content">
-                <div class="product-address-map"
-                     leaflet
-                     [leafletOptions]="options"
-                     (leafletMapReady)="onMapReady($event)"
-                >
-                </div>
+        <div *ngIf="product.description && product.description.length > 0" class="description-area product-details-item"
+             id="prod-desc">
+            <div class="form-heading">Description</div>
+            <div class="product-description-content">
+                {{product.description}}
             </div>
         </div>
     </div>

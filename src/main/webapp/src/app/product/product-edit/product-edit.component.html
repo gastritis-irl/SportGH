@@ -91,27 +91,11 @@
             <div class="location form-part">
                 <div class="form-heading">Location</div>
                 <div class="product-location">
-                    <div>
-                        <label class="form-part-label">Type address</label>
-                        <input class="product-address-text form-part-input"
-                               type="text"
-                               name="location"
-                               (focusout)="getLocationCoordinates()"
-                               [(ngModel)]="markerAddress"
-                        >
-                    </div>
-                    or<br>
-                    <div>
-                        <label class="form-part-label">Choose on map</label>
-                        <div class="product-address-map"
-                             leaflet
-                             [leafletOptions]="options"
-                             (leafletMapReady)="onMapReady($event)"
-                             (leafletClick)="moveMarkerToNewPosition($event)"
-                             (focusout)="getLocationAddress()"
-                        >
-                        </div>
-                    </div>
+                    <sgh-map
+                            [lat]="product.locationLat"
+                            [lng]="product.locationLng"
+                            (locationEventEmitter)="setLocation($event)"
+                    ></sgh-map>
                 </div>
             </div>
             <div class="availability form-part">

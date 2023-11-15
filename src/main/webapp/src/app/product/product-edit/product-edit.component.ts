@@ -12,41 +12,8 @@ import { IdToken } from '../../auth-and-token/firebase-id-token.model';
 import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ImageComponent } from '../../shared/image/image.component';
-import * as L from 'leaflet';
-import * as opencage from 'opencage-api-client';
-import { environment } from '../../environment';
 
 type ClickHandlerFunction = () => void;
-
-// opencage geocode api
-// q: request param / query param (coordinates or address)
-// key: api key from opencage
-// language: address format
-
-// opencage geocode api response format part
-type GeocodeResponse = {
-    results: {
-        components: {
-            _category?: string;
-            _type?: string;
-            continent?: string;
-            country?: string;
-            country_code?: string;
-            county?: string;
-            political_union?: string;
-            postcode?: string;
-            road?: string;
-            road_reference?: string;
-            road_type?: string;
-            village?: string;
-        },
-        formatted: string,
-        geometry: {
-            lat: number;
-            lng: number;
-        },
-    }[];
-}
 
 @Component({
     selector: 'sgh-product-post',
@@ -69,19 +36,6 @@ export class ProductEditComponent implements OnInit {
     _imageIds?: number[];
     newImageFiles: File[] = [];
     imageDatas: Image[] = [];
-
-    marker: L.Marker = new L.Marker([45.9442858, 25.0094303]);
-    markerAddress: string = 'Romania,Cluj-Napoca';
-    map: L.Map | undefined;
-    options: L.MapOptions = {
-        layers: [
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-            })
-        ],
-        zoom: 10,
-        center: L.latLng(this.marker.getLatLng().lat, this.marker.getLatLng().lng)
-    };
 
     constructor(
         private productService: ProductService,
@@ -110,67 +64,9 @@ export class ProductEditComponent implements OnInit {
         this.loadDataByParam();
     }
 
-    // sync with leaflet 'map' after it has been loaded and add marker to map
-    onMapReady(map: L.Map): void {
-        this.map = map;
-        this.marker = new L.Marker(this.marker.getLatLng(), {
-            icon: L.icon({
-                iconUrl: 'main/webapp/src/assets/blue-marker.svg',
-                iconSize: [32, 32],
-                iconAnchor: [16, 32]
-            })
-        }).addTo(map);
-    }
-
-    // recenter map to marker (setView to marker's position)
-    resetMarkerOnMap(): void {
-        if (this.product.locationLat && this.product.locationLng) {
-            this.marker.setLatLng(new L.LatLng(this.product.locationLat, this.product.locationLng));
-        }
-        this.map?.setView(this.marker.getLatLng());
-    }
-
-    // move marker to new position on click and recenter map
-    moveMarkerToNewPosition(event: L.LeafletMouseEvent): void {
-        this.marker.setLatLng(L.latLng(event.latlng.lat, event.latlng.lng));
-        this.product.locationLat = this.marker.getLatLng().lat;
-        this.product.locationLng = this.marker.getLatLng().lng;
-        this.resetMarkerOnMap();
-    }
-
-    // request address by coordinates (opencage geocode api)
-    getLocationAddress(): void {
-        opencage.geocode({
-            q: `${this.marker.getLatLng().lat}, ${this.marker.getLatLng().lng}`,
-            key: environment.geocodingApiKey,
-            language: 'en'
-        })
-            .then((data: GeocodeResponse): void => {
-                this.markerAddress = data.results[0].formatted;
-            })
-            .catch((error): void => {
-                console.error(error);
-                this.toastNotify.error('Error fetching location');
-            });
-    }
-
-    // request coordinates by address (opencage geocode api)
-    getLocationCoordinates(): void {
-        opencage.geocode({
-            q: this.markerAddress,
-            key: environment.geocodingApiKey,
-            language: 'en'
-        })
-            .then((data: GeocodeResponse): void => {
-                this.product.locationLat = data.results[0].geometry.lat;
-                this.product.locationLng = data.results[0].geometry.lng;
-                this.marker.setLatLng(new L.LatLng(this.product.locationLat, this.product.locationLng));
-                this.resetMarkerOnMap();
-            })
-            .catch((error): void => {
-                console.error(error);
-                this.toastNotify.error('Error fetching location');
-            });
+    setLocation(coordinates: [number, number]): void {
+        this.product.locationLat = coordinates[0];
+        this.product.locationLng = coordinates[1];
     }
 
     onFileChange(files: File[]): void {
@@ -215,10 +111,6 @@ export class ProductEditComponent implements OnInit {
                     {
                         next: (data: Product): void => {
                             this.product = data;
-                            if (data.locationLat && data.locationLng) {
-                                this.marker.setLatLng(new L.LatLng(data.locationLat, data.locationLng));
-                                this.resetMarkerOnMap();
-                            }
                             this.subcategoryDropdownDisabled = false;
                             this.getSubcategoriesByCategoryId();
                             // Call the loadProductImages method here

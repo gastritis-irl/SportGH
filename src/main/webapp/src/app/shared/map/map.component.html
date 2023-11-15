@@ -1,0 +1,20 @@
+<div>
+    <label class="form-part-label">Type address</label>
+    <input class="product-address-text form-part-input"
+           type="text"
+           name="location"
+           (focusout)="getLocationCoordinates()"
+           [(ngModel)]="address"
+    >
+</div>
+or<br>
+<div>
+    <label class="form-part-label">Choose on map</label>
+    <div class="map"
+         leaflet
+         [leafletOptions]="options"
+         (leafletMapReady)="onMapReady($event)"
+         (leafletClick)="moveMarkerToNewPosition($event)"
+    >
+    </div>
+</div>

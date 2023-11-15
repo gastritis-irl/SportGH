@@ -16,6 +16,7 @@ import { PopoverDeleteComponent } from '../shared/popover/popover-delete.compone
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SwitchButtonComponent } from '../shared/switch-button/switch-button.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapComponent } from '../shared/map/map.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
         BreadcrumbComponent,
         PopoverDeleteComponent,
         SwitchButtonComponent,
-        LeafletModule
+        LeafletModule,
+        MapComponent
     ],
     providers: [
         ProductComponent,
