@@ -64,15 +64,12 @@ public abstract class BaseDataGenerator {
 
     public void initUsers(List<User> usersFromJson) {
         try {
-            Collection<User> firebaseUsers = firebaseService.getUsers();
             Collection<User> localUsers = userService.findAll();
 
-            for (User userJson : usersFromJson) {
-                User localUser = userService.findByEmail(userJson.getEmail());
-                processUser(userJson, localUser, firebaseUsers);
-            }
+            processUserFromJsonToDB(usersFromJson);
 
-            syncLocalUsersToFirebase(localUsers, firebaseUsers);
+
+            syncLocalUsersToFirebase(localUsers);
 
             log.info("{} Generating users: OK", this.getClass().getSimpleName());
         } catch (ServiceException e) {
@@ -80,21 +77,23 @@ public abstract class BaseDataGenerator {
         }
     }
 
-    private void processUser(User userJson, User localUser, Collection<User> firebaseUsers) {
+    private void processUserFromJsonToDB(Collection<User> usersJson) {
 
-        User user = localUser;
-        if (user == null) {
-            user = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
-        } else {
-            user.setRole(userJson.getRole());
-            userService.update(user);
+        for (User userJson : usersJson) {
+            User user = userService.findByEmail(userJson.getEmail());
+            if (user == null) {
+                user = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
+            } else {
+                user.setRole(userJson.getRole());
+                userService.update(user);
+            }
+            firebaseService.syncUserToFirebase(user);
         }
-        firebaseService.syncUserToFirebase(user, firebaseUsers);
     }
 
-    private void syncLocalUsersToFirebase(Collection<User> localUsers, Collection<User> firebaseUsers) {
+    private void syncLocalUsersToFirebase(Collection<User> localUsers) {
         for (User localUser : localUsers) {
-            firebaseService.syncUserToFirebase(localUser, firebaseUsers);
+            firebaseService.syncUserToFirebase(localUser);
         }
     }
 

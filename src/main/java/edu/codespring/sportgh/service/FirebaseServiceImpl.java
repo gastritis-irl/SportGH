@@ -41,17 +41,6 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public boolean userExistsInFirebase(String email) {
-        try {
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            UserRecord userRecord = firebaseAuth.getUserByEmail(email);
-            return userRecord != null;
-        } catch (FirebaseAuthException e) {
-            throw new ServiceException("Failed to check if user exists in firebase", e);
-        }
-    }
-
-    @Override
     public String getFirebaseUidFromToken(String idToken) {
         FirebaseTokenHolder tokenHolder = verifyTokenAndReturnTokenHolder(idToken);
         return tokenHolder.getUid();
@@ -98,18 +87,40 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public void syncUserToFirebase(User localUser, Collection<User> firebaseUsers) {
-        User firebaseUser = findFirebaseUserByEmail(firebaseUsers, localUser.getEmail());
-        if (firebaseUser == null || !firebaseUser.getFirebaseUid().equals(localUser.getFirebaseUid())) {
-            String firebaseUid = signupUserToFirebase(localUser, "password");
-            localUser.setFirebaseUid(firebaseUid);
-            userRepository.save(localUser);
+    public String getFirebaseUid(String email) {
+        try {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            UserRecord userRecord = firebaseAuth.getUserByEmail(email);
+            return userRecord.getUid();
+        } catch (FirebaseAuthException e) {
+            log.error("Failed to get user with" + email + " from firebase", e);
+            return null;
         }
     }
 
     @Override
-    public User findFirebaseUserByEmail(Collection<User> firebaseUsers, String email) {
-        return firebaseUsers.stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null);
+    public void syncUserToFirebase(User user) {
+        if (user == null || user.getId() == null) {
+            throw new ServiceException("User must be saved before calling sync to firebase!");
+        }
+
+        String firebaseUid = getFirebaseUid(user.getEmail());
+        if (user.getFirebaseUid() == null) {
+            if (firebaseUid == null) {
+                user.setFirebaseUid(signupUserToFirebase(user, "password"));
+                userRepository.save(user);
+
+            } else {
+                user.setFirebaseUid(firebaseUid);
+                userRepository.save(user);
+            }
+        } else {
+            if (!user.getFirebaseUid().equals(firebaseUid)) {
+                // invalid data --> update the firebaseId in our local user
+                user.setFirebaseUid(firebaseUid);
+                userRepository.save(user);
+            } // else do nothing, because everything is good
+        }
     }
 
     @Override
