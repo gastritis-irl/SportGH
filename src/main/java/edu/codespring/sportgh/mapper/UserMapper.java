@@ -17,5 +17,8 @@ public interface UserMapper {
     Collection<UserOutDTO> usersToOuts(Collection<User> users);
 
     @Mapping(source = "imageId", target = "image.id")
+    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "products", ignore = true)
+    @Mapping(target = "myRequests", ignore = true)
     User dtoToUser(UserInDTO userInDTO);
 }

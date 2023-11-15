@@ -28,7 +28,6 @@ public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
     private final UserService userService;
-    private final SecurityUtil securityUtil;
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
@@ -97,7 +96,7 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        if (!securityUtil.isCurrentlyLoggedIn(product.getUser())) {
+        if (!SecurityUtil.isCurrentlyLoggedIn(product.getUser())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 
