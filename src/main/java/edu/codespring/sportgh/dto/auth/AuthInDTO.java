@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SignRequestOut {
+public class AuthInDTO {
 
+    private String email;
     private String idToken;
 }

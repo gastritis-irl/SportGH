@@ -125,6 +125,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
             Map<String, Object> customClaimsMap = new ConcurrentHashMap<>();
             customClaimsMap.put("role", user.getRole());
+            customClaimsMap.put("userId", user.getId());
 
             UpdateRequest updateRequest = new UpdateRequest(uid).setCustomClaims(customClaimsMap);
             firebaseAuth.updateUser(updateRequest);

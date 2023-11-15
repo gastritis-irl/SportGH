@@ -1,15 +1,16 @@
 package edu.codespring.sportgh.controller;
 
-import edu.codespring.sportgh.dto.auth.SignRequestOut;
+import edu.codespring.sportgh.dto.auth.AuthOutDTO;
 import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.FirebaseService;
 import edu.codespring.sportgh.service.UserService;
-import edu.codespring.sportgh.dto.auth.SignupRequest;
+import edu.codespring.sportgh.dto.auth.AuthInDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
@@ -21,22 +22,20 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<SignRequestOut> signup(@RequestBody SignupRequest request) {
+    public ResponseEntity<AuthOutDTO> signup(@RequestBody AuthInDTO request) {
         String firebaseUid = firebaseService.getFirebaseUidFromToken(request.getIdToken());
+        if (userService.findByFirebaseUid(firebaseUid) != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
         userService.signup(request.getEmail(), firebaseUid, SecurityUtil.ROLE_USER);
         String idTokenWithCustomFields = firebaseService.getFirebaseIdTokenWithCustomClaims(request.getIdToken());
-        return new ResponseEntity<>(
-                new SignRequestOut(idTokenWithCustomFields),
-                HttpStatus.OK
-        );
+        return new ResponseEntity<>(new AuthOutDTO(idTokenWithCustomFields), HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<SignRequestOut> login(@RequestBody SignupRequest request) {
+    public ResponseEntity<AuthOutDTO> login(@RequestBody AuthInDTO request) {
         String idTokenWithCustomFields = firebaseService.getFirebaseIdTokenWithCustomClaims(request.getIdToken());
-        return new ResponseEntity<>(
-                new SignRequestOut(idTokenWithCustomFields),
-                HttpStatus.OK
-        );
+        return new ResponseEntity<>(new AuthOutDTO(idTokenWithCustomFields), HttpStatus.OK);
     }
 }
