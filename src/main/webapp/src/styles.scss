@@ -518,16 +518,16 @@ $item-gap: 10px;
 $image-max-height: 100px;
 $item-max-width: 200px;
 
-.category-edit-holder {
+.list-edit-holder {
     padding-inline: $main-padding-inline;
 }
 
-.list-manage-holder {
+@mixin list-manage-holder-styles($includePadding: true) {
     color: $color-main-1;
-    padding-inline: $main-padding-inline;
+    padding-inline: if($includePadding, $main-padding-inline, 0);
 
     .list-manage {
-        padding: $page-padding;
+        padding:  if($includePadding, $page-padding, 0);
         border-radius: $border-radius;
         background-color: $color-neutral-1;
         display: flex;
@@ -536,7 +536,7 @@ $item-max-width: 200px;
         .title {
             font-size: $size-h1;
             font-weight: $font-weight-bold;
-            padding: $page-padding;
+            padding: if($includePadding, $page-padding, 5px);
         }
 
         .buttons {
@@ -596,5 +596,14 @@ $item-max-width: 200px;
                 }
             }
         }
+    }
+}
+
+
+.list-manage-holder {
+    @include list-manage-holder-styles();
+
+    &.no-inline-padding {
+        @include list-manage-holder-styles(false);
     }
 }

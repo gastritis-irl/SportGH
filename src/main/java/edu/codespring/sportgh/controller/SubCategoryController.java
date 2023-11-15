@@ -34,9 +34,9 @@ public class SubCategoryController {
         return new ResponseEntity<>(subCategoryMapper.subCategoriesToOuts(subCategories), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{subcategoryId}")
-    public ResponseEntity<SubCategoryOutDTO> findById(@PathVariable Long subcategoryId) {
-        SubCategory subcategory = subCategoryService.findById(subcategoryId);
+    @GetMapping(path = "/{subCategoryId}")
+    public ResponseEntity<SubCategoryOutDTO> findById(@PathVariable Long subCategoryId) {
+        SubCategory subcategory = subCategoryService.findById(subCategoryId);
         if (subcategory == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
