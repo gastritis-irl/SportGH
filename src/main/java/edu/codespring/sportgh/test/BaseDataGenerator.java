@@ -78,16 +78,14 @@ public abstract class BaseDataGenerator {
     }
 
     private void processUserFromJsonToDB(Collection<User> usersJson) {
-
         for (User userJson : usersJson) {
             User user = userService.findByEmail(userJson.getEmail());
             if (user == null) {
-                user = userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
+                userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
             } else {
                 user.setRole(userJson.getRole());
                 userService.update(user);
             }
-            firebaseService.syncUserToFirebase(user);
         }
     }
 
