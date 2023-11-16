@@ -1,6 +1,7 @@
 package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.dto.auth.AuthOutDTO;
+import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.FirebaseService;
 import edu.codespring.sportgh.service.UserService;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
@@ -24,11 +24,15 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ResponseEntity<AuthOutDTO> signup(@RequestBody AuthInDTO request) {
         String firebaseUid = firebaseService.getFirebaseUidFromToken(request.getIdToken());
-        if (userService.findByFirebaseUid(firebaseUid) != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+        User user = userService.findByFirebaseUid(firebaseUid);
+        if (user == null) {
+            userService.signup(request.getEmail(), firebaseUid, SecurityUtil.ROLE_USER);
+        } else {
+            user.setEmail(request.getEmail());
+            userService.update(user);
         }
 
-        userService.signup(request.getEmail(), firebaseUid, SecurityUtil.ROLE_USER);
         String idTokenWithCustomFields = firebaseService.getFirebaseIdTokenWithCustomClaims(request.getIdToken());
         return new ResponseEntity<>(new AuthOutDTO(idTokenWithCustomFields), HttpStatus.OK);
     }
