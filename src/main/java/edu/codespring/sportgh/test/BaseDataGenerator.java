@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.codespring.sportgh.dto.DataInitDTO;
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.*;
+import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -65,9 +66,11 @@ public abstract class BaseDataGenerator {
     public void initUsers(List<User> usersFromJson) {
         try {
             Collection<User> localUsers = userService.findAll();
+            Collection<User> firebaseUsers = firebaseService.getUsers();
 
             processUserFromJsonToDB(usersFromJson);
 
+            syncFirebaseUsersToLocal(firebaseUsers);
 
             syncLocalUsersToFirebase(localUsers);
 
@@ -88,6 +91,19 @@ public abstract class BaseDataGenerator {
             }
         }
     }
+
+    private void syncFirebaseUsersToLocal(Collection<User> firebaseUsers) {
+        for (User firebaseUser : firebaseUsers) {
+            User localUser = userService.findByEmail(firebaseUser.getEmail());
+            if (localUser == null) {
+                userService.signup(firebaseUser.getEmail(), firebaseUser.getFirebaseUid(), SecurityUtil.ROLE_USER);
+            } else {
+                localUser.setFirebaseUid(firebaseUser.getFirebaseUid());
+                userService.update(localUser);
+            }
+        }
+    }
+
 
     private void syncLocalUsersToFirebase(Collection<User> localUsers) {
         for (User localUser : localUsers) {
