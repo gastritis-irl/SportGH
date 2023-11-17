@@ -1,0 +1,484 @@
+{
+  "categories": [
+    {
+      "name": "Water sports",
+      "description": "Water sports are sports which are played in water.",
+      "image": {
+        "id": 1,
+        "url": "waterSports.png"
+      }
+    },
+    {
+      "name": "Combat sports",
+      "description": "Combat sports, or fighting sports, are competitive sports in which two people engage in combat.",
+      "image": {
+        "id": 2,
+        "url": "combatSports.png"
+      }
+    },
+    {
+      "name": "Extreme sports",
+      "description": "Extreme sports are recreational activities perceived as involving a high degree of risk.",
+      "image": {
+        "id": 3,
+        "url": "extremeSports.png"
+      }
+    },
+    {
+      "name": "Team sports",
+      "description": "Team sports are sports played by teams with some members not participating directly with the opponents.",
+      "image": {
+        "id": 4,
+        "url": "teamSports.png"
+      }
+    },
+    {
+      "name": "Winter sports",
+      "description": "Winter sports or winter activities are competitive sports or non-competitive recreational activities which are played on snow or ice.",
+      "image": {
+        "id": 5,
+        "url": "winterSports.png"
+      }
+    },
+    {
+      "name": "Track & Field",
+      "description": "Track and field is a sport which includes athletic contests established on the skills of running, jumping, and throwing.",
+      "image": {
+        "id": 6,
+        "url": "trackAndField.png"
+      }
+    },
+    {
+      "name": "Racquet Sports",
+      "description": "Racquet sports are sports in which players use racquets to hit a ball or other object.",
+      "image": {
+        "id": 7,
+        "url": "racquetSports.png"
+      }
+    },
+    {
+      "name": "Fitness & Gym",
+      "description": "Fitness & Gym includes equipment for exercise and physical fitness.",
+      "image": {
+        "id": 9,
+        "url": "fitnessAndGym.png"
+      }
+    },
+    {
+      "name": "Other",
+      "description": "Other sports",
+      "image": {
+        "id": 10,
+        "url": "otherSports.png"
+      }
+    }
+  ],
+  "subcategories": [
+    {
+      "name": "Swimming",
+      "category": {
+        "name": "Water sports"
+      }
+    },
+    {
+      "name": "Surfing",
+      "category": {
+        "name": "Water sports"
+      }
+    },
+    {
+      "name": "Kayaking",
+      "category": {
+        "name": "Water sports"
+      }
+    },
+    {
+      "name": "Scuba Diving",
+      "category": {
+        "name": "Water sports"
+      }
+    },
+    {
+      "name": "Sailing",
+      "category": {
+        "name": "Water sports"
+      }
+    },
+    {
+      "name": "Boxing",
+      "category": {
+        "name": "Combat sports"
+      }
+    },
+    {
+      "name": "Judo",
+      "category": {
+        "name": "Combat sports"
+      }
+    },
+    {
+      "name": "Martial Arts",
+      "category": {
+        "name": "Combat sports"
+      }
+    },
+    {
+      "name": "Wrestling",
+      "category": {
+        "name": "Combat sports"
+      }
+    },
+    {
+      "name": "Base Jumping",
+      "category": {
+        "name": "Extreme sports"
+      }
+    },
+    {
+      "name": "Bungee Jumping",
+      "category": {
+        "name": "Extreme sports"
+      }
+    },
+    {
+      "name": "Rock Climbing",
+      "category": {
+        "name": "Extreme sports"
+      }
+    },
+    {
+      "name": "Skydiving",
+      "category": {
+        "name": "Extreme sports"
+      }
+    },
+    {
+      "name": "Paragliding",
+      "category": {
+        "name": "Extreme sports"
+      }
+    },
+    {
+      "name": "Soccer (football)",
+      "category": {
+        "name": "Team sports"
+      }
+    },
+    {
+      "name": "Basketball",
+      "category": {
+        "name": "Team sports"
+      }
+    },
+    {
+      "name": "Baseball",
+      "category": {
+        "name": "Team sports"
+      }
+    },
+    {
+      "name": "Cricket",
+      "category": {
+        "name": "Team sports"
+      }
+    },
+    {
+      "name": "Volleyball",
+      "category": {
+        "name": "Team sports"
+      }
+    },
+    {
+      "name": "Skiing",
+      "category": {
+        "name": "Winter sports"
+      }
+    },
+    {
+      "name": "Snowboarding",
+      "category": {
+        "name": "Winter sports"
+      }
+    },
+    {
+      "name": "Ice Skating",
+      "category": {
+        "name": "Winter sports"
+      }
+    },
+    {
+      "name": "Ice Hockey",
+      "category": {
+        "name": "Winter sports"
+      }
+    },
+    {
+      "name": "Running",
+      "category": {
+        "name": "Track & Field"
+      }
+    },
+    {
+      "name": "Cycling",
+      "category": {
+        "name": "Track & Field"
+      }
+    },
+    {
+      "name": "Long Jump",
+      "category": {
+        "name": "Track & Field"
+      }
+    },
+    {
+      "name": "High Jump",
+      "category": {
+        "name": "Track & Field"
+      }
+    },
+    {
+      "name": "Tennis",
+      "category": {
+        "name": "Racquet Sports"
+      }
+    },
+    {
+      "name": "Badminton",
+      "category": {
+        "name": "Racquet Sports"
+      }
+    },
+    {
+      "name": "Table Tennis",
+      "category": {
+        "name": "Racquet Sports"
+      }
+    },
+    {
+      "name": "Squash",
+      "category": {
+        "name": "Racquet Sports"
+      }
+    },
+    {
+      "name": "Weightlifting",
+      "category": {
+        "name": "Fitness & Gym"
+      }
+    },
+    {
+      "name": "Yoga",
+      "category": {
+        "name": "Fitness & Gym"
+      }
+    },
+    {
+      "name": "Aerobics",
+      "category": {
+        "name": "Fitness & Gym"
+      }
+    },
+    {
+      "name": "Gymnastics",
+      "category": {
+        "name": "Fitness & Gym"
+      }
+    },
+    {
+      "name": "Other",
+      "category": {
+        "name": "Other"
+      }
+    }
+  ],
+  "products": [
+    {
+      "name": "Swimming goggles",
+      "description": "Goggles for swimming",
+      "location": "Cluj-Napoca, Romania",
+      "rentPrice": 20.0,
+      "subCategory": {
+        "name": "Swimming"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Flip flops",
+      "description": "Flip flops for easier swimming",
+      "location": "Cluj-Napoca, Romania",
+      "rentPrice": 35.0,
+      "subCategory": {
+        "name": "Swimming"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Bike",
+      "description": "Bike for cycling",
+      "location": "Cluj-Napoca, Romania",
+      "rentPrice": 100.0,
+      "subCategory": {
+        "name": "Cycling"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Helmet",
+      "description": "Helmet for your protection",
+      "location": "Cluj-Napoca, Romania",
+      "rentPrice": 18.0,
+      "subCategory": {
+        "name": "Cycling"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Flashlight",
+      "description": "Flashlight for better visibility",
+      "location": "Cluj-Napoca, Romania",
+      "rentPrice": 15.0,
+      "subCategory": {
+        "name": "Cycling"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Bicycle lock",
+      "description": "Bicycle lock for your bike's protection",
+      "location": "Cluj-Napoca, Romania",
+      "rentPrice": 20.0,
+      "subCategory": {
+        "name": "Cycling"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Boxing gloves",
+      "description": "Gloves for boxing",
+      "location": "New York, USA",
+      "rentPrice": 50.0,
+      "subCategory": {
+        "name": "Boxing"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Judo uniform",
+      "description": "Uniform for Judo practice",
+      "location": "Tokyo, Japan",
+      "rentPrice": 75.0,
+      "subCategory": {
+        "name": "Judo"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Tennis racket",
+      "description": "Racket for tennis",
+      "location": "London, UK",
+      "rentPrice": 120.0,
+      "subCategory": {
+        "name": "Tennis"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Golf clubs",
+      "description": "Set of golf clubs",
+      "location": "Paris, France",
+      "rentPrice": 300.0,
+      "subCategory": {
+        "name": "Golf"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Yoga mat",
+      "description": "Comfortable yoga mat",
+      "location": "Berlin, Germany",
+      "rentPrice": 25.0,
+      "subCategory": {
+        "name": "Yoga"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    },
+    {
+      "name": "Fishing rod",
+      "description": "Rod for fishing",
+      "location": "Sydney, Australia",
+      "rentPrice": 40.0,
+      "subCategory": {
+        "name": "Fishing"
+      },
+      "user": {
+        "email": "akos@test.com"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "Akos",
+      "email": "akos@test.com",
+      "firebaseUid": "2oONJKqW6ZeNwVDD1zQ2CCM42dx2",
+      "role": "USER"
+    },
+    {
+      "username": "Csabi",
+      "email": "csabi@test.com",
+      "firebaseUid": "T5dVJRFwy5Xd1gmG0FAhDJwAWUc2",
+      "role": "USER"
+    },
+    {
+      "username": "Beni",
+      "email": "beni@test.com",
+      "firebaseUid": "8qTypiOnWkbtIPyVEid4VvExFD62",
+      "role": "USER"
+    },
+    {
+      "username": "Huni",
+      "email": "huni@test.com",
+      "firebaseUid": "48R7OD3j54g6dc4uIqkb8yeF6n52",
+      "role": "USER"
+    },
+    {
+      "username": "Anita",
+      "email": "anita@test.com",
+      "firebaseUid": "jaEbPJbOFrTgugS8z21ELnD42BV2",
+      "role": "USER"
+    },
+    {
+      "username": "Ancsa",
+      "email": "aniko@test.com",
+      "firebaseUid": "FmPW3nJEbOWAnxbZD6XDPMi5a7W2",
+      "role": "USER"
+    },
+    {
+      "username": "ADMIN",
+      "email": "admin@test.com",
+      "firebaseUid": "WOSZGOExwhbMGTwO9DZMUIULfYO2",
+      "role": "ADMIN"
+    }
+  ]
+}
