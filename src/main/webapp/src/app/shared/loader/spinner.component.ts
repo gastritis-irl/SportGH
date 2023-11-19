@@ -5,8 +5,10 @@ import { LoaderService } from './loader.service';
   selector: 'sgh-spinner',
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.scss'],
+  standalone: true,
   encapsulation: ViewEncapsulation.ShadowDom
 })
 export class SpinnerComponent {
+
   constructor(public loader: LoaderService) { }
 }

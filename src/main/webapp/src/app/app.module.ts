@@ -19,16 +19,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ImageService } from './shared/image/image.service';
 import { UserModule } from './user/user.module';
 import { FooterComponent } from './shared/footer/footer.component';
-import {SpinnerComponent} from "./shared/loader/spinner.component";
-import {LoadingInterceptor} from "./shared/loader/loading.interceptor";
+import { SpinnerComponent } from "./shared/loader/spinner.component";
+import { LoadingInterceptor } from "./shared/loader/loading.interceptor";
 
 @NgModule({
     declarations: [
-        AppComponent,
-        SpinnerComponent
+        AppComponent
     ],
     imports: [
         NavbarComponent,
+        SpinnerComponent,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
         FormsModule,
