@@ -1,6 +1,7 @@
 package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.dto.auth.AuthOutDTO;
+import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.FirebaseService;
@@ -29,8 +30,12 @@ public class AuthenticationController {
         if (user == null) {
             userService.signup(request.getEmail(), firebaseUid, SecurityUtil.ROLE_USER);
         } else {
-            user.setEmail(request.getEmail());
-            userService.update(user);
+            String firebaseUidOfUsersEmail = firebaseService.getFirebaseUid(user.getEmail());
+            if (!firebaseUid.equals(firebaseUidOfUsersEmail)) {
+                log.warn("User inconsistency for fUid {}, local DB email is {}, firebaseUid for this email is {}",
+                        firebaseUid, user.getEmail(), firebaseUidOfUsersEmail);
+                throw new ServiceException("User signup failed, please contact your system administrator!");
+            }
         }
 
         String idTokenWithCustomFields = firebaseService.getFirebaseIdTokenWithCustomClaims(request.getIdToken());
