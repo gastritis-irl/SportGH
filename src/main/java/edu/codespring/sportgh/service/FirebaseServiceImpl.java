@@ -1,6 +1,8 @@
 package edu.codespring.sportgh.service;
 
 import com.google.firebase.auth.*;
+import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.UserRecord.UpdateRequest;
 import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.User;
@@ -13,9 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
@@ -149,5 +150,26 @@ public class FirebaseServiceImpl implements FirebaseService {
             throw new ServiceException("[FbService] listUsers failed!", e);
         }
         return users;
+    }
+
+    @Override
+    public String getFirebaseIdTokenWithCustomClaims(String idToken) {
+        try {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseToken decodedToken = firebaseAuth.verifyIdToken(idToken);
+            String uid = decodedToken.getUid();
+            User user = userRepository.findByFirebaseUid(uid);
+
+            Map<String, Object> customClaimsMap = new ConcurrentHashMap<>();
+            customClaimsMap.put("role", user.getRole());
+            customClaimsMap.put("userId", user.getId());
+
+            UpdateRequest updateRequest = new UpdateRequest(uid).setCustomClaims(customClaimsMap);
+            firebaseAuth.updateUser(updateRequest);
+
+            return firebaseAuth.createCustomToken(uid);
+        } catch (FirebaseAuthException e) {
+            throw new ServiceException("Error adding custom claims to firebase id token.", e);
+        }
     }
 }
