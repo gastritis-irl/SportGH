@@ -1,5 +1,3 @@
-//module for the user component
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +8,7 @@ import { UserRoute } from './user.route';
 import { ImageComponent } from '../shared/image/image.component';
 import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-label.component';
 import { ProductModule } from "../product/product.module";
+import { AuthModule } from '../authentication/authentication.module';
 
 @NgModule({
     declarations: [
@@ -23,10 +22,11 @@ import { ProductModule } from "../product/product.module";
         UserRoute,
         ImageComponent,
         FormCheckLabelComponent,
-        ProductModule
+        ProductModule,
+        AuthModule
     ],
     exports: [
-        UserDetailsComponent // If you want to use it in other modules
+        UserDetailsComponent
     ]
 })
 export class UserModule { }

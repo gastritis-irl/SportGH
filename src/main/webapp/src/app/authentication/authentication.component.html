@@ -71,7 +71,8 @@
         <div class="buttons">
             <div>
                 <button class="button-secondary button-default" type="submit" value="Reset password">
-                    <svg width="20" viewBox="0 0 20 20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg" class="reset-icon">
+                    <svg width="20" viewBox="0 0 20 20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"
+                         class="reset-icon">
                         <g fill="none" fill-rule="evenodd" stroke-linecap="round"
                            stroke-linejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
                             <path d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"/>
@@ -86,7 +87,17 @@
     </form>
 </ng-template>
 
-<ng-container *ngIf="loggedInUserEmail; else notLoggedIn">
+<ng-template #changePasswordContent>
+    <div class="modal-form form">
+        <p class="account-yet"><a (click)="openModal(forgotPassword)">Change password</a></p>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="changePassword;">
+    <ng-container *ngTemplateOutlet="changePasswordContent"></ng-container>
+</ng-container>
+
+<ng-container *ngIf="loggedInUserEmail && !changePassword;">
     <div class="auth-buttons">
         <div class="buttons">
             <div class="button-default button-primary">
@@ -115,6 +126,10 @@
             </div>
         </div>
     </div>
+</ng-container>
+
+<ng-container *ngIf="!loggedInUserEmail && !changePassword;">
+    <ng-container *ngTemplateOutlet="notLoggedIn"></ng-container>
 </ng-container>
 
 <ng-template #notLoggedIn>

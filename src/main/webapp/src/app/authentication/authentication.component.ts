@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -16,6 +16,7 @@ import { IdToken } from '../auth-and-token/firebase-id-token.model';
 export class AuthenticationComponent implements OnInit, OnDestroy {
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
+    @Input() changePassword: boolean = false;
 
     loggedInUserEmail: string | null = null;
     loggedInUserName: string | null = null;
