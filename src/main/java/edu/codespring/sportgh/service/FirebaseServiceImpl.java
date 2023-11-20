@@ -37,7 +37,7 @@ public class FirebaseServiceImpl implements FirebaseService {
             return userRecord.getUid();
 
         } catch (FirebaseAuthException e) {
-            throw new ServiceException("Failed to add user to firebase", e);
+            throw new ServiceException("Failed to add user " + user.getEmail() + " to firebase", e);
         }
     }
 
@@ -85,6 +85,43 @@ public class FirebaseServiceImpl implements FirebaseService {
                 firebaseToken,
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
         );
+    }
+
+    @Override
+    public String getFirebaseUid(String email) {
+        try {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            UserRecord userRecord = firebaseAuth.getUserByEmail(email);
+            return userRecord.getUid();
+        } catch (FirebaseAuthException e) {
+            log.error("Failed to get user with" + email + " from firebase", e);
+            return null;
+        }
+    }
+
+    @Override
+    public void syncUserToFirebase(User user) {
+        if (user == null || user.getId() == null) {
+            throw new ServiceException("User must be saved before calling sync to firebase!");
+        }
+
+        String firebaseUid = getFirebaseUid(user.getEmail());
+        if (user.getFirebaseUid() == null) {
+            if (firebaseUid == null) {
+                user.setFirebaseUid(signupUserToFirebase(user, "password"));
+                userRepository.save(user);
+
+            } else {
+                user.setFirebaseUid(firebaseUid);
+                userRepository.save(user);
+            }
+        } else {
+            if (!user.getFirebaseUid().equals(firebaseUid)) {
+                // invalid data --> update the firebaseId in our local user
+                user.setFirebaseUid(firebaseUid);
+                userRepository.save(user);
+            } // else do nothing, because everything is good
+        }
     }
 
     @Override

@@ -1,5 +1,7 @@
 package edu.codespring.sportgh.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.codespring.sportgh.dto.DataInitDTO;
 import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.*;
 import edu.codespring.sportgh.security.SecurityUtil;
@@ -8,8 +10,12 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,69 +24,90 @@ public abstract class BaseDataGenerator {
     @Value("${test.file.storage.location}")
     protected String testFileStorageLocation;
 
-    protected final UserService userService;
+    public final UserService userService;
     protected final CategoryService categoryService;
     protected final SubCategoryService subCategoryService;
     protected final ProductService productService;
-    protected final FirebaseService firebaseService;
+    public final FirebaseService firebaseService;
     protected final ImageService imageService;
+
+    @Value("${data.init.location}")
+    private String dataInitLocation;
 
     @PostConstruct
     public void init() {
 
-        try {
-            initUsers();
-            log.info("{} Generating users: OK", this.getClass().getSimpleName());
-        } catch (ServiceException e) {
-            log.warn("Generating users: FAILED");
-            log.warn(e.getMessage());
+        ObjectMapper objectMapper = new ObjectMapper();
+        try (InputStream inputStream = new ClassPathResource(dataInitLocation).getInputStream()) {
+            DataInitDTO data = objectMapper.readValue(inputStream, DataInitDTO.class);
+
+            initUsers(data.getUsers());
+
+            initCategories(data.getCategories());
+            log.info("{} Generating categories: OK", this.getClass().getSimpleName());
+
+            initSubCategories(data.getSubcategories());
+            log.info("{} Generating subcategories: OK", this.getClass().getSimpleName());
+
+            initProducts(data.getProducts());
+            log.info("{} Generating products: OK", this.getClass().getSimpleName());
+
+        } catch (IOException e) {
+            log.error(this.getClass().getSimpleName() + "Failed to load data from JSON file.", e);
         }
-
-        initCategories();
-        log.info("Generating categories: OK");
-
-        initSubCategories();
-        log.info("Generating subcategories: OK");
-
-        initProducts();
-        log.info("Generating products: OK");
     }
 
-    public abstract void initCategories();
+    public abstract void initCategories(List<Category> categories);
 
-    public abstract void initSubCategories();
+    public abstract void initSubCategories(List<SubCategory> subcategories);
 
-    public abstract void initProducts();
+    public abstract void initProducts(List<Product> products);
 
-    public void initUsers() {
-        final String adminEmail = "admin@test.com";
-        if (userService.findByUsername(adminEmail) == null) {
-            userService.signup(adminEmail, null, SecurityUtil.ROLE_ADMIN);
-        } else {
-            User admin = userService.findByUsername(adminEmail);
-            admin.setRole(SecurityUtil.ROLE_ADMIN);
-            userService.update(admin);
+    public void initUsers(List<User> usersFromJson) {
+        try {
+            Collection<User> localUsers = userService.findAll();
+            Collection<User> firebaseUsers = firebaseService.getUsers();
+
+            processUserFromJsonToDB(usersFromJson);
+
+            syncFirebaseUsersToLocal(firebaseUsers);
+
+            syncLocalUsersToFirebase(localUsers);
+
+            log.info("{} Generating users: OK", this.getClass().getSimpleName());
+        } catch (ServiceException e) {
+            log.warn("{} Generating users: FAILED - {}", this.getClass().getSimpleName(), e.getMessage());
         }
+    }
 
-        Collection<User> userListFB = firebaseService.getUsers();
-        for (User user : userListFB) {
-            User localUser = userService.findByEmail(user.getEmail());
-            if (localUser == null) {
-                userService.signup(user.getEmail(), user.getFirebaseUid(), SecurityUtil.ROLE_USER);
+    private void processUserFromJsonToDB(Collection<User> usersJson) {
+        for (User userJson : usersJson) {
+            User user = userService.findByEmail(userJson.getEmail());
+            if (user == null) {
+                userService.signup(userJson.getEmail(), userJson.getFirebaseUid(), userJson.getRole());
             } else {
-                localUser.setFirebaseUid(user.getFirebaseUid());
+                user.setRole(userJson.getRole());
+                userService.update(user);
+            }
+        }
+    }
+
+    private void syncFirebaseUsersToLocal(Collection<User> firebaseUsers) {
+        for (User firebaseUser : firebaseUsers) {
+            User localUser = userService.findByEmail(firebaseUser.getEmail());
+            if (localUser == null) {
+                userService.signup(firebaseUser.getEmail(), firebaseUser.getFirebaseUid(), SecurityUtil.ROLE_USER);
+            } else {
+                localUser.setFirebaseUid(firebaseUser.getFirebaseUid());
                 userService.update(localUser);
             }
         }
+    }
 
-        Collection<User> userListDB = userService.findAll();
-        for (User user : userListDB) {
-            if (!userListFB.contains(user)) {
-                String firebaseUid = firebaseService.signupUserToFirebase(user, "password");
-                user.setFirebaseUid(firebaseUid);
-                userService.update(user);
-                log.info("User {} successfully updated and registered to firebase.", user);
-            }
+
+    private void syncLocalUsersToFirebase(Collection<User> localUsers) {
+        for (User localUser : localUsers) {
+            firebaseService.syncUserToFirebase(localUser);
         }
     }
 
@@ -106,8 +133,8 @@ public abstract class BaseDataGenerator {
         SubCategory subCategory = subCategoryService.findByName(subCategoryName);
         if (subCategory != null && productService.notExistsByNameAndUser(product.getName(), user)) {
             productService.save(new Product(true, product.getName(), product.getDescription(),
-                product.getLocation(), product.getRentPrice(),
-                subCategory, user, null, null));
+                    product.getLocation(), product.getRentPrice(),
+                    subCategory, user, null, null));
         }
     }
 }

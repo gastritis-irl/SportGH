@@ -18,5 +18,9 @@ public interface FirebaseService {
 
     Collection<User> getUsers();
 
+    void syncUserToFirebase(User localUser);
+
+    String getFirebaseUid(String email);
+
     String getFirebaseIdTokenWithCustomClaims(String idToken);
 }
