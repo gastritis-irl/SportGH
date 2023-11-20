@@ -41,7 +41,9 @@ public class WebSecurityConfig {
                 ).permitAll()
                 // users
                 .requestMatchers(
-                    HttpMethod.POST, "/api/auth/signup"
+                    HttpMethod.POST,
+                        "/api/auth/signup",
+                        "/api/auth/login"
                 ).permitAll()
                 .requestMatchers(
                     HttpMethod.GET, "/api/users/**"
