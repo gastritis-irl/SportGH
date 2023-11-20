@@ -80,6 +80,15 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         this.password = '';
     }
 
+    async resetPassword(): Promise<void> {
+        this.afAuth.sendPasswordResetEmail(this.email).then((): void => {
+            this.toastNotify.success(`Password reset email sent to ${this.email}`);
+        }).catch((error): void => {
+            this.toastNotify.warning(`Error sending password reset email: ${this.getErrorMessageInfo(error)}`);
+        });
+        this.closeModal()
+    }
+
     login(): void {
         this.userService.signInWithFirebase(this.email, this.password)
             .then((): void => {
