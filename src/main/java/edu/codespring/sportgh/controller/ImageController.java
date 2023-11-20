@@ -59,9 +59,12 @@ public class ImageController {
         Path imagePath = Paths.get(image.getUrl(), image.getName());
         Resource resource = new FileSystemResource(imagePath);
 
-        return ResponseEntity.ok()
-            .contentType(MediaType.IMAGE_JPEG)
-            .body(resource);
+        if (resource.exists()) {
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
+        } else {
+            log.error("Resource not found: {}", imagePath);
+            return ResponseEntity.ok().body(null);
+        }
     }
 
     @GetMapping(path = "/product/files/{productId}")
