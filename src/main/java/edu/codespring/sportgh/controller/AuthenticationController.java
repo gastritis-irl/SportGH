@@ -1,7 +1,6 @@
 package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.dto.auth.AuthOutDTO;
-import edu.codespring.sportgh.exception.ServiceException;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.FirebaseService;
@@ -12,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
@@ -32,9 +32,9 @@ public class AuthenticationController {
         } else {
             String firebaseUidOfUsersEmail = firebaseService.getFirebaseUid(user.getEmail());
             if (!firebaseUid.equals(firebaseUidOfUsersEmail)) {
-                log.warn("User inconsistency for fUid {}, local DB email is {}, firebaseUid for this email is {}",
+                log.error("User inconsistency for fUid {}, local DB email is {}, firebaseUid for this email is {}",
                         firebaseUid, user.getEmail(), firebaseUidOfUsersEmail);
-                throw new ServiceException("User signup failed, please contact your system administrator!");
+                throw new ResponseStatusException(HttpStatus.CONFLICT);
             }
         }
 
