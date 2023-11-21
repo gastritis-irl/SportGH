@@ -1,5 +1,7 @@
 export interface IdToken {
 
+    role: string;
+    userId: number;
     iss: string;
     aud: string;
     auth_time: number;
