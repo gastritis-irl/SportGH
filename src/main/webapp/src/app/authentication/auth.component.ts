@@ -10,10 +10,10 @@ import { AuthService } from './authentication.service';
 
 @Component({
     selector: 'sgh-authentication',
-    templateUrl: './authentication.component.html',
-    styleUrls: ['./authentication.component.scss']
+    templateUrl: './auth.component.html',
+    styleUrls: ['./auth.component.scss']
 })
-export class AuthenticationComponent implements OnInit, OnDestroy {
+export class AuthComponent implements OnInit, OnDestroy {
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
 
