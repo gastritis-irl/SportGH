@@ -5,7 +5,7 @@ import { ProductService } from '../product/product.service';
 import { Product } from '../product/product.model';
 
 export const isLoggedIn: CanActivateFn = (): boolean => {
-    if (inject(FirebaseIdTokenService).getDecodedIdToken()?.user_id) {
+    if (FirebaseIdTokenService.getDecodedIdToken()?.user_id) {
         return true;
     } else {
         inject(Router).navigate(['']);
@@ -13,14 +13,18 @@ export const isLoggedIn: CanActivateFn = (): boolean => {
     }
 };
 
+export const isCurrentUser: CanActivateFn = (route: ActivatedRouteSnapshot): boolean => {
+    return FirebaseIdTokenService.getDecodedIdToken()?.user_id === route.params['uid'];
+};
+
 export const isAdmin: CanActivateFn = (): boolean => {
-    return inject(FirebaseIdTokenService).getDecodedIdToken()?.email === 'admin@test.com';
+    return FirebaseIdTokenService.getDecodedIdToken()?.role === 'ADMIN';
 };
 
 export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot): boolean => {
     return !!inject(ProductService).getById(route.params['productId']).subscribe({
         next: (product: Product): boolean => {
-            return product.userUid === inject(FirebaseIdTokenService).getDecodedIdToken()?.user_id;
+            return product.userId === FirebaseIdTokenService.getDecodedIdToken()?.userId;
         },
         error: (): boolean => {
             return false;
