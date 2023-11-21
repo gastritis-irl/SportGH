@@ -4,7 +4,7 @@
            type="text"
            name="location"
            (focusout)="getLocationCoordinates()"
-           (keyup.enter)="getLocationCoordinates()"
+           (keydown)="triggerGetLocationCoordinates()"
            [(ngModel)]="address"
     >
 </div>

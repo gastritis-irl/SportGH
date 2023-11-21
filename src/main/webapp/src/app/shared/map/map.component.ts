@@ -31,6 +31,7 @@ export class MapComponent implements OnInit, OnChanges {
         zoom: 10,
         center: L.latLng(this.marker.getLatLng().lat, this.marker.getLatLng().lng)
     };
+    timeout?: number;
 
     constructor(private mapService: MapService) {
     }
@@ -93,5 +94,12 @@ export class MapComponent implements OnInit, OnChanges {
             .catch((error): void => {
                 console.error(error);
             });
+    }
+
+    triggerGetLocationCoordinates(): void {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout((): void => {
+            this.getLocationCoordinates();
+        }, 1000);
     }
 }
