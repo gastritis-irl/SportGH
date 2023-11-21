@@ -59,8 +59,7 @@ export class NavbarComponent implements OnInit {
     }
 
     checkIfAdmin(): boolean {
-        return this.getDecodedIdToken()?.email === 'admin@test.com';
-        // return this.getDecodedIdToken().role === 'admin';
+        return this.getDecodedIdToken()?.role === 'ADMIN';
     }
 
     getDecodedIdToken(): IdToken | null {
