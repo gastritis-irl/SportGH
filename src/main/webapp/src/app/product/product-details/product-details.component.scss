@@ -337,6 +337,7 @@ $icon-size: 50px;
 
                             &:disabled {
                                 background-color: $color-main-2;
+                                cursor: default;
                             }
                         }
                     }

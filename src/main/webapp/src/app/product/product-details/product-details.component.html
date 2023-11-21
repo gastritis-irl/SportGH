@@ -115,7 +115,7 @@
 
                     <div class="rent-button-holder buttons">
                         <button class="rent-button button-default button-primary"
-                                [disabled]="getLoggedInUserUid() === null"
+                                [disabled]="getLoggedInUserUid() === null || getLoggedInUserUid() === product.userUid"
                                 (click)="getOwnerInfo(ownerModalContent)">Get Contact
                         </button>
                     </div>

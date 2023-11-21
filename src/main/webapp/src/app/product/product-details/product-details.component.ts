@@ -164,6 +164,10 @@ export class ProductDetailsComponent implements OnInit {
                         this.toastNotify.success('Request sent successfully!');
                         break;
                     }
+                    case 400: {
+                        this.toastNotify.warning('Bad request!');
+                        break;
+                    }
                     default: {  // Error
                         this.toastNotify.error(`Error fetching data: ${error.statusText}`);
                         this.toastNotify.error('Please try again.');
