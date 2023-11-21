@@ -43,6 +43,10 @@ public class RentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        if (product.getUser().getId().equals(user.getId())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (product.isPublicContact()) {
             return new ResponseEntity<>(userMapper.userToOut(product.getUser()), HttpStatus.OK);
         }
