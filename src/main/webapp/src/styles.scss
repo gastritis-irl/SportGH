@@ -31,10 +31,16 @@ body {
 }
 
 /* Container */
-.app-root {
-    width: 90%;
-    margin: auto;
-    max-width: 1200px;
+app-root {
+    height: 100vh;
+    display: flex;
+    min-width: 100%;
+    flex-direction: column;
+}
+
+sgh-footer {
+    width: 100%;
+    margin-top: auto;
 }
 
 /* Headers */
