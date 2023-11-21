@@ -24,6 +24,11 @@
                 </button>
             </div>
         </div>
+        <div class="formGroup">
+            <button type="button" (click)="authService.GoogleAuth()">
+                Log in with Google
+            </button>
+        </div>
         <p class="account-yet">Don't have an account ? <a (click)="openModal(signupContent)">Sign up</a></p>
     </form>
 </ng-template>

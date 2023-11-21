@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseIdTokenService } from '../auth-and-token/firebase-id-token.service';
 import { IdToken } from '../auth-and-token/firebase-id-token.model';
+import { AuthService } from './authentication.service';
 
 @Component({
     selector: 'sgh-authentication',
@@ -31,6 +32,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         private afAuth: AngularFireAuth,
         private toastNotify: ToastrService,
         private firebaseIdTokenService: FirebaseIdTokenService,
+        protected authService: AuthService
     ) {
     }
 
