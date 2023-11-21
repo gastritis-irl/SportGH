@@ -88,8 +88,7 @@ export class MapComponent implements OnInit, OnChanges {
     getLocationAddress(): void {
         this.mapService.getLocationAddress(this.marker.getLatLng().lat, this.marker.getLatLng().lng)
             .then((result: GeocodeResponse): void => {
-                const data = result.results[0].components;
-                this.address = `${data.county}, ${data.village ? data.village : data.city ? data.city : data.town ? data.town : ''} ${data.postcode}, ${data.country}`;
+                this.address = result.results[0].formatted;
             })
             .catch((error): void => {
                 console.error(error);

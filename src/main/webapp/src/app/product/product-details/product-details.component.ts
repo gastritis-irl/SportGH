@@ -102,7 +102,7 @@ export class ProductDetailsComponent implements OnInit {
                         this.mapService.getLocationAddress(data.locationLat, data.locationLng)
                             .then((result: GeocodeResponse): void => {
                                 const data = result.results[0].components;
-                                this.address = `${data.county}, ${data.village ? data.village : data.city ? data.city : data.town ? data.town : ''} ${data.postcode}, ${data.country}`;
+                                this.address = `${data.county}, ${data.village ? data.village : data.city ? data.city : data.town ? data.town : ''}, ${data.country}`;
                             })
                             .catch((error): void => {
                                 console.error(error);
