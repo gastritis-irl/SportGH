@@ -80,23 +80,23 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         this.password = '';
     }
 
+    async requestPasswordReset(_email: string): Promise<void> {
+        await this.afAuth.sendPasswordResetEmail(_email).then((): void => {
+            this.toastNotify.success(`Password reset email sent to ${_email}`);
+        }).catch((): void => {
+            this.toastNotify.success(`Password reset email sent to ${_email}`);
+        });
+    }
+
     async resetPassword(): Promise<void> {
         if (!this.changePassword) {
-            await this.afAuth.sendPasswordResetEmail(this.email).then((): void => {
-                this.toastNotify.success(`Password reset email sent to ${this.email}`);
-            }).catch((): void => {
-                this.toastNotify.success(`Password reset email sent to ${this.email}`);
-            });
+            await this.requestPasswordReset(this.email)
             this.closeModal();
         } else {
             const user = await this.afAuth.currentUser;
             const email: string | null | undefined = user?.email;
             if(email) {
-                await this.afAuth.sendPasswordResetEmail(email).then((): void => {
-                    this.toastNotify.success(`Password reset email sent to ${email}`);
-                }).catch((): void => {
-                    this.toastNotify.success(`Password reset email sent to ${email}`);
-                });
+                await this.requestPasswordReset(email);
             }
         }
     }
