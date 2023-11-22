@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -15,6 +15,7 @@ import { IdToken } from '../auth-and-token/firebase-id-token.model';
 export class AuthenticationComponent implements OnInit, OnDestroy {
 
     @ViewChild('loginContent') loginContent!: TemplateRef<string>;
+    @Input() changePassword: boolean = false;
 
     loggedInUserEmail: string | null = null;
     loggedInUserName: string | null = null;
@@ -77,6 +78,27 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         // Clear the form
         this.email = '';
         this.password = '';
+    }
+
+    async requestPasswordReset(_email: string): Promise<void> {
+        await this.afAuth.sendPasswordResetEmail(_email).then((): void => {
+            this.toastNotify.success(`Password reset email sent to ${_email}`);
+        }).catch((): void => {
+            this.toastNotify.success(`Password reset email sent to ${_email}`);
+        });
+    }
+
+    async resetPassword(): Promise<void> {
+        if (!this.changePassword) {
+            await this.requestPasswordReset(this.email);
+            this.closeModal();
+        } else {
+            const user = await this.afAuth.currentUser;
+            const email: string | null | undefined = user?.email;
+            if (email) {
+                await this.requestPasswordReset(email);
+            }
+        }
     }
 
     login(): void {
