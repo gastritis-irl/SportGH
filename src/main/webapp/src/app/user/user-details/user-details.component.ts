@@ -2,22 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ImageService } from '../../shared/image/image.service';
-import { ViewportScroller } from '@angular/common';
-import { Product } from "../../product/product.model";
-import { ProductService } from "../../product/product.service";
-import { ProductPage } from "../../product/product-page.model";
+import { Product } from '../../product/product.model';
+import { ProductService } from '../../product/product.service';
+import { ProductPage } from '../../product/product-page.model';
+import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.service';
 
 @Component({
     selector: 'sgh-user',
     templateUrl: './user-details.component.html',
-    styleUrls: [ './user-details.component.scss' ]
+    styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent implements OnInit {
 
     username: string = '';
-    user: User = { id: undefined, username: '', email: '', phoneNumber: '', address: '', imageId: 0, imageDataUrl: undefined };
+    user: User = {
+        id: undefined,
+        username: '',
+        email: '',
+        phoneNumber: '',
+        address: '',
+        imageId: 0,
+        imageDataUrl: undefined
+    };
     image: string = '';
     products: Product[] = [];
     nrOfItems: number = 0;
@@ -27,13 +35,10 @@ export class UserDetailsComponent implements OnInit {
         private toastNotify: ToastrService,
         private route: ActivatedRoute,
         private imageService: ImageService,
-        private viewPortScroller: ViewportScroller,
-        private productService: ProductService
+        private productService: ProductService,
+        private fbIdTokenService: FirebaseIdTokenService,
+        private router: Router,
     ) {
-    }
-
-    scrollToPagePart(elementId: string): void {
-        this.viewPortScroller.scrollToAnchor(elementId);
     }
 
     ngOnInit(): void {
@@ -51,6 +56,9 @@ export class UserDetailsComponent implements OnInit {
     }
 
     loadData(uid: string | undefined): void {
+        if (uid === 'profile') {
+            uid = this.fbIdTokenService.getDecodedIdToken()?.user_id;
+        }
         if (uid) {
             this.userService.getByUid(uid).subscribe({
                 next: (data: User): void => {
@@ -69,10 +77,16 @@ export class UserDetailsComponent implements OnInit {
                         }
                     });
                 },
-                error: (): void => {
-                    this.toastNotify.error(`Error fetching data`);
+                error: (error): void => {
+                    if (error.status === 401) {
+                        this.router.navigate(['/']);
+                    } else {
+                        this.toastNotify.error(`Error fetching data`);
+                    }
                 }
             });
+        } else {
+            this.router.navigate(['/']);
         }
     }
 

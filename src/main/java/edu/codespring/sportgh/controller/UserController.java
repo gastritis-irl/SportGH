@@ -4,6 +4,7 @@ import edu.codespring.sportgh.dto.UserInDTO;
 import edu.codespring.sportgh.dto.UserOutDTO;
 import edu.codespring.sportgh.mapper.UserMapper;
 import edu.codespring.sportgh.model.User;
+import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,10 @@ public class UserController {
         User user = userService.findByFirebaseUid(fbUid);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        if (!SecurityUtil.isCurrentlyLoggedIn(user) || !SecurityUtil.getCurrentUser().getRole().equals("ADMIN")) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 
         return new ResponseEntity<>(userMapper.userToOut(user), HttpStatus.OK);
