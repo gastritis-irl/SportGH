@@ -147,6 +147,13 @@ $logout-btn-transition-duration: .3s;
             color: $color-main-1;
             stroke: $color-main-1;
 
+            .reset-icon {
+                height: $height-sign-in-icon;
+                padding-left: 0;
+                justify-content: flex-end;
+                flex-shrink: 0;
+            }
+
             &:hover {
                 background-color: $color-main-2;
                 color: $color-neutral-1;
@@ -154,6 +161,10 @@ $logout-btn-transition-duration: .3s;
 
                 .upper-part {
                     animation: openUp 0.5s forwards;
+                }
+
+                .reset-icon {
+                    animation: full-rotation 1.3s linear infinite;
                 }
             }
 
@@ -288,6 +299,16 @@ $logout-btn-transition-duration: .3s;
                 }
             }
         }
+    }
+}
+
+@keyframes full-rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
     }
 }
 
