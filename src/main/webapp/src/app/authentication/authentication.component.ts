@@ -90,12 +90,12 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
     async resetPassword(): Promise<void> {
         if (!this.changePassword) {
-            await this.requestPasswordReset(this.email)
+            await this.requestPasswordReset(this.email);
             this.closeModal();
         } else {
             const user = await this.afAuth.currentUser;
             const email: string | null | undefined = user?.email;
-            if(email) {
+            if (email) {
                 await this.requestPasswordReset(email);
             }
         }
