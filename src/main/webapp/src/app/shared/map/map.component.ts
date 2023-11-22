@@ -79,6 +79,7 @@ export class MapComponent implements OnInit, OnChanges {
         this.mapService.getLocationCoordinates(this.address)
             .then((result: GeocodeResponse): void => {
                 this.marker.setLatLng(new L.LatLng(result.results[0].geometry.lat, result.results[0].geometry.lng));
+                this.locationEventEmitter.emit([result.results[0].geometry.lat, result.results[0].geometry.lng]);
                 this.resetMarkerOnMap();
             })
             .catch((error): void => {
