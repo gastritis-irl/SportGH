@@ -64,6 +64,11 @@ export class ProductEditComponent implements OnInit {
         this.loadDataByParam();
     }
 
+    setLocation(coordinates: [number, number]): void {
+        this.product.locationLat = coordinates[0];
+        this.product.locationLng = coordinates[1];
+    }
+
     onFileChange(files: File[]): void {
         this.newImageFiles = files;
     }
