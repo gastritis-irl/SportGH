@@ -3,31 +3,47 @@ import { inject } from '@angular/core';
 import { FirebaseIdTokenService } from './firebase-id-token.service';
 import { ProductService } from '../product/product.service';
 import { Product } from '../product/product.model';
+import { Observable, Subscriber } from 'rxjs';
 
-export const isLoggedIn: CanActivateFn = (): boolean => {
-    if (FirebaseIdTokenService.getDecodedIdToken()?.user_id) {
+function check(statement: boolean): boolean {
+    if (statement) {
         return true;
     } else {
-        inject(Router).navigate(['']);
+        inject(Router).navigate(['/']).then((): void => {
+        });
         return false;
     }
+}
+
+export const isLoggedIn: CanActivateFn = (): boolean => {
+    return check(FirebaseIdTokenService.getDecodedIdToken()?.user_id !== undefined);
 };
 
 export const isCurrentUser: CanActivateFn = (route: ActivatedRouteSnapshot): boolean => {
-    return FirebaseIdTokenService.getDecodedIdToken()?.user_id === route.params['uid'];
+    return check(FirebaseIdTokenService.getDecodedIdToken()?.user_id === route.params['uid']);
 };
 
 export const isAdmin: CanActivateFn = (): boolean => {
-    return FirebaseIdTokenService.getDecodedIdToken()?.role === 'ADMIN';
+    return check(FirebaseIdTokenService.getDecodedIdToken()?.role === 'ADMIN');
 };
 
-export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot): boolean => {
-    return !!inject(ProductService).getById(route.params['productId']).subscribe({
-        next: (product: Product): boolean => {
-            return product.userId === FirebaseIdTokenService.getDecodedIdToken()?.userId;
-        },
-        error: (): boolean => {
-            return false;
-        }
+export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot): Observable<boolean> => {
+    return new Observable<boolean>((observer: Subscriber<boolean>): void => {
+        !!inject(ProductService).getById(route.params['productId']).subscribe({
+                next: (product: Product): void => {
+                    const isProductValid: boolean = product && product.userId === FirebaseIdTokenService.getDecodedIdToken()?.userId;
+
+                    console.log(isProductValid);
+                    observer.next(isProductValid);
+                    observer.complete();
+                },
+                error:
+                    (error): void => {
+                        console.error('Error fetching product:', error);
+                        observer.next(check(false));
+                        observer.complete();
+                    }
+            }
+        );
     });
 };

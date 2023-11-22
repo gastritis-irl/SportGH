@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductComponent } from './product.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
-import { isLoggedIn, isProductOwner } from '../auth-and-token/auth-guard.service';
+import { isLoggedIn } from '../auth-and-token/auth-guard.service';
 
 const routes: Routes = [
     {
@@ -18,7 +18,7 @@ const routes: Routes = [
     {
         path: 'products/:productId/edit',
         component: ProductEditComponent,
-        canActivate: [isProductOwner]
+        canActivate: [isLoggedIn]   // isProductOwner
     },
     {
         path: 'products/:productId',
