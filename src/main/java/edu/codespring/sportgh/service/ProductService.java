@@ -14,14 +14,17 @@ public interface ProductService {
     ResponseEntity<ProductOutDTO> saveInDTO(ProductInDTO productOutDTO);
 
     ProductPageOutDTO findPageByParams(
-        String orderBy,
-        String direction,
-        int pageNumber,
-        String[] subcategoryNames,
-        Double minPrice,
-        Double maxPrice,
-        String textSearch,
-        Long userId
+            String orderBy,
+            String direction,
+            int pageNumber,
+            String[] subcategoryNames,
+            Double minPrice,
+            Double maxPrice,
+            String textSearch,
+            Double locationLat,
+            Double locationLng,
+            Double locationRadius,
+            Long userId
     );
 
     boolean notExistsByNameAndUser(String name, User user);

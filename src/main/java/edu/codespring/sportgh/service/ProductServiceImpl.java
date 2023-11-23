@@ -54,17 +54,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Specification<Product> filterByPrice(
-        Double minPrice, Double maxPrice, Specification<Product> specification
+            Double minPrice, Double maxPrice, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
         if (minPrice != null && minPrice != 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
+                    criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minPrice));
         }
 
         if (maxPrice != null && maxPrice != 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
+                    criteriaBuilder.lessThanOrEqualTo(root.get("rentPrice"), maxPrice));
         }
 
         return spec;
@@ -77,48 +77,75 @@ public class ProductServiceImpl implements ProductService {
 
         if (subcategoryNames != null && subcategoryNames.length > 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                root.get("subCategory").get("name").in((Object[]) subcategoryNames));
+                    root.get("subCategory").get("name").in((Object[]) subcategoryNames));
         }
         return spec;
     }
 
     private Specification<Product> filterByTextInNameOrDescription(
-        String textSearch, Specification<Product> specification
+            String textSearch, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
         if (textSearch != null) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.or(
-                    criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"),
-                    criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
-                )
+                    criteriaBuilder.or(
+                            criteriaBuilder.like(root.get("name"), "%" + textSearch + "%"),
+                            criteriaBuilder.like(root.get("description"), "%" + textSearch + "%")
+                    )
             );
         }
         return spec;
     }
 
     private Specification<Product> filterByUserId(
-        Long userId, Specification<Product> specification
+            Long userId, Specification<Product> specification
     ) {
         Specification<Product> spec = specification;
         if (userId != null) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("user").get("id"), userId)
+                    criteriaBuilder.equal(root.get("user").get("id"), userId)
             );
+        }
+        return spec;
+    }
+
+    private Specification<Product> filterByLocation(Double locationLat,
+                                                    Double locationLng,
+                                                    Double locationRadius,
+                                                    Specification<Product> specification) {
+        Specification<Product> spec = specification;
+        if (locationLat != null) {
+            try {
+                spec = spec.and((root, query, criteriaBuilder) -> {
+                            Double dbLocLat = Double.parseDouble(root.get("locationLat").toString());
+                            Double dbLocLng = Double.parseDouble(root.get("locationLng").toString());
+                            Double euclideanDistance = Math.sqrt(Math.pow(dbLocLat - locationLat, 2)
+                                    + Math.pow(dbLocLng - locationLng, 2));
+                            return criteriaBuilder.lessThanOrEqualTo(
+                                    criteriaBuilder.literal(euclideanDistance), locationRadius);
+                        }
+                );
+            } catch (NumberFormatException e) {
+                log.error("Error parsing location coordinates to Double", e);
+                return spec;
+            }
         }
         return spec;
     }
 
     @Override
     public ProductPageOutDTO findPageByParams(
-        String orderBy,
-        String direction,
-        int pageNumber,
-        String[] subcategoryNames,
-        Double minPrice,
-        Double maxPrice,
-        String textSearch,
-        Long userId
+            String orderBy,
+            String direction,
+            int pageNumber,
+            String[] subcategoryNames,
+            Double minPrice,
+            Double maxPrice,
+            String textSearch,
+            Double locationLat,
+            Double locationLng,
+            Double locationRadius,
+            Long userId
     ) {
         Specification<Product> specification = Specification.where(null);
 
@@ -128,15 +155,15 @@ public class ProductServiceImpl implements ProductService {
         } else {
             if (direction == null) {
                 pageable = PageRequest.of(
-                    pageNumber - 1,
-                    pageSize,
-                    Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
+                        pageNumber - 1,
+                        pageSize,
+                        Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
                 );
             } else {
                 pageable = PageRequest.of(
-                    pageNumber - 1,
-                    pageSize,
-                    Sort.by(Sort.Direction.fromString(direction), orderBy)
+                        pageNumber - 1,
+                        pageSize,
+                        Sort.by(Sort.Direction.fromString(direction), orderBy)
                 );
             }
         }
@@ -145,6 +172,7 @@ public class ProductServiceImpl implements ProductService {
         specification = filterBySubcategories(subcategoryNames, specification);
         specification = filterByPrice(minPrice, maxPrice, specification);
         specification = filterByTextInNameOrDescription(textSearch, specification);
+        specification = filterByLocation(locationLat, locationLng, locationRadius, specification);
 
         Page<Product> page = productRepository.findAll(specification, pageable);
 

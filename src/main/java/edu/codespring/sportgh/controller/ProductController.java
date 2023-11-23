@@ -38,7 +38,10 @@ public class ProductController {
             @RequestParam("MinPrice") Optional<Double> minPrice,
             @RequestParam("MaxPrice") Optional<Double> maxPrice,
             @RequestParam("TextSearch") Optional<String> textSearch,
-            @RequestParam("userId")Optional<Long> userId
+            @RequestParam("userId") Optional<Long> userId,
+            @RequestParam("locationLat") Optional<Double> locationLat,
+            @RequestParam("locationLng") Optional<Double> locationLng,
+            @RequestParam("locationRadius") Optional<Double> locationRadius
     ) {
         return new ResponseEntity<>(
                 productService.findPageByParams(
@@ -49,6 +52,9 @@ public class ProductController {
                         minPrice.orElse(null),
                         maxPrice.orElse(null),
                         textSearch.orElse(null),
+                        locationLat.orElse(null),
+                        locationLng.orElse(null),
+                        locationRadius.orElse(null),
                         userId.orElse(null)
                 ),
                 HttpStatus.OK
