@@ -17,7 +17,7 @@ import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.s
 export class UserDetailsComponent implements OnInit {
 
     username: string = '';
-    user: User = {};
+    user: User = { imageId: 0 };
     image: string = '';
     products: Product[] = [];
     nrOfItems: number = 0;
