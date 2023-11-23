@@ -57,7 +57,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        if (!SecurityUtil.isCurrentlyLoggedIn(user) || !SecurityUtil.isAdmin()) {
+        if (!SecurityUtil.isCurrentlyLoggedIn(user) && !SecurityUtil.isAdmin()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 
