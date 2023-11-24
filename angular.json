@@ -30,7 +30,8 @@
               "src/main/webapp/src/assets"
             ],
             "styles": [
-              "src/main/webapp/src/styles.scss"
+              "src/main/webapp/src/styles.scss",
+              "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           },

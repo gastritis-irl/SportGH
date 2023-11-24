@@ -11,6 +11,7 @@ import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GeocodeResponse, MapService } from '../../shared/map/map.service';
 
 @Component({
     selector: 'sgh-product-details',
@@ -25,6 +26,7 @@ export class ProductDetailsComponent implements OnInit {
     owner: User = { imageId: 0 };
     dateFrom: Date | string = new Date('0001-01-01');
     dateTo: Date | string = new Date('0001-01-01');
+    address: string = '';
 
     constructor(
         private productService: ProductService,
@@ -35,7 +37,22 @@ export class ProductDetailsComponent implements OnInit {
         private fbIdTokenService: FirebaseIdTokenService,
         private imageService: ImageService,
         private modalService: NgbModal,
+        private mapService: MapService
     ) {
+    }
+
+    ngOnInit(): void {
+        this.route.params.subscribe(
+            {
+                next: (params: Params): void => {
+                    this.loadProduct(params['productId']);
+                },
+                error: (error): void => {
+                    console.error(error);
+                    this.toastNotify.error(`Error fetching data`);
+                }
+            }
+        );
     }
 
     loadProductImages(productId: number): void {
@@ -68,20 +85,6 @@ export class ProductDetailsComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {
-        this.route.params.subscribe(
-            {
-                next: (params: Params): void => {
-                    this.loadProduct(params['productId']);
-                },
-                error: (error): void => {
-                    console.error(error);
-                    this.toastNotify.error(`Error fetching data`);
-                }
-            }
-        );
-    }
-
     getLoggedInUserUid(): string | null {
         const userId: string | undefined = this.fbIdTokenService.getDecodedIdToken()?.user_id;
         if (userId != undefined) {
@@ -95,6 +98,16 @@ export class ProductDetailsComponent implements OnInit {
             {
                 next: (data: Product): void => {
                     this.product = data;
+                    if (data.locationLat && data.locationLng) {
+                        this.mapService.getLocationAddress(data.locationLat, data.locationLng)
+                            .then((result: GeocodeResponse): void => {
+                                const data = result.results[0].components;
+                                this.address = `${data.county}, ${data.village ? data.village : data.city ? data.city : data.town ? data.town : ''}, ${data.country}`;
+                            })
+                            .catch((error): void => {
+                                console.error(error);
+                            });
+                    }
                     this.loadProductImages(this.product.id ? this.product.id : 0);
                 },
                 error: (error): void => {
@@ -145,7 +158,6 @@ export class ProductDetailsComponent implements OnInit {
         // load modal with owner's data
         this.productService.getOwnerInfo(this.product).subscribe({
             next: (user: User): void => {
-                // 200 Ok / Accepted
                 this.owner = user;
                 this.modalService.dismissAll();
                 this.modalService.open(modalContent, { centered: true, scrollable: true, animation: true });
