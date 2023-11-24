@@ -61,6 +61,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         });
         sessionStorage.clear();
         indexedDB.deleteDatabase('firebaseLocalStorageDb');
+        window.location.reload();
     }
 
     toggleDropdown(): void {
