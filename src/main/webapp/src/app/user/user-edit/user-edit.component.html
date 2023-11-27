@@ -4,26 +4,87 @@
 
         <div class="general-data">
             <div class="general-data-form">
-
                 <div class="form-part">
-                    <label for="username" class="form-part-label creative-label">Username</label>
-                    <input type="text"
-                           id="username"
-                           name="username"
-                           [(ngModel)]="user.username"
-                           #username="ngModel"
-                           required minlength="4"
-                           maxlength="50"
-                           class="form-part-input"/>
+                    <div>
+                        <label for="username" class="form-part-label">Username</label>
+                        <input type="text"
+                               id="username"
+                               name="username"
+                               [(ngModel)]="user.username"
+                               #username="ngModel"
+                               required minlength="4"
+                               maxlength="50"
+                               class="form-part-input"/>
 
-                    <sgh-form-ch-lbl [fieldName]="'Username'"
-                                     [required]="true"
-                                     [minlength]="4"
-                                     [maxlength]="50"
-                                     [length]="username.value.length"
-                                     *ngIf="username.invalid && (username.dirty || username.touched)"
-                                     class="form-check-label">
-                    </sgh-form-ch-lbl>
+                        <sgh-form-ch-lbl [fieldName]="'Username'"
+                                         [required]="true"
+                                         [minlength]="4"
+                                         [maxlength]="50"
+                                         [length]="username.value.length"
+                                         *ngIf="username.invalid && (username.dirty || username.touched)"
+                                         class="form-check-label">
+                        </sgh-form-ch-lbl>
+                    </div>
+                    <div>
+                        <label for="email" class="form-part-label">Email</label>
+                        <input type="email"
+                               id="email" name="email"
+                               [(ngModel)]="user.email"
+                               #email="ngModel"
+                               required
+                               minlength="5"
+                               maxlength="100"
+                               class="form-part-input"
+                               disabled="true"/>
+                        <sgh-authentication [changePassword]="true"></sgh-authentication>
+
+                        <sgh-form-ch-lbl [fieldName]="'Email'"
+                                         [required]="true"
+                                         [minlength]="5"
+                                         [maxlength]="100"
+                                         [length]="email.value.length"
+                                         *ngIf="email.invalid && (email.dirty || email.touched)"
+                                         class="form-check-label">
+                        </sgh-form-ch-lbl>
+                    </div>
+                    <div>
+                        <label for="fullName" class="form-part-label">Full Name</label>
+                        <input type="text"
+                               id="fullName"
+                               name="fullName"
+                               [(ngModel)]="user.fullName"
+                               #fullName="ngModel"
+                               minlength="5"
+                               maxlength="100"
+                               class="form-part-input"/>
+
+                        <sgh-form-ch-lbl [fieldName]="'Full Name'"
+                                         [minlength]="5"
+                                         [maxlength]="100"
+                                         [length]="fullName.value.length"
+                                         *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)"
+                                         class="form-check-label">
+                        </sgh-form-ch-lbl>
+                    </div>
+                    <div>
+                        <label for="phone" class="form-part-label">Phone</label>
+                        <input type="text"
+                               id="phone"
+                               name="phone"
+                               [(ngModel)]="user.phoneNumber"
+                               #phone="ngModel"
+                               minlength="9"
+                               maxlength="12"
+                               class="form-part-input"/>
+
+                        <sgh-form-ch-lbl [fieldName]="'Phone'"
+                                         [minlength]="9"
+                                         [maxlength]="12"
+                                         [length]="phone.value.length"
+                                         *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+                                         class="form-check-label">
+                        </sgh-form-ch-lbl>
+                    </div>
                 </div>
 
                 <div class="images form-part">
@@ -31,142 +92,75 @@
                     <sgh-image (fileChange)="onFileChange($event)"
                                [imageIds]="[user.imageId]"
                                [allowMultiple]="false"
-                               [mode]="mode">
+                               [mode]="imageComponentMode">
                     </sgh-image>
                 </div>
 
                 <div class="form-part">
-                    <label for="email" class="form-part-label creative-label">Email</label>
-                    <input type="email"
-                           id="email" name="email"
-                           [(ngModel)]="user.email"
-                           #email="ngModel"
-                           required
-                           minlength="5"
-                           maxlength="100"
-                           class="form-part-input"
-                           disabled="true"/>
-                    <sgh-authentication [changePassword]="true"></sgh-authentication>
-
-                    <sgh-form-ch-lbl [fieldName]="'Email'"
-                                     [required]="true"
-                                     [minlength]="5"
-                                     [maxlength]="100"
-                                     [length]="email.value.length"
-                                     *ngIf="email.invalid && (email.dirty || email.touched)"
-                                     class="form-check-label">
-                    </sgh-form-ch-lbl>
-                </div>
-
-                <div class="form-part">
-                    <label for="fullName" class="form-part-label creative-label">Full Name</label>
-                    <input type="text"
-                           id="fullName"
-                           name="fullName"
-                           [(ngModel)]="user.fullName"
-                           #fullName="ngModel"
-                           minlength="5"
-                           maxlength="100"
-                           class="form-part-input"/>
-
-                    <sgh-form-ch-lbl [fieldName]="'Full Name'"
-                                     [minlength]="5"
-                                     [maxlength]="100"
-                                     [length]="fullName.value.length"
-                                     *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)"
-                                     class="form-check-label">
-                    </sgh-form-ch-lbl>
-                </div>
-
-                <div class="address-group">
-                    <div class="location-header">
-                        <div class="form-heading">Location</div>
+                    <div class="form-heading">
+                        Location
                     </div>
-                    <div class="fields-group">
-                        <div class="form-part">
-                            <label for="address" class="form-part-label creative-label">Address</label>
-                            <input type="text"
-                                   id="address"
-                                   name="address"
-                                   [(ngModel)]="user.address"
-                                   #address="ngModel"
-                                   minlength="5"
-                                   maxlength="100"
-                                   class="form-part-input"/>
+                    <div>
+                        <label for="address" class="form-part-label">Address</label>
+                        <input type="text"
+                               id="address"
+                               name="address"
+                               [(ngModel)]="user.address"
+                               #address="ngModel"
+                               minlength="5"
+                               maxlength="100"
+                               class="form-part-input"/>
 
-                            <sgh-form-ch-lbl [fieldName]="'Address'"
-                                             [minlength]="5"
-                                             [maxlength]="100"
-                                             [length]="address.value.length"
-                                             *ngIf="address.invalid && (address.dirty || address.touched)"
-                                             class="form-check-label">
-                            </sgh-form-ch-lbl>
-                        </div>
+                        <sgh-form-ch-lbl [fieldName]="'Address'"
+                                         [minlength]="5"
+                                         [maxlength]="100"
+                                         [length]="address.value.length"
+                                         *ngIf="address.invalid && (address.dirty || address.touched)"
+                                         class="form-check-label">
+                        </sgh-form-ch-lbl>
+                    </div>
+                    <div>
+                        <label for="city" class="form-part-label">City</label>
+                        <input type="text"
+                               id="city"
+                               name="city"
+                               [(ngModel)]="user.city"
+                               #city="ngModel"
+                               minlength="5"
+                               maxlength="100"
+                               class="form-part-input"/>
 
+                        <sgh-form-ch-lbl [fieldName]="'City'"
+                                         [minlength]="5"
+                                         [maxlength]="100"
+                                         [length]="city.value.length"
+                                         *ngIf="city.invalid && (city.dirty || city.touched)"
+                                         class="form-check-label">
+                        </sgh-form-ch-lbl>
+                    </div>
+                    <div>
+                        <label for="country" class="form-part-label">Country</label>
+                        <input type="text"
+                               id="country"
+                               name="country"
+                               [(ngModel)]="user.country"
+                               #country="ngModel"
+                               minlength="5"
+                               maxlength="100"
+                               class="form-part-input"/>
 
-                        <div class="form-part">
-                            <label for="city" class="form-part-label creative-label">City</label>
-                            <input type="text"
-                                   id="city"
-                                   name="city"
-                                   [(ngModel)]="user.city"
-                                   #city="ngModel"
-                                   minlength="5"
-                                   maxlength="100"
-                                   class="form-part-input"/>
-
-                            <sgh-form-ch-lbl [fieldName]="'City'"
-                                             [minlength]="5"
-                                             [maxlength]="100"
-                                             [length]="city.value.length"
-                                             *ngIf="city.invalid && (city.dirty || city.touched)"
-                                             class="form-check-label">
-                            </sgh-form-ch-lbl>
-                        </div>
-
-                        <div class="form-part">
-                            <label for="country" class="form-part-label creative-label">Country</label>
-                            <input type="text"
-                                   id="country"
-                                   name="country"
-                                   [(ngModel)]="user.country"
-                                   #country="ngModel"
-                                   minlength="5"
-                                   maxlength="100"
-                                   class="form-part-input"/>
-
-                            <sgh-form-ch-lbl [fieldName]="'Country'"
-                                             [minlength]="5"
-                                             [maxlength]="100"
-                                             [length]="country.value.length"
-                                             *ngIf="country.invalid && (country.dirty || country.touched)"
-                                             class="form-check-label">
-                            </sgh-form-ch-lbl>
-                        </div>
+                        <sgh-form-ch-lbl [fieldName]="'Country'"
+                                         [minlength]="5"
+                                         [maxlength]="100"
+                                         [length]="country.value.length"
+                                         *ngIf="country.invalid && (country.dirty || country.touched)"
+                                         class="form-check-label">
+                        </sgh-form-ch-lbl>
                     </div>
                 </div>
-                <div class="form-part">
-                    <label for="phone" class="form-part-label creative-label">Phone</label>
-                    <input type="text"
-                           id="phone"
-                           name="phone"
-                           [(ngModel)]="user.phoneNumber"
-                           #phone="ngModel"
-                           minlength="9"
-                           maxlength="12"
-                           class="form-part-input"/>
-
-                    <sgh-form-ch-lbl [fieldName]="'Phone'"
-                                     [minlength]="9"
-                                     [maxlength]="12"
-                                     [length]="phone.value.length"
-                                     *ngIf="phone.invalid && (phone.dirty || phone.touched)"
-                                     class="form-check-label">
-                    </sgh-form-ch-lbl>
-                </div>
 
                 <div class="form-part">
-                    <label for="bio" class="form-part-label creative-label">Bio</label>
+                    <label for="bio" class="form-part-label">Biography</label>
                     <textarea id="bio"
                               name="bio"
                               [(ngModel)]="user.bio"
@@ -187,12 +181,12 @@
 
                 <div class="edit-btn-holder buttons">
                     <button
-                        class="button-primary button-default save-btn"
-                        type="submit">
+                            class="button-primary button-default save-btn"
+                            type="submit">
                         Update Profile
                     </button>
                     <button class="button-secondary button-default cancel-btn"
-                            (click)="cancelEdit( '/users/' + user.firebaseUid)">
+                            (click)="cancelEdit('/users/'+paramUid)">
                         Cancel
                     </button>
                 </div>

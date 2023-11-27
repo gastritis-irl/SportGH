@@ -111,7 +111,7 @@ export class UserDetailsComponent implements OnInit {
                 continue;
             }
             this.imageService.getImageFilesByProductId(product.id).subscribe({
-                next: (response: { name: string, data: Uint8Array }[]) => {
+                next: (response: { name: string, data: Uint8Array }[]): void => {
                     if (!response) {
                         return;
                     }
@@ -122,8 +122,8 @@ export class UserDetailsComponent implements OnInit {
                                 continue;
                             }
 
-                            const base64String = imageDTO.data;
-                            const imageUrl = 'data:image/jpeg;base64,' + base64String;
+                            const base64String: Uint8Array = imageDTO.data;
+                            const imageUrl: string = 'data:image/jpeg;base64,' + base64String;
                             product.imageDataUrls.push(imageUrl);
                         }
                         product.imagesLoaded = true;
@@ -131,7 +131,7 @@ export class UserDetailsComponent implements OnInit {
                         this.toastNotify.error(`Error loading images: ${error}`);
                     }
                 },
-                error: (error) => {
+                error: (error): void => {
                     this.toastNotify.error(`Error fetching images`, error);
                 }
             });

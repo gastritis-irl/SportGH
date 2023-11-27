@@ -20,7 +20,8 @@ export class UserEditComponent implements OnInit {
     username: string = '';
     user: User = { imageId: 0 };
     newImageFile?: File;
-    mode: 'edit' | 'create' = 'edit';
+    imageComponentMode: 'edit' | 'create' = 'edit';
+    paramUid: string = '';
 
     constructor(
         private userService: UserService,
@@ -36,6 +37,7 @@ export class UserEditComponent implements OnInit {
         this.route.params.subscribe(
             {
                 next: (params: Params): void => {
+                    this.paramUid = params['uid'];
                     this.loadData(params['uid']);
                 },
                 error: (error): void => {
@@ -109,7 +111,7 @@ export class UserEditComponent implements OnInit {
 
     updateUserData(): void {
         if (this.user.id) {
-            this.userService.update(this.user.id, this.user).subscribe(() => {
+            this.userService.update(this.user.id, this.user).subscribe((): void => {
                 this.toastNotify.success('User updated successfully');
             });
         }
@@ -117,7 +119,7 @@ export class UserEditComponent implements OnInit {
 
     onSubmit(): void {
         this.updateUser();
-        this.router.navigate(['/users', this.user.firebaseUid])
+        this.router.navigate([`/users/${this.paramUid}`])
             .catch((error): void => {
                 console.error(error);
                 this.toastNotify.error('Error redirecting to page');
