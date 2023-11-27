@@ -18,15 +18,7 @@ export class UserEditComponent implements OnInit {
     @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
 
     username: string = '';
-    user: User = {
-        id: undefined,
-        username: '',
-        email: '',
-        phoneNumber: '',
-        address: '',
-        imageId: 0,
-        imageDataUrl: undefined
-    };
+    user: User = { imageId: 0 };
     newImageFile?: File;
     mode: 'edit' | 'create' = 'edit';
 

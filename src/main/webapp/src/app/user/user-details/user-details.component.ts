@@ -21,6 +21,7 @@ export class UserDetailsComponent implements OnInit {
     image: string = '';
     products: Product[] = [];
     nrOfItems: number = 0;
+    nrOfPages: number = 0;
 
     constructor(
         private userService: UserService,
@@ -63,6 +64,7 @@ export class UserDetailsComponent implements OnInit {
                         next: (data: ProductPage): void => {
                             this.products = data.products;
                             this.nrOfItems = data.nrOfElements;
+                            this.nrOfPages = data.nrOfPages;
                             this.loadProductImages(this.products);
                         },
                         error: (): void => {

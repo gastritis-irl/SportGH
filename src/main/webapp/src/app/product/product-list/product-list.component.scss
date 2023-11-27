@@ -98,7 +98,6 @@ $card-max-width-large: 280px;
 
         @media (max-width: $breakpoint-small) {
             flex-direction: column;
-            gap: 1.5%;
         }
 
         .product-item {
