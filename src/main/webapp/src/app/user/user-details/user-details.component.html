@@ -1,31 +1,42 @@
 <div class="user-page-holder">
     <div class="user-info-holder">
         <div class="user-avatar">
-            <img class="user-avatar-image" src="{{user.imageDataUrl}}" alt="{{user.username}}">
-            <div *ngIf="user.fullName" class="user-avatar-name">
-                {{user.fullName}}
+            <img class="user-avatar-image" src="{{user.imageDataUrl}}" alt="Image not found">
+            <div class="user-avatar-name">
+                {{user.username}}
             </div>
         </div>
         <div class="user-info">
-            <div class="form-heading">
-                About me
+            <div class="user-info-header">
+                <div class="form-heading">
+                    About me
+                </div>
+                <div class="buttons">
+                    <div class="button-default button-secondary">
+                        Edit profile
+                    </div>
+                </div>
             </div>
             <div class="user-info-part">
-                <div>Email:</div>
+                <div class="user-info-part-heading">Email:</div>
                 <div>{{user.email}}</div>
             </div>
             <div class="user-info-part">
-                <div>Username:</div>
+                <div class="user-info-part-heading">Username:</div>
                 <div>{{user.username}}</div>
             </div>
-            <div *ngIf="user.phoneNumber" class="user-info-part">
-                <div>Phone Number:</div>
-                <div>{{user.phoneNumber}}</div>
+            <div class="user-info-part">
+                <div class="user-info-part-heading">Phone Number:</div>
+                <div *ngIf="user.phoneNumber">{{user.phoneNumber}}</div>
+                <div *ngIf="!user.phoneNumber">---not-set---</div>
             </div>
-            <div *ngIf="user.bio" class="user-info-part">
-                <div>Bio:</div>
-                <div>{{user.bio}}</div>
-            </div>
+        </div>
+    </div>
+
+    <div class="user-info-holder-bio">
+        <div *ngIf="user.bio" class="user-info-part">
+            <div class="form-heading">Biography</div>
+            <div class="user-bio">{{user.bio}}</div>
         </div>
     </div>
 

@@ -1,6 +1,7 @@
 @use '../../../style-variables.scss' as *;
 
-$item-gap: 20px;
+$item-gap: 12px;
+$item-gap-small: 7px;
 
 .user-page-holder {
     display: flex;
@@ -19,25 +20,73 @@ $item-gap: 20px;
         }
 
         .user-avatar {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: $item-gap;
             background-color: $color-neutral-1;
             border-radius: $border-radius;
-            width: 34%;
+            width: 40%;
 
             @media (max-width: $breakpoint-medium) {
                 width: 100%;
+            }
+
+            .user-avatar-image {
+                min-height: 200px;
+                height: 85%;
+            }
+
+            .user-avatar-name {
+                font-weight: $font-weight-bold;
+                font-size: $size-h2;
+                color: $color-main-1;
             }
         }
 
         .user-info {
+            display: flex;
+            flex-direction: column;
             padding: $item-gap;
             background-color: $color-neutral-1;
             border-radius: $border-radius;
-            width: 64%;
+            width: 58%;
+            gap: $item-gap-small;
 
             @media (max-width: $breakpoint-medium) {
                 width: 100%;
             }
+
+            .user-info-header {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .button-default {
+                    text-decoration: underline;
+                }
+            }
+
+            .user-info-part {
+                padding-inline: $item-gap;
+
+                .user-info-part-heading {
+                    font-weight: $font-weight-medium;
+                    font-size: $size-h3;
+                    color: $color-main-1;
+                }
+            }
+        }
+    }
+
+    .user-info-holder-bio {
+        background-color: $color-neutral-1;
+        border-radius: $border-radius;
+        padding: $item-gap;
+
+        .user-bio {
+            padding-inline: $item-gap;
         }
     }
 
