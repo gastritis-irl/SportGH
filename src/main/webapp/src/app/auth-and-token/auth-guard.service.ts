@@ -3,14 +3,13 @@ import { inject } from '@angular/core';
 import { FirebaseIdTokenService } from './firebase-id-token.service';
 import { ProductService } from '../product/product.service';
 import { Product } from '../product/product.model';
-import { Observable, Subscriber } from 'rxjs';
+import { first, map, Observable, tap } from 'rxjs';
 
-function check(statement: boolean): boolean {
+function check(statement: boolean, router?: Router): boolean {
     if (statement) {
         return true;
     } else {
-        inject(Router).navigate(['/']).then((): void => {
-        });
+        (router ?? inject(Router)).navigate(['/']);
         return false;
     }
 }
@@ -28,22 +27,13 @@ export const isAdmin: CanActivateFn = (): boolean => {
 };
 
 export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot): Observable<boolean> => {
-    return new Observable<boolean>((observer: Subscriber<boolean>): void => {
-        !!inject(ProductService).getById(route.params['productId']).subscribe({
-                next: (product: Product): void => {
-                    const isProductValid: boolean = product && product.userId === FirebaseIdTokenService.getDecodedIdToken()?.userId;
-
-                    console.log(isProductValid);
-                    observer.next(isProductValid);
-                    observer.complete();
-                },
-                error:
-                    (error): void => {
-                        console.error('Error fetching product:', error);
-                        observer.next(check(false));
-                        observer.complete();
-                    }
-            }
+    const router: Router = inject(Router);
+    return inject(ProductService).getById(route.params['productId'])
+        .pipe(
+            first(),
+            map((product: Product) => product && product.userId === FirebaseIdTokenService.getDecodedIdToken()?.userId),
+            tap((answer: boolean) =>
+                check(answer, router)
+            )
         );
-    });
 };
