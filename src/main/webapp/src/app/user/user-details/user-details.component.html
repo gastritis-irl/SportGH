@@ -26,6 +26,11 @@
                 <div>{{user.username}}</div>
             </div>
             <div class="user-info-part">
+                <div class="user-info-part-heading">Full Name:</div>
+                <div *ngIf="user.fullName">{{user.fullName}}</div>
+                <div *ngIf="!user.fullName">---not-set---</div>
+            </div>
+            <div class="user-info-part">
                 <div class="user-info-part-heading">Phone Number:</div>
                 <div *ngIf="user.phoneNumber">{{user.phoneNumber}}</div>
                 <div *ngIf="!user.phoneNumber">---not-set---</div>

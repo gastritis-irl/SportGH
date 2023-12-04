@@ -111,8 +111,14 @@ export class UserEditComponent implements OnInit {
 
     updateUserData(): void {
         if (this.user.id) {
-            this.userService.update(this.user.id, this.user).subscribe((): void => {
-                this.toastNotify.success('User updated successfully');
+            this.userService.update(this.user.id, this.user).subscribe({
+                next: (): void => {
+                    this.toastNotify.success('User updated successfully');
+                },
+                error: (error): void => {
+                    this.toastNotify.error('Error updating user');
+                    console.error(error);
+                }
             });
         }
     }

@@ -86,7 +86,7 @@ export class UserDetailsComponent implements OnInit {
     }
 
     loadImage(imageId: number): void {
-        if (imageId) {
+        if (imageId !== 0) {
             this.imageService.getImageFile(imageId).subscribe({
                 next: (blob: Blob): void => {
                     const reader: FileReader = new FileReader();
