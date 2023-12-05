@@ -85,7 +85,7 @@ $map-height: 500px;
 
                     @media (max-width: $breakpoint-small) {
                         display: flex;
-                        flex-direction: column;
+                        flex-direction: row;
                         column-gap: $item-gap-1;
                     }
 
@@ -138,15 +138,15 @@ $map-height: 500px;
 
             .images {
                 display: flex;
-                // gap: $item-gap-1;
+                gap: $item-gap-1;
                 margin-right: $item-gap-1;
                 flex-direction: row;
                 align-items: flex-start;
 
                 img {
-                    max-height: 400px;
+                    //max-height: 400px;
                     width: 100%;
-                    height: 100%;
+                    height: 80%;
                     object-fit: contain;
                     border-radius: $border-radius;
                     cursor: pointer;
@@ -186,7 +186,7 @@ $map-height: 500px;
                         img {
                             margin: 0;
                             width: 100%;
-                            height: 100%;
+                            height: 90%;
                             object-fit: cover;
                             cursor: pointer;
                         }
@@ -221,7 +221,7 @@ $map-height: 500px;
                 color: $color-main-1;
                 flex-grow: 1;
                 flex-shrink: 1;
-                height: 600px;
+                height: 80%;
                 max-height: fit-content;
 
                 @media (max-width: $breakpoint-large) {
@@ -245,8 +245,8 @@ $map-height: 500px;
                 .carousel-item {
                     flex: 0 0 auto;
                     scroll-snap-align: start;
-                    width: 600px;
-                    height: 600px;
+                    width: 80%;
+                    height: 90%;
                     background-color: $color-neutral-1;
                     border: $border;
                     border-radius: $border-radius;
@@ -255,9 +255,8 @@ $map-height: 500px;
 
                     img {
                         max-width: 66%;
-                        height: auto;
-                        max-height: 100%;
-                        min-height: 300px;
+                        max-height: 80%;
+                        //min-height: 200px;
                         object-fit: contain;
                         border-radius: $border-radius;
                     }
@@ -273,7 +272,6 @@ $map-height: 500px;
                 border: $border;
                 padding: $item-padding;
                 gap: $item-gap-1;
-                height: fit-content;
 
                 .rent-options {
 
