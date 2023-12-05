@@ -2,7 +2,6 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { FirebaseIdTokenService } from './firebase-id-token.service';
 import { ProductService } from '../product/product.service';
-import { Product } from '../product/product.model';
 import { first, map, Observable, tap } from 'rxjs';
 
 function check(statement: boolean, router?: Router): boolean {
@@ -28,10 +27,10 @@ export const isAdmin: CanActivateFn = (): boolean => {
 
 export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot): Observable<boolean> => {
     const router: Router = inject(Router);
-    return inject(ProductService).getOwnerById(route.params['productId'])
+    return inject(ProductService).getOwnerIdById(route.params['productId'])
         .pipe(
             first(),
-            map((product: Product) => product && product.userId === FirebaseIdTokenService.getDecodedIdToken()?.userId),
+            map((ownerId: number | null) => ownerId !== null && ownerId === FirebaseIdTokenService.getDecodedIdToken()?.userId),
             tap((answer: boolean) =>
                 check(answer, router)
             )

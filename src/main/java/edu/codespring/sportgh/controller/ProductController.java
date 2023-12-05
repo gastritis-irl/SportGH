@@ -66,15 +66,12 @@ public class ProductController {
     }
 
     @GetMapping(path = "/{productId}/owner")
-    public ResponseEntity<ProductOutDTO> findOwnerById(@PathVariable Long productId) {
-        Product product = productService.findById(productId);
-        if (product == null) {
+    public ResponseEntity<Long> findOwnerIdById(@PathVariable Long productId) {
+        Long ownerId = productService.findOwnerIdById(productId);
+        if (ownerId == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        Product productOut = new Product();
-        productOut.setId(product.getId());
-        productOut.setUser(product.getUser());
-        return new ResponseEntity<>(productMapper.productToOut(productOut), HttpStatus.OK);
+        return new ResponseEntity<>(ownerId, HttpStatus.OK);
     }
 
     @PostMapping

@@ -21,9 +21,9 @@ export class ProductService extends AppService {
         return this.httpGet<Product>(url);
     }
 
-    getOwnerById(id: number): Observable<Product> {
+    getOwnerIdById(id: number): Observable<number | null> {
         const url: string = `${this.baseUrl}/products/${id}/owner`;
-        return this.httpGet<Product>(url);
+        return this.httpGet<number | null>(url);
     }
 
     create(product: Product): Observable<Product> {
