@@ -21,6 +21,8 @@ import { UserModule } from './user/user.module';
 import { FooterComponent } from './shared/footer/footer.component';
 import { SpinnerComponent } from "./shared/loader/spinner.component";
 import { LoadingInterceptor } from "./shared/loader/loading.interceptor";
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { AccessDeniedComponent } from './shared/access-denied/access-denied.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +31,8 @@ import { LoadingInterceptor } from "./shared/loader/loading.interceptor";
     imports: [
         NavbarComponent,
         SpinnerComponent,
+        NotFoundComponent,
+        AccessDeniedComponent,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
         FormsModule,
