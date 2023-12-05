@@ -1,12 +1,18 @@
 @use '../../../style-variables.scss' as *;
 
-$map-height: 500px;
+.map-holder {
+    height: 100%;
 
-.map {
-    width: 100%;
-    height: $map-height;
-    padding: 0;
-    border-radius: $border-radius;
-    border-style: solid;
-    border-color: $color-main-3;
+    .map-part {
+        height: 77%;
+
+        .map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            border-radius: $border-radius;
+            border-style: solid;
+            border-color: $color-main-3;
+        }
+    }
 }
