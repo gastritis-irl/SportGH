@@ -28,7 +28,7 @@ export const isAdmin: CanActivateFn = (): boolean => {
 
 export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot): Observable<boolean> => {
     const router: Router = inject(Router);
-    return inject(ProductService).getById(route.params['productId'])
+    return inject(ProductService).getOwnerById(route.params['productId'])
         .pipe(
             first(),
             map((product: Product) => product && product.userId === FirebaseIdTokenService.getDecodedIdToken()?.userId),
