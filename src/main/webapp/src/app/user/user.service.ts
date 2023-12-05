@@ -5,15 +5,14 @@ import { User } from './user.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
 import { getIdToken } from '@angular/fire/auth';
-import { FirebaseIdTokenService } from '../auth-and-token/firebase-id-token.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService extends AppService {
 
-    constructor(private afAuth: AngularFireAuth, http: HttpClient, fbIdTokenService: FirebaseIdTokenService) {
-        super(http, fbIdTokenService);
+    constructor(private afAuth: AngularFireAuth, http: HttpClient) {
+        super(http);
     }
 
     getByUid(uid: string): Observable<User> {

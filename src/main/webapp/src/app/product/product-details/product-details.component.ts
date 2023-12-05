@@ -34,7 +34,6 @@ export class ProductDetailsComponent implements OnInit {
         private router: Router,
         private viewPortScroller: ViewportScroller,
         private toastNotify: ToastrService,
-        private fbIdTokenService: FirebaseIdTokenService,
         private imageService: ImageService,
         private modalService: NgbModal,
         private mapService: MapService
@@ -86,7 +85,7 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     getLoggedInUserUid(): string | null {
-        const userId: string | undefined = this.fbIdTokenService.getDecodedIdToken()?.user_id;
+        const userId: string | undefined = FirebaseIdTokenService.getDecodedIdToken()?.user_id;
         if (userId != undefined) {
             return userId;
         }
