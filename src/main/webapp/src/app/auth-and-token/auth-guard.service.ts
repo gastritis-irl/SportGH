@@ -2,28 +2,37 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { FirebaseIdTokenService } from './firebase-id-token.service';
 import { ProductService } from '../product/product.service';
-import { Product } from '../product/product.model';
+import { first, map, Observable, tap } from 'rxjs';
 
-export const isLoggedIn: CanActivateFn = (): boolean => {
-    if (inject(FirebaseIdTokenService).getDecodedIdToken()?.user_id) {
+function check(statement: boolean, router?: Router): boolean {
+    if (statement) {
         return true;
     } else {
-        inject(Router).navigate(['']);
+        (router ?? inject(Router)).navigate(['/']);
         return false;
     }
+}
+
+export const isLoggedIn: CanActivateFn = (): boolean => {
+    return check(FirebaseIdTokenService.getDecodedIdToken()?.user_id !== undefined);
+};
+
+export const isCurrentUser: CanActivateFn = (route: ActivatedRouteSnapshot): boolean => {
+    return check(FirebaseIdTokenService.getDecodedIdToken()?.user_id === route.params['uid']);
 };
 
 export const isAdmin: CanActivateFn = (): boolean => {
-    return inject(FirebaseIdTokenService).getDecodedIdToken()?.email === 'admin@test.com';
+    return check(FirebaseIdTokenService.getDecodedIdToken()?.role === 'ADMIN');
 };
 
-export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot): boolean => {
-    return !!inject(ProductService).getById(route.params['productId']).subscribe({
-        next: (product: Product): boolean => {
-            return product.userUid === inject(FirebaseIdTokenService).getDecodedIdToken()?.user_id;
-        },
-        error: (): boolean => {
-            return false;
-        }
-    });
+export const isProductOwner: CanActivateFn = (route: ActivatedRouteSnapshot): Observable<boolean> => {
+    const router: Router = inject(Router);
+    return inject(ProductService).getOwnerIdById(route.params['productId'])
+        .pipe(
+            first(),
+            map((ownerId: number | null) => ownerId !== null && ownerId === FirebaseIdTokenService.getDecodedIdToken()?.userId),
+            tap((answer: boolean) =>
+                check(answer, router)
+            )
+        );
 };
