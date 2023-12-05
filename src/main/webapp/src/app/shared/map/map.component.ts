@@ -47,6 +47,8 @@ export class MapComponent implements OnInit, OnChanges {
             this.marker.setLatLng([this.lat, this.lng]);
             this.resetMarkerOnMap();
             this.getLocationAddress();
+        } else {
+            this.address = '';
         }
     }
 

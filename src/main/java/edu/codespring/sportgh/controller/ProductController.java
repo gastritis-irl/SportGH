@@ -59,7 +59,6 @@ public class ProductController {
                 ),
                 HttpStatus.OK
         );
-
     }
 
     @GetMapping(path = "/{productId}")

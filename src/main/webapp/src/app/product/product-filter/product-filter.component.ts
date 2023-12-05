@@ -5,7 +5,7 @@ import { Subcategory } from '../../subcategory/subcategory.model';
 @Component({
     selector: 'sgh-product-filter',
     templateUrl: './product-filter.component.html',
-    styleUrls: [ './product-filter.component.scss' ],
+    styleUrls: ['./product-filter.component.scss'],
 })
 export class ProductFilterComponent implements OnInit {
 
@@ -18,8 +18,11 @@ export class ProductFilterComponent implements OnInit {
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
     @Input() maxPrice: number = 0;
+    @Input() locationLat: number = 0;
+    @Input() locationLng: number = 0;
+    @Input() locationRadius: number = 0;
 
-    @Output() changesEvent: EventEmitter<[ number, number, string ]> = new EventEmitter<[ number, number, string ]>();
+    @Output() changesEvent: EventEmitter<[number, number, string, number, number, number]> = new EventEmitter<[number, number, string, number, number, number]>();
 
     constructor() {
     }
@@ -28,6 +31,20 @@ export class ProductFilterComponent implements OnInit {
     }
 
     filterBy(): void {
-        this.changesEvent.emit([ this.minPrice, this.maxPrice, this.textSearch ]);
+        this.changesEvent.emit([this.minPrice, this.maxPrice, this.textSearch, this.locationLat, this.locationLng, this.locationRadius]);
+    }
+
+    setRadius(): void {
+        if (this.locationLat && this.locationLng) {
+            this.filterBy();
+        }
+    }
+
+    setLocation(coordinates: [number, number]): void {
+        this.locationLat = coordinates[0];
+        this.locationLng = coordinates[1];
+        if (this.locationRadius) {
+            this.filterBy();
+        }
     }
 }

@@ -34,7 +34,10 @@ export class ProductComponent implements OnInit {
         'Subcategory',
         'MinPrice',
         'MaxPrice',
-        'TextSearch'
+        'TextSearch',
+        'locationLat',
+        'locationLng',
+        'locationRadius'
     ];
     selectedAtLeastOneSubCatOfCat: boolean[] = [];
     categorySelected: boolean[] = [];
@@ -42,6 +45,9 @@ export class ProductComponent implements OnInit {
     textSearch: string = '';
     minPrice: number = 0;
     maxPrice: number = 0;
+    locationLat: number = 0;
+    locationLng: number = 0;
+    locationRadius: number = 0;
 
     constructor(
         private productService: ProductService,
@@ -119,10 +125,13 @@ export class ProductComponent implements OnInit {
         }
     }
 
-    changesEvent(changed: [number, number, string]): void {
+    changesEvent(changed: [number, number, string, number, number, number]): void {
         this.minPrice = changed[0];
         this.maxPrice = changed[1];
         this.textSearch = changed[2];
+        this.locationLat = changed[3];
+        this.locationLng = changed[4];
+        this.locationRadius = changed[5];
         this.setParams();
         this.setQueryParams();
         this.loadData();
@@ -205,6 +214,15 @@ export class ProductComponent implements OnInit {
                             if (paramName === 'MaxPrice') {
                                 this.maxPrice = params[paramName];
                             }
+                            if (paramName === 'locationLat') {
+                                this.locationLat = params[paramName];
+                            }
+                            if (paramName === 'locationLng') {
+                                this.locationLng = params[paramName];
+                            }
+                            if (paramName === 'locationRadius') {
+                                this.locationRadius = params[paramName];
+                            }
                         }
                     }
                     this.setParams();
@@ -228,6 +246,9 @@ export class ProductComponent implements OnInit {
                     TextSearch: this.textSearch,
                     MinPrice: this.minPrice,
                     MaxPrice: this.maxPrice,
+                    locationLat: this.locationLat,
+                    locationLng: this.locationLng,
+                    locationRadius: this.locationRadius
                 },
                 replaceUrl: true,
             }
@@ -274,19 +295,31 @@ export class ProductComponent implements OnInit {
         this.loadData();
     }
 
-    clearFilter(paramName: string): void {
-        if (paramName === 'TextSearch') {
+    clearFilter(paramNameAndFilterCheck: [string, boolean]): void {
+        if (paramNameAndFilterCheck[0] === 'TextSearch') {
             this.textSearch = '';
         }
-        if (paramName === 'MinPrice') {
+        if (paramNameAndFilterCheck[0] === 'MinPrice') {
             this.minPrice = 0;
         }
-        if (paramName === 'MaxPrice') {
+        if (paramNameAndFilterCheck[0] === 'MaxPrice') {
             this.maxPrice = 0;
         }
-        this.setParams();
-        this.setQueryParams();
-        this.loadData();
+        if (paramNameAndFilterCheck[0] === 'locationLat') {
+            this.locationLat = 0;
+        }
+        if (paramNameAndFilterCheck[0] === 'locationLng') {
+            this.locationLng = 0;
+        }
+        if (paramNameAndFilterCheck[0] === 'locationRadius') {
+            this.locationRadius = 0;
+        }
+
+        if (paramNameAndFilterCheck[1]) {
+            this.setParams();
+            this.setQueryParams();
+            this.loadData();
+        }
     }
 
     resetFilters(): void {
@@ -304,6 +337,9 @@ export class ProductComponent implements OnInit {
             TextSearch: '',
             MinPrice: 0,
             MaxPrice: 0,
+            locationLat: 0,
+            locationLng: 0,
+            locationRadius: 0
         };
         this.currentPage = 1;
         this.orderByParam = 'name';
@@ -314,6 +350,9 @@ export class ProductComponent implements OnInit {
         this.textSearch = '';
         this.minPrice = 0;
         this.maxPrice = 0;
+        this.locationLat = 0;
+        this.locationLng = 0;
+        this.locationRadius = 0;
     }
 
     setParams(): void {
@@ -326,6 +365,9 @@ export class ProductComponent implements OnInit {
             TextSearch: this.textSearch,
             MinPrice: this.minPrice,
             MaxPrice: this.maxPrice,
+            locationLat: this.locationLat,
+            locationLng: this.locationLng,
+            locationRadius: this.locationRadius
         };
 
         for (let i: number = 0; i < this.subcategories.length; i++) {
