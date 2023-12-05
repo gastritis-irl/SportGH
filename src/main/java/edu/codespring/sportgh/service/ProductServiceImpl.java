@@ -114,26 +114,10 @@ public class ProductServiceImpl implements ProductService {
                                                     Double locationRadius,
                                                     Specification<Product> specification) {
         Specification<Product> spec = specification;
-        if (locationLat != null) {
+        if (locationLat != null && locationLng != null && locationRadius != null) {
             try {
                 spec = spec.and((root, query, criteriaBuilder) -> {
-                            if (root.get("locationLat") == null || root.get("locationLng") == null) {
-                                return criteriaBuilder.isTrue(criteriaBuilder.literal(false));
-                            }
-
-                            // Haversine formula
-                            double dbLocLat = Double.parseDouble(root.get("locationLat").toString());
-                            double dbLocLng = Double.parseDouble(root.get("locationLng").toString());
-                            double dLat = dbLocLat - locationLat;
-                            double dLng = dbLocLng - locationLng;
-
-                            double r = 6371.0;    // Earth's mean radius in kms
-                            double a = Math.pow(Math.sin(dLat / 2), 2)
-                                    + Math.cos(locationLat) * Math.cos(dbLocLat) * Math.pow(Math.sin(dLng / 2), 2);
-                            double c = 2 * Math.pow(Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)), 2);
-                            double d = r * c;
-
-                            return criteriaBuilder.isTrue(criteriaBuilder.literal(d < locationRadius));
+                            return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
                         }
                 );
             } catch (NumberFormatException e) {
