@@ -18,11 +18,12 @@ export class ProductFilterComponent implements OnInit {
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
     @Input() maxPrice: number = 0;
-    @Input() locationLat: number = 0;
-    @Input() locationLng: number = 0;
-    @Input() locationRadius: number = 0;
+    @Input() locationLat?: number;
+    @Input() locationLng?: number;
+    @Input() locationRadius?: number;
 
-    @Output() changesEvent: EventEmitter<[number, number, string, number, number, number]> = new EventEmitter<[number, number, string, number, number, number]>();
+    @Output() changesEvent: EventEmitter<[number, number, string, number?, number?, number?]> =
+        new EventEmitter<[number, number, string, number?, number?, number?]>();
 
     constructor() {
     }

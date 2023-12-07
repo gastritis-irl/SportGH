@@ -45,9 +45,9 @@ export class ProductComponent implements OnInit {
     textSearch: string = '';
     minPrice: number = 0;
     maxPrice: number = 0;
-    locationLat: number = 0;
-    locationLng: number = 0;
-    locationRadius: number = 0;
+    locationLat?: number = 0;
+    locationLng?: number = 0;
+    locationRadius?: number = 0;
 
     constructor(
         private productService: ProductService,
@@ -125,7 +125,7 @@ export class ProductComponent implements OnInit {
         }
     }
 
-    changesEvent(changed: [number, number, string, number, number, number]): void {
+    changesEvent(changed: [number, number, string, number?, number?, number?]): void {
         this.minPrice = changed[0];
         this.maxPrice = changed[1];
         this.textSearch = changed[2];

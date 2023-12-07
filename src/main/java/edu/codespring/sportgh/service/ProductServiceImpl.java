@@ -114,16 +114,27 @@ public class ProductServiceImpl implements ProductService {
                                                     Double locationRadius,
                                                     Specification<Product> specification) {
         Specification<Product> spec = specification;
-        if (locationLat != null && locationLng != null && locationRadius != null) {
-            try {
-                spec = spec.and((root, query, criteriaBuilder) -> {
-                            return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
-                        }
-                );
-            } catch (NumberFormatException e) {
-                log.error("Error parsing location coordinates to Double", e);
-                return spec;
-            }
+        if (locationLat != 0 && locationLng != 0 && locationRadius != 0) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.and(
+                            criteriaBuilder.and(
+                                    root.get("locationLat").isNotNull(),
+                                    root.get("locationLng").isNotNull()
+                            ),
+                            criteriaBuilder.lessThanOrEqualTo(
+                                    criteriaBuilder.function("ST_Distance_Sphere", Double.class,
+                                            criteriaBuilder.function("Point", Double.class,
+                                                    criteriaBuilder.literal(locationLat),
+                                                    criteriaBuilder.literal(locationLng)
+                                            ),
+                                            criteriaBuilder.function("Point", Double.class,
+                                                    root.get("locationLat"),
+                                                    root.get("locationLng")
+                                            )
+                                    ),
+                                    criteriaBuilder.literal(locationRadius * 1000)
+                            )
+                    ));
         }
         return spec;
     }

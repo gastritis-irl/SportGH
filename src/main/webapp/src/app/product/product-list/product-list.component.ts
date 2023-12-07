@@ -18,9 +18,9 @@ export class ProductListComponent {
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
     @Input() maxPrice: number = 0;
-    @Input() locationLat: number = 0;
-    @Input() locationLng: number = 0;
-    @Input() locationRadius: number = 0;
+    @Input() locationLat?: number;
+    @Input() locationLng?: number;
+    @Input() locationRadius?: number;
     @Input() nrOfPages: number = 0;
     @Input() nrOfItems: number = 0;
     currentPage: number = 1;
