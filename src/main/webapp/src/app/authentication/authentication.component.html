@@ -125,6 +125,7 @@
                 </button>
                 <div class="dropdown-content" *ngIf="showDropdown">
                     <div></div>
+                    <div>{{this.loggedInUserEmail}}</div>
                     <div [routerLink]="['/users/profile']">Profile</div>
                     <div (click)="logout()">Logout</div>
                 </div>
