@@ -1,7 +1,9 @@
 <div class="user-page-holder">
     <div class="user-info-holder">
         <div class="user-avatar">
-            <img class="user-avatar-image" src="{{user.imageDataUrl}}" alt="Image not found">
+            <img *ngIf="user.imageDataUrl" class="user-avatar-image"
+                 src="{{user.imageDataUrl}}"
+                 alt="">
             <div class="user-avatar-name">
                 {{user.username}}
             </div>
@@ -12,7 +14,7 @@
                     About me
                 </div>
                 <div class="buttons">
-                    <div class="button-default button-secondary" routerLink="/users/profile/edit">
+                    <div class="button-default button-primary" routerLink="/users/profile/edit">
                         Edit profile
                     </div>
                 </div>
@@ -27,19 +29,17 @@
             </div>
             <div class="user-info-part">
                 <div class="user-info-part-heading">Full Name:</div>
-                <div *ngIf="user.fullName">{{user.fullName}}</div>
-                <div *ngIf="!user.fullName">---not-set---</div>
+                <div>{{user.fullName ?? '---not-set---'}}</div>
             </div>
             <div class="user-info-part">
                 <div class="user-info-part-heading">Phone Number:</div>
-                <div *ngIf="user.phoneNumber">{{user.phoneNumber}}</div>
-                <div *ngIf="!user.phoneNumber">---not-set---</div>
+                <div>{{user.phoneNumber ?? '---not-set---'}}</div>
             </div>
         </div>
     </div>
 
-    <div class="user-info-holder-bio">
-        <div *ngIf="user.bio" class="user-info-part">
+    <div *ngIf="user.bio" class="user-info-holder-bio">
+        <div class="user-info-part">
             <div class="form-heading">Biography</div>
             <div class="user-bio">{{user.bio}}</div>
         </div>

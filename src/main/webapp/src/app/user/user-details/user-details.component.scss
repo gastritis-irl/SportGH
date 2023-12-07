@@ -64,17 +64,16 @@ $item-gap-small: 7px;
                 justify-content: space-between;
 
                 .button-default {
-                    text-decoration: underline;
+                    font-weight: $font-weight-bold;
                 }
             }
 
             .user-info-part {
-                padding-inline: $item-gap;
+                color: $color-main-1;
 
                 .user-info-part-heading {
-                    font-weight: $font-weight-medium;
+                    font-weight: $font-weight-bold;
                     font-size: $size-h3;
-                    color: $color-main-1;
                 }
             }
         }

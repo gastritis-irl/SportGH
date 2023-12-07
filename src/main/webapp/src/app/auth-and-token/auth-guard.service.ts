@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { FirebaseIdTokenService } from './firebase-id-token.service';
 import { ProductService } from '../product/product.service';
 import { first, map, Observable, tap } from 'rxjs';
+import { IdToken } from './firebase-id-token.model';
 
 function check(statement: boolean, router?: Router): boolean {
     if (statement) {
@@ -18,7 +19,10 @@ export const isLoggedIn: CanActivateFn = (): boolean => {
 };
 
 export const isCurrentUser: CanActivateFn = (route: ActivatedRouteSnapshot): boolean => {
-    return check(FirebaseIdTokenService.getDecodedIdToken()?.user_id === route.params['uid']);
+    const uid: string | undefined = route.params['uid'];
+    const token: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
+
+    return (token && uid === 'profile') || uid === token?.user_id || token?.role === 'ADMIN';
 };
 
 export const isAdmin: CanActivateFn = (): boolean => {
