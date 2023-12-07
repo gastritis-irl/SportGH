@@ -1,12 +1,13 @@
 package edu.codespring.sportgh.model;
 
 
-import edu.codespring.sportgh.mapper.JsonConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -30,7 +31,6 @@ public class SubCategory extends BaseEntity {
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "subCategory")
     private Set<Product> products;
 
-    @Column(name="properties_list", columnDefinition = "json")
-    @Convert(converter = JsonConverter.class)
-    private Map<String, String> propertyFields;
+    @JdbcTypeCode(SqlTypes.JSON)
+    private List<CustomFieldConfig> customFields;
 }

@@ -1,12 +1,13 @@
 package edu.codespring.sportgh.dto;
 
+import edu.codespring.sportgh.model.CustomFieldConfig;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.util.Map;
+import java.util.List;
 
 @Valid
 @Data
@@ -23,6 +24,6 @@ public class SubCategoryInDTO {
     @NotNull(message = "Category must be given")
     private Long categoryId;
 
-    private Map<String, String> propertiesList;
+    private List<CustomFieldConfig> customFields;
 }
 
