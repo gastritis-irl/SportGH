@@ -70,6 +70,15 @@ public class ProductController {
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/{productId}/owner")
+    public ResponseEntity<Long> findOwnerIdById(@PathVariable Long productId) {
+        Long ownerId = productService.findOwnerIdById(productId);
+        if (ownerId == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(ownerId, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<ProductOutDTO> create(@RequestBody @Valid ProductInDTO productInDTO) {
         log.info("Creating product with name: {}.", productInDTO.getName());

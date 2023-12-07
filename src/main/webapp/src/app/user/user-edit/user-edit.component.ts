@@ -6,6 +6,7 @@ import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { ImageComponent } from '../../shared/image/image.component';
 import { Image } from '../../shared/image/image.model';
+import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.service';
 
 @Component({
     selector: 'sgh-user-edit',
@@ -14,7 +15,7 @@ import { Image } from '../../shared/image/image.model';
 })
 export class UserEditComponent implements OnInit {
 
-    @ViewChild(ImageComponent, {static: false}) imageComponent?: ImageComponent;
+    @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
 
     username: string = '';
     user: User = {
@@ -34,7 +35,9 @@ export class UserEditComponent implements OnInit {
         private toastNotify: ToastrService,
         private route: ActivatedRoute,
         private imageService: ImageService,
-        private router: Router) {
+        private fbIdTokenService: FirebaseIdTokenService,
+        private router: Router,
+    ) {
     }
 
     ngOnInit(): void {
@@ -60,15 +63,24 @@ export class UserEditComponent implements OnInit {
     }
 
     loadData(uid: string | undefined): void {
+        if (uid === 'profile') {
+            uid = this.fbIdTokenService.getDecodedIdToken()?.user_id;
+        }
         if (uid) {
             this.userService.getByUid(uid).subscribe({
                 next: (data: User): void => {
                     this.user = data;
                 },
-                error: (): void => {
-                    this.toastNotify.error(`Error fetching data`);
+                error: (error): void => {
+                    if (error.status === 401) {
+                        this.router.navigate(['/']);
+                    } else {
+                        this.toastNotify.error(`Error fetching data`);
+                    }
                 }
             });
+        } else {
+            this.router.navigate(['/']);
         }
     }
 

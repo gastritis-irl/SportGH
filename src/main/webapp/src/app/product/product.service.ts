@@ -21,6 +21,11 @@ export class ProductService extends AppService {
         return this.httpGet<Product>(url);
     }
 
+    getOwnerIdById(id: number): Observable<number | null> {
+        const url: string = `${this.baseUrl}/products/${id}/owner`;
+        return this.httpGet<number | null>(url);
+    }
+
     create(product: Product): Observable<Product> {
         const url: string = `${this.baseUrl}/products`;
         return this.httpPost(url, { body: product });

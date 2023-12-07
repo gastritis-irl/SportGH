@@ -11,6 +11,8 @@ public interface ProductService {
 
     Product findById(Long productId);
 
+    Long findOwnerIdById(Long productId);
+
     ResponseEntity<ProductOutDTO> saveInDTO(ProductInDTO productOutDTO);
 
     ProductPageOutDTO findPageByParams(

@@ -18,11 +18,11 @@ export class AppService {
 
     protected readonly baseUrl: string = `${environment.baseURL}/api`;
 
-    constructor(protected http: HttpClient, protected fbIdTokenService: FirebaseIdTokenService) {
+    constructor(protected http: HttpClient) {
     }
 
     protected setHeaders(): HttpHeaders {
-        const idToken: string | null = this.fbIdTokenService.getIdToken();
+        const idToken: string | null = FirebaseIdTokenService.getIdToken();
         if (idToken == null || idToken == '') {
             return new HttpHeaders();
         } else {

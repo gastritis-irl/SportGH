@@ -195,6 +195,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Long findOwnerIdById(Long productId) {
+        return productRepository.findUserIdById(productId);
+    }
+
+    @Override
     public boolean notExistsByNameAndUser(String name, User user) {
         return !productRepository.existsByNameAndUser(name, user);
     }

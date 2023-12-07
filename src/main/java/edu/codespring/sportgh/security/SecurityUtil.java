@@ -30,4 +30,8 @@ public class SecurityUtil {
             return false;
         }
     }
+
+    public static boolean isAdmin() {
+        return ROLE_ADMIN.equals(getCurrentUser().getRole());
+    }
 }
