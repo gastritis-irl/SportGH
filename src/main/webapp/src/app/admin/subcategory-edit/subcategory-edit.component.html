@@ -25,7 +25,49 @@
                     </div>
                 </div>
             </div>
-
+            <div *ngIf="editMode">
+                <div class="form-part">
+                    <div class="list-manage-holder no-inline-padding">
+                        <div class="list-manage">
+                            <div class="title">Custom fields</div>
+                            <div class="buttons">
+                                <div class="button-default button-primary" routerLink="/admin/categories/{{subcategory.id}}/subcategories/new">Create new custom field +</div>
+                            </div>
+                            <div class="list-elements">
+                                <div class="list-element" *ngFor="let customField of subcategory.customFields; let i = index">
+                                    <div class="name row-item">
+                                        {{subcategory.name}}
+                                        <input class="form-part-input"
+                                               type="text" name="name"
+                                               [(ngModel)]="subcategory.name"
+                                               #name="ngModel"
+                                        >
+                                    </div>
+                                    <div ngbDropdown class="name row-item">
+                                        <button type="button" class="nav-link" ngbDropdownToggle>Type</button>
+                                        <div ngbDropdownMenu>
+<!--                                            <div *ngFor="let subcategory of subcategories">-->
+<!--                                                <div class="nav-link-item" ngbDropdownItem>{{subcategory.name}}</div>-->
+<!--                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="row-item">
+                                        <div class="buttons">
+                                            <div class="button-default button-primary" routerLink="/admin/categories/{{subcategory.id}}/subcategories/{{subcategory.id}}">
+                                                Edit
+                                            </div>
+                                        </div>
+                                        <sgh-popover-delete
+                                                [deleteData]="[subcategory.id?subcategory.id:0, i]"
+                                                (deleteEvent)="deleteCustomField($event, subcategory.categoryId)"
+                                        ></sgh-popover-delete>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="edit-btn-holder buttons">
                 <button
                         class="button-primary button-default save-btn"

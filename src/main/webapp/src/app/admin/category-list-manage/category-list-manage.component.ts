@@ -43,6 +43,7 @@ export class CategoryListManageComponent implements OnInit {
         this.subcategoryService.getAll().subscribe({
             next: (data: Subcategory[]) => {
                 this.subcategories = data;
+                console.log(data);
             },
             error: (error) => {
                 console.error(error);
