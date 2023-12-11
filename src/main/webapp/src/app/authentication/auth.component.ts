@@ -32,13 +32,12 @@ export class AuthComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private afAuth: AngularFireAuth,
         private toastNotify: ToastrService,
-        private firebaseIdTokenService: FirebaseIdTokenService,
         protected authService: AuthService
     ) {
     }
 
     ngOnInit(): void {
-        const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
+        const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
         if (idToken) {
             this.loggedInUserEmail = idToken.email;
             this.loggedInUserName = this.loggedInUserEmail;
@@ -71,6 +70,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         });
         sessionStorage.clear();
         indexedDB.deleteDatabase('firebaseLocalStorageDb');
+        window.location.reload();
     }
 
     toggleDropdown(): void {
@@ -121,7 +121,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                                 // Use the email directly here before clearing the form
                                 this.loggedInUserEmail = this.email;
                                 this.loggedInUserName = this.loggedInUserEmail;
-                                const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
+                                const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
                                 if (idToken) {
                                     this.loggedInUserFirebaseId = idToken?.user_id;
                                 }
@@ -154,7 +154,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                                 this.loggedInUserEmail = this.email;
                                 this.loggedInUserName = this.loggedInUserEmail;
 
-                                const idToken: IdToken | null = this.firebaseIdTokenService.getDecodedIdToken();
+                                const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
                                 if (idToken) {
                                     this.loggedInUserFirebaseId = idToken?.user_id;
                                 }
