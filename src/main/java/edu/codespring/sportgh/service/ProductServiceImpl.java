@@ -4,6 +4,7 @@ import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
+import edu.codespring.sportgh.model.FilterOptions;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
@@ -140,45 +141,35 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductPageOutDTO findPageByParams(
-            String orderBy,
-            String direction,
-            int pageNumber,
-            String[] subcategoryNames,
-            Double minPrice,
-            Double maxPrice,
-            String textSearch,
-            Double locationLat,
-            Double locationLng,
-            Double locationRadius,
-            Long userId
-    ) {
+    public ProductPageOutDTO findPageByParams(FilterOptions filterOptions) {
         Specification<Product> specification = Specification.where(null);
 
         Pageable pageable;
-        if (orderBy == null) {
-            pageable = PageRequest.of(pageNumber - 1, pageSize);
+        if (filterOptions.getOrderBy() == null) {
+            pageable = PageRequest.of(filterOptions.getPageNumber() - 1, pageSize);
         } else {
-            if (direction == null) {
+            if (filterOptions.getDirection() == null) {
                 pageable = PageRequest.of(
-                        pageNumber - 1,
+                        filterOptions.getPageNumber() - 1,
                         pageSize,
-                        Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
+                        Sort.by(Sort.DEFAULT_DIRECTION, filterOptions.getOrderBy())
                 );
             } else {
                 pageable = PageRequest.of(
-                        pageNumber - 1,
+                        filterOptions.getPageNumber() - 1,
                         pageSize,
-                        Sort.by(Sort.Direction.fromString(direction), orderBy)
+                        Sort.by(Sort.Direction.fromString(filterOptions.getDirection()),
+                                filterOptions.getOrderBy())
                 );
             }
         }
 
-        specification = filterByUserId(userId, specification);
-        specification = filterBySubcategories(subcategoryNames, specification);
-        specification = filterByPrice(minPrice, maxPrice, specification);
-        specification = filterByTextInNameOrDescription(textSearch, specification);
-        specification = filterByLocation(locationLat, locationLng, locationRadius, specification);
+        specification = filterByUserId(filterOptions.getUserId(), specification);
+        specification = filterBySubcategories(filterOptions.getSubcategoryNames(), specification);
+        specification = filterByPrice(filterOptions.getMinPrice(), filterOptions.getMaxPrice(), specification);
+        specification = filterByTextInNameOrDescription(filterOptions.getTextSearch(), specification);
+        specification = filterByLocation(filterOptions.getLocationLat(), filterOptions.getLocationLng(),
+                filterOptions.getLocationRadius(), specification);
 
         Page<Product> page = productRepository.findAll(specification, pageable);
 

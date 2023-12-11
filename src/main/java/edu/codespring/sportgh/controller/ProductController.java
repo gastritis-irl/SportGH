@@ -4,6 +4,7 @@ import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
+import edu.codespring.sportgh.model.FilterOptions;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.ProductService;
@@ -11,11 +12,14 @@ import edu.codespring.sportgh.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -31,34 +35,13 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
-            @RequestParam("orderBy") Optional<String> orderBy,
-            @RequestParam("direction") Optional<String> direction,
-            @RequestParam("pageNumber") Optional<Integer> pageNumber,
-            @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
-            @RequestParam("MinPrice") Optional<Double> minPrice,
-            @RequestParam("MaxPrice") Optional<Double> maxPrice,
-            @RequestParam("TextSearch") Optional<String> textSearch,
-            @RequestParam("userId") Optional<Long> userId,
-            @RequestParam("locationLat") Optional<Double> locationLat,
-            @RequestParam("locationLng") Optional<Double> locationLng,
-            @RequestParam("locationRadius") Optional<Double> locationRadius
+            @RequestParam Map<String, String> params,
+            @RequestParam(value = "Subcategory", required = false) String[] subCategoryNames,
+            ModelMapper modelMapper
     ) {
-        return new ResponseEntity<>(
-                productService.findPageByParams(
-                        orderBy.orElse(null),
-                        direction.orElse(null),
-                        pageNumber.orElse(1),
-                        subcategoryNames.orElse(null),
-                        minPrice.orElse(null),
-                        maxPrice.orElse(null),
-                        textSearch.orElse(null),
-                        locationLat.orElse(null),
-                        locationLng.orElse(null),
-                        locationRadius.orElse(null),
-                        userId.orElse(null)
-                ),
-                HttpStatus.OK
-        );
+        FilterOptions filterOptions = modelMapper.map(params, FilterOptions.class);
+        filterOptions.setSubcategoryNames(subCategoryNames);
+        return new ResponseEntity<>(productService.findPageByParams(filterOptions), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{productId}")
