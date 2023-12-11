@@ -1,7 +1,9 @@
+import { customFieldConfig } from './customFieldConfig.model';
+
 export interface Subcategory {
 
     id?: number;
     name?: string;
     categoryId?: number;
-    customFields?: undefined;
+    customFields: customFieldConfig[];
 }

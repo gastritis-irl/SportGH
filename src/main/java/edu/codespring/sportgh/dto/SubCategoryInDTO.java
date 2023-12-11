@@ -1,6 +1,7 @@
 package edu.codespring.sportgh.dto;
 
 import edu.codespring.sportgh.model.CustomFieldConfig;
+import jakarta.persistence.Column;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ public class SubCategoryInDTO {
     @NotNull(message = "Category must be given")
     private Long categoryId;
 
+    @Column(unique = true)
     private List<CustomFieldConfig> customFields;
 }
 

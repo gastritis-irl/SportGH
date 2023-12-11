@@ -1,8 +1,12 @@
 package edu.codespring.sportgh.model;
 
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@ToString
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomFieldConfig {
     private String name;
     private CustomFieldType type;
