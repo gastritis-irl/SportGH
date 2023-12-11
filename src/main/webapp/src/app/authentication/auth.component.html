@@ -3,11 +3,11 @@
         <p class="title">Login</p>
         <p class="message">Enter your login credentials below.</p>
         <label>
-            <input class="input" type="email" required [(ngModel)]="email" name="email">
+            <input class="input" type="email" required [(ngModel)]="email" name="email" autocomplete="username">
             <span>Email</span>
         </label>
         <label>
-            <input class="input" type="password" required [(ngModel)]="password" name="password">
+            <input class="input" type="password" required [(ngModel)]="password" name="password" autocomplete="current-password">
             <span>Password</span>
         </label>
         <p class="account-yet"><a (click)="openModal(forgotPassword)">Forgot password?</a></p>
@@ -27,7 +27,16 @@
         </div>
         <div class="formGroup">
             <button type="button" (click)="authService.GoogleAuth()">
-                Log in with Google
+                <div class="g-signin2" data-onsuccess="onSignIn">Google</div>
+
+                <svg width="20" viewBox="0 0 20 20" height="20" fill="none"
+                     class="svg-icon">
+                    <g stroke-width="1.5" stroke-linecap="round">
+                        <circle r="7.5" cy="10" cx="10"></circle>
+                        <path d="m9.99998 7.5v5"></path>
+                        <path d="m7.5 9.99998h5"></path>
+                    </g>
+                </svg>
             </button>
         </div>
         <p class="account-yet">Don't have an account? <a (click)="openModal(signupContent)">Sign up</a></p>
@@ -39,11 +48,11 @@
         <p class="title">Sign up</p>
         <p class="message">Signup now and get full access to our app. </p>
         <label>
-            <input class="input" type="email" required [(ngModel)]="email" name="email">
+            <input class="input" type="email" required [(ngModel)]="email" name="email" autocomplete="username">
             <span>Email</span>
         </label>
         <label>
-            <input class="input" type="password" required [(ngModel)]="password" name="password">
+            <input class="input" type="password" required [(ngModel)]="password" name="password" autocomplete="current-password">
             <span>Password</span>
         </label>
         <div class="buttons">

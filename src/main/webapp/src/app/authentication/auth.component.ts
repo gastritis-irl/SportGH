@@ -51,6 +51,14 @@ export class AuthComponent implements OnInit, OnDestroy {
         indexedDB.deleteDatabase('firebaseLocalStorageDb');
     }
 
+    onSignIn(googleUser) {
+        const profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    }
+
     logout(): void {
         this.afAuth.signOut().then((): void => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
