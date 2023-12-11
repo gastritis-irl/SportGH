@@ -147,8 +147,8 @@ export class SubcategoryEditComponent implements OnInit {
         );
     }
 
-    onSelectChange(event: any, i: number) {
-        this.selectedFields[i] = event.target.value;
+    onSelectChange(event: Event, i: number) {
+        this.selectedFields[i] = (event.target as HTMLInputElement).value;
         console.log(this.selectedFields);
     }
 
