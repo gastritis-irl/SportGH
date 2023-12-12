@@ -44,16 +44,11 @@
                                 </div>
                                 <div class="name row-item">
                                     <select class="nav-link" (change)="onSelectChange($event, i)">
-                                        <option value="" disabled selected>{{subcategory.customFields[i].type}}</option>
-                                        <option *ngFor="let value of Object.values(CustomFieldType)" [value]="value">{{ value }}</option>
+                                        <option value="" disabled selected>{{subcategory.customFields[i].type[0] + subcategory.customFields[i].type.slice(1).toLowerCase()}}</option>
+                                        <option *ngFor="let value of Object.values(CustomFieldType)" [value]="value">{{ value[0] + value.slice(1).toLowerCase() }}</option>
                                     </select>
                                 </div>
                                 <div class="row-item">
-<!--                                        <div class="buttons">-->
-<!--                                            <div class="button-default button-primary" routerLink="/admin/categories/{{subcategory.id}}/subcategories/{{subcategory.id}}">-->
-<!--                                                Edit-->
-<!--                                            </div>-->
-<!--                                        </div>-->
                                     <sgh-popover-delete
                                             [deleteData]="[i]"
                                             (deleteEvent)="deleteCustomField($event)"

@@ -82,9 +82,9 @@ export class SubcategoryEditComponent implements OnInit {
     checkInputFields(): void {
         if (this.inputFields) {
             this.inputFields.forEach((input: ElementRef, i: number) => {
-                this.subcategory.customFields[i].name = input.nativeElement.value
+                this.subcategory.customFields[i].name = input.nativeElement.value;
                 if (this.selectedFields[i]) {
-                    this.subcategory.customFields[i].type = <CustomFieldType>this.selectedFields[i]
+                    this.subcategory.customFields[i].type = <CustomFieldType>this.selectedFields[i];
                 }
             });
             this.subcategory.customFields = this.subcategory.customFields.filter(field => field.name !== '');
