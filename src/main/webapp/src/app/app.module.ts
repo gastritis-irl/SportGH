@@ -21,7 +21,7 @@ import { UserModule } from './user/user.module';
 import { FooterComponent } from './shared/footer/footer.component';
 import { SpinnerComponent } from './shared/loader/spinner.component';
 import { LoadingInterceptor } from './shared/loader/loading.interceptor';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AuthInterceptor } from './auth-and-token/auth-interceptor';
 
 @NgModule({
     declarations: [
@@ -48,11 +48,16 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
         ToastrModule.forRoot({
             timeOut: 10000,
         }),
-        AngularFirestoreModule
     ],
-    providers: [ImageService, {
-        provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
-    }],
+    providers: [
+        ImageService,
+        {
+            provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
