@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
 import { UserService } from '../user/user.service';
 import { getIdToken } from '@angular/fire/auth';
+import { GoogleAuthProvider } from '@angular/fire/auth'
 
 @Injectable({
     providedIn: 'root',
@@ -38,7 +39,9 @@ export class AuthService {
     }
 
     async googleSignin() {
-        const provider = new firebase.auth.GoogleAuthProvider();
+        const provider = new GoogleAuthProvider()
+        provider.addScope('profile');
+        provider.addScope('email');
         const credential = await this.afAuth.signInWithPopup(provider);
         const idToken: string = await getIdToken(credential.user!);
         return this.updateUserData(credential.user, idToken);
