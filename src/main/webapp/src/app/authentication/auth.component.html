@@ -26,17 +26,8 @@
             </div>
         </div>
         <div class="formGroup">
-            <button type="button" (click)="authService.GoogleAuth()">
-                <div class="g-signin2" data-onsuccess="onSignIn">Google</div>
-
-                <svg width="20" viewBox="0 0 20 20" height="20" fill="none"
-                     class="svg-icon">
-                    <g stroke-width="1.5" stroke-linecap="round">
-                        <circle r="7.5" cy="10" cx="10"></circle>
-                        <path d="m9.99998 7.5v5"></path>
-                        <path d="m7.5 9.99998h5"></path>
-                    </g>
-                </svg>
+            <button type="button" (click)="authService.googleSignin()">
+                Log in with Google
             </button>
         </div>
         <p class="account-yet">Don't have an account? <a (click)="openModal(signupContent)">Sign up</a></p>

@@ -41,6 +41,18 @@ export class UserService extends AppService {
         return this.http.post<{ idToken: string }>(url, { email, idToken });
     }
 
+    async signUpWithGoogle(idToken: string, email: string): Promise<Observable<{ idToken: string }>> {
+        sessionStorage.setItem('firebaseIdToken', idToken);
+        const url: string = `${this.baseUrl}/auth/signup`;
+        return this.http.post<{ idToken: string; }>(url, { email, idToken });
+    }
+
+    async signInWithGoogle(idToken: string, email: string): Promise<Observable<{ idToken: string }>> {
+        sessionStorage.setItem('firebaseIdToken', idToken);
+        const url: string = `${this.baseUrl}/auth/login`;
+        return this.http.post<{ idToken: string; }>(url, { email, idToken });
+    }
+
     async signInForCustomClaims(customToken: string): Promise<void> {
         const userCredentials = await this.afAuth.signInWithCustomToken(customToken);
         const idToken: string = await getIdToken(userCredentials.user!);
