@@ -3,7 +3,6 @@
 div {
   height: 100vh;
   text-align: center;
-  padding: 20px;
   background-color: $color-neutral-1;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -22,7 +21,6 @@ p {
 
 img {
     width: 100px;
-    height: 100px;
     margin-top: 20px;
     margin-bottom: 20px;
     content: $not-found;

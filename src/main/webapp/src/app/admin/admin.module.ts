@@ -10,6 +10,8 @@ import { FormCheckLabelComponent } from '../shared/form-check-labels/form-check-
 import { PopoverDeleteComponent } from '../shared/popover/popover-delete.component';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
 import {SubcategoryEditComponent} from "./subcategory-edit/subcategory-edit.component";
+import {ErrorInterceptor} from "../error.interceptor";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -17,7 +19,9 @@ import {SubcategoryEditComponent} from "./subcategory-edit/subcategory-edit.comp
         CategoryEditComponent,
         SubcategoryEditComponent,
     ],
-    providers: [],
+    providers: [{
+        provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true
+    }],
     bootstrap: [],
     imports: [
         AdminRoute,

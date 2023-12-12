@@ -23,6 +23,8 @@ import { SpinnerComponent } from "./shared/loader/spinner.component";
 import { LoadingInterceptor } from "./shared/loader/loading.interceptor";
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { AccessDeniedComponent } from './shared/access-denied/access-denied.component';
+import {ErrorInterceptor} from "./error.interceptor";
+
 
 @NgModule({
     declarations: [
@@ -37,7 +39,6 @@ import { AccessDeniedComponent } from './shared/access-denied/access-denied.comp
         AngularFireAuthModule,
         FormsModule,
         BrowserModule,
-        AppRoutingModule,
         HttpClientModule,
         NgbModule,
         HomeModule,
@@ -45,6 +46,7 @@ import { AccessDeniedComponent } from './shared/access-denied/access-denied.comp
         CategoryModule,
         AdminModule,
         UserModule,
+        AppRoutingModule,
         NavbarComponent,
         FooterComponent,
         BrowserAnimationsModule,
@@ -53,7 +55,9 @@ import { AccessDeniedComponent } from './shared/access-denied/access-denied.comp
         }),
     ],
     providers: [ImageService, {
-        provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+        provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+        {
+        provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true
     }],
     bootstrap: [AppComponent]
 })
