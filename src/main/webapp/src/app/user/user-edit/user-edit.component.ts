@@ -35,7 +35,6 @@ export class UserEditComponent implements OnInit {
         private toastNotify: ToastrService,
         private route: ActivatedRoute,
         private imageService: ImageService,
-        private fbIdTokenService: FirebaseIdTokenService,
         private router: Router,
     ) {
     }
@@ -64,7 +63,7 @@ export class UserEditComponent implements OnInit {
 
     loadData(uid: string | undefined): void {
         if (uid === 'profile') {
-            uid = this.fbIdTokenService.getDecodedIdToken()?.user_id;
+            uid = FirebaseIdTokenService.getDecodedIdToken()?.user_id;
         }
         if (uid) {
             this.userService.getByUid(uid).subscribe({
