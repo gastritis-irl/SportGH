@@ -85,7 +85,7 @@ $map-height: 500px;
 
                     @media (max-width: $breakpoint-small) {
                         display: flex;
-                        flex-direction: row;
+                        flex-direction: column;
                         column-gap: $item-gap-1;
                     }
 
