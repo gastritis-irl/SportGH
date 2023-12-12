@@ -117,7 +117,8 @@ export class AuthComponent implements OnInit, OnDestroy {
             await this.afAuth.signInWithPopup(provider).then(
                 async (result: firebase.auth.UserCredential) => {
                     if (result.credential == null) {
-                        console.log('credential is null');
+                        console.error('credential is null');
+                        this.toastNotify.error('Error during Google Login');
                         return;
                     }
                     const credential = result
@@ -131,7 +132,10 @@ export class AuthComponent implements OnInit, OnDestroy {
                     }
                 },
                 (error) => {
-                    console.log('error', error);
+                    if(error.code === 'auth/popup-closed-by-user') {
+                        return;
+                    }
+                    console.error('error', error);
                     this.toastNotify.error('Google login failed', error);
                     return;
                 }
@@ -202,6 +206,9 @@ export class AuthComponent implements OnInit, OnDestroy {
                     }
                 },
                 (error) => {
+                    if(error.code === 'auth/popup-closed-by-user') {
+                        return;
+                    }
                     console.log('error', error);
                     this.toastNotify.error('Error during Google Signup');
                     return;
