@@ -12,8 +12,7 @@
                 <div>
                     Search
                 </div>
-                <div *ngIf="!isExpanded[i]">&darr;</div>
-                <div *ngIf="isExpanded[i]">&uarr;</div>
+                <div>{{isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595)}}</div>
             </div>
         </div>
         <div [(ngbCollapse)]="!isExpanded[i]">
@@ -42,8 +41,7 @@
                 <div>
                     Location
                 </div>
-                <div *ngIf="!isExpanded[i]">&darr;</div>
-                <div *ngIf="isExpanded[i]">&uarr;</div>
+                <div>{{isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595)}}</div>
             </div>
         </div>
         <div [(ngbCollapse)]="!isExpanded[i]">
@@ -76,8 +74,7 @@
                 <div>
                     Categories
                 </div>
-                <div *ngIf="!isExpanded[i]">&darr;</div>
-                <div *ngIf="isExpanded[i]">&uarr;</div>
+                <div>{{isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595)}}</div>
             </div>
         </div>
         <div [(ngbCollapse)]="!isExpanded[i]">
@@ -104,8 +101,7 @@
                 <div>
                     Price
                 </div>
-                <div class="isCollapsed" *ngIf="!isExpanded[i]">&darr;</div>
-                <div class="notIsCollapsed" *ngIf="isExpanded[i]">&uarr;</div>
+                <div>{{isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595)}}</div>
             </div>
         </div>
         <div [(ngbCollapse)]="!isExpanded[i]">

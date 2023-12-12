@@ -9,6 +9,7 @@ import { Subcategory } from '../../subcategory/subcategory.model';
 })
 export class ProductFilterComponent implements OnInit {
 
+    protected readonly String: StringConstructor = String;
     isExpanded: boolean[] = [];
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
