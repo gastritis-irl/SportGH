@@ -32,5 +32,6 @@ public class SubCategory extends BaseEntity {
     private Set<Product> products;
 
     @JdbcTypeCode(SqlTypes.JSON)
+    @Column(unique = true)
     private List<CustomFieldConfig> customFields;
 }

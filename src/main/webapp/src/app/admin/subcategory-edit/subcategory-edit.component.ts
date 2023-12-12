@@ -141,7 +141,6 @@ export class SubcategoryEditComponent implements OnInit {
 
     deleteCustomField(customFieldIndex: number[]): void {
         this.subcategory.customFields = this.subcategory.customFields.slice(0, customFieldIndex[0]).concat(this.subcategory.customFields.slice(customFieldIndex[0] + 1));
-        console.log(this.subcategory.customFields);
     }
 
     onSelectChange(event: Event, i: number) {
