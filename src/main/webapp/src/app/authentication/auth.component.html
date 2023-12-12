@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="formGroup">
-            <button type="button" (click)="authService.googleSignin()">
+            <button type="button" (click)="this.googleLogin()">
                 Log in with Google
             </button>
         </div>
@@ -60,6 +60,11 @@
                     Sign up
                 </button>
             </div>
+        </div>
+        <div class="formGroup">
+            <button type="button" (click)="this.googleSignup()">
+                Sign-up with Google
+            </button>
         </div>
         <p class="account-yet">Already have an account? <a (click)="openModal(loginContent)">Sign in</a></p>
     </form>

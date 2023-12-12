@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseIdTokenService } from '../auth-and-token/firebase-id-token.service';
 import { IdToken } from '../auth-and-token/firebase-id-token.model';
-import { AuthService } from './authentication.service';
+import firebase from 'firebase/compat';
+import { GoogleAuthProvider } from '@angular/fire/auth';
 
 @Component({
     selector: 'sgh-authentication',
@@ -32,7 +33,6 @@ export class AuthComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private afAuth: AngularFireAuth,
         private toastNotify: ToastrService,
-        protected authService: AuthService
     ) {
     }
 
@@ -102,6 +102,154 @@ export class AuthComponent implements OnInit, OnDestroy {
             }
         }
     }
+
+    async initGoogleAuth(): Promise<GoogleAuthProvider> {
+        this.closeModal();
+        const provider = new GoogleAuthProvider();
+        provider.addScope('profile');
+        provider.addScope('email');
+        return provider;
+    }
+
+    async googleLogin() {
+        try {
+            const provider = await this.initGoogleAuth();
+            await this.afAuth.signInWithPopup(provider).then(
+                async (result: firebase.auth.UserCredential) => {
+                    if (result.credential == null) {
+                        console.log('credential is null');
+                        return;
+                    }
+                    const credential = result
+
+                    if (credential.user) {
+                        const idToken = await credential.user.getIdToken(); // Get ID token
+
+                        await this.handleGoogleLogin(credential.user, idToken);
+                    } else {
+                        this.toastNotify.error('No user information available after login redirect.');
+                    }
+                },
+                (error) => {
+                    console.log('error', error);
+                    this.toastNotify.error('Google login failed', error);
+                    return;
+                }
+            );
+        } catch (error) {
+            console.error('Error during Google Login', error);
+            this.toastNotify.error('Error during Google Login');
+        }
+    }
+
+
+    async handleGoogleLogin(user: firebase.User | null, idToken: string) {
+        if (user == null || user.email == null) {
+            this.toastNotify.error('Something went wrong during GAuth!');
+            return;
+        }
+
+        this.userService.signInWithGoogle(idToken, user.email!).then((respObservable: Observable<{
+            idToken: string
+        }>): void => {
+            respObservable.subscribe({
+                next: (idTokenWithCustomFields: { idToken: string }): void => {
+                    this.userService.signInForCustomClaims(idTokenWithCustomFields.idToken)
+                        .then((): void => {
+                            this.loggedInUserEmail = user.email;
+                            this.loggedInUserName = this.loggedInUserEmail;
+                            const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
+                            if (idToken) {
+                                this.loggedInUserFirebaseId = idToken?.user_id;
+                            }
+
+                            this.toastNotify.success(`Successfully logged in as ${user.email}`);
+                        }).catch((error): void => {
+                        console.log(error);
+                        this.toastNotify.warning(`Error logging in`);
+                    });
+                },
+                error: (error): void => {
+                    console.log(error);
+                    this.toastNotify.warning(`Error logging in`);
+                }
+            });
+        }).catch((error: string): void => {
+            this.toastNotify.warning(`Error logging in: ${this.getErrorMessageInfo(error)}`);
+        });
+    }
+
+    async googleSignup() {
+        try {
+
+            const provider = await this.initGoogleAuth();
+            await this.afAuth.signInWithPopup(provider).then(
+                async (result: firebase.auth.UserCredential) => {
+                    if (result.credential == null) {
+                        console.log('credential is null');
+                        this.toastNotify.error('Error during Google Signup');
+                        return;
+                    }
+                    const credential = result
+
+                    if (credential.user) {
+                        const idToken = await credential.user.getIdToken(); // Get ID token
+
+                        // Now use this idToken for your login logic
+                        await this.handleGoogleSignup(credential.user, idToken);
+                    } else {
+                        this.toastNotify.error('No user information available after signup redirect.');
+                    }
+                },
+                (error) => {
+                    console.log('error', error);
+                    this.toastNotify.error('Error during Google Signup');
+                    return;
+                }
+            );
+        } catch (error) {
+            console.error('Error during Google Signup', error);
+            this.toastNotify.error('Error during Google Signup');
+        }
+    }
+
+    async handleGoogleSignup(user: firebase.User | null, idToken: string) {
+        if (user == null || user.email == null) {
+            this.toastNotify.error('Something went wrong during Google authentication!');
+            return;
+        }
+
+        this.userService.signUpWithGoogle(idToken, user.email!).then((respObservable: Observable<{
+            idToken: string
+        }>): void => {
+            respObservable.subscribe({
+                next: (idTokenWithCustomFields: { idToken: string }): void => {
+                    this.userService.signInForCustomClaims(idTokenWithCustomFields.idToken)
+                        .then((): void => {
+                            // Use the email directly here before clearing the form
+                            this.loggedInUserEmail = user.email;
+                            this.loggedInUserName = this.loggedInUserEmail;
+                            const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
+                            if (idToken) {
+                                this.loggedInUserFirebaseId = idToken?.user_id;
+                            }
+
+                            this.toastNotify.success(`Successfully signed up as ${user.email}`);
+                        }).catch((error): void => {
+                        console.log(error);
+                        this.toastNotify.warning(`Error signing up`);
+                    });
+                },
+                error: (error): void => {
+                    console.log(error);
+                    this.toastNotify.warning(`Error signing up`);
+                }
+            });
+        }).catch((error: string): void => {
+            this.toastNotify.warning(`Error signing up: ${this.getErrorMessageInfo(error)}`);
+        });
+    }
+
 
     login(): void {
         this.userService.signInWithFirebase(this.email, this.password)
