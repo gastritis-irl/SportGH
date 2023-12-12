@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { SubcategoryService } from '../../subcategory/subcategory.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ export class SubcategoryEditComponent implements OnInit {
 
     selectedFields: string[] = [''];
     subcategory: Subcategory = { id: undefined, name: '', categoryId: undefined, customFields: [{name: '', type: CustomFieldType.STRING }]};
-    // @ViewChild('customFieldsContainer', { static: true }) customFieldsContainer: ElementRef | undefined;
+    @ViewChildren('inputField') inputFields: QueryList<ElementRef> | undefined;
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
     editMode: boolean = false;
@@ -26,8 +26,6 @@ export class SubcategoryEditComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private toastNotify: ToastrService,
-        private elementRef: ElementRef,
-        private renderer: Renderer2,
     ) {
     }
 
@@ -81,7 +79,20 @@ export class SubcategoryEditComponent implements OnInit {
         }
     }
 
+    checkInputFields(): void {
+        if (this.inputFields) {
+            this.inputFields.forEach((input: ElementRef, i: number) => {
+                this.subcategory.customFields[i].name = input.nativeElement.value
+                if (this.selectedFields[i]) {
+                    this.subcategory.customFields[i].type = <CustomFieldType>this.selectedFields[i]
+                }
+            });
+            this.subcategory.customFields = this.subcategory.customFields.filter(field => field.name !== '');
+        }
+    }
+
     createSubcategoryData(): void {
+        this.checkInputFields();
         this.subcategoryService.create(this.subcategory).subscribe(
             {
                 next: (resp: Subcategory): void => {
@@ -105,6 +116,7 @@ export class SubcategoryEditComponent implements OnInit {
     }
 
     updateSubcategoryData(): void {
+        this.checkInputFields()
         this.subcategoryService.update(this.subcategory.id, this.subcategory).subscribe(
             {
                 next: (): void => {
@@ -127,61 +139,21 @@ export class SubcategoryEditComponent implements OnInit {
         );
     }
 
-    deleteCustomField(subcategoryIdAndIndex: number[], categoryId: number | undefined): void {
-        this.subcategoryService.delete(subcategoryIdAndIndex[0]).subscribe(
-            {
-                next: (): void => {
-                    // this.subcategories.splice(subcategoryIdAndIndex[1], 1);
-                    this.router.navigate([`/admin/categories/${categoryId}`])
-                        .then((): void => {
-                            this.toastNotify.success(`Subcategory successfully deleted!`);
-                        })
-                        .catch((): void => {
-                            this.toastNotify.error('Error redirecting to route /admin/categories');
-                        });
-                },
-                error: (error): void => {
-                    this.toastNotify.error(`Error deleting category: ${error.error}`);
-                }
-            }
-        );
+    deleteCustomField(customFieldIndex: number[]): void {
+        this.subcategory.customFields = this.subcategory.customFields.slice(0, customFieldIndex[0]).concat(this.subcategory.customFields.slice(customFieldIndex[0] + 1));
+        console.log(this.subcategory.customFields);
     }
 
     onSelectChange(event: Event, i: number) {
         this.selectedFields[i] = (event.target as HTMLInputElement).value;
-        console.log(this.selectedFields);
     }
 
     newField(): void {
-        const element = this.elementRef.nativeElement.querySelector('#customFieldsContainer');
-        const newDiv = this.renderer.createElement("div");
-        this.renderer.addClass(newDiv, "list-element")
-        this.renderer.appendChild(element, newDiv);
-
-        const itemDiv1 = this.renderer.createElement('div');
-        this.renderer.addClass(itemDiv1, 'name');
-        this.renderer.addClass(itemDiv1, 'row-item');
-        this.renderer.appendChild(newDiv, itemDiv1);
-
-        // const inputElement = this.renderer.createElement('input');
-        // this.renderer.setAttribute(inputElement, 'class', 'form-part-input');
-        // this.renderer.setAttribute(inputElement, 'type', 'text');
-        // this.renderer.setAttribute(inputElement, 'name', 'name');
-        // this.renderer.setAttribute(inputElement, 'placeholder', 'xd');
-        // const ngModel = new NgModel(itemDiv1, [inputElement], [], []);
-        // ngModel.name = 'field.name';
-        // this.renderer.appendChild(itemDiv1, inputElement);
-
-        const itemDiv2 = this.renderer.createElement('div');
-        this.renderer.addClass(itemDiv2, 'name');
-        this.renderer.addClass(itemDiv2, 'row-item');
-        this.renderer.appendChild(newDiv, itemDiv2);
-
-        const button = this.renderer.createElement('button');
-        const buttonText = this.renderer.createText('Click me');
-        this.renderer.appendChild(button, buttonText);
-        this.renderer.appendChild(itemDiv2, button);
-
+        if (this.subcategory.customFields) {
+            this.subcategory.customFields.push({ name: '', type: CustomFieldType.STRING });
+        } else {
+            this.subcategory.customFields = [{ name: '', type: CustomFieldType.STRING }];
+        }
     }
 
     protected readonly Object = Object;
