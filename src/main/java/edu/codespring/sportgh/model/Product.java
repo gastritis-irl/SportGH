@@ -24,8 +24,9 @@ public class Product extends BaseEntity {
     @Column(length = 1000)
     private String description;
 
-    @Column(length = 100)
-    private String location;
+    private Double locationLat;
+
+    private Double locationLng;
 
     private Double rentPrice;
 

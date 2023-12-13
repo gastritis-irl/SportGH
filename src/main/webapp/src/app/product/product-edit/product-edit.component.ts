@@ -41,7 +41,6 @@ export class ProductEditComponent implements OnInit {
         private productService: ProductService,
         private categoryService: CategoryService,
         private subcategoryService: SubcategoryService,
-        private fbIdTokenService: FirebaseIdTokenService,
         private router: Router,
         private route: ActivatedRoute,
         private toastNotify: ToastrService,
@@ -62,6 +61,11 @@ export class ProductEditComponent implements OnInit {
             }
         );
         this.loadDataByParam();
+    }
+
+    setLocation(coordinates: [number, number]): void {
+        this.product.locationLat = coordinates[0];
+        this.product.locationLng = coordinates[1];
     }
 
     onFileChange(files: File[]): void {
@@ -156,7 +160,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     createProduct(): void {
-        const idToken: IdToken | null = this.fbIdTokenService.getDecodedIdToken();
+        const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
         if (!idToken) {
             this.toastNotify.warning('Please log in first.');
             return;

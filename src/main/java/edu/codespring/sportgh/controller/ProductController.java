@@ -38,7 +38,7 @@ public class ProductController {
             @RequestParam("MinPrice") Optional<Double> minPrice,
             @RequestParam("MaxPrice") Optional<Double> maxPrice,
             @RequestParam("TextSearch") Optional<String> textSearch,
-            @RequestParam("userId")Optional<Long> userId
+            @RequestParam("userId") Optional<Long> userId
     ) {
         return new ResponseEntity<>(
                 productService.findPageByParams(
@@ -63,6 +63,15 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productMapper.productToOut(product), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/{productId}/owner")
+    public ResponseEntity<Long> findOwnerIdById(@PathVariable Long productId) {
+        Long ownerId = productService.findOwnerIdById(productId);
+        if (ownerId == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(ownerId, HttpStatus.OK);
     }
 
     @PostMapping

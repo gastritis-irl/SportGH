@@ -295,7 +295,8 @@
     {
       "name": "Swimming goggles",
       "description": "Goggles for swimming",
-      "location": "Cluj-Napoca, Romania",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 20.0,
       "subCategory": {
         "name": "Swimming"
@@ -307,7 +308,8 @@
     {
       "name": "Flip flops",
       "description": "Flip flops for easier swimming",
-      "location": "Cluj-Napoca, Romania",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 35.0,
       "subCategory": {
         "name": "Swimming"
@@ -319,7 +321,8 @@
     {
       "name": "Bike",
       "description": "Bike for cycling",
-      "location": "Cluj-Napoca, Romania",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 100.0,
       "subCategory": {
         "name": "Cycling"
@@ -331,7 +334,8 @@
     {
       "name": "Helmet",
       "description": "Helmet for your protection",
-      "location": "Cluj-Napoca, Romania",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 18.0,
       "subCategory": {
         "name": "Cycling"
@@ -343,7 +347,8 @@
     {
       "name": "Flashlight",
       "description": "Flashlight for better visibility",
-      "location": "Cluj-Napoca, Romania",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 15.0,
       "subCategory": {
         "name": "Cycling"
@@ -355,7 +360,8 @@
     {
       "name": "Bicycle lock",
       "description": "Bicycle lock for your bike's protection",
-      "location": "Cluj-Napoca, Romania",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 20.0,
       "subCategory": {
         "name": "Cycling"
@@ -367,7 +373,8 @@
     {
       "name": "Boxing gloves",
       "description": "Gloves for boxing",
-      "location": "New York, USA",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 50.0,
       "subCategory": {
         "name": "Boxing"
@@ -379,7 +386,8 @@
     {
       "name": "Judo uniform",
       "description": "Uniform for Judo practice",
-      "location": "Tokyo, Japan",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 75.0,
       "subCategory": {
         "name": "Judo"
@@ -391,7 +399,8 @@
     {
       "name": "Tennis racket",
       "description": "Racket for tennis",
-      "location": "London, UK",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 120.0,
       "subCategory": {
         "name": "Tennis"
@@ -403,7 +412,8 @@
     {
       "name": "Golf clubs",
       "description": "Set of golf clubs",
-      "location": "Paris, France",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 300.0,
       "subCategory": {
         "name": "Golf"
@@ -415,7 +425,8 @@
     {
       "name": "Yoga mat",
       "description": "Comfortable yoga mat",
-      "location": "Berlin, Germany",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 25.0,
       "subCategory": {
         "name": "Yoga"
@@ -427,7 +438,8 @@
     {
       "name": "Fishing rod",
       "description": "Rod for fishing",
-      "location": "Sydney, Australia",
+      "locationLat": null,
+      "locationLng": null,
       "rentPrice": 40.0,
       "subCategory": {
         "name": "Fishing"

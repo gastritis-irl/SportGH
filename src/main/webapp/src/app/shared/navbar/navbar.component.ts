@@ -25,7 +25,6 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private categoryService: CategoryService,
-        private fbIdTokenService: FirebaseIdTokenService,
         private toastNotify: ToastrService,
         private router: Router,
     ) {
@@ -63,6 +62,6 @@ export class NavbarComponent implements OnInit {
     }
 
     getDecodedIdToken(): IdToken | null {
-        return this.fbIdTokenService.getDecodedIdToken();
+        return FirebaseIdTokenService.getDecodedIdToken();
     }
 }

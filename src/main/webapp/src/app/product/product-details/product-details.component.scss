@@ -11,6 +11,7 @@ $product-links-size: 18px;
 $date-picker-size: 140px;
 $border: 2px solid $color-main-3;
 $icon-size: 50px;
+$map-height: 500px;
 
 .form-heading {
     color: $color-main-1;
@@ -122,6 +123,7 @@ $icon-size: 50px;
             flex-direction: row;
             gap: $item-gap-1;
             color: $color-main-2;
+            padding-bottom: $item-padding;
         }
 
         .images-and-pricing {
@@ -361,6 +363,15 @@ $icon-size: 50px;
             border-radius: $border-radius;
             background-color: $color-neutral-1;
             padding: $item-padding;
+        }
+
+        .product-address-map {
+            width: 100%;
+            height: $map-height;
+            padding: 0;
+            border-radius: $border-radius;
+            border-style: solid;
+            border-color: $color-main-3;
         }
 
         .product-details-nav-btn {

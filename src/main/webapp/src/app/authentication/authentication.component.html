@@ -125,7 +125,7 @@
                 </button>
                 <div class="dropdown-content" *ngIf="showDropdown">
                     <div></div>
-                    <div [routerLink]="['/users', loggedInUserFirebaseId]">Profile</div>
+                    <div [routerLink]="['/users/profile']">Profile</div>
                     <div (click)="logout()">Logout</div>
                 </div>
             </div>

@@ -9,7 +9,8 @@ public class ProductOutDTO {
     private boolean publicContact;
     private String name;
     private String description;
-    private String location;
+    private Double locationLat;
+    private Double locationLng;
     private Double rentPrice;
     private Long categoryId;
     private String categoryName;

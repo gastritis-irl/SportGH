@@ -49,8 +49,8 @@
                             Edit
                         </div>
                         <sgh-popover-delete
-                            [deleteData]="[]"
-                            (deleteEvent)="deleteProduct()"
+                                [deleteData]="[]"
+                                (deleteEvent)="deleteProduct()"
                         ></sgh-popover-delete>
                     </div>
                 </div>
@@ -60,9 +60,9 @@
             </div>
         </div>
 
-        <div class="ad-info-and-location">
+        <div *ngIf="address.length>0" class="ad-info-and-location">
             <div class="location">
-                {{product.location}}
+                {{address}}
             </div>
         </div>
 
@@ -126,21 +126,16 @@
 
     <div class="product-details-area">
         <div class="product-details-nav-btn buttons">
-            <div (click)="scrollToPagePart('prod-desc')" class="button-default button-secondary">Description</div>
-            <div (click)="scrollToPagePart('prod-loc')" class="button-default button-secondary">Location</div>
-        </div>
-
-        <div class="description-area product-details-item" id="prod-desc">
-            <div class="form-heading">Description</div>
-            <div class="product-description-content">
-                {{product.description}}
+            <div *ngIf="product.description && product.description.length > 0" (click)="scrollToPagePart('prod-desc')"
+                 class="button-default button-secondary">Description
             </div>
         </div>
 
-        <div class="product-location product-details-item" id="prod-loc">
-            <div class="form-heading">Location</div>
-            <div class="product-location-content">
-                {{product.location}}
+        <div *ngIf="product.description && product.description.length > 0" class="description-area product-details-item"
+             id="prod-desc">
+            <div class="form-heading">Description</div>
+            <div class="product-description-content">
+                {{product.description}}
             </div>
         </div>
     </div>

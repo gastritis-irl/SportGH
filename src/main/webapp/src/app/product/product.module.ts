@@ -15,6 +15,8 @@ import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
 import { PopoverDeleteComponent } from '../shared/popover/popover-delete.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SwitchButtonComponent } from '../shared/switch-button/switch-button.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapComponent } from '../shared/map/map.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +39,9 @@ import { SwitchButtonComponent } from '../shared/switch-button/switch-button.com
         NgbModule,
         BreadcrumbComponent,
         PopoverDeleteComponent,
-        SwitchButtonComponent
+        SwitchButtonComponent,
+        LeafletModule,
+        MapComponent
     ],
     providers: [
         ProductComponent,
