@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from './environment';
 import { Observable } from 'rxjs';
-import { FirebaseIdTokenService } from './auth-and-token/firebase-id-token.service';
 
 interface Options {
 
@@ -18,16 +17,11 @@ export class AppService {
 
     protected readonly baseUrl: string = `${environment.baseURL}/api`;
 
-    constructor(protected http: HttpClient, protected fbIdTokenService: FirebaseIdTokenService) {
+    constructor(protected http: HttpClient) {
     }
 
     protected setHeaders(): HttpHeaders {
-        const idToken: string | null = this.fbIdTokenService.getIdToken();
-        if (idToken == null || idToken == '') {
-            return new HttpHeaders();
-        } else {
-            return new HttpHeaders().set('Authorization', idToken);
-        }
+        return new HttpHeaders();
     }
 
     httpGet<T>(url: string, options: Options = {}): Observable<T> {
