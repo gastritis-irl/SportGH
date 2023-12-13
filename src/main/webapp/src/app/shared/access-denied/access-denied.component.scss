@@ -1,9 +1,8 @@
 @use '../../../style-variables.scss' as *;
 
 div {
-  height: 100vh;
+  margin-inline: $main-padding-inline;
   text-align: center;
-  padding: 20px;
   background-color: $color-neutral-1;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
