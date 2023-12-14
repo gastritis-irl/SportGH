@@ -54,6 +54,79 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseEntity<>(productOutDTO, HttpStatus.OK);
     }
 
+    @Override
+    public Product findById(Long productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
+
+    @Override
+    public Long findOwnerIdById(Long productId) {
+        return productRepository.findUserIdById(productId);
+    }
+
+    @Override
+    public boolean notExistsByNameAndUser(String name, User user) {
+        return !productRepository.existsByNameAndUser(name, user);
+    }
+
+    @Override
+    public boolean existsById(Long productId) {
+        return productRepository.existsById(productId);
+    }
+
+    @Override
+    public void save(Product product) {
+        productRepository.save(product);
+        log.info("Product saved successfully ({}) with ID: {}", product.getName(), product.getId());
+    }
+
+    @Transactional
+    @Override
+    public void delete(Product product) {
+        imageService.deleteByProductId(product.getId());
+        productRepository.delete(product);
+    }
+
+    @Override
+    public ProductPageOutDTO findPageByParams(FilterOptions filterOptions) {
+        Specification<Product> specification = Specification.where(null);
+
+        Pageable pageable;
+        if (filterOptions.getOrderBy() == null) {
+            pageable = PageRequest.of(filterOptions.getPageNumber() - 1, pageSize);
+        } else {
+            if (filterOptions.getDirection() == null) {
+                pageable = PageRequest.of(
+                        filterOptions.getPageNumber() - 1,
+                        pageSize,
+                        Sort.by(Sort.DEFAULT_DIRECTION, filterOptions.getOrderBy())
+                );
+            } else {
+                pageable = PageRequest.of(
+                        filterOptions.getPageNumber() - 1,
+                        pageSize,
+                        Sort.by(Sort.Direction.fromString(filterOptions.getDirection()),
+                                filterOptions.getOrderBy())
+                );
+            }
+        }
+
+        specification = filterByUserId(filterOptions.getUserId(), specification);
+        specification = filterBySubcategories(filterOptions.getSubcategoryNames(), specification);
+        specification = filterByPrice(filterOptions.getMinPrice(), filterOptions.getMaxPrice(), specification);
+        specification = filterByTextInNameOrDescription(filterOptions.getTextSearch(), specification);
+        specification = filterByLocation(filterOptions.getLocationLat(), filterOptions.getLocationLng(),
+                filterOptions.getLocationRadius(), specification);
+
+        Page<Product> page = productRepository.findAll(specification, pageable);
+
+        Collection<Product> products = page.getContent();
+        int nrOfPages = page.getTotalPages();
+        long nrOfElements = page.getTotalElements();
+
+        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
+    }
+
     private Specification<Product> filterByPrice(
             Double minPrice, Double maxPrice, Specification<Product> specification
     ) {
@@ -138,78 +211,5 @@ public class ProductServiceImpl implements ProductService {
                     ));
         }
         return spec;
-    }
-
-    @Override
-    public ProductPageOutDTO findPageByParams(FilterOptions filterOptions) {
-        Specification<Product> specification = Specification.where(null);
-
-        Pageable pageable;
-        if (filterOptions.getOrderBy() == null) {
-            pageable = PageRequest.of(filterOptions.getPageNumber() - 1, pageSize);
-        } else {
-            if (filterOptions.getDirection() == null) {
-                pageable = PageRequest.of(
-                        filterOptions.getPageNumber() - 1,
-                        pageSize,
-                        Sort.by(Sort.DEFAULT_DIRECTION, filterOptions.getOrderBy())
-                );
-            } else {
-                pageable = PageRequest.of(
-                        filterOptions.getPageNumber() - 1,
-                        pageSize,
-                        Sort.by(Sort.Direction.fromString(filterOptions.getDirection()),
-                                filterOptions.getOrderBy())
-                );
-            }
-        }
-
-        specification = filterByUserId(filterOptions.getUserId(), specification);
-        specification = filterBySubcategories(filterOptions.getSubcategoryNames(), specification);
-        specification = filterByPrice(filterOptions.getMinPrice(), filterOptions.getMaxPrice(), specification);
-        specification = filterByTextInNameOrDescription(filterOptions.getTextSearch(), specification);
-        specification = filterByLocation(filterOptions.getLocationLat(), filterOptions.getLocationLng(),
-                filterOptions.getLocationRadius(), specification);
-
-        Page<Product> page = productRepository.findAll(specification, pageable);
-
-        Collection<Product> products = page.getContent();
-        int nrOfPages = page.getTotalPages();
-        long nrOfElements = page.getTotalElements();
-
-        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
-    }
-
-    @Override
-    public Product findById(Long productId) {
-        return productRepository.findById(productId).orElse(null);
-    }
-
-    @Override
-    public Long findOwnerIdById(Long productId) {
-        return productRepository.findUserIdById(productId);
-    }
-
-    @Override
-    public boolean notExistsByNameAndUser(String name, User user) {
-        return !productRepository.existsByNameAndUser(name, user);
-    }
-
-    @Override
-    public boolean existsById(Long productId) {
-        return productRepository.existsById(productId);
-    }
-
-    @Override
-    public void save(Product product) {
-        productRepository.save(product);
-        log.info("Product saved successfully ({}) with ID: {}", product.getName(), product.getId());
-    }
-
-    @Transactional
-    @Override
-    public void delete(Product product) {
-        imageService.deleteByProductId(product.getId());
-        productRepository.delete(product);
     }
 }
