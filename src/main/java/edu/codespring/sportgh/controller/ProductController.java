@@ -34,8 +34,8 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
-            @RequestParam Map<String, String> params,
-            @RequestParam(value = "subcategoryNames", required = false) String[] subcategoryNames
+            @RequestParam(value = "subcategoryNames", required = false) String[] subcategoryNames,
+            @RequestParam Map<String, String> params
     ) {
         log.info(Arrays.toString(subcategoryNames));
         try {
