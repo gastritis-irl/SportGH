@@ -12,7 +12,7 @@
                 <div>
                     Search
                 </div>
-                <div>{{isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595)}}</div>
+                <div>{{ isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595) }}</div>
             </div>
         </div>
         <div [(ngbCollapse)]="!isExpanded[i]">
@@ -41,7 +41,7 @@
                 <div>
                     Location
                 </div>
-                <div>{{isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595)}}</div>
+                <div>{{ isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595) }}</div>
             </div>
         </div>
         <div [(ngbCollapse)]="!isExpanded[i]">
@@ -53,9 +53,10 @@
                             (locationEventEmitter)="setLocation($event)"
                     ></sgh-map>
                 </div>
+                <div class="map-fix"></div>
                 <div class="filter-price">
                     <div>
-                        Radius: {{locationRadius}} km
+                        Radius: {{ locationRadius }} km
                     </div>
                     <input class="input-slider form-range" [(ngModel)]="locationRadius" type="range"
                            min="0" max="100" value="0" step="5" (mouseup)="setRadius()">
@@ -74,7 +75,7 @@
                 <div>
                     Categories
                 </div>
-                <div>{{isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595)}}</div>
+                <div>{{ isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595) }}</div>
             </div>
         </div>
         <div [(ngbCollapse)]="!isExpanded[i]">
@@ -101,21 +102,21 @@
                 <div>
                     Price
                 </div>
-                <div>{{isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595)}}</div>
+                <div>{{ isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595) }}</div>
             </div>
         </div>
         <div [(ngbCollapse)]="!isExpanded[i]">
             <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
                 <div class="filter-price">
                     <div>
-                        Min price: {{minPrice}}
+                        Min price: {{ minPrice }}
                     </div>
                     <input class="input-slider form-range" [(ngModel)]="minPrice" type="range"
                            min="0" max="1000" value="0" step="1" (mouseup)="filterBy()">
                 </div>
                 <div class="filter-price">
                     <div>
-                        Max price: {{maxPrice}}
+                        Max price: {{ maxPrice }}
                     </div>
                     <input class="input-slider form-range" [(ngModel)]="maxPrice" type="range"
                            min="0" max="1000" value="1000" step="1" (mouseup)="filterBy()">

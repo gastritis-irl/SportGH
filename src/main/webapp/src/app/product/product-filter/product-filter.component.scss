@@ -3,6 +3,7 @@
 $filter-gap: 10px;
 $filter-padding: 10px;
 $select-padding: 5px;
+$map-height: 250px;
 
 .form-heading {
     color: $color-main-1;
@@ -73,7 +74,12 @@ $select-padding: 5px;
         }
 
         .filter-location {
-            height: 500px;
+            height: $map-height;
+            width: auto;
+        }
+
+        .map-fix {
+            height: 60px;
         }
 
         .filter-price {
