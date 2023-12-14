@@ -7,6 +7,7 @@ import { User } from '../user.model';
 import { ImageComponent } from '../../shared/image/image.component';
 import { Image } from '../../shared/image/image.model';
 import { FirebaseIdTokenService } from '../../auth-and-token/firebase-id-token.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
     selector: 'sgh-user-edit',
@@ -24,6 +25,7 @@ export class UserEditComponent implements OnInit {
     paramUid: string = '';
 
     constructor(
+        private afAuth: AngularFireAuth,
         private userService: UserService,
         private toastNotify: ToastrService,
         private route: ActivatedRoute,
@@ -122,9 +124,21 @@ export class UserEditComponent implements OnInit {
         }
     }
 
+    async requestPasswordReset(): Promise<void> {
+        if (this.user.email) {
+            await this.afAuth.sendPasswordResetEmail(this.user.email).then((): void => {
+                this.toastNotify.success(`Password reset email sent to ${this.user.email}`);
+            }).catch((): void => {
+                this.toastNotify.error(`Error sending password reset email to ${this.user.email}`);
+            });
+        } else {
+            this.toastNotify.warning('Please log in first.');
+        }
+    }
+
     onSubmit(): void {
         this.updateUser();
-        this.router.navigate([`/users/${this.paramUid}`])
+        this.router.navigate([`/users/profile`])
             .catch((error): void => {
                 console.error(error);
                 this.toastNotify.error('Error redirecting to page');

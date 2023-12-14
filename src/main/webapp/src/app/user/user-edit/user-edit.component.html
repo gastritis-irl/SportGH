@@ -27,17 +27,20 @@
                     </div>
                     <div>
                         <label for="email" class="form-part-label">Email</label>
-                        <input type="email"
-                               id="email" name="email"
-                               [(ngModel)]="user.email"
-                               #email="ngModel"
-                               required
-                               minlength="5"
-                               maxlength="100"
-                               class="form-part-input"
-                               disabled="true"/>
-                        <sgh-authentication [changePassword]="true"></sgh-authentication>
-
+                        <div class="buttons email-and-password-reset">
+                            <input type="email"
+                                   id="email" name="email"
+                                   [(ngModel)]="user.email"
+                                   #email="ngModel"
+                                   required
+                                   minlength="5"
+                                   maxlength="100"
+                                   class="form-part-input"
+                                   [disabled]="true"/>
+                            <div class="button-default button-primary" (click)="requestPasswordReset()">
+                                Request password reset
+                            </div>
+                        </div>
                         <sgh-form-ch-lbl [fieldName]="'Email'"
                                          [required]="true"
                                          [minlength]="5"
