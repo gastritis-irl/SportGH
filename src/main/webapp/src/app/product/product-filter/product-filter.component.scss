@@ -92,6 +92,18 @@ $select-padding: 5px;
                 &.form-range::-ms-thumb {
                     background-color: $color-main-1;
                 }
+
+                &.form-range::-webkit-slider-runnable-track {
+                    background: $color-main-2;
+                }
+
+                &.form-range::-moz-range-track {
+                    background: $color-main-2;
+                }
+
+                &.form-range::-ms-track {
+                    background: $color-main-2;
+                }
             }
         }
     }
