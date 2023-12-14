@@ -22,7 +22,7 @@ export const isCurrentUser: CanActivateFn = (route: ActivatedRouteSnapshot): boo
     const uid: string | undefined = route.params['uid'];
     const token: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
 
-    return (token && uid === 'profile') || uid === token?.user_id || token?.role === 'ADMIN';
+    return (token && uid === 'profile') || uid === token?.user_id;
 };
 
 export const isAdmin: CanActivateFn = (): boolean => {

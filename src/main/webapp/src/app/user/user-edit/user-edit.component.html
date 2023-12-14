@@ -1,5 +1,5 @@
 <div class="holder">
-    <form #userForm="ngForm" (ngSubmit)="onSubmit()" class="form-main-title">
+    <form #userForm="ngForm" (ngSubmit)="updateUser()" class="form-main-title">
         <div class="form-heading">Edit User</div>
 
         <div class="general-data">
@@ -93,7 +93,7 @@
                 <div class="images form-part">
                     <div class="form-heading">Set a profile picture</div>
                     <sgh-image (fileChange)="onFileChange($event)"
-                               [imageIds]="[user.imageId]"
+                               [imageIds]="user.imageId?[user.imageId]:undefined"
                                [allowMultiple]="false"
                                [mode]="imageComponentMode">
                     </sgh-image>

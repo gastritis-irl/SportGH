@@ -19,7 +19,7 @@ export class UserEditComponent implements OnInit {
     @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
 
     username: string = '';
-    user: User = { imageId: 0 };
+    user: User = {};
     newImageFile?: File;
     imageComponentMode: 'edit' | 'create' = 'edit';
     paramUid: string = '';
@@ -111,10 +111,17 @@ export class UserEditComponent implements OnInit {
     }
 
     updateUserData(): void {
+        console.log(this.user);
+
         if (this.user.id) {
             this.userService.update(this.user.id, this.user).subscribe({
                 next: (): void => {
                     this.toastNotify.success('User updated successfully');
+                    this.router.navigate([`/users/profile`])
+                        .catch((error): void => {
+                            console.error(error);
+                            this.toastNotify.error('Error redirecting to page');
+                        });
                 },
                 error: (error): void => {
                     this.toastNotify.error('Error updating user');
@@ -134,14 +141,5 @@ export class UserEditComponent implements OnInit {
         } else {
             this.toastNotify.warning('Please log in first.');
         }
-    }
-
-    onSubmit(): void {
-        this.updateUser();
-        this.router.navigate([`/users/profile`])
-            .catch((error): void => {
-                console.error(error);
-                this.toastNotify.error('Error redirecting to page');
-            });
     }
 }
