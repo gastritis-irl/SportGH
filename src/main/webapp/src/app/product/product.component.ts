@@ -31,10 +31,10 @@ export class ProductComponent implements OnInit {
         'orderBy',
         'direction',
         'Category',
-        'Subcategory',
-        'MinPrice',
-        'MaxPrice',
-        'TextSearch',
+        'subcategoryNames',
+        'minPrice',
+        'maxPrice',
+        'textSearch',
         'locationLat',
         'locationLng',
         'locationRadius'
@@ -154,7 +154,7 @@ export class ProductComponent implements OnInit {
                 next: (params: Params): void => {
                     for (const paramName of this.filterParamNames) {
                         if (params[paramName] && params[paramName] != 0) {
-                            if (paramName === 'Subcategory') {
+                            if (paramName === 'subcategoryNames') {
                                 if (typeof params[paramName] === 'string') {
                                     for (let j: number = 0; j < this.subcategories.length; j++) {
                                         if (this.subcategories[j].name === params[paramName]) {
@@ -205,13 +205,13 @@ export class ProductComponent implements OnInit {
                             if (paramName === 'direction') {
                                 this.direction = params[paramName];
                             }
-                            if (paramName === 'TextSearch') {
+                            if (paramName === 'textSearch') {
                                 this.textSearch = params[paramName];
                             }
-                            if (paramName === 'MinPrice') {
+                            if (paramName === 'minPrice') {
                                 this.minPrice = params[paramName];
                             }
-                            if (paramName === 'MaxPrice') {
+                            if (paramName === 'maxPrice') {
                                 this.maxPrice = params[paramName];
                             }
                             if (paramName === 'locationLat') {
@@ -242,10 +242,10 @@ export class ProductComponent implements OnInit {
             {
                 relativeTo: this.route,
                 queryParams: {
-                    Subcategory: this.filterParams['Subcategory'],
-                    TextSearch: this.textSearch,
-                    MinPrice: this.minPrice,
-                    MaxPrice: this.maxPrice,
+                    subcategoryNames: this.filterParams['subcategoryNames'],
+                    textSearch: this.textSearch,
+                    minPrice: this.minPrice,
+                    maxPrice: this.maxPrice,
                     locationLat: this.locationLat,
                     locationLng: this.locationLng,
                     locationRadius: this.locationRadius
@@ -296,13 +296,13 @@ export class ProductComponent implements OnInit {
     }
 
     clearFilter(paramNameAndFilterCheck: [string, boolean]): void {
-        if (paramNameAndFilterCheck[0] === 'TextSearch') {
+        if (paramNameAndFilterCheck[0] === 'textSearch') {
             this.textSearch = '';
         }
-        if (paramNameAndFilterCheck[0] === 'MinPrice') {
+        if (paramNameAndFilterCheck[0] === 'minPrice') {
             this.minPrice = 0;
         }
-        if (paramNameAndFilterCheck[0] === 'MaxPrice') {
+        if (paramNameAndFilterCheck[0] === 'maxPrice') {
             this.maxPrice = 0;
         }
         if (paramNameAndFilterCheck[0] === 'locationLat') {
@@ -333,10 +333,10 @@ export class ProductComponent implements OnInit {
             pageNumber: 1,
             orderBy: 'name',
             direction: 'ASC',
-            Subcategory: [],
-            TextSearch: '',
-            MinPrice: 0,
-            MaxPrice: 0,
+            subcategoryNames: [],
+            textSearch: '',
+            minPrice: 0,
+            maxPrice: 0,
             locationLat: 0,
             locationLng: 0,
             locationRadius: 0
@@ -361,10 +361,10 @@ export class ProductComponent implements OnInit {
             pageNumber: this.currentPage,
             orderBy: this.orderByParam,
             direction: this.direction,
-            Subcategory: [],
-            TextSearch: this.textSearch,
-            MinPrice: this.minPrice,
-            MaxPrice: this.maxPrice,
+            subcategoryNames: [],
+            textSearch: this.textSearch,
+            minPrice: this.minPrice,
+            maxPrice: this.maxPrice,
             locationLat: this.locationLat,
             locationLng: this.locationLng,
             locationRadius: this.locationRadius
@@ -372,7 +372,7 @@ export class ProductComponent implements OnInit {
 
         for (let i: number = 0; i < this.subcategories.length; i++) {
             if (this.subcategorySelected[i]) {
-                this.filterParams['Subcategory'].push(this.subcategories[i].name);
+                this.filterParams['subcategoryNames'].push(this.subcategories[i].name);
             }
         }
     }

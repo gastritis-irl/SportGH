@@ -27,24 +27,24 @@
 
         <div class="filter-param" *ngIf="textSearch!=''">
             Search: {{textSearch}}
-            <div class="clear-filter" (click)="clearFilter('TextSearch',0)">&#10005;</div>
+            <div class="clear-filter" (click)="clearFilter('textSearch',0)">&#10005;</div>
         </div>
 
         <div *ngFor="let selected of subcategorySelected; let i = index">
             <div class="filter-param" *ngIf="selected">
                 {{subcategories[i].name}}
-                <div class="clear-filter" (click)="clearFilter('Subcategory',i)">&#10005;</div>
+                <div class="clear-filter" (click)="clearFilter('subcategoryNames',i)">&#10005;</div>
             </div>
         </div>
 
         <div class="filter-param" *ngIf="minPrice">
             Min price: {{minPrice}}
-            <div class="clear-filter" (click)="clearFilter('MinPrice',0)">&#10005;</div>
+            <div class="clear-filter" (click)="clearFilter('minPrice',0)">&#10005;</div>
         </div>
 
         <div class="filter-param" *ngIf="maxPrice">
             Max price: {{maxPrice}}
-            <div class="clear-filter" (click)="clearFilter('MaxPrice',0)">&#10005;</div>
+            <div class="clear-filter" (click)="clearFilter('maxPrice',0)">&#10005;</div>
         </div>
 
         <div class="filter-param" *ngIf="locationLat && locationLng && locationRadius">

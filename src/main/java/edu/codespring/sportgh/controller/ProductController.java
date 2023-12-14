@@ -1,5 +1,6 @@
 package edu.codespring.sportgh.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
@@ -12,12 +13,12 @@ import edu.codespring.sportgh.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
@@ -34,12 +35,19 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
             @RequestParam Map<String, String> params,
-            @RequestParam(value = "Subcategory", required = false) String[] subCategoryNames,
-            ModelMapper modelMapper
+            @RequestParam(value = "subcategoryNames", required = false) String[] subcategoryNames
     ) {
-        FilterOptions filterOptions = modelMapper.map(params, FilterOptions.class);
-        filterOptions.setSubcategoryNames(subCategoryNames);
-        return new ResponseEntity<>(productService.findPageByParams(filterOptions), HttpStatus.OK);
+        log.info(Arrays.toString(subcategoryNames));
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            params.remove("subcategoryNames");
+            FilterOptions filterOptions = objectMapper.convertValue(params, FilterOptions.class);
+            filterOptions.setSubcategoryNames(subcategoryNames);
+            return new ResponseEntity<>(productService.findPageByParams(filterOptions), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            log.warn("{}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(path = "/{productId}")
