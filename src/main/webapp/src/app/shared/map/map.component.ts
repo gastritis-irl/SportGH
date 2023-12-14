@@ -64,6 +64,11 @@ export class MapComponent implements OnInit, OnChanges {
         }).addTo(map);
     }
 
+    // this resize event fixes the map it isn't correctly loaded
+    resetMap(): void {
+        window.dispatchEvent(new Event('resize'));
+    }
+
     // recenter map to marker (setView to marker's position)
     resetMarkerOnMap(): void {
         this.map?.setView(this.marker.getLatLng());

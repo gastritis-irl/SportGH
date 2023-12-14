@@ -17,6 +17,7 @@
              [leafletOptions]="options"
              (leafletMapReady)="onMapReady($event)"
              (leafletClick)="moveMarkerToNewPosition($event)"
+             (leafletMapZoom)="resetMap()"
         >
         </div>
     </div>
