@@ -117,7 +117,6 @@ export class AuthComponent implements OnInit, OnDestroy {
             await this.afAuth.signInWithPopup(provider).then(
                 async (result: firebase.auth.UserCredential) => {
                     if (result.credential == null) {
-                        console.error('credential is null');
                         this.toastNotify.error('Error during Google Login');
                         return;
                     }
@@ -135,13 +134,11 @@ export class AuthComponent implements OnInit, OnDestroy {
                     if (error.code === 'auth/popup-closed-by-user') {
                         return;
                     }
-                    console.error('error', error);
                     this.toastNotify.error('Google login failed', error);
                     return;
                 }
             );
         } catch (error) {
-            console.error('Error during Google Login', error);
             this.toastNotify.error('Error during Google Login');
         }
     }
@@ -238,13 +235,11 @@ export class AuthComponent implements OnInit, OnDestroy {
                             }
 
                             this.toastNotify.success(`Successfully signed up as ${user.email}`);
-                        }).catch((error): void => {
-                        console.log(error);
+                        }).catch((): void => {
                         this.toastNotify.warning(`Error signing up`);
                     });
                 },
-                error: (error): void => {
-                    console.log(error);
+                error: (): void => {
                     this.toastNotify.warning(`Error signing up`);
                 }
             });
@@ -271,13 +266,11 @@ export class AuthComponent implements OnInit, OnDestroy {
 
                                 this.toastNotify.success(`Successfully logged in as ${this.email}`);
                                 this.closeModal(); // Close the modal
-                            }).catch((error): void => {
-                            console.log(error);
+                            }).catch((): void => {
                             this.toastNotify.warning(`Error logging in`);
                         });
                     },
-                    error: (error): void => {
-                        console.log(error);
+                    error: (): void => {
                         this.toastNotify.warning(`Error logging in`);
                     }
                 });
@@ -303,14 +296,12 @@ export class AuthComponent implements OnInit, OnDestroy {
                                 }
 
                                 this.toastNotify.success('Registration successful');
-                                this.closeModal(); // Close the modal
-                            }).catch((error): void => {
-                            console.log(error);
+                                this.closeModal();
+                            }).catch((): void => {
                             this.toastNotify.warning(`Error logging in`);
                         });
                     },
-                    error: (error): void => {
-                        console.log(error);
+                    error: (): void => {
                         this.toastNotify.warning(`Error registering`);
                     }
                 });
