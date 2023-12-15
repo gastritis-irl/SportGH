@@ -121,7 +121,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                         this.toastNotify.error('Error during Google Login');
                         return;
                     }
-                    const credential = result
+                    const credential = result;
 
                     if (credential.user) {
                         const idToken = await credential.user.getIdToken(); // Get ID token
@@ -132,7 +132,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                     }
                 },
                 (error) => {
-                    if(error.code === 'auth/popup-closed-by-user') {
+                    if (error.code === 'auth/popup-closed-by-user') {
                         return;
                     }
                     console.error('error', error);
@@ -190,32 +190,28 @@ export class AuthComponent implements OnInit, OnDestroy {
             await this.afAuth.signInWithPopup(provider).then(
                 async (result: firebase.auth.UserCredential) => {
                     if (result.credential == null) {
-                        console.log('credential is null');
                         this.toastNotify.error('Error during Google Signup');
                         return;
                     }
-                    const credential = result
+                    const credential = result;
 
                     if (credential.user) {
                         const idToken = await credential.user.getIdToken(); // Get ID token
 
-                        // Now use this idToken for your login logic
                         await this.handleGoogleSignup(credential.user, idToken);
                     } else {
                         this.toastNotify.error('No user information available after signup redirect.');
                     }
                 },
                 (error) => {
-                    if(error.code === 'auth/popup-closed-by-user') {
+                    if (error.code === 'auth/popup-closed-by-user') {
                         return;
                     }
-                    console.log('error', error);
                     this.toastNotify.error('Error during Google Signup');
                     return;
                 }
             );
         } catch (error) {
-            console.error('Error during Google Signup', error);
             this.toastNotify.error('Error during Google Signup');
         }
     }

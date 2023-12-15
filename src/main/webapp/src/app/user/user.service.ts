@@ -6,6 +6,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
 import { getIdToken } from '@angular/fire/auth';
 import { FirebaseIdTokenService } from '../auth-and-token/firebase-id-token.service';
+import firebase from 'firebase/compat';
+import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({
     providedIn: 'root'
@@ -28,35 +30,39 @@ export class UserService extends AppService {
 
     async signInWithFirebase(email: string, password: string): Promise<Observable<{ idToken: string }>> {
         const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
-        const idToken: string = await getIdToken(userCredential.user!);
-        FirebaseIdTokenService.setIdToken(idToken);
-        const url: string = `${this.baseUrl}/auth/login`;
-        return this.http.post<{ idToken: string }>(url, { email, idToken });
+        return this.firebaseAuthProcedure(userCredential, email);
     }
 
     async signUpWithFirebase(email: string, password: string): Promise<Observable<{ idToken: string }>> {
         const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
-        const idToken: string = await getIdToken(userCredential.user!);
-        FirebaseIdTokenService.setIdToken(idToken);
-        const url: string = `${this.baseUrl}/auth/signup`;
-        return this.http.post<{ idToken: string }>(url, { email, idToken });
-    }
-
-    async signUpWithGoogle(idToken: string, email: string): Promise<Observable<{ idToken: string }>> {
-        sessionStorage.setItem('firebaseIdToken', idToken);
-        const url: string = `${this.baseUrl}/auth/signup`;
-        return this.http.post<{ idToken: string; }>(url, { email, idToken });
+        return this.firebaseAuthProcedure(userCredential, email);
     }
 
     async signInWithGoogle(idToken: string, email: string): Promise<Observable<{ idToken: string }>> {
         sessionStorage.setItem('firebaseIdToken', idToken);
-        const url: string = `${this.baseUrl}/auth/login`;
-        return this.http.post<{ idToken: string; }>(url, { email, idToken });
+        return this.makeAuthRequest(email, idToken, '/auth/login');
+    }
+
+    async signUpWithGoogle(idToken: string, email: string): Promise<Observable<{ idToken: string }>> {
+        sessionStorage.setItem('firebaseIdToken', idToken);
+        return this.makeAuthRequest(email, idToken, '/auth/signup');
     }
 
     async signInForCustomClaims(customToken: string): Promise<void> {
         const userCredentials = await this.afAuth.signInWithCustomToken(customToken);
         const idToken: string = await getIdToken(userCredentials.user!);
         FirebaseIdTokenService.setIdToken(idToken);
+    }
+
+    private async firebaseAuthProcedure(userCredential: UserCredential, email: string): Promise<Observable<{ idToken: string }>> {
+        const idToken: string = await getIdToken(userCredential.user!);
+        FirebaseIdTokenService.setIdToken(idToken);
+        const endpoint = userCredential.additionalUserInfo!.isNewUser ? '/auth/signup' : '/auth/login';
+        return this.makeAuthRequest(email, idToken, endpoint);
+    }
+
+    private makeAuthRequest(email: string, idToken: string, endpoint: string): Observable<{ idToken: string }> {
+        const url: string = `${this.baseUrl}${endpoint}`;
+        return this.http.post<{ idToken: string }>(url, { email, idToken });
     }
 }
