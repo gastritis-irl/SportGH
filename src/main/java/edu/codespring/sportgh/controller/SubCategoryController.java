@@ -68,9 +68,12 @@ public class SubCategoryController {
         return uniqueConstraintCheckForCustomFieldNames(subCategoryInDTO);
     }
 
-    private ResponseEntity<SubCategoryOutDTO> uniqueConstraintCheckForCustomFieldNames(@RequestBody @Valid SubCategoryInDTO subCategoryInDTO) {
-        Object[] customFieldNames = subCategoryInDTO.getCustomFields().stream().map(CustomFieldConfig::getName).toArray();
-        boolean hasDuplicate = Arrays.stream(customFieldNames).anyMatch(i -> Arrays.stream(customFieldNames).filter(j -> j.equals(i)).count() > 1);
+    private ResponseEntity<SubCategoryOutDTO> uniqueConstraintCheckForCustomFieldNames
+            (@RequestBody @Valid SubCategoryInDTO subCategoryInDTO) {
+        Object[] customFieldNames = subCategoryInDTO.getCustomFields().stream().map(CustomFieldConfig::getName)
+                                        .toArray();
+        boolean hasDuplicate = Arrays.stream(customFieldNames).anyMatch(i -> Arrays.stream(customFieldNames)
+                                    .filter(name -> name.equals(i)).count() > 1);
         if (hasDuplicate) {
             log.info("hasDuplicates");
         }
