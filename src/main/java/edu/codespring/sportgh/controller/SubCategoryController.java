@@ -3,6 +3,7 @@ package edu.codespring.sportgh.controller;
 import edu.codespring.sportgh.dto.SubCategoryInDTO;
 import edu.codespring.sportgh.dto.SubCategoryOutDTO;
 import edu.codespring.sportgh.mapper.SubCategoryMapper;
+import edu.codespring.sportgh.model.CustomFieldConfig;
 import edu.codespring.sportgh.model.SubCategory;
 import edu.codespring.sportgh.service.SubCategoryService;
 import jakarta.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
@@ -63,6 +65,15 @@ public class SubCategoryController {
         if (subCategoryInDTO.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return uniqueConstraintCheckForCustomFieldNames(subCategoryInDTO);
+    }
+
+    private ResponseEntity<SubCategoryOutDTO> uniqueConstraintCheckForCustomFieldNames(@RequestBody @Valid SubCategoryInDTO subCategoryInDTO) {
+        Object[] customFieldNames = subCategoryInDTO.getCustomFields().stream().map(CustomFieldConfig::getName).toArray();
+        boolean hasDuplicate = Arrays.stream(customFieldNames).anyMatch(i -> Arrays.stream(customFieldNames).filter(j -> j.equals(i)).count() > 1);
+        if (hasDuplicate) {
+            log.info("hasDuplicates");
+        }
         return save(subCategoryInDTO);
     }
 
@@ -76,6 +87,6 @@ public class SubCategoryController {
         if (!subCategoryService.existsById(subCategoryId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return save(subCategoryInDTO);
+        return uniqueConstraintCheckForCustomFieldNames(subCategoryInDTO);
     }
 }

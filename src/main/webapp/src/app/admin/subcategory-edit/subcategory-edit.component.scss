@@ -1,0 +1,98 @@
+@use '../../../style-variables.scss' as *;
+
+$button-width: 200px;
+$delete-btn-width: 90px;
+$page-padding: 20px;
+$item-gap: 10px;
+$item-max-width: 200px;
+
+.list-edit-holder {
+    padding-inline: $main-padding-inline;
+}
+
+@mixin list-manage-holder-styles($includePadding: true) {
+    color: $color-main-1;
+    padding-inline: if($includePadding, $main-padding-inline, 0);
+
+    .list-manage {
+
+        .list-header{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-inline: $page-padding;
+            border-color: $color-main-2;
+            align-items: center;
+            justify-content: space-between;
+
+            .row-item {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: $item-gap;
+            }
+
+            .name {
+                width: $item-max-width;
+                font-size: $size-h2;
+                font-weight: $font-weight-bold;
+            }
+        }
+
+        .list-elements {
+            padding-block: $page-padding;
+            display: flex;
+            flex-direction: column;
+            background-color: $color-main-3;
+            border-radius: $border-radius;
+
+            .list-element-without-radius {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding-inline: $page-padding;
+                gap: $item-gap;
+                border-color: $color-main-2;
+                border-bottom: solid;
+                border-bottom-width: thin;
+                align-items: center;
+                justify-content: space-between;
+
+                .row-item {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: $item-gap;
+
+                    .buttons {
+                        width: $delete-btn-width;
+
+                        div {
+                            width: 100%;
+                        }
+                    }
+
+                    input {
+                        outline: none;
+                        border-color: $color-main-2;
+                    }
+                }
+
+                .name {
+                    width: $item-max-width;
+                    font-size: $size-h2;
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+    }
+}
+
+
+.list-manage-holder {
+    @include list-manage-holder-styles();
+
+    &.no-inline-padding {
+        @include list-manage-holder-styles(false);
+    }
+}

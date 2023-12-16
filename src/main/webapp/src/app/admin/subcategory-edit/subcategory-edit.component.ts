@@ -4,16 +4,20 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { CustomFieldType } from '../../subcategory/customFieldConfig.model';
+import { CategoryService } from '../../category/category.service';
+import { Category } from '../../category/category.model';
 
 type ClickHandlerFunction = () => void;
 
 @Component({
     selector: 'sgh-subcategory-edit',
     templateUrl: './subcategory-edit.component.html',
+    styleUrls: [ './subcategory-edit.component.scss' ],
 })
 export class SubcategoryEditComponent implements OnInit {
 
-    selectedFields: string[] = [''];
+    selectedFields: string[] = [];
+    category: Category  = {id: undefined, name: '', imageId: 0};
     subcategory: Subcategory = { id: undefined, name: '', categoryId: undefined, customFields: [{name: '', type: CustomFieldType.STRING }]};
     @ViewChildren('inputField') inputFields: QueryList<ElementRef> | undefined;
     clickHandlerFunction: ClickHandlerFunction = (): void => {
@@ -23,6 +27,7 @@ export class SubcategoryEditComponent implements OnInit {
     paramCheck: 'create' | 'edit' = 'create';
     constructor(
         private subcategoryService: SubcategoryService,
+        private categoryService: CategoryService,
         private router: Router,
         private route: ActivatedRoute,
         private toastNotify: ToastrService,
@@ -67,6 +72,17 @@ export class SubcategoryEditComponent implements OnInit {
                         {
                             next: (data: Subcategory) => {
                                 this.subcategory = data;
+                                if(this.subcategory.categoryId) {
+                                    this.categoryService.getById(this.subcategory.categoryId).subscribe({
+                                        next: (data: Category) => {
+                                            this.category = data;
+                                        },
+                                        error: (error) => {
+                                            console.error(error);
+                                            this.toastNotify.error(`Error fetching data`);
+                                        }
+                                    });
+                                }
                             },
                             error: (error) => {
                                 console.error(error);
@@ -80,7 +96,7 @@ export class SubcategoryEditComponent implements OnInit {
     }
 
     checkInputFields(): void {
-        if (this.inputFields) {
+        if (this.inputFields && this.subcategory.customFields !== null) {
             this.inputFields.forEach((input: ElementRef, i: number) => {
                 this.subcategory.customFields[i].name = input.nativeElement.value;
                 if (this.selectedFields[i]) {

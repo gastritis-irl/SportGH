@@ -7,6 +7,25 @@
             <div class="form-part">
                 <div class="form-heading">Details</div>
                 <div>
+                    <label class="form-part-label">Category name</label>
+                    <input class="form-part-input"
+                           type="text" name="category-name"
+                           [(ngModel)]="category.name"
+                           #name="ngModel"
+                           [disabled]="true"
+                    >
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                                *ngIf="name.dirty || name.touched || buttonPushed"
+                                [fieldName]="'Subcategory name'"
+                                [required]="true"
+                                [length]="category.name?.length"
+                                [minlength]="4"
+                                [maxlength]="25"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+                <div>
                     <label class="form-part-label">Subcategory name</label>
                     <input class="form-part-input"
                            type="text" name="name"
@@ -32,20 +51,28 @@
                         <div class="buttons">
                             <div class="button-default button-primary" (click)="newField()">Create new custom field +</div>
                         </div>
+                        <div class="list-header">
+                            <div class="name row-item"> Name </div>
+                            <div class="name row-item">Type</div>
+                        </div>
                         <div class="list-elements" *ngIf="subcategory.customFields">
-                            <div class="list-element"  *ngFor="let _ of subcategory.customFields; let i = index">
+                            <div class="list-element-without-radius" *ngFor="let _ of subcategory.customFields; let i = index">
                                 <div class="name row-item">
                                     <input #inputField
                                            class="form-part-input"
                                            type="text" name="name{{i}}"
+                                           [minlength]="4"
+                                           [maxlength]="25"
                                            [ngModel]="subcategory.customFields[i].name"
                                            #name="ngModel"
                                     >
                                 </div>
                                 <div class="name row-item">
                                     <select class="nav-link" (change)="onSelectChange($event, i)">
-                                        <option value="" disabled selected>{{subcategory.customFields[i].type[0] + subcategory.customFields[i].type.slice(1).toLowerCase()}}</option>
-                                        <option *ngFor="let value of Object.values(CustomFieldType)" [value]="value">{{ value[0] + value.slice(1).toLowerCase() }}</option>
+                                        <option value="">{{subcategory.customFields[i].type[0] + subcategory.customFields[i].type.slice(1).toLowerCase()}}</option>
+                                        <ng-container *ngFor="let value of Object.values(CustomFieldType)">
+                                            <option *ngIf="value !== subcategory.customFields[i].type" [value]="value">{{ value[0] + value.slice(1).toLowerCase() }}</option>
+                                        </ng-container>
                                     </select>
                                 </div>
                                 <div class="row-item">
