@@ -13,10 +13,10 @@ $item-gap-small: 7px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        gap: $item-gap;
 
         @media (max-width: $breakpoint-medium) {
             flex-direction: column;
-            gap: $item-gap;
         }
 
         .user-avatar {
@@ -25,17 +25,19 @@ $item-gap-small: 7px;
             justify-content: center;
             align-items: center;
             padding: $item-gap;
+            gap: $item-gap;
             background-color: $color-neutral-1;
             border-radius: $border-radius;
-            width: 40%;
+            width: 30%;
+            min-width: 200px + $item-gap;
 
             @media (max-width: $breakpoint-medium) {
                 width: 100%;
             }
 
             .user-avatar-image {
-                min-height: 200px;
-                height: 85%;
+                max-height: 200px;
+                width: 200px;
             }
 
             .user-avatar-name {
@@ -51,7 +53,7 @@ $item-gap-small: 7px;
             padding: $item-gap;
             background-color: $color-neutral-1;
             border-radius: $border-radius;
-            width: 58%;
+            width: 67%;
             gap: $item-gap-small;
 
             @media (max-width: $breakpoint-medium) {

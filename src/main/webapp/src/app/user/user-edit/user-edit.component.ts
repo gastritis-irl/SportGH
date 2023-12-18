@@ -111,8 +111,6 @@ export class UserEditComponent implements OnInit {
     }
 
     updateUserData(): void {
-        console.log(this.user);
-
         if (this.user.id) {
             this.userService.update(this.user.id, this.user).subscribe({
                 next: (): void => {
