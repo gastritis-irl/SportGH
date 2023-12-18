@@ -5,6 +5,43 @@ $padding-left-welcome-message: 1em;
 $padding-right-welcome-message: 2.5em;
 $btn-height: 100%;
 
+.or-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 13px;
+    column-gap: 18px;
+    color: $color-main-4;
+
+    position: relative;
+
+    &:before,
+    &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        background-color: rgb(219, 219, 219);
+    }
+
+    &:before {
+        left: 0;
+    }
+
+    &:after {
+        right: 0;
+    }
+
+    span {
+        z-index: 1;
+        background-color: white;
+        padding: 0 40px;
+    }
+}
+
+
 .auth-buttons {
     display: flex;
     flex-direction: row;
@@ -192,6 +229,7 @@ $btn-height: 100%;
     background-color: #fff;
     cursor: pointer;
     transition: all .6s ease;
+    margin-bottom: 10px;
 
     &:hover {
         transform: scale(1.02);
@@ -199,6 +237,7 @@ $btn-height: 100%;
         transition: all .3s ease-in-out;
         background: $color-main-1;
         color: white;
+
         svg {
             transition: all .6s ease-in-out;
             filter: invert(1);
