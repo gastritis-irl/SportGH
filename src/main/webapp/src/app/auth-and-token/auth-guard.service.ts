@@ -8,7 +8,7 @@ function check(statement: boolean, router?: Router): boolean {
     if (statement) {
         return true;
     } else {
-        (router ?? inject(Router)).navigate(['/']);
+        (router ?? inject(Router)).navigate(['/access-denied']);
         return false;
     }
 }
