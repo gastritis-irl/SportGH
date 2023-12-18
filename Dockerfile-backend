@@ -12,6 +12,10 @@ WORKDIR /sportgh
 
 COPY --from=build /usr/src/app/build/libs/*.war app.war
 
+COPY serviceAccountKey.json .
+
+COPY src/main/resources /sportgh/resources
+
 EXPOSE 8080
 
 CMD java -jar app.war
