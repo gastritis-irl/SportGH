@@ -139,7 +139,6 @@ $map-height: 500px;
             .images {
                 display: flex;
                 gap: $item-gap-1;
-                margin-right: $item-gap-1;
                 flex-direction: row;
                 align-items: flex-start;
 
@@ -149,7 +148,7 @@ $map-height: 500px;
                     object-fit: contain;
                     border-radius: $border-radius;
                     cursor: pointer;
-                    margin-left: -20px;
+                    //margin-left: -20px;
                 }
 
                 @media(max-width: $breakpoint-large) {
