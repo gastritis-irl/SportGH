@@ -1,180 +1,101 @@
 @use '../../../style-variables.scss' as *;
 
+$item-gap: 12px;
+$item-gap-small: 7px;
 
-.user-page-container {
+.user-page-holder {
+    display: flex;
+    flex-direction: column;
+    padding-inline: $main-padding-inline;
+    gap: $item-gap;
 
-    .user-container {
+    .user-info-holder {
         display: flex;
         flex-direction: row;
-        gap: 20px;
-        max-width: 100%;
-        margin: 0;
-        padding-inline: $main-padding-inline;
+        justify-content: space-between;
+        gap: $item-gap;
 
-        @media (max-width: $breakpoint-large) {
+        @media (max-width: $breakpoint-medium) {
             flex-direction: column;
         }
 
-        .left-card, .right-card {
+        .user-avatar {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: $item-gap;
+            gap: $item-gap;
             background-color: $color-neutral-1;
             border-radius: $border-radius;
-            position: relative;
-            transition: 0.5s ease-out;
-            overflow: visible;
-            border: 2px solid $border-color;
+            width: 30%;
+            min-width: 200px + $item-gap;
+
+            @media (max-width: $breakpoint-medium) {
+                width: 100%;
+            }
+
+            .user-avatar-image {
+                max-height: 200px;
+                width: 200px;
+            }
+
+            .user-avatar-name {
+                width: 100%;
+                font-weight: $font-weight-bold;
+                font-size: $size-h2;
+                color: $color-main-1;
+                overflow: clip;
+            }
         }
 
-        .left-card {
-            flex: 0.3;
+        .user-info {
             display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding-left: 1%;
-            justify-content: space-between;
-            gap: 2%;
+            flex-direction: column;
+            padding: $item-gap;
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
+            width: 67%;
+            gap: $item-gap-small;
 
-            .card-button {
-                transform: translate(-50%, 125%);
-                width: 30%;
-                height: fit-content;
-                border: none;
-                font-size: 1rem;
-                padding: .5rem 1rem;
-                position: absolute;
-                left: 50%;
-                bottom: 0;
-                opacity: 0;
-                transition: 0.3s ease-out;
+            @media (max-width: $breakpoint-medium) {
+                width: 100%;
             }
 
-            &:hover {
-                border-color: $color-main-1;
-                box-shadow: 0 4px 18px 0 $color-neutral-2;
-
-                .card-button {
-                    transform: translate(-50%, 0);
-                    opacity: 1;
-                }
-            }
-
-            .image-container {
-                width: fit-content;
-                height: fit-content;
-                overflow: hidden;
-                background-color: $color-neutral-1;
-                border-radius: $border-radius;
-                position: relative;
-                margin: 3%;
-
-                .image {
-                    min-width: 120px;
-                    max-height: 200px;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    align-items: center;
-
-                    @media (max-width: $breakpoint-large) {
-                        max-width: 200px;
-                        max-height: 150px;
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                    }
-                }
-            }
-
-            .name-container {
+            .user-info-header {
                 display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: flex-start;
-                margin: 3%;
+                flex-direction: row;
+                justify-content: space-between;
 
-                .username {
-                    font-family: $font-default;
+                .button-default {
                     font-weight: $font-weight-bold;
-                    font-size: $size-h1;
-                    color: $color-main-1;
-                    margin-bottom: 10px;
-                    margin-right: 3%;
-                }
-
-                .full-name {
-                    font-family: $font-default;
-                    font-weight: $font-weight-medium;
-                    font-size: $size-h2;
-                    color: $color-main-2;
-                    margin-bottom: 10px;
-                    margin-right: 3%;
                 }
             }
 
-            .buttons {
-                margin-top: 10px;
-                display: flex;
+            .user-info-part {
+                color: $color-main-1;
+
+                .user-info-part-heading {
+                    font-weight: $font-weight-bold;
+                    font-size: $size-h3;
+                }
             }
         }
+    }
 
-        .right-card {
-            flex: 0.7;
-            justify-content: flex-start;
-            margin-left: auto;
-            padding: 1%;
+    .user-info-holder-bio {
+        background-color: $color-neutral-1;
+        border-radius: $border-radius;
+        padding: $item-gap;
 
-            @media (max-width: $breakpoint-large) {
-                margin-left: 0;
-            }
-
-            .form-main-title {
-                font-family: $font-default;
-                font-weight: $font-weight-bold;
-                font-size: $size-h1;
-                color: $color-main-1;
-                border-bottom: 5px solid $border-color;
-                margin: 0;
-                padding: 0;
-            }
-
-            .form-heading {
-                font-family: $font-default;
-                font-weight: $font-weight-bold;
-                font-size: $size-h2;
-                color: $color-main-1;
-                padding-top: 1%;
-                padding-bottom: 0;
-                margin: 0;
-            }
-
-            .bio-content {
-                font-family: $font-default;
-                font-size: $size-h2;
-                color: $color-main-1;
-                background-color: $color-neutral-1;
-                border-radius: $border-radius;
-            }
+        .user-bio {
+            padding-inline: $item-gap;
         }
     }
 
     .product-list-holder {
-        display: flex;
-        flex-direction: column;
-
-        gap: 20px;
-        max-width: 100%;
-        margin-top: 2%;
-        padding-inline: $main-padding-inline;
-        justify-content: space-between;
-
-        .product-list-title {
-            font-family: $font-default;
-            font-weight: $font-weight-bold;
-            font-size: $size-h1;
-            color: $color-main-1;
-            border-bottom: 5px solid $border-color;
-            margin: 0;
-            padding: 0;
-        }
+        background-color: $color-neutral-1;
+        border-radius: $border-radius;
+        padding: $item-gap;
     }
 }
-
