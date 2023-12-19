@@ -2,6 +2,7 @@ package edu.codespring.sportgh.controller;
 
 import edu.codespring.sportgh.dto.SubCategoryInDTO;
 import edu.codespring.sportgh.dto.SubCategoryOutDTO;
+import edu.codespring.sportgh.exception.BadRequestException;
 import edu.codespring.sportgh.mapper.SubCategoryMapper;
 import edu.codespring.sportgh.model.CustomFieldConfig;
 import edu.codespring.sportgh.model.SubCategory;
@@ -75,7 +76,7 @@ public class SubCategoryController {
         boolean hasDuplicate = Arrays.stream(customFieldNames).anyMatch(i -> Arrays.stream(customFieldNames)
                 .filter(name -> name.equals(i)).count() > 1);
         if (hasDuplicate) {
-            log.info("hasDuplicates");
+            throw new BadRequestException("Name has to be unique");
         }
         return save(subCategoryInDTO);
     }

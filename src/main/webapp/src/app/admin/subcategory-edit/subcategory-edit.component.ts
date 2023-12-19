@@ -58,6 +58,15 @@ export class SubcategoryEditComponent implements OnInit {
                 this.paramCheck = 'create';
                 if (params[0]) {
                     this.subcategory.categoryId = parseInt(params[0]);
+                    this.categoryService.getById(this.subcategory.categoryId).subscribe({
+                        next: (data: Category) => {
+                            this.category = data;
+                        },
+                        error: (error) => {
+                            console.error(error);
+                            this.toastNotify.error(`Error fetching data`);
+                        }
+                    });
                 }
                 this.clickHandlerFunction = this.createSubcategoryData;
                 this.editMode = false;
@@ -122,9 +131,9 @@ export class SubcategoryEditComponent implements OnInit {
                 },
                 error: (error): void => {
                     if (error.status === 0) {
-                        this.toastNotify.error('Error creating category: unauthorized');
+                        this.toastNotify.error('Error creating subcategory: unauthorized');
                     } else {
-                        this.toastNotify.error(`Error creating category: ${error.error}`);
+                        this.toastNotify.error(`Error creating subcategory: ${error.error}`);
                     }
                 }
             }
@@ -146,9 +155,9 @@ export class SubcategoryEditComponent implements OnInit {
                 },
                 error: (error: { status: number; error: undefined }): void => {
                     if (error.status === 0) {
-                        this.toastNotify.error('Error creating category: unauthorized');
+                        this.toastNotify.error('Error updating subcategory: unauthorized');
                     } else {
-                        this.toastNotify.error(`Error creating category: ${error.error}`);
+                        this.toastNotify.error(`Error updating subcategory: ${error.error}`);
                     }
                 }
             }

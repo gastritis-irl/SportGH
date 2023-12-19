@@ -16,29 +16,6 @@ $item-max-width: 200px;
 
     .list-manage {
 
-        .list-header{
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            padding-inline: $page-padding;
-            border-color: $color-main-2;
-            align-items: center;
-            justify-content: space-between;
-
-            .row-item {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                gap: $item-gap;
-            }
-
-            .name {
-                width: $item-max-width;
-                font-size: $size-h2;
-                font-weight: $font-weight-bold;
-            }
-        }
-
         .list-elements {
             padding-block: $page-padding;
             display: flex;
