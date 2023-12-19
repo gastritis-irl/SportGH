@@ -41,9 +41,11 @@ $item-gap-small: 7px;
             }
 
             .user-avatar-name {
+                width: 100%;
                 font-weight: $font-weight-bold;
                 font-size: $size-h2;
                 color: $color-main-1;
+                overflow: clip;
             }
         }
 
