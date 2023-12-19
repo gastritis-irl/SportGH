@@ -1,10 +1,72 @@
 @use '../../../style-variables.scss' as *;
 
-$button-width: 200px;
+$button-width: 250px;
 $delete-btn-width: 90px;
-$page-padding: 20px;
+$page-padding: 10px;
 $item-gap: 10px;
 $item-max-width: 200px;
+
+.table {
+    background-color: $color-main-3;
+    border-radius: $border-radius;
+    border-color: $color-main-1;
+    padding-block: $page-padding;
+    margin-top: 1rem;
+    border-collapse: unset;
+    vertical-align: initial;
+    --bs-table-color: initial;
+    font-size: initial;
+
+    td {
+        text-align: center;
+    }
+
+    th {
+        font-size: 170%;
+        padding-left: 20px;
+    }
+
+    .type {
+        padding-left: 7%;
+    }
+
+    .nav-link {
+        display: initial;
+    }
+
+    .button-container {
+        max-width: 100px;
+    }
+
+    .row-item {
+        background-color: $color-main-3;
+        gap: $item-gap;
+
+        .buttons {
+            width: $delete-btn-width;
+
+            div {
+                width: 100%;
+            }
+        }
+
+        input {
+            outline: none;
+            border-color: $color-main-2;
+            width: initial;
+        }
+    }
+
+    .name {
+        width: $item-max-width;
+        font-size: $size-h2;
+        font-weight: $font-weight-bold;
+    }
+}
+
+td {
+    background-color: $color-main-3;
+}
 
 .list-edit-holder {
     padding-inline: $main-padding-inline;
@@ -16,51 +78,15 @@ $item-max-width: 200px;
 
     .list-manage {
 
-        .list-elements {
-            padding-block: $page-padding;
-            display: flex;
-            flex-direction: column;
-            background-color: $color-main-3;
-            border-radius: $border-radius;
+        .title {
+            font-size: $size-h1;
+            font-weight: $font-weight-bold;
+            padding: 5px;
+        }
 
-            .list-element-without-radius {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                padding-inline: $page-padding;
-                gap: $item-gap;
-                border-color: $color-main-2;
-                border-bottom: solid;
-                border-bottom-width: thin;
-                align-items: center;
-                justify-content: space-between;
-
-                .row-item {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    gap: $item-gap;
-
-                    .buttons {
-                        width: $delete-btn-width;
-
-                        div {
-                            width: 100%;
-                        }
-                    }
-
-                    input {
-                        outline: none;
-                        border-color: $color-main-2;
-                    }
-                }
-
-                .name {
-                    width: $item-max-width;
-                    font-size: $size-h2;
-                    font-weight: $font-weight-bold;
-                }
-            }
+        .buttons {
+            padding-block: 5px;
+            width: $button-width;
         }
     }
 }

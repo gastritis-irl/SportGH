@@ -51,24 +51,30 @@
                         <div class="buttons">
                             <div class="button-default button-primary" (click)="newField()">Create new custom field +</div>
                         </div>
-                        <div class="list-elements" *ngIf="subcategory.customFields">
-                            <div class="list-element-without-radius">
-                                <div class="name row-item">  Name</div>
-                                <div class="name row-item">  Type</div>
-                                <div class="name row-item">  Actions</div>
-                            </div>
-                            <div class="list-element-without-radius" *ngFor="let _ of subcategory.customFields; let i = index">
-                                <div class="name row-item">
+                        <table class="table" *ngIf="subcategory.customFields && subcategory.customFields.length > 0">
+                            <thead>
+                            <tr>
+                                <th class="name row-item">Name</th>
+                                <th class="name row-item type">Type</th>
+                                <th class="name row-item"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let customField of subcategory.customFields; let i = index">
+                                <td>
+                                    <div class="name row-item">
                                     <input #inputField
                                            class="form-part-input"
                                            type="text" name="name{{i}}"
                                            [minlength]="4"
                                            [maxlength]="25"
-                                           [ngModel]="subcategory.customFields[i].name"
+                                           [ngModel]="customField.name"
                                            #name="ngModel"
                                     >
                                 </div>
-                                <div class="name row-item">
+                                </td>
+                                <td>
+                                    <div class="name row-item">
                                     <select class="nav-link" (change)="onSelectChange($event, i)">
                                         <option value="">{{subcategory.customFields[i].type[0] + subcategory.customFields[i].type.slice(1).toLowerCase()}}</option>
                                         <ng-container *ngFor="let value of Object.values(CustomFieldType)">
@@ -76,14 +82,16 @@
                                         </ng-container>
                                     </select>
                                 </div>
-                                <div class="row-item">
+                                </td>
+                                <td class="button-container">
                                     <sgh-popover-delete
                                             [deleteData]="[i]"
                                             (deleteEvent)="deleteCustomField($event)"
                                     ></sgh-popover-delete>
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
