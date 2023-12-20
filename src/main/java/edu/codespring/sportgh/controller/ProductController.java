@@ -1,9 +1,11 @@
 package edu.codespring.sportgh.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
+import edu.codespring.sportgh.model.FilterOptions;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.security.SecurityUtil;
 import edu.codespring.sportgh.service.ProductService;
@@ -16,8 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/products")
@@ -31,29 +34,20 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
-            @RequestParam("orderBy") Optional<String> orderBy,
-            @RequestParam("direction") Optional<String> direction,
-            @RequestParam("pageNumber") Optional<Integer> pageNumber,
-            @RequestParam("Subcategory") Optional<String[]> subcategoryNames,
-            @RequestParam("MinPrice") Optional<Double> minPrice,
-            @RequestParam("MaxPrice") Optional<Double> maxPrice,
-            @RequestParam("TextSearch") Optional<String> textSearch,
-            @RequestParam("userId") Optional<Long> userId
+            @RequestParam(value = "subcategoryNames", required = false) String[] subcategoryNames,
+            @RequestParam Map<String, String> params
     ) {
-        return new ResponseEntity<>(
-                productService.findPageByParams(
-                        orderBy.orElse(null),
-                        direction.orElse(null),
-                        pageNumber.orElse(1),
-                        subcategoryNames.orElse(null),
-                        minPrice.orElse(null),
-                        maxPrice.orElse(null),
-                        textSearch.orElse(null),
-                        userId.orElse(null)
-                ),
-                HttpStatus.OK
-        );
-
+        log.info(Arrays.toString(subcategoryNames));
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            params.remove("subcategoryNames");
+            FilterOptions filterOptions = objectMapper.convertValue(params, FilterOptions.class);
+            filterOptions.setSubcategoryNames(subcategoryNames);
+            return new ResponseEntity<>(productService.findPageByParams(filterOptions), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            log.warn("{}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(path = "/{productId}")

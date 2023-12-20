@@ -47,6 +47,8 @@ export class MapComponent implements OnInit, OnChanges {
             this.marker.setLatLng([this.lat, this.lng]);
             this.resetMarkerOnMap();
             this.getLocationAddress();
+        } else {
+            this.address = '';
         }
     }
 
@@ -62,6 +64,11 @@ export class MapComponent implements OnInit, OnChanges {
         }).addTo(map);
     }
 
+    // this resize event fixes the map it isn't correctly loaded
+    resetMap(): void {
+        window.dispatchEvent(new Event('resize'));
+    }
+
     // recenter map to marker (setView to marker's position)
     resetMarkerOnMap(): void {
         this.map?.setView(this.marker.getLatLng());
@@ -69,6 +76,7 @@ export class MapComponent implements OnInit, OnChanges {
 
     // move marker to new position on click and recenter map
     moveMarkerToNewPosition(event: L.LeafletMouseEvent): void {
+        this.resetMap();
         this.marker.setLatLng(L.latLng(event.latlng.lat, event.latlng.lng));
         this.locationEventEmitter.emit([event.latlng.lat, event.latlng.lng]);
         this.getLocationAddress();
@@ -90,7 +98,8 @@ export class MapComponent implements OnInit, OnChanges {
     getLocationAddress(): void {
         this.mapService.getLocationAddress(this.marker.getLatLng().lat, this.marker.getLatLng().lng)
             .then((result: GeocodeResponse): void => {
-                this.address = result.results[0].formatted;
+                const comp = result.results[0].components;
+                this.address = `${comp.country}, ${comp.county}, ${comp.village ? comp.village : comp.town ? comp.town : comp.city ? comp.city : ''}`;
             })
             .catch((error): void => {
                 console.error(error);
@@ -99,8 +108,10 @@ export class MapComponent implements OnInit, OnChanges {
 
     triggerGetLocationCoordinates(): void {
         clearTimeout(this.timeout);
-        this.timeout = setTimeout((): void => {
-            this.getLocationCoordinates();
-        }, 1000);
+        if (this.address) {
+            this.timeout = setTimeout((): void => {
+                this.getLocationCoordinates();
+            }, 1000);
+        }
     }
 }
