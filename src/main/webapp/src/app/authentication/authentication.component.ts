@@ -20,7 +20,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     loggedInUserEmail: string | null = null;
     loggedInUserFirebaseId: string | null = null;
     showDropdown: boolean = false;
-
+    emptyInput: boolean = true;
 
     email: string = '';
     password: string = '';
@@ -163,5 +163,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
     getErrorMessageInfo(error: string): string {
         return (String(error)).split(':')[2].split('(')[0];
+    }
+
+    checkEmailInput() {
+        this.emptyInput = this.email === '';
     }
 }
