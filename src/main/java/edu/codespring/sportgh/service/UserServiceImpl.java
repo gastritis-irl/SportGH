@@ -41,7 +41,12 @@ public class UserServiceImpl implements UserService {
     public User update(User user) {
         if (user.getImage() == null) {
             user.setImage(null);
+        } else {
+            if (user.getImage().getId() == null) {
+                user.setImage(null);
+            }
         }
+
         userRepository.save(user);
         return user;
     }
