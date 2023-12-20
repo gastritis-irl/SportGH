@@ -22,6 +22,9 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { SpinnerComponent } from './shared/loader/spinner.component';
 import { LoadingInterceptor } from './shared/loader/loading.interceptor';
 import { AuthInterceptor } from './auth-and-token/auth-interceptor';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { AccessDeniedComponent } from './shared/access-denied/access-denied.component';
+
 
 @NgModule({
     declarations: [
@@ -30,11 +33,12 @@ import { AuthInterceptor } from './auth-and-token/auth-interceptor';
     imports: [
         NavbarComponent,
         SpinnerComponent,
+        NotFoundComponent,
+        AccessDeniedComponent,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
         FormsModule,
         BrowserModule,
-        AppRoutingModule,
         HttpClientModule,
         NgbModule,
         HomeModule,
@@ -42,6 +46,7 @@ import { AuthInterceptor } from './auth-and-token/auth-interceptor';
         CategoryModule,
         AdminModule,
         UserModule,
+        AppRoutingModule,
         NavbarComponent,
         FooterComponent,
         BrowserAnimationsModule,

@@ -3,6 +3,7 @@
 $filter-gap: 10px;
 $filter-padding: 10px;
 $select-padding: 5px;
+$map-height: 250px;
 
 .form-heading {
     color: $color-main-1;
@@ -72,6 +73,15 @@ $select-padding: 5px;
             }
         }
 
+        .filter-location {
+            height: $map-height;
+            width: auto;
+        }
+
+        .map-fix {
+            height: 60px;
+        }
+
         .filter-price {
 
             .input-slider {
@@ -87,6 +97,18 @@ $select-padding: 5px;
 
                 &.form-range::-ms-thumb {
                     background-color: $color-main-1;
+                }
+
+                &.form-range::-webkit-slider-runnable-track {
+                    background: $color-main-2;
+                }
+
+                &.form-range::-moz-range-track {
+                    background: $color-main-2;
+                }
+
+                &.form-range::-ms-track {
+                    background: $color-main-2;
                 }
             }
         }

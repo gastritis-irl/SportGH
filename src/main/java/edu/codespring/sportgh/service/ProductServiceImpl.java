@@ -4,6 +4,7 @@ import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
+import edu.codespring.sportgh.model.FilterOptions;
 import edu.codespring.sportgh.model.Product;
 import edu.codespring.sportgh.model.User;
 import edu.codespring.sportgh.repository.ProductRepository;
@@ -51,6 +52,79 @@ public class ProductServiceImpl implements ProductService {
         save(product);
         ProductOutDTO productOutDTO = productMapper.productToOut(product);
         return new ResponseEntity<>(productOutDTO, HttpStatus.OK);
+    }
+
+    @Override
+    public Product findById(Long productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
+
+    @Override
+    public Long findOwnerIdById(Long productId) {
+        return productRepository.findUserIdById(productId);
+    }
+
+    @Override
+    public boolean notExistsByNameAndUser(String name, User user) {
+        return !productRepository.existsByNameAndUser(name, user);
+    }
+
+    @Override
+    public boolean existsById(Long productId) {
+        return productRepository.existsById(productId);
+    }
+
+    @Override
+    public void save(Product product) {
+        productRepository.save(product);
+        log.info("Product saved successfully ({}) with ID: {}", product.getName(), product.getId());
+    }
+
+    @Transactional
+    @Override
+    public void delete(Product product) {
+        imageService.deleteByProductId(product.getId());
+        productRepository.delete(product);
+    }
+
+    @Override
+    public ProductPageOutDTO findPageByParams(FilterOptions filterOptions) {
+        Specification<Product> specification = Specification.where(null);
+
+        Pageable pageable;
+        if (filterOptions.getOrderBy() == null) {
+            pageable = PageRequest.of(filterOptions.getPageNumber() - 1, pageSize);
+        } else {
+            if (filterOptions.getDirection() == null) {
+                pageable = PageRequest.of(
+                        filterOptions.getPageNumber() - 1,
+                        pageSize,
+                        Sort.by(Sort.DEFAULT_DIRECTION, filterOptions.getOrderBy())
+                );
+            } else {
+                pageable = PageRequest.of(
+                        filterOptions.getPageNumber() - 1,
+                        pageSize,
+                        Sort.by(Sort.Direction.fromString(filterOptions.getDirection()),
+                                filterOptions.getOrderBy())
+                );
+            }
+        }
+
+        specification = filterByUserId(filterOptions.getUserId(), specification);
+        specification = filterBySubcategories(filterOptions.getSubcategoryNames(), specification);
+        specification = filterByPrice(filterOptions.getMinPrice(), filterOptions.getMaxPrice(), specification);
+        specification = filterByTextInNameOrDescription(filterOptions.getTextSearch(), specification);
+        specification = filterByLocation(filterOptions.getLocationLat(), filterOptions.getLocationLng(),
+                filterOptions.getLocationRadius(), specification);
+
+        Page<Product> page = productRepository.findAll(specification, pageable);
+
+        Collection<Product> products = page.getContent();
+        int nrOfPages = page.getTotalPages();
+        long nrOfElements = page.getTotalElements();
+
+        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
     }
 
     private Specification<Product> filterByPrice(
@@ -109,82 +183,33 @@ public class ProductServiceImpl implements ProductService {
         return spec;
     }
 
-    @Override
-    public ProductPageOutDTO findPageByParams(
-            String orderBy,
-            String direction,
-            int pageNumber,
-            String[] subcategoryNames,
-            Double minPrice,
-            Double maxPrice,
-            String textSearch,
-            Long userId
-    ) {
-        Specification<Product> specification = Specification.where(null);
-
-        Pageable pageable;
-        if (orderBy == null) {
-            pageable = PageRequest.of(pageNumber - 1, pageSize);
-        } else {
-            if (direction == null) {
-                pageable = PageRequest.of(
-                        pageNumber - 1,
-                        pageSize,
-                        Sort.by(Sort.DEFAULT_DIRECTION, orderBy)
-                );
-            } else {
-                pageable = PageRequest.of(
-                        pageNumber - 1,
-                        pageSize,
-                        Sort.by(Sort.Direction.fromString(direction), orderBy)
-                );
-            }
+    private Specification<Product> filterByLocation(Double locationLat,
+                                                    Double locationLng,
+                                                    Double locationRadius,
+                                                    Specification<Product> specification) {
+        Specification<Product> spec = specification;
+        if (locationLat != 0 && locationLng != 0 && locationRadius != 0) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.and(
+                            criteriaBuilder.and(
+                                    root.get("locationLat").isNotNull(),
+                                    root.get("locationLng").isNotNull()
+                            ),
+                            criteriaBuilder.lessThanOrEqualTo(
+                                    criteriaBuilder.function("ST_Distance_Sphere", Double.class,
+                                            criteriaBuilder.function("Point", Double.class,
+                                                    criteriaBuilder.literal(locationLat),
+                                                    criteriaBuilder.literal(locationLng)
+                                            ),
+                                            criteriaBuilder.function("Point", Double.class,
+                                                    root.get("locationLat"),
+                                                    root.get("locationLng")
+                                            )
+                                    ),
+                                    criteriaBuilder.literal(locationRadius * 1000)
+                            )
+                    ));
         }
-
-        specification = filterByUserId(userId, specification);
-        specification = filterBySubcategories(subcategoryNames, specification);
-        specification = filterByPrice(minPrice, maxPrice, specification);
-        specification = filterByTextInNameOrDescription(textSearch, specification);
-
-        Page<Product> page = productRepository.findAll(specification, pageable);
-
-        Collection<Product> products = page.getContent();
-        int nrOfPages = page.getTotalPages();
-        long nrOfElements = page.getTotalElements();
-
-        return productMapper.productPageToOut(products, nrOfPages, nrOfElements);
-    }
-
-    @Override
-    public Product findById(Long productId) {
-        return productRepository.findById(productId).orElse(null);
-    }
-
-    @Override
-    public Long findOwnerIdById(Long productId) {
-        return productRepository.findUserIdById(productId);
-    }
-
-    @Override
-    public boolean notExistsByNameAndUser(String name, User user) {
-        return !productRepository.existsByNameAndUser(name, user);
-    }
-
-    @Override
-    public boolean existsById(Long productId) {
-        return productRepository.existsById(productId);
-    }
-
-    @Override
-    public void save(Product product) {
-        productRepository.save(product);
-        log.info("Product saved successfully ({}) with ID: {}", product.getName(), product.getId());
-    }
-
-    @Transactional
-    @Override
-    public void delete(Product product) {
-        imageService.deleteByProductId(product.getId());
-        productRepository.delete(product);
+        return spec;
     }
 }

@@ -425,6 +425,35 @@ $description-textarea-height: 200px;
     padding: $form-part-padding;
 }
 
+.form-part-label {
+    color: $color-main-1;
+    font-size: $size-h3;
+    font-weight: $font-weight-bold;
+}
+
+.form-part-input {
+    width: 100%;
+    height: $input-height;
+    border-radius: $border-radius;
+    border-style: solid;
+    border-color: $color-main-3;
+    padding-left: $input-padding-left;
+    color: $color-main-1;
+
+    &:disabled {
+        background-color: $color-main-3;
+    }
+
+    &:enabled {
+        background-color: $color-neutral-1;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $color-main-2;
+    }
+}
+
 .general-data {
 
     .general-data-form {
@@ -441,35 +470,6 @@ $description-textarea-height: 200px;
             border-radius: $border-radius;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             gap: $item-gap;
-
-            .form-part-label {
-                color: $color-main-1;
-                font-size: $size-h3;
-                font-weight: $font-weight-bold;
-            }
-
-            .form-part-input {
-                width: 100%;
-                height: $input-height;
-                border-radius: $border-radius;
-                border-style: solid;
-                border-color: $color-main-3;
-                padding-left: $input-padding-left;
-                color: $color-main-1;
-
-                &:disabled {
-                    background-color: $color-main-3;
-                }
-
-                &:enabled {
-                    background-color: $color-neutral-1;
-                }
-
-                &:focus {
-                    outline: none;
-                    border-color: $color-main-2;
-                }
-            }
 
             .form-check-label {
                 font-size: $font-default;

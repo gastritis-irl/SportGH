@@ -17,7 +17,6 @@ import {SubcategoryEditComponent} from "./subcategory-edit/subcategory-edit.comp
         CategoryEditComponent,
         SubcategoryEditComponent,
     ],
-    providers: [],
     bootstrap: [],
     imports: [
         AdminRoute,

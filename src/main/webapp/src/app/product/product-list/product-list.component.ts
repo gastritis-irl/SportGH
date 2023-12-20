@@ -6,9 +6,9 @@ import { Category } from '../../category/category.model';
 @Component({
     selector: 'sgh-product-list',
     templateUrl: './product-list.component.html',
-    styleUrls: [ './product-list.component.scss' ],
+    styleUrls: ['./product-list.component.scss'],
 })
-export class ProductListComponent{
+export class ProductListComponent {
 
     @Input() products: Product[] = [];
     @Input() categories: Category[] = [];
@@ -18,6 +18,9 @@ export class ProductListComponent{
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
     @Input() maxPrice: number = 0;
+    @Input() locationLat?: number;
+    @Input() locationLng?: number;
+    @Input() locationRadius?: number;
     @Input() nrOfPages: number = 0;
     @Input() nrOfItems: number = 0;
     currentPage: number = 1;
@@ -25,7 +28,7 @@ export class ProductListComponent{
 
     @Output() newPageEvent: EventEmitter<number> = new EventEmitter<number>();
     @Output() orderByEvent: EventEmitter<string> = new EventEmitter<string>();
-    @Output() clearFilterEvent: EventEmitter<string> = new EventEmitter<string>();
+    @Output() clearFilterEvent: EventEmitter<[string, boolean]> = new EventEmitter<[string, boolean]>();
     @Output() resetFilterEvent: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
@@ -54,7 +57,13 @@ export class ProductListComponent{
             }
         }
 
-        this.clearFilterEvent.emit(paramName);
+        this.clearFilterEvent.emit([paramName, true]);
+    }
+
+    clearMultipleFilters(paramNames: string[]): void {
+        for (let i: number = 0; i < paramNames.length; i++) {
+            this.clearFilterEvent.emit([paramNames[i], i >= paramNames.length - 1]);
+        }
     }
 
     anyActiveFilter(): boolean {
