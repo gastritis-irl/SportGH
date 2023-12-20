@@ -21,6 +21,7 @@ export class UserDetailsComponent implements OnInit {
     image: string = '';
     products: Product[] = [];
     nrOfItems: number = 0;
+    nrOfPages: number = 0;
 
     constructor(
         private userService: UserService,
@@ -62,6 +63,8 @@ export class UserDetailsComponent implements OnInit {
                         next: (data: ProductPage): void => {
                             this.products = data.products;
                             this.nrOfItems = data.nrOfElements;
+                            this.nrOfPages = data.nrOfPages;
+                            this.loadProductImages(this.products);
                         },
                         error: (): void => {
                             this.toastNotify.error(`Error fetching data`);
@@ -82,7 +85,7 @@ export class UserDetailsComponent implements OnInit {
     }
 
     loadImage(imageId: number): void {
-        if (imageId) {
+        if (imageId !== 0) {
             this.imageService.getImageFile(imageId).subscribe({
                 next: (blob: Blob): void => {
                     const reader: FileReader = new FileReader();
@@ -95,6 +98,40 @@ export class UserDetailsComponent implements OnInit {
                 },
                 error: (error): void => {
                     this.toastNotify.error(`Error fetching image`, error);
+                }
+            });
+        }
+    }
+
+    loadProductImages(products: Product[]): void {
+        for (const product of products) {
+
+            if (!product.id) {
+                continue;
+            }
+            this.imageService.getImageFilesByProductId(product.id).subscribe({
+                next: (response: { name: string, data: Uint8Array }[]): void => {
+                    if (!response) {
+                        return;
+                    }
+                    try {
+                        product.imageDataUrls = [];
+                        for (const imageDTO of response) {
+                            if (!imageDTO.data) {
+                                continue;
+                            }
+
+                            const base64String: Uint8Array = imageDTO.data;
+                            const imageUrl: string = 'data:image/jpeg;base64,' + base64String;
+                            product.imageDataUrls.push(imageUrl);
+                        }
+                        product.imagesLoaded = true;
+                    } catch (error) {
+                        this.toastNotify.error(`Error loading images: ${error}`);
+                    }
+                },
+                error: (error): void => {
+                    this.toastNotify.error(`Error fetching images`, error);
                 }
             });
         }

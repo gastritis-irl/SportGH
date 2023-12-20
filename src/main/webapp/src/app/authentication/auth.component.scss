@@ -59,8 +59,9 @@ $btn-height: 100%;
 }
 
 .dropdown-content {
-    display: none;
+    display: block;
     position: absolute;
+    right: 0;
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -68,14 +69,16 @@ $btn-height: 100%;
     z-index: 1;
     border-radius: $border-radius;
 
-    div:hover {
+    .dropdown-label {
+        color: $color-main-1;
+        font-weight: $font-weight-bold;
+        font-size: $size-h2;
+    }
+
+    .dropdown-button:hover {
         cursor: pointer;
         background-color: $color-main-3;
     }
-}
-
-.profile-dropdown:hover .dropdown-content {
-    display: block;
 }
 
 .profile-icon {
