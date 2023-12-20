@@ -35,7 +35,6 @@ export class UserEditComponent implements OnInit {
         private toastNotify: ToastrService,
         private route: ActivatedRoute,
         private imageService: ImageService,
-        // private fbIdTokenService: FirebaseIdTokenService,
         private router: Router,
     ) {
     }

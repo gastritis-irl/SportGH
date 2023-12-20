@@ -11,6 +11,12 @@ export class FirebaseIdTokenService {
         return sessionStorage.getItem('firebaseIdToken');
     }
 
+    static setIdToken(token: string | null): void {
+        if (token) {
+            sessionStorage.setItem('firebaseIdToken', token);
+        }
+    }
+
     static getDecodedIdToken(): IdToken | null {
         const firebaseIdToken: string | null = sessionStorage.getItem('firebaseIdToken');
         if (firebaseIdToken) {
