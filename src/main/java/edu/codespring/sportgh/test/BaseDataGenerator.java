@@ -125,7 +125,7 @@ public abstract class BaseDataGenerator {
     public void saveSubcategory(String name, String categoryName) {
         Category category = categoryService.findByName(categoryName);
         if (category != null && !subCategoryService.existsByName(name)) {
-            subCategoryService.save(new SubCategory(name, category, null));
+            subCategoryService.save(new SubCategory(name, category, null, null));
         }
     }
 

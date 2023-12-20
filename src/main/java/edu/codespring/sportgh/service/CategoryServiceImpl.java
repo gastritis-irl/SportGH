@@ -19,17 +19,6 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final ImageService imageService;
 
-
-    @Override
-    public void deleteImageFileByCategoryId(Long categoryId) {
-        Category category = findById(categoryId);
-        if (category == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } else if (category.getImage() != null) {
-            imageService.deleteFile(category.getImage().getId());
-        }
-    }
-
     @Override
     public void save(Category category) {
         categoryRepository.save(category);
@@ -39,8 +28,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     @Override
     public void delete(Long categoryId) {
-        deleteImageFileByCategoryId(categoryId);
+        Category category = findById(categoryId);
+        if (category == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
         categoryRepository.deleteById(categoryId);
+        imageService.deleteFile(category.getImage().getId());
         log.info("Category with ID {} deleted successfully.", categoryId);
     }
 
