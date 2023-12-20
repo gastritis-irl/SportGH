@@ -51,6 +51,8 @@
                 [products]="products"
                 [nrOfItems]="nrOfItems"
                 [nrOfPages]="nrOfPages"
+                (newPageEvent)="setPageNumber($event)"
+                (orderByEvent)="setOrderBy($event)"
         ></sgh-product-list>
     </div>
 </div>

@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
@@ -37,7 +36,6 @@ public class ProductController {
             @RequestParam(value = "subcategoryNames", required = false) String[] subcategoryNames,
             @RequestParam Map<String, String> params
     ) {
-        log.info(Arrays.toString(subcategoryNames));
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             params.remove("subcategoryNames");

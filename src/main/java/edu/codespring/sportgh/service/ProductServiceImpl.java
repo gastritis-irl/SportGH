@@ -188,7 +188,8 @@ public class ProductServiceImpl implements ProductService {
                                                     Double locationRadius,
                                                     Specification<Product> specification) {
         Specification<Product> spec = specification;
-        if (locationLat != 0 && locationLng != 0 && locationRadius != 0) {
+        if (locationLat != null && locationLng != null && locationRadius != null &&
+                locationLat != 0 && locationLng != 0 && locationRadius != 0) {
             spec = spec.and((root, query, criteriaBuilder) ->
                     criteriaBuilder.and(
                             criteriaBuilder.and(

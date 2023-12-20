@@ -23,10 +23,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -93,8 +90,7 @@ public class ImageServiceImpl implements ImageService {
         Collection<Image> images = findByProductId(productId);
 
         if (images.isEmpty()) {
-            log.warn("Images not found");
-            return null; // You might want to return an empty list instead of null
+            return new ArrayList<>();
         }
 
         log.info("Found {} images for productId {}.", images.size(), productId);
