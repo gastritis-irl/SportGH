@@ -20,7 +20,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     @Input() changePassword: boolean = false;
 
     loggedInUserEmail: string | null = null;
-    loggedInUserName: string | null = null;
     loggedInUserFirebaseId: string | null = null;
     showDropdown: boolean = false;
 
@@ -40,7 +39,6 @@ export class AuthComponent implements OnInit, OnDestroy {
         const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
         if (idToken) {
             this.loggedInUserEmail = idToken.email;
-            this.loggedInUserName = this.loggedInUserEmail;
             this.loggedInUserFirebaseId = idToken.user_id;
         }
     }
@@ -53,7 +51,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     logout(): void {
         this.afAuth.signOut().then((): void => {
             this.loggedInUserEmail = null;  // Reset the logged-in email
-            this.loggedInUserName = this.loggedInUserEmail;
             this.loggedInUserFirebaseId = null;
             this.toastNotify.success('Successfully logged out');
         }).catch(error => {
@@ -158,7 +155,6 @@ export class AuthComponent implements OnInit, OnDestroy {
                     this.userService.signInForCustomClaims(idTokenWithCustomFields.idToken)
                         .then((): void => {
                             this.loggedInUserEmail = user.email;
-                            this.loggedInUserName = this.loggedInUserEmail;
                             const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
                             if (idToken) {
                                 this.loggedInUserFirebaseId = idToken?.user_id;
@@ -228,7 +224,6 @@ export class AuthComponent implements OnInit, OnDestroy {
                         .then((): void => {
                             // Use the email directly here before clearing the form
                             this.loggedInUserEmail = user.email;
-                            this.loggedInUserName = this.loggedInUserEmail;
                             const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
                             if (idToken) {
                                 this.loggedInUserFirebaseId = idToken?.user_id;
@@ -258,7 +253,6 @@ export class AuthComponent implements OnInit, OnDestroy {
                             .then((): void => {
                                 // Use the email directly here before clearing the form
                                 this.loggedInUserEmail = this.email;
-                                this.loggedInUserName = this.loggedInUserEmail;
                                 const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
                                 if (idToken) {
                                     this.loggedInUserFirebaseId = idToken?.user_id;
@@ -288,7 +282,6 @@ export class AuthComponent implements OnInit, OnDestroy {
                             .then((): void => {
                                 // Use the email directly here before clearing the form
                                 this.loggedInUserEmail = this.email;
-                                this.loggedInUserName = this.loggedInUserEmail;
 
                                 const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
                                 if (idToken) {
