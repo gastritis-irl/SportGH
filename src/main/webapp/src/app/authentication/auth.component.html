@@ -3,17 +3,17 @@
         <p class="title">Login</p>
         <p class="message">Enter your login credentials below.</p>
         <label>
-            <input class="input" type="email" required [(ngModel)]="email" name="email">
+            <input class="input" type="email" required [(ngModel)]="email" name="email" autocomplete="username">
             <span>Email</span>
         </label>
         <label>
-            <input class="input" type="password" required [(ngModel)]="password" name="password">
+            <input class="input" type="password" required [(ngModel)]="password" name="password" autocomplete="current-password">
             <span>Password</span>
         </label>
         <p class="account-yet"><a (click)="openModal(forgotPassword)">Forgot password?</a></p>
         <div class="buttons">
             <div>
-                <button class="button-secondary button-default" type="submit" value="Login">
+                <button class="button-primary button-default" type="submit" value="Login">
                     <svg class="sign-in-icon" width="14" height="19" viewBox="0 0 14 19" fill="none">
                         <path
                                 d="M11.1667 7.61627H2.83333C1.68274 7.61627 0.75 8.54901 0.75 9.69961V15.9496C0.75 17.1002 1.68274 18.0329 2.83333 18.0329H11.1667C12.3173 18.0329 13.25 17.1002 13.25 15.9496V9.69961C13.25 8.54901 12.3173 7.61627 11.1667 7.61627Z"
@@ -26,6 +26,22 @@
             </div>
         </div>
         <p class="account-yet">Don't have an account? <a (click)="openModal(signupContent)">Sign up</a></p>
+        <div class="or-text">
+            <span></span>
+            <span>OR</span>
+            <span></span>
+        </div>
+        <div class="formGroup">
+            <button class="button" type="button" (click)="googleLogin()">
+                <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
+                    <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                    <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.130-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                    <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                    <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                </svg>
+                Continue with Google
+            </button>
+        </div>
     </form>
 </ng-template>
 
@@ -34,11 +50,11 @@
         <p class="title">Sign up</p>
         <p class="message">Signup now and get full access to our app. </p>
         <label>
-            <input class="input" type="email" required [(ngModel)]="email" name="email">
+            <input class="input" type="email" required [(ngModel)]="email" name="email" autocomplete="username">
             <span>Email</span>
         </label>
         <label>
-            <input class="input" type="password" required [(ngModel)]="password" name="password">
+            <input class="input" type="password" required [(ngModel)]="password" name="password" autocomplete="current-password">
             <span>Password</span>
         </label>
         <div class="buttons">
@@ -52,11 +68,27 @@
                             <path d="m7.5 9.99998h5"></path>
                         </g>
                     </svg>
-                    Sign up
+                    Sign-up
                 </button>
             </div>
         </div>
-        <p class="account-yet">Already have an account? <a (click)="openModal(loginContent)">Sign in</a></p>
+        <p class="account-yet">Already have an account? <a (click)="openModal(loginContent)">Sign-in</a></p>
+        <div class="or-text">
+            <span></span>
+            <span>OR</span>
+            <span></span>
+        </div>
+        <div class="formGroup">
+            <button class="button" type="button" (click)="googleSignup()">
+                <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
+                    <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                    <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                    <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                    <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                </svg>
+                Continue with Google
+            </button>
+        </div>
     </form>
 </ng-template>
 
@@ -145,8 +177,8 @@
             <button class="button-secondary button-default" (click)="openModal(loginContent)">
                 <svg class="sign-in-icon" width="14" height="19" viewBox="0 0 14 19" fill="none">
                     <path
-                            d="M11.1667 7.61627H2.83333C1.68274 7.61627 0.75 8.54901 0.75 9.69961V15.9496C0.75 17.1002 1.68274 18.0329 2.83333 18.0329H11.1667C12.3173 18.0329 13.25 17.1002 13.25 15.9496V9.69961C13.25 8.54901 12.3173 7.61627 11.1667 7.61627Z"
-                            stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        d="M11.1667 7.61627H2.83333C1.68274 7.61627 0.75 8.54901 0.75 9.69961V15.9496C0.75 17.1002 1.68274 18.0329 2.83333 18.0329H11.1667C12.3173 18.0329 13.25 17.1002 13.25 15.9496V9.69961C13.25 8.54901 12.3173 7.61627 11.1667 7.61627Z"
+                        stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M2.83334 5.53294 A 4.16667 4.16667 0 1 1 11.1667 5.53294" stroke-width="1.4"
                           stroke-linecap="round" stroke-linejoin="round" class="upper-part"/>
                 </svg>
@@ -163,7 +195,7 @@
                         <path d="m7.5 9.99998h5"></path>
                     </g>
                 </svg>
-                Sign up
+                Sign-up
             </button>
         </div>
     </div>
