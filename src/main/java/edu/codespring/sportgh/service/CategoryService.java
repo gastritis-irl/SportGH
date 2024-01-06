@@ -8,8 +8,6 @@ public interface CategoryService {
 
     void save(Category category);
 
-    void deleteImageFileByCategoryId(Long categoryId);
-
     void delete(Long categoryID);
 
     boolean existsById(Long categoryID);

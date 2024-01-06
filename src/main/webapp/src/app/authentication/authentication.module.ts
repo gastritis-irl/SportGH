@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthenticationComponent } from './authentication.component';
+import { AuthComponent } from './auth.component';
 import { RouterModule } from '@angular/router';
 import { RequestsComponent } from '../shared/requests/requests.component';
 
 @NgModule({
     declarations: [
-        AuthenticationComponent
+        AuthComponent
     ],
     imports: [
         CommonModule,
@@ -16,7 +16,7 @@ import { RequestsComponent } from '../shared/requests/requests.component';
         RequestsComponent
     ],
     exports: [
-        AuthenticationComponent
+        AuthComponent
     ]
 })
 export class AuthModule { }
