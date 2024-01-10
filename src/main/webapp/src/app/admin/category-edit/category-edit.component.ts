@@ -7,8 +7,8 @@ import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ViewChild } from '@angular/core';
 import { ImageComponent } from '../../shared/image/image.component';
-import {SubcategoryService} from "../../subcategory/subcategory.service";
-import {Subcategory} from "../../subcategory/subcategory.model";
+import { SubcategoryService } from '../../subcategory/subcategory.service';
+import { Subcategory } from '../../subcategory/subcategory.model';
 
 type ClickHandlerFunction = () => void;
 
@@ -22,7 +22,7 @@ export class CategoryEditComponent implements OnInit {
 
     category: Category
         = { id: undefined, name: '', description: '', imageId: 0, imageDataUrl: undefined };
-    subcategories: Subcategory[] = []
+    subcategories: Subcategory[] = [];
     newImageFile?: File;
     paramCheck: 'create' | 'edit' = 'create';
     clickHandlerFunction: ClickHandlerFunction = (): void => {
@@ -169,8 +169,7 @@ export class CategoryEditComponent implements OnInit {
         if (this.newImageFile) {
             this.uploadImageAndCreateCategory(this.newImageFile);
         } else {
-            // If no new image file has been selected, just create the category data
-            this.createCategoryData();
+            this.toastNotify.warning('Image is required');
         }
     }
 
