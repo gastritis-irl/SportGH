@@ -58,12 +58,12 @@
                                [(ngModel)]="user.fullName"
                                #fullName="ngModel"
                                minlength="5"
-                               maxlength="100"
+                               maxlength="30"
                                class="form-part-input"/>
 
                         <sgh-form-ch-lbl [fieldName]="'Full Name'"
                                          [minlength]="5"
-                                         [maxlength]="100"
+                                         [maxlength]="30"
                                          [length]="fullName.value.length"
                                          *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)"
                                          class="form-check-label">

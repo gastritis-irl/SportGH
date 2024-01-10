@@ -22,6 +22,8 @@ export class UserDetailsComponent implements OnInit {
     products: Product[] = [];
     nrOfItems: number = 0;
     nrOfPages: number = 0;
+    currentPage: number = 1;
+    orderByElement: string = 'name#ASC';
 
     constructor(
         private userService: UserService,
@@ -58,7 +60,13 @@ export class UserDetailsComponent implements OnInit {
                     if (data.imageId) {
                         this.loadImage(data.imageId);
                     }
-                    const params: Params = { userId: data.id };
+
+                    const params: Params = {
+                        userId: data.id,
+                        pageNumber: this.currentPage,
+                        orderBy: this.orderByElement.split('#')[0],
+                        direction: this.orderByElement.split('#')[1]
+                    };
                     this.productService.getAllByParams(params).subscribe({
                         next: (data: ProductPage): void => {
                             this.products = data.products;
@@ -135,5 +143,15 @@ export class UserDetailsComponent implements OnInit {
                 }
             });
         }
+    }
+
+    setPageNumber(pageNumber: number): void {
+        this.currentPage = pageNumber;
+        this.loadData(FirebaseIdTokenService.getDecodedIdToken()?.user_id);
+    }
+
+    setOrderBy(orderByElement: string): void {
+        this.orderByElement = orderByElement;
+        this.loadData(FirebaseIdTokenService.getDecodedIdToken()?.user_id);
     }
 }
