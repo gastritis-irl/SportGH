@@ -138,6 +138,7 @@ $map-height: 500px;
 
             .images {
                 display: flex;
+                padding: $item-padding;
                 gap: $item-gap-1;
                 flex-direction: row;
                 align-items: flex-start;
