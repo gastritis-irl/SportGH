@@ -3,7 +3,7 @@
         <p class="title">Login</p>
         <p class="message">Enter your login credentials below.</p>
         <label>
-            <input class="input" type="email" required [ngClass]="{'not-empty': !emptyInput}" (change)="checkEmailInput()" [(ngModel)]="email" name="email" autocomplete="username">
+            <input class="input" type="email" required [ngClass]="{'not-empty': email !== ''}" [(ngModel)]="email" name="email" autocomplete="username">
             <span>Email</span>
         </label>
         <label>
