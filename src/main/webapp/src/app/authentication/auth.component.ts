@@ -23,7 +23,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     loggedInUserFirebaseId: string | null = null;
     showDropdown: boolean = false;
 
-
     email: string = '';
     password: string = '';
 
