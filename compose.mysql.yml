@@ -27,6 +27,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
       - sportgh-mysql
+    ports:
+      - "8080:8080"
 
   sportgh-frontend:
     build:
@@ -34,8 +36,6 @@ services:
       dockerfile: Dockerfile-frontend
     restart: unless-stopped
     ports:
-      - "4210:4200"
+      - "4200:80"
     depends_on:
       - sportgh-backend
-    environment:
-        - BASE_URL=http://sportgh-backend:8080

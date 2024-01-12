@@ -3,26 +3,14 @@ FROM node:18.14.2-alpine3.17 as build
 
 WORKDIR /app
 
-COPY package*.json ./
-
-RUN npm install
-
 COPY . .
 
-RUN npm run build --prod
+RUN npm install
+RUN npm run build --configuration=production
 
 # Stage 2: Serve the application from Nginx Web Server
 FROM nginx:stable-alpine3.17-slim
 
-RUN apk add --no-cache curl
-
 COPY --from=build /app/dist/webapp /usr/share/nginx/html
-
-COPY startup.sh /usr/share/nginx/startup.sh
-RUN chmod +x /usr/share/nginx/startup.sh
-
 COPY nginx.config /etc/nginx/conf.d/default.conf
-
-EXPOSE 4210
-
-ENTRYPOINT ["/usr/share/nginx/startup.sh"]
+#CMD ["nginx", "-g", "daemon off;"]
