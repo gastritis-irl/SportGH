@@ -1,23 +1,28 @@
-#DigitalOcean only
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ca-sportgh-ingress
   annotations:
-    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - host: sportgh.k8s.edu.codespring.ro
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: ca-sportgh-frontend-service
-              servicePort: 80
+              service:
+                name: ca-sportgh-frontend-service
+                port:
+                  number: 80
     - host: api.sportgh.k8s.edu.codespring.ro
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: ca-sportgh-backend-service
-              servicePort: 80
+              service:
+                name: ca-sportgh-backend-service
+                port:
+                  number: 80

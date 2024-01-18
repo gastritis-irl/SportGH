@@ -262,6 +262,7 @@ $map-height: 500px;
 
 
             .pricing {
+                height: fit-content;
                 display: flex;
                 flex-direction: column;
                 background-color: $color-neutral-1;
