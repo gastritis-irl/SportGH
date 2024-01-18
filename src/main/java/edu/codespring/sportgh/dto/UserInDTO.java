@@ -30,7 +30,7 @@ public class UserInDTO {
     @Size(min = 9, max = 12, message = "Phone number should be between 9 and 12 characters")
     private String phoneNumber;
 
-    @Size(max = 2000, message = "Bio must be under 2000 characters")
+    @Size(max = 600, message = "Bio must be under 600 characters")
     private String bio;
 
     @Size(min = 5, max = 80, message = "Address should be between 5 and 8 characters")
