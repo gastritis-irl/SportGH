@@ -12,6 +12,7 @@ import { IdToken } from '../../auth-and-token/firebase-id-token.model';
 import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ImageComponent } from '../../shared/image/image.component';
+import { CustomFieldConfig, CustomFieldType } from '../../subcategory/customFieldConfig.model';
 
 type ClickHandlerFunction = () => void;
 
@@ -28,6 +29,7 @@ export class ProductEditComponent implements OnInit {
     categories: Category[] = [];
     subcategories: Subcategory[] = [];
     subcategoryDropdownDisabled: boolean = true;
+    customFieldsDisabled: boolean = true;
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
     editMode: boolean = false;
@@ -36,6 +38,7 @@ export class ProductEditComponent implements OnInit {
     _imageIds?: number[];
     newImageFiles: File[] = [];
     imageDatas: Image[] = [];
+    protected readonly CustomFieldType = CustomFieldType;
 
     constructor(
         private productService: ProductService,
@@ -145,6 +148,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     getSubcategoriesByCategoryId(): void {
+        this.customFieldsDisabled = true;
         this.subcategoryService.getByCategoryId(this.product.categoryId ? this.product.categoryId : 0).subscribe(
             {
                 next: (data: Subcategory[]): void => {
@@ -157,6 +161,23 @@ export class ProductEditComponent implements OnInit {
                 }
             }
         );
+    }
+
+    getCustomFieldsBySubcategoryId(): void {
+        if (this.product.subCategoryId) {
+            this.subcategoryService.getCustomFieldsById(this.product.subCategoryId).subscribe(
+                {
+                    next: (data: CustomFieldConfig[]): void => {
+                        console.log(data);
+                        this.customFieldsDisabled = false;
+                    },
+                    error: (error): void => {
+                        console.error(error);
+                        this.toastNotify.error(`Error loading custom fields`);
+                    }
+                }
+            );
+        }
     }
 
     createProduct(): void {

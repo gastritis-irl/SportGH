@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,6 +41,16 @@ public class SubCategoryController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(subCategoryMapper.subCategoryToOut(subcategory), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/{subCategoryId}/customFields")
+    private ResponseEntity<List<CustomFieldConfig>> getCustomFieldsBySubcategoryId(@PathVariable Long subCategoryId) {
+        SubCategory subCategory = subCategoryService.findById(subCategoryId);
+        if (subCategory == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        List<CustomFieldConfig> customFieldConfigs = subCategory.getCustomFields();
+        return new ResponseEntity<>(customFieldConfigs, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{subCategoryId}")
