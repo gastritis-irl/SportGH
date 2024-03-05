@@ -25,7 +25,7 @@ export class ProductEditComponent implements OnInit {
 
     @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
 
-    product: Product = {};
+    product: Product = { customFieldValues: [] };
     categories: Category[] = [];
     subcategories: Subcategory[] = [];
     subcategoryDropdownDisabled: boolean = true;
@@ -121,7 +121,9 @@ export class ProductEditComponent implements OnInit {
                             } else {
                                 this.toastNotify.error(`Error loading images: ${data.id} is undefined`);
                             }
-                            this.getCustomFieldsBySubcategoryId();
+                            if (this.product.customFieldValues) {
+                                this.customFieldsDisabled = false;
+                            }
                         },
                         error: (error): void => {
                             console.error(error);
@@ -166,13 +168,13 @@ export class ProductEditComponent implements OnInit {
 
     getCustomFieldsBySubcategoryId(): void {
         if (this.product.subCategoryId) {
+            this.product.customFieldValues = [];
             this.subcategoryService.getCustomFieldsById(this.product.subCategoryId).subscribe(
                 {
                     next: (data: CustomFieldConfig[]): void => {
                         if (data) {
-                            this.product.customFieldValues = [];
                             for (let i: number = 0; i < data.length; i++) {
-                                this.product.customFieldValues.push({ value: null, config: data[i] });
+                                this.product.customFieldValues!.push({ value: null, config: data[i] });
                             }
                             this.customFieldsDisabled = false;
                         }
