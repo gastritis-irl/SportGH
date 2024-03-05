@@ -96,7 +96,6 @@ export class ProductDetailsComponent implements OnInit {
         this.productService.getById(productId).subscribe(
             {
                 next: (data: Product): void => {
-                    console.log(data);
                     this.product = data;
                     if (data.locationLat && data.locationLng) {
                         this.mapService.getLocationAddress(data.locationLat, data.locationLng)

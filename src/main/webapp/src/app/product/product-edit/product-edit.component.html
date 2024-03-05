@@ -63,9 +63,8 @@
                     </div>
                 </div>
                 <div *ngIf="product.customFieldValues && !customFieldsDisabled">
-                    <label class="form-part-label">Custom Fields</label>
-                    <div class="custom-fields" *ngFor="let field of product.customFieldValues; let i = index">
-                        <label>{{ field.config.name }}</label>
+                    <div *ngFor="let field of product.customFieldValues; let i = index">
+                        <label class="form-part-label">{{ field.config.name }}</label>
                         <input class="form-part-input"
                                type="{{field.config.type === CustomFieldType.NUMBER ? 'number':'text'}}"
                                [(ngModel)]="product.customFieldValues[i].value" name="customFieldValue"

@@ -121,6 +121,7 @@ export class ProductEditComponent implements OnInit {
                             } else {
                                 this.toastNotify.error(`Error loading images: ${data.id} is undefined`);
                             }
+                            this.getCustomFieldsBySubcategoryId();
                         },
                         error: (error): void => {
                             console.error(error);
@@ -168,8 +169,13 @@ export class ProductEditComponent implements OnInit {
             this.subcategoryService.getCustomFieldsById(this.product.subCategoryId).subscribe(
                 {
                     next: (data: CustomFieldConfig[]): void => {
-                        console.log(data);
-                        this.customFieldsDisabled = false;
+                        if (data) {
+                            this.product.customFieldValues = [];
+                            for (let i: number = 0; i < data.length; i++) {
+                                this.product.customFieldValues.push({ value: null, config: data[i] });
+                            }
+                            this.customFieldsDisabled = false;
+                        }
                     },
                     error: (error): void => {
                         console.error(error);

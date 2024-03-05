@@ -9,6 +9,6 @@ export interface CustomFieldConfig {
 }
 
 export interface CustomFieldValue {
-    value: string | number;
+    value: string | number | null;
     config: CustomFieldConfig;
 }

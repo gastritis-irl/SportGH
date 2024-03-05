@@ -1,6 +1,9 @@
 package edu.codespring.sportgh.dto;
 
+import edu.codespring.sportgh.model.CustomFieldValue;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ProductOutDTO {
@@ -16,6 +19,7 @@ public class ProductOutDTO {
     private String categoryName;
     private Long subCategoryId;
     private String subCategoryName;
+    private List<CustomFieldValue> customFieldValues;
     private Long userId;
     private String userUid;
     private String username;
