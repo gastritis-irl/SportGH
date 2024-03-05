@@ -1,3 +1,5 @@
+import { CustomFieldValue } from '../subcategory/customFieldConfig.model';
+
 export interface Product {
 
     id?: number,
@@ -11,6 +13,7 @@ export interface Product {
     categoryName?: string,
     subCategoryId?: number,
     subCategoryName?: string,
+    customFieldValues?: CustomFieldValue[],
     userId?: number,
     userUid?: string,
     username?: string,

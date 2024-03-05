@@ -1,9 +1,14 @@
 export enum CustomFieldType {
-    STRING = "STRING",
-    NUMBER = "NUMBER"
+    STRING = 'STRING',
+    NUMBER = 'NUMBER'
 }
 
-export interface customFieldConfig {
+export interface CustomFieldConfig {
     name: string;
     type: CustomFieldType;
+}
+
+export interface CustomFieldValue {
+    value: string | number;
+    config: CustomFieldConfig;
 }
