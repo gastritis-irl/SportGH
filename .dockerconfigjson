@@ -1,0 +1,10 @@
+{
+    "auths": {
+        "r.edu.codespring.ro":{
+            "username":"gitlab+deploy-token-26",
+            "password":"gldt-CFpwN4RJVfepzVhxJp8D",
+            "email":"REGISTRY_EMAIL",
+            "auth":"e2dpdGxhYitkZXBsb3ktdG9rZW4tMjZ9OntnbGR0LUNGcHdONFJKVmZlcHpWaHhKcDhEfQ=="
+    	}
+    }
+}
