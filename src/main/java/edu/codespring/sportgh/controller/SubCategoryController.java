@@ -44,7 +44,7 @@ public class SubCategoryController {
     }
 
     @GetMapping(path = "/{subCategoryId}/customFields")
-    private ResponseEntity<List<CustomFieldConfig>> getCustomFieldsBySubcategoryId(@PathVariable Long subCategoryId) {
+    public ResponseEntity<List<CustomFieldConfig>> getCustomFieldsBySubcategoryId(@PathVariable Long subCategoryId) {
         SubCategory subCategory = subCategoryService.findById(subCategoryId);
         if (subCategory == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

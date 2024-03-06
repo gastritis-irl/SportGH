@@ -67,7 +67,7 @@
                         <label class="form-part-label">{{ field.config.name }}</label>
                         <input class="form-part-input"
                                type="{{field.config.type === CustomFieldType.NUMBER ? 'number':'text'}}"
-                               [(ngModel)]="product.customFieldValues[i].value" name="customFieldValue"
+                               [(ngModel)]="product.customFieldValues[i].value" name="customFieldValue{{i}}"
                                #customField="ngModel">
                     </div>
                 </div>
