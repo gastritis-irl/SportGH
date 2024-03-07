@@ -9,6 +9,7 @@ import { SubcategoryService } from '../subcategory/subcategory.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ImageService } from '../shared/image/image.service';
+import { CustomFieldType, CustomFieldValue } from '../subcategory/customFieldConfig.model';
 
 @Component({
     selector: 'sgh-product',
@@ -41,6 +42,7 @@ export class ProductComponent implements OnInit {
     ];
     selectedAtLeastOneSubCatOfCat: boolean[] = [];
     selectedExactlyOneSubCat: boolean = false;
+    customFieldValues: CustomFieldValue[] = [];
     categorySelected: boolean[] = [];
     subcategorySelected: boolean[] = [];
     textSearch: string = '';
@@ -127,6 +129,7 @@ export class ProductComponent implements OnInit {
     }
 
     changesEvent(changed: [number, number, string, boolean, number?, number?, number?]): void {
+        const selectedExactlyOneSubCatOldValue: boolean = this.selectedExactlyOneSubCat;
         this.minPrice = changed[0];
         this.maxPrice = changed[1];
         this.textSearch = changed[2];
@@ -134,6 +137,37 @@ export class ProductComponent implements OnInit {
         this.locationLat = changed[4];
         this.locationLng = changed[5];
         this.locationRadius = changed[6];
+
+        if (this.selectedExactlyOneSubCat && !selectedExactlyOneSubCatOldValue) {
+            let selectedSubcategoryIndex: number = -1;
+            for (let i: number = 0; i < this.subcategories.length; i++) {
+                if (this.subcategorySelected[i]) {
+                    selectedSubcategoryIndex = i;
+                }
+            }
+            if (selectedSubcategoryIndex !== -1) {
+                this.subcategoryService.getById(selectedSubcategoryIndex).subscribe({
+                    next: (data: Subcategory): void => {
+                        this.customFieldValues = [];
+                        for (const field of data.customFields) {
+                            this.customFieldValues.push({
+                                config: field,
+                                value: field.type === CustomFieldType.NUMBER ? 0 : ''
+                            });
+                        }
+                    },
+                    error: (error): void => {
+                        console.error(error);
+                        this.toastNotify.error(`Error fetching data, please try again.`);
+                    }
+                });
+            }
+        }
+
+        if (!this.selectedExactlyOneSubCat && selectedExactlyOneSubCatOldValue) {
+            this.customFieldValues = [];
+        }
+
         this.setParams();
         this.setQueryParams();
         this.loadData();
@@ -225,6 +259,8 @@ export class ProductComponent implements OnInit {
                             if (paramName === 'locationRadius') {
                                 this.locationRadius = params[paramName];
                             }
+                            this.selectedExactlyOneSubCat = this.subcategorySelected.length > 0 ?
+                                this.subcategorySelected.map((a: boolean): number => a ? 1 : 0).reduce((a: number, b: number) => a + b) === 1 : false;
                         }
                     }
                     this.setParams();
@@ -245,6 +281,7 @@ export class ProductComponent implements OnInit {
                 relativeTo: this.route,
                 queryParams: {
                     subcategoryNames: this.filterParams['subcategoryNames'],
+                    customFieldValues: this.filterParams['customFieldValues'],
                     textSearch: this.textSearch,
                     minPrice: this.minPrice,
                     maxPrice: this.maxPrice,
@@ -254,11 +291,10 @@ export class ProductComponent implements OnInit {
                 },
                 replaceUrl: true,
             }
-        )
-            .catch(error => {
-                console.error(error);
-                this.toastNotify.error('Error loading filter parameters');
-            });
+        ).catch(error => {
+            console.error(error);
+            this.toastNotify.error('Error loading filter parameters');
+        });
     }
 
     loadData(): void {
@@ -338,6 +374,7 @@ export class ProductComponent implements OnInit {
             orderBy: 'name',
             direction: 'ASC',
             subcategoryNames: [],
+            customFieldValues: [],
             textSearch: '',
             minPrice: 0,
             maxPrice: 0,
@@ -349,6 +386,7 @@ export class ProductComponent implements OnInit {
         this.orderByParam = 'name';
         this.direction = 'ASC';
         this.subcategorySelected = [];
+        this.customFieldValues = [];
         this.categorySelected = [];
         this.selectedAtLeastOneSubCatOfCat = [];
         this.textSearch = '';
@@ -366,6 +404,7 @@ export class ProductComponent implements OnInit {
             orderBy: this.orderByParam,
             direction: this.direction,
             subcategoryNames: [],
+            customFieldValues: [],
             textSearch: this.textSearch,
             minPrice: this.minPrice,
             maxPrice: this.maxPrice,

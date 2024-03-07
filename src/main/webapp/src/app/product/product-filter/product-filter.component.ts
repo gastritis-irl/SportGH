@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Category } from '../../category/category.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
+import { CustomFieldValue } from '../../subcategory/customFieldConfig.model';
 
 @Component({
     selector: 'sgh-product-filter',
@@ -16,6 +17,7 @@ export class ProductFilterComponent implements OnInit {
     @Input() categorySelected: boolean[] = [];
     @Input() selectedAtLeastOneSubCatOfCat: boolean[] = [];
     @Input() selectedExactlyOneSubCat: boolean = false;
+    @Input() customFieldValues: CustomFieldValue[] = [];
     @Input() subcategorySelected: boolean[] = [];
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;

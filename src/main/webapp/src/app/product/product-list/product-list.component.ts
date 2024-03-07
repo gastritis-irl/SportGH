@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../product.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { Category } from '../../category/category.model';
+import { CustomFieldValue } from '../../subcategory/customFieldConfig.model';
 
 @Component({
     selector: 'sgh-product-list',
@@ -14,7 +15,7 @@ export class ProductListComponent {
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
     @Input() subcategorySelected: boolean[] = [];
-    @Input() selectedExactlyOneSubCat: boolean = false;
+    @Input() customFieldValues: CustomFieldValue[] = [];
     @Input() categorySelected: boolean[] = [];
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
