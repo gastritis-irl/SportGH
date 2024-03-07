@@ -37,12 +37,10 @@
             </div>
         </div>
 
-        <div *ngIf="[]">
-            <div *ngFor="let field of []; let i = index">
-                <div class="filter-param" *ngIf="field">
-                    {{ field }}
-                    <div class="clear-filter" (click)="clearFilter('customFields',i)">&#10005;</div>
-                </div>
+        <div *ngFor="let field of customFieldValues; let i = index">
+            <div class="filter-param" *ngIf="field.value !== null && field.value !== '' && field.value !== 0">
+                {{ field.config.name }}: {{ field.value }}
+                <div class="clear-filter" (click)="clearFilter('customFields',i)">&#10005;</div>
             </div>
         </div>
 
