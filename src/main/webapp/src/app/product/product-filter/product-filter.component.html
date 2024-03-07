@@ -125,7 +125,7 @@
         </div>
     </div>
 
-    <div *ngIf="selectedExactlyOneSubCat">
+    <div *ngIf="selectedExactlyOneSubCat && customFieldValues.length > 0">
         <div *ngFor="let i of [5]">
             <div class="buttons">
                 <div
@@ -141,7 +141,13 @@
             </div>
             <div [(ngbCollapse)]="!isExpanded[i]">
                 <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
-                    Itt lesznek a custom field filterek
+                    <div *ngFor="let field of customFieldValues; let i = index"
+                         class="{{field.config.type === CustomFieldType.NUMBER ? 'filter-price' : 'nav-searchbar filter-search'}}">
+                        <div>{{ field.config.name }}</div>
+                        <input class="{{field.config.type === CustomFieldType.NUMBER ? 'input-slider form-range' : 'nav-searchbar-input'}}"
+                               type="{{field.config.type === CustomFieldType.NUMBER ? 'number' : 'text'}}"
+                               [(ngModel)]="customFieldValues[i].value">
+                    </div>
                 </div>
             </div>
         </div>

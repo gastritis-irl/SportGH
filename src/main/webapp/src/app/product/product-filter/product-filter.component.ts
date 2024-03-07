@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Category } from '../../category/category.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
-import { CustomFieldValue } from '../../subcategory/customFieldConfig.model';
+import { CustomFieldType, CustomFieldValue } from '../../subcategory/customFieldConfig.model';
 
 @Component({
     selector: 'sgh-product-filter',
@@ -61,4 +61,6 @@ export class ProductFilterComponent implements OnInit {
             this.filterBy();
         }
     }
+
+    protected readonly CustomFieldType = CustomFieldType;
 }
