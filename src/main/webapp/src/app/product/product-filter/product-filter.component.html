@@ -124,4 +124,26 @@
             </div>
         </div>
     </div>
+
+    <div *ngIf="selectedExactlyOneSubCat">
+        <div *ngFor="let i of [5]">
+            <div class="buttons">
+                <div
+                        class="button-default button-secondary button-content"
+                        (click)="isExpanded[i] = ! isExpanded[i]"
+                        [attr.aria-expanded]="isExpanded[i]"
+                >
+                    <div>
+                        Specifications
+                    </div>
+                    <div>{{ isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595) }}</div>
+                </div>
+            </div>
+            <div [(ngbCollapse)]="!isExpanded[i]">
+                <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
+                    Itt lesznek a custom field filterek
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

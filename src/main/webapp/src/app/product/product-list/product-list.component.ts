@@ -14,6 +14,7 @@ export class ProductListComponent {
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
     @Input() subcategorySelected: boolean[] = [];
+    @Input() selectedExactlyOneSubCat: boolean = false;
     @Input() categorySelected: boolean[] = [];
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;

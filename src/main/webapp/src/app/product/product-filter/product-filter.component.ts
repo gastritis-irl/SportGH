@@ -15,6 +15,7 @@ export class ProductFilterComponent implements OnInit {
     @Input() subcategories: Subcategory[] = [];
     @Input() categorySelected: boolean[] = [];
     @Input() selectedAtLeastOneSubCatOfCat: boolean[] = [];
+    @Input() selectedExactlyOneSubCat: boolean = false;
     @Input() subcategorySelected: boolean[] = [];
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
@@ -23,8 +24,8 @@ export class ProductFilterComponent implements OnInit {
     @Input() locationLng?: number;
     @Input() locationRadius?: number;
 
-    @Output() changesEvent: EventEmitter<[number, number, string, number?, number?, number?]> =
-        new EventEmitter<[number, number, string, number?, number?, number?]>();
+    @Output() changesEvent: EventEmitter<[number, number, string, boolean, number?, number?, number?]> =
+        new EventEmitter<[number, number, string, boolean, number?, number?, number?]>();
 
     constructor() {
     }
@@ -33,7 +34,16 @@ export class ProductFilterComponent implements OnInit {
     }
 
     filterBy(): void {
-        this.changesEvent.emit([this.minPrice, this.maxPrice, this.textSearch, this.locationLat, this.locationLng, this.locationRadius]);
+        this.changesEvent.emit([
+            this.minPrice,
+            this.maxPrice,
+            this.textSearch,
+            // selected exactly one subcategory
+            this.subcategorySelected.length > 0 ? this.subcategorySelected.map((a: boolean): number => a ? 1 : 0).reduce((a: number, b: number) => a + b) === 1 : false,
+            this.locationLat,
+            this.locationLng,
+            this.locationRadius
+        ]);
     }
 
     setRadius(): void {

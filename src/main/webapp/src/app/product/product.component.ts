@@ -40,6 +40,7 @@ export class ProductComponent implements OnInit {
         'locationRadius'
     ];
     selectedAtLeastOneSubCatOfCat: boolean[] = [];
+    selectedExactlyOneSubCat: boolean = false;
     categorySelected: boolean[] = [];
     subcategorySelected: boolean[] = [];
     textSearch: string = '';
@@ -125,13 +126,14 @@ export class ProductComponent implements OnInit {
         }
     }
 
-    changesEvent(changed: [number, number, string, number?, number?, number?]): void {
+    changesEvent(changed: [number, number, string, boolean, number?, number?, number?]): void {
         this.minPrice = changed[0];
         this.maxPrice = changed[1];
         this.textSearch = changed[2];
-        this.locationLat = changed[3];
-        this.locationLng = changed[4];
-        this.locationRadius = changed[5];
+        this.selectedExactlyOneSubCat = changed[3];
+        this.locationLat = changed[4];
+        this.locationLng = changed[5];
+        this.locationRadius = changed[6];
         this.setParams();
         this.setQueryParams();
         this.loadData();
@@ -314,6 +316,8 @@ export class ProductComponent implements OnInit {
         if (paramNameAndFilterCheck[0] === 'locationRadius') {
             this.locationRadius = 0;
         }
+        this.selectedExactlyOneSubCat = this.subcategorySelected.length > 0 ?
+            this.subcategorySelected.map((a: boolean): number => a ? 1 : 0).reduce((a: number, b: number) => a + b) === 1 : false;
 
         if (paramNameAndFilterCheck[1]) {
             this.setParams();

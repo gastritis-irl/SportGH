@@ -1,7 +1,7 @@
 <div class="product-list-holder">
     <div class="product-list-info-holder">
         <div>
-            Number of results: {{nrOfItems}}
+            Number of results: {{ nrOfItems }}
         </div>
         <div class="order-by-holder">
             <div>
@@ -26,24 +26,33 @@
         </div>
 
         <div class="filter-param" *ngIf="textSearch!=''">
-            Search: {{textSearch}}
+            Search: {{ textSearch }}
             <div class="clear-filter" (click)="clearFilter('textSearch',0)">&#10005;</div>
         </div>
 
         <div *ngFor="let selected of subcategorySelected; let i = index">
             <div class="filter-param" *ngIf="selected">
-                {{subcategories[i].name}}
+                {{ subcategories[i].name }}
                 <div class="clear-filter" (click)="clearFilter('subcategoryNames',i)">&#10005;</div>
             </div>
         </div>
 
+        <div *ngIf="[] && selectedExactlyOneSubCat">
+            <div *ngFor="let field of []; let i = index">
+                <div class="filter-param" *ngIf="field">
+                    {{ field }}
+                    <div class="clear-filter" (click)="clearFilter('customFields',i)">&#10005;</div>
+                </div>
+            </div>
+        </div>
+
         <div class="filter-param" *ngIf="minPrice">
-            Min price: {{minPrice}}
+            Min price: {{ minPrice }}
             <div class="clear-filter" (click)="clearFilter('minPrice',0)">&#10005;</div>
         </div>
 
         <div class="filter-param" *ngIf="maxPrice">
-            Max price: {{maxPrice}}
+            Max price: {{ maxPrice }}
             <div class="clear-filter" (click)="clearFilter('maxPrice',0)">&#10005;</div>
         </div>
 
@@ -83,7 +92,7 @@
             </div>
             <div class="product-price">
                 <div class="product-price-d">
-                    Price from {{product.rentPrice}} RON / DAY
+                    Price from {{ product.rentPrice }} RON / DAY
                 </div>
             </div>
         </div>
@@ -98,11 +107,11 @@
         <div class="pagination-item buttons" *ngFor="let currentPageNumber of range(1,nrOfPages)">
             <div *ngIf="currentPageNumber === currentPage"
                  class="button-default button-primary pagination-item-current-page" disabled>
-                {{currentPageNumber}}
+                {{ currentPageNumber }}
             </div>
             <div *ngIf="currentPageNumber !== currentPage" class="button-default button-secondary"
                  (click)="selectPage(currentPageNumber)">
-                {{currentPageNumber}}
+                {{ currentPageNumber }}
             </div>
         </div>
         <div *ngIf="currentPage<nrOfPages" class="buttons">
