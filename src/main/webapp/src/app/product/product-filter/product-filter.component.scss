@@ -112,5 +112,10 @@ $map-height: 250px;
                 }
             }
         }
+
+        .custom-fields {
+            display: flex;
+            flex-direction: column;
+        }
     }
 }

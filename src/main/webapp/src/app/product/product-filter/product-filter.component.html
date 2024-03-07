@@ -142,11 +142,11 @@
             <div [(ngbCollapse)]="!isExpanded[i]">
                 <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
                     <div *ngFor="let field of customFieldValues; let i = index"
-                         class="{{field.config.type === CustomFieldType.NUMBER ? 'filter-price' : 'nav-searchbar filter-search'}}">
-                        <div>{{ field.config.name }}</div>
-                        <input class="{{field.config.type === CustomFieldType.NUMBER ? 'input-slider form-range' : 'nav-searchbar-input'}}"
+                         class="nav-searchbar filter-search custom-fields">
+                        <div class="custom-fields-label">{{ field.config.name }}</div>
+                        <input class="nav-searchbar-input"
                                type="{{field.config.type === CustomFieldType.NUMBER ? 'number' : 'text'}}"
-                               [(ngModel)]="customFieldValues[i].value">
+                               [(ngModel)]="customFieldValues[i].value" (keydown.enter)="filterBy()">
                     </div>
                 </div>
             </div>

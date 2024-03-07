@@ -419,7 +419,6 @@ export class ProductComponent implements OnInit {
                 this.subcategoryService.getById(selectedSubcategory.id).subscribe({
                     next: (data: Subcategory): void => {
                         this.setCustomFieldValues(data.customFields);
-                        console.log(this.customFieldValues);
                     },
                     error: (error): void => {
                         console.error(error);
