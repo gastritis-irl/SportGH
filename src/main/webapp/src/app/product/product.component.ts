@@ -138,8 +138,10 @@ export class ProductComponent implements OnInit {
         this.locationLng = changed[5];
         this.locationRadius = changed[6];
 
-        if (this.selectedExactlyOneSubCat && !selectedExactlyOneSubCatOldValue) {
+        if (this.selectedExactlyOneSubCat) {
             this.setCustomFieldValuesInCondition();
+        } else {
+            this.customFieldValues = [];
         }
 
         if (!this.selectedExactlyOneSubCat && selectedExactlyOneSubCatOldValue) {
