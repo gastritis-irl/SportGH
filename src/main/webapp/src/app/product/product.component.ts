@@ -9,7 +9,7 @@ import { SubcategoryService } from '../subcategory/subcategory.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ImageService } from '../shared/image/image.service';
-import { CustomFieldConfig, CustomFieldType, CustomFieldValue } from '../subcategory/customFieldConfig.model';
+import { CustomFieldConfig, CustomFieldValue } from '../subcategory/customFieldConfig.model';
 
 @Component({
     selector: 'sgh-product',
@@ -150,6 +150,9 @@ export class ProductComponent implements OnInit {
 
         this.setParams();
         this.setQueryParams();
+
+        console.log(this.filterParams);
+
         this.loadData();
     }
 
@@ -421,6 +424,10 @@ export class ProductComponent implements OnInit {
                 this.subcategoryService.getById(selectedSubcategory.id).subscribe({
                     next: (data: Subcategory): void => {
                         this.setCustomFieldValues(data.customFields);
+                        this.filterParams['customFieldValues'] = [];
+                        for (let i: number = 0; i < this.customFieldValues.length; i++) {
+                            this.filterParams['customFieldValues'].push(this.customFieldValues[i]);
+                        }
                     },
                     error: (error): void => {
                         console.error(error);
@@ -432,12 +439,17 @@ export class ProductComponent implements OnInit {
     }
 
     setCustomFieldValues(customFields: CustomFieldConfig[]): void {
+        const values: (string | number | null)[] = [];
+        for (let i: number = 0; i < this.customFieldValues.length; i++) {
+            values.push(this.customFieldValues[i].value);
+        }
+
         this.customFieldValues = [];
         if (customFields && customFields.length > 0) {
-            for (const field of customFields) {
+            for (let i: number = 0; i < customFields.length; i++) {
                 this.customFieldValues.push({
-                    config: field,
-                    value: field.type === CustomFieldType.NUMBER ? 0 : ''
+                    config: customFields[i],
+                    value: values[i]
                 });
             }
         }
