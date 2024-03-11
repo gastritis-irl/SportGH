@@ -33,6 +33,7 @@ export class ProductComponent implements OnInit {
         'direction',
         'Category',
         'subcategoryNames',
+        'customFieldValues',
         'minPrice',
         'maxPrice',
         'textSearch',
@@ -150,9 +151,6 @@ export class ProductComponent implements OnInit {
 
         this.setParams();
         this.setQueryParams();
-
-        console.log(this.filterParams);
-
         this.loadData();
     }
 

@@ -40,7 +40,7 @@
         <div *ngFor="let field of customFieldValues; let i = index">
             <div class="filter-param" *ngIf="field.value !== null && field.value !== '' && field.value !== 0 && field.value">
                 {{ field.config.name }}: {{ field.value }}
-                <div class="clear-filter" (click)="clearFilter('customFields',i)">&#10005;</div>
+                <div class="clear-filter" (click)="clearFilter('customFieldValues',i)">&#10005;</div>
             </div>
         </div>
 

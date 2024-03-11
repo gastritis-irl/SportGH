@@ -42,22 +42,27 @@ export class ProductListComponent {
 
     clearFilter(paramName: string, paramIndex: number): void {
         if (paramIndex !== -1) {
-            this.subcategorySelected[paramIndex] = false;
-            let checkedSubWithSameCat: boolean = false;
-            for (let i: number = 0; i < this.subcategories.length; i++) {
-                if (this.subcategories[i].categoryId == this.subcategories[paramIndex].categoryId
-                    && this.subcategorySelected[i]) {
-                    checkedSubWithSameCat = true;
-                    break;
-                }
-            }
-            if (!checkedSubWithSameCat) {
-                for (let i: number = 0; i < this.categories.length; i++) {
-                    if (this.categories[i].id == this.subcategories[paramIndex].categoryId) {
-                        this.categorySelected[i] = false;
+            if (paramName === 'subcategoryNames') {
+                this.subcategorySelected[paramIndex] = false;
+                let checkedSubWithSameCat: boolean = false;
+                for (let i: number = 0; i < this.subcategories.length; i++) {
+                    if (this.subcategories[i].categoryId == this.subcategories[paramIndex].categoryId
+                        && this.subcategorySelected[i]) {
+                        checkedSubWithSameCat = true;
                         break;
                     }
                 }
+                if (!checkedSubWithSameCat) {
+                    for (let i: number = 0; i < this.categories.length; i++) {
+                        if (this.categories[i].id == this.subcategories[paramIndex].categoryId) {
+                            this.categorySelected[i] = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (paramName === 'customFieldValues') {
+                this.customFieldValues[paramIndex].value = null;
             }
         }
 
