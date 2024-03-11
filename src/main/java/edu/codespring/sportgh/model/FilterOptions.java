@@ -9,6 +9,7 @@ public class FilterOptions {
     private String direction;
     private int pageNumber;
     private String[] subcategoryNames;
+    private String[] customFieldValues;
     private Double minPrice;
     private Double maxPrice;
     private String textSearch;

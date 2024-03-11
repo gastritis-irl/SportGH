@@ -141,10 +141,7 @@ export class ProductComponent implements OnInit {
 
         if (this.selectedExactlyOneSubCat) {
             this.setCustomFieldValuesInCondition();
-        } else {
-            this.customFieldValues = [];
         }
-
         if (!this.selectedExactlyOneSubCat && selectedExactlyOneSubCatOldValue) {
             this.customFieldValues = [];
         }
@@ -419,19 +416,11 @@ export class ProductComponent implements OnInit {
         if (selectedSubcategoryIndex !== -1) {
             const selectedSubcategory: Subcategory = this.subcategories[selectedSubcategoryIndex];
             if (selectedSubcategory.id) {
-                this.subcategoryService.getById(selectedSubcategory.id).subscribe({
-                    next: (data: Subcategory): void => {
-                        this.setCustomFieldValues(data.customFields);
-                        this.filterParams['customFieldValues'] = [];
-                        for (let i: number = 0; i < this.customFieldValues.length; i++) {
-                            this.filterParams['customFieldValues'].push(this.customFieldValues[i]);
-                        }
-                    },
-                    error: (error): void => {
-                        console.error(error);
-                        this.toastNotify.error(`Error fetching data, please try again.`);
-                    }
-                });
+                this.setCustomFieldValues(this.subcategories[selectedSubcategoryIndex].customFields);
+                this.filterParams['customFieldValues'] = [];
+                for (let i: number = 0; i < this.customFieldValues.length; i++) {
+                    this.filterParams['customFieldValues'].push(`${this.customFieldValues[i].config.name}#${this.customFieldValues[i].config.type}#${this.customFieldValues[i].value}`);
+                }
             }
         }
     }
