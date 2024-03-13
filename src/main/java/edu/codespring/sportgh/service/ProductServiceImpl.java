@@ -164,22 +164,22 @@ public class ProductServiceImpl implements ProductService {
                 if (args.length != 3) {
                     continue;
                 }
-                String fieldName = args[0];
-                String fieldType = "NUMBER".equals(args[1]) ? "NUMBER" : "STRING";
+
                 String fieldValue = args[2];
 
                 if ("undefined".equals(fieldValue) || fieldValue == null) {
                     continue;
                 }
 
-                String customFieldValue = String.format("{\"value\": \"%s\","
-                                + " \"config\": {\"name\": \"%s\", \"type\": \"%s\"}}",
-                        fieldValue, fieldName, fieldType);
-
                 spec = spec.and((root, query, criteriaBuilder) ->
                         criteriaBuilder.like(
-                                root.get("customFieldValues"),
-                                "%" + customFieldValue + "%"
+                                criteriaBuilder.function(
+                                        "JSON_EXTRACT",
+                                        String.class,
+                                        root.get("customFieldValues"),
+                                        criteriaBuilder.literal("$[*].value")
+                                ),
+                                criteriaBuilder.literal('%' + fieldValue + '%')
                         )
                 );
             }
