@@ -4,9 +4,7 @@ import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
-import edu.codespring.sportgh.model.FilterOptions;
-import edu.codespring.sportgh.model.Product;
-import edu.codespring.sportgh.model.User;
+import edu.codespring.sportgh.model.*;
 import edu.codespring.sportgh.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -113,6 +111,7 @@ public class ProductServiceImpl implements ProductService {
 
         specification = filterByUserId(filterOptions.getUserId(), specification);
         specification = filterBySubcategories(filterOptions.getSubcategoryNames(), specification);
+        specification = filterByCustomFields(filterOptions.getCustomFieldValues(), specification);
         specification = filterByPrice(filterOptions.getMinPrice(), filterOptions.getMaxPrice(), specification);
         specification = filterByTextInNameOrDescription(filterOptions.getTextSearch(), specification);
         specification = filterByLocation(filterOptions.getLocationLat(), filterOptions.getLocationLng(),
@@ -153,6 +152,38 @@ public class ProductServiceImpl implements ProductService {
             spec = spec.and((root, query, criteriaBuilder) ->
                     root.get("subCategory").get("name").in((Object[]) subcategoryNames));
         }
+        return spec;
+    }
+
+    private Specification<Product> filterByCustomFields(String[] customFieldValues, Specification<Product> specification) {
+        Specification<Product> spec = specification;
+
+        if (customFieldValues != null && customFieldValues.length > 0) {
+            for (int i = 0; i < customFieldValues.length; i++) {
+                String[] args = customFieldValues[i].split("#");
+                if (args.length != 3) {
+                    continue;
+                }
+                String fieldName = args[0];
+                String fieldType = "NUMBER".equals(args[1]) ? "NUMBER" : "STRING";
+                String fieldValue = args[2];
+
+                if ("undefined".equals(fieldValue) || fieldValue == null) {
+                    continue;
+                }
+
+                String customFieldValue = String.format("{\"value\": \"%s\","
+                                + " \"config\": {\"name\": \"%s\", \"type\": \"%s\"}}",
+                        fieldValue, fieldName, fieldType);
+                log.info(customFieldValue);
+
+                spec = spec.and((root, query, criteriaBuilder) ->
+                        criteriaBuilder.literal(customFieldValue)
+                                .in(root.get("customFieldValues").toString())
+                );
+            }
+        }
+
         return spec;
     }
 
