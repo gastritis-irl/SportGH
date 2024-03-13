@@ -158,9 +158,9 @@ public class ProductServiceImpl implements ProductService {
     private Specification<Product> filterByCustomFields(String[] customFieldValues, Specification<Product> specification) {
         Specification<Product> spec = specification;
 
-        if (customFieldValues != null && customFieldValues.length > 0) {
-            for (int i = 0; i < customFieldValues.length; i++) {
-                String[] args = customFieldValues[i].split("#");
+        if (customFieldValues != null) {
+            for (String value : customFieldValues) {
+                String[] args = value.split("#");
                 if (args.length != 3) {
                     continue;
                 }
@@ -175,11 +175,12 @@ public class ProductServiceImpl implements ProductService {
                 String customFieldValue = String.format("{\"value\": \"%s\","
                                 + " \"config\": {\"name\": \"%s\", \"type\": \"%s\"}}",
                         fieldValue, fieldName, fieldType);
-                log.info(customFieldValue);
 
                 spec = spec.and((root, query, criteriaBuilder) ->
-                        criteriaBuilder.literal(customFieldValue)
-                                .in(root.get("customFieldValues").toString())
+                        criteriaBuilder.like(
+                                root.get("customFieldValues"),
+                                "%" + customFieldValue + "%"
+                        )
                 );
             }
         }
