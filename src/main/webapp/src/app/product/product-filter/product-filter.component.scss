@@ -22,6 +22,7 @@ $map-height: 250px;
     border-radius: $border-radius;
     background-color: $color-neutral-1;
     color: $color-main-1;
+    transition: all 0.5s ease-out;
 
     .filter-search {
         border-color: $color-main-3;
@@ -119,11 +120,22 @@ $map-height: 250px;
             justify-content: space-between;
             align-items: flex-start;
 
+            .hidden {
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+                height: 0;
+            }
+
+
             .custom-fields-label {
                 font-weight: $font-weight-bold;
                 font-size: $size-h3;
                 color: $color-main-1;
                 margin-bottom: 5px;
+                width: 100%;
+                display: flex;
+                justify-content: flex-start;
 
                 &:hover {
                     cursor: pointer;
@@ -138,10 +150,8 @@ $map-height: 250px;
                     border-radius: $border-radius;
                     transition: 0.5s ease-in-out;
                 }
-
-                &:active {
-                    background-color: $color-main-2;
-                    border-radius: $border-radius;
+                // unfocused state
+                &:not(:focus) {
                     transition: 0.5s ease-in-out;
                 }
 

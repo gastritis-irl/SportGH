@@ -149,9 +149,11 @@
                                 class="custom-fields-label"
                         >
                             {{ field.config.name }}
+                            <div>{{ isSpecificationExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595) }}</div>
+
                         </div>
                         <input
-                                *ngIf="isSpecificationExpanded[i]"
+                                [ngClass]="{'hidden': !isSpecificationExpanded[i]}"
                                 class="nav-searchbar-input custom-fields-input"
                                 type="{{field.config.type === CustomFieldType.NUMBER ? 'number' : 'text'}}"
                                 [(ngModel)]="customFieldValues[i].value" (keydown.enter)="filterBy()"
