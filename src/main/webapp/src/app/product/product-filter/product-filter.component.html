@@ -143,10 +143,19 @@
                 <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
                     <div *ngFor="let field of customFieldValues; let i = index"
                          class="nav-searchbar filter-search custom-fields">
-                        <div class="custom-fields-label">{{ field.config.name }}</div>
-                        <input class="nav-searchbar-input"
-                               type="{{field.config.type === CustomFieldType.NUMBER ? 'number' : 'text'}}"
-                               [(ngModel)]="customFieldValues[i].value" (keydown.enter)="filterBy()">
+                        <div
+                                (click)="toggleSpecification(i)"
+                                [attr.aria-expanded]="isSpecificationExpanded[i]"
+                                class="custom-fields-label"
+                        >
+                            {{ field.config.name }}
+                        </div>
+                        <input
+                                *ngIf="isSpecificationExpanded[i]"
+                                class="nav-searchbar-input custom-fields-input"
+                                type="{{field.config.type === CustomFieldType.NUMBER ? 'number' : 'text'}}"
+                                [(ngModel)]="customFieldValues[i].value" (keydown.enter)="filterBy()"
+                        >
                     </div>
                 </div>
             </div>

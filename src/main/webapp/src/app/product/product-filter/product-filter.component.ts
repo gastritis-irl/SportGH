@@ -12,6 +12,7 @@ export class ProductFilterComponent implements OnInit {
 
     protected readonly String: StringConstructor = String;
     isExpanded: boolean[] = [];
+    isSpecificationExpanded: boolean[] = [];
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
     @Input() categorySelected: boolean[] = [];
@@ -62,5 +63,8 @@ export class ProductFilterComponent implements OnInit {
         }
     }
 
+    toggleSpecification(index: number): void {
+        this.isSpecificationExpanded[index] = !this.isSpecificationExpanded[index];
+    }
     protected readonly CustomFieldType = CustomFieldType;
 }
