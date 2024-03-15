@@ -145,8 +145,9 @@
         <div *ngIf="product.customFieldValues && product.customFieldValues.length>0"
              class="specifications-area product-details-item" id="prod-spec">
             <div class="form-heading">Specifications</div>
-            <div *ngFor="let field of product.customFieldValues">
-                {{ field.config.name }}: {{ field.value }}
+            <div *ngFor="let field of product.customFieldValues" class="specifications-item">
+                <div class="specifications-item-name">{{ field.config.name }}:</div>
+                <div class="specifications-item-value">{{ field.value }}</div>
             </div>
         </div>
     </div>

@@ -345,6 +345,33 @@ $map-height: 500px;
 
     column-gap: $item-gap-2;
 
+    .specifications-area {
+        display: flex;
+        flex-direction: column;
+
+        .specifications-item {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            // border-radius: $border-radius;
+            border-bottom: $border;
+            background-color: $color-neutral-1;
+
+            .specifications-item-value {
+                padding: $item-padding;
+                color: $color-main-2;
+                font-weight: $font-weight-2;
+            }
+
+            .specifications-item-name {
+                padding: $item-padding;
+                color: $color-main-1;
+                font-weight: $font-weight-2;
+            }
+
+        }
+    }
+
     .product-details-area {
         display: flex;
         flex-direction: column;
