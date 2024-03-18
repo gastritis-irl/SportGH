@@ -6,7 +6,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@SuppressWarnings("PMD.TooManyFields")
 public class ProductOutDTO {
 
     private Long id;
