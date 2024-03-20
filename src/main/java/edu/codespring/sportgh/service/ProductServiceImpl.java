@@ -162,15 +162,13 @@ public class ProductServiceImpl implements ProductService {
             for (String value : customFieldValues) {
                 String[] args = value.split("#");
                 if (args.length != 3) {
+                    if (!value.endsWith("#")) {
+                        log.warn("Invalid customFieldValues received {}, length must be 3!", value);
+                    }
                     continue;
                 }
 
                 String fieldValue = args[2];
-
-                if ("undefined".equals(fieldValue) || fieldValue == null) {
-                    continue;
-                }
-
                 spec = spec.and((root, query, criteriaBuilder) ->
                         criteriaBuilder.like(
                                 criteriaBuilder.function(
