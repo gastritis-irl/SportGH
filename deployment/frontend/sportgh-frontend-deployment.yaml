@@ -22,7 +22,7 @@ spec:                                                         #specifications fo
             - containerPort: 80                                 #the port of the container within the pod
               protocol: TCP
       imagePullSecrets:
-        - name: sportgh-group-registry2
+        - name: sportgh-cred
 
 ---
 apiVersion: v1                                                #version of the API to use
