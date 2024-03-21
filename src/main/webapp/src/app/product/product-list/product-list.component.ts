@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../product.model';
 import { Subcategory } from '../../subcategory/subcategory.model';
 import { Category } from '../../category/category.model';
+import { CustomFieldValue } from '../../subcategory/customFieldConfig.model';
 
 @Component({
     selector: 'sgh-product-list',
@@ -14,6 +15,7 @@ export class ProductListComponent {
     @Input() categories: Category[] = [];
     @Input() subcategories: Subcategory[] = [];
     @Input() subcategorySelected: boolean[] = [];
+    @Input() customFieldValues: CustomFieldValue[] = [];
     @Input() categorySelected: boolean[] = [];
     @Input() textSearch: string = '';
     @Input() minPrice: number = 0;
@@ -39,21 +41,28 @@ export class ProductListComponent {
     }
 
     clearFilter(paramName: string, paramIndex: number): void {
-        this.subcategorySelected[paramIndex] = false;
-        let checkedSubWithSameCat: boolean = false;
-        for (let i: number = 0; i < this.subcategories.length; i++) {
-            if (this.subcategories[i].categoryId == this.subcategories[paramIndex].categoryId
-                && this.subcategorySelected[i]) {
-                checkedSubWithSameCat = true;
-                break;
-            }
-        }
-        if (!checkedSubWithSameCat) {
-            for (let i: number = 0; i < this.categories.length; i++) {
-                if (this.categories[i].id == this.subcategories[paramIndex].categoryId) {
-                    this.categorySelected[i] = false;
-                    break;
+        if (paramIndex !== -1) {
+            if (paramName === 'subcategoryNames') {
+                this.subcategorySelected[paramIndex] = false;
+                let checkedSubWithSameCat: boolean = false;
+                for (let i: number = 0; i < this.subcategories.length; i++) {
+                    if (this.subcategories[i].categoryId == this.subcategories[paramIndex].categoryId
+                        && this.subcategorySelected[i]) {
+                        checkedSubWithSameCat = true;
+                        break;
+                    }
                 }
+                if (!checkedSubWithSameCat) {
+                    for (let i: number = 0; i < this.categories.length; i++) {
+                        if (this.categories[i].id == this.subcategories[paramIndex].categoryId) {
+                            this.categorySelected[i] = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (paramName === 'customFieldValues') {
+                this.customFieldValues[paramIndex].value = null;
             }
         }
 

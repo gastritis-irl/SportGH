@@ -48,6 +48,7 @@
                             [disabled]="subcategoryDropdownDisabled"
                             [(ngModel)]="product.subCategoryId" name="subcategoryId"
                             #subcategory="ngModel"
+                            (change)="getCustomFieldsBySubcategoryId()"
                     >
                         <option class="product-category form-part-input" *ngFor="let subcategory of subcategories"
                                 value="{{subcategory.id}}">{{subcategory.name}}</option>
@@ -59,6 +60,15 @@
                             [required]="true"
                             [length]="product.subCategoryId"
                         ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+                <div *ngIf="product.customFieldValues && !customFieldsDisabled">
+                    <div *ngFor="let field of product.customFieldValues; let i = index">
+                        <label class="form-part-label">{{ field.config.name }}</label>
+                        <input class="form-part-input"
+                               type="{{field.config.type === CustomFieldType.NUMBER ? 'number':'text'}}"
+                               [(ngModel)]="product.customFieldValues[i].value" name="customFieldValue{{i}}"
+                               #customField="ngModel">
                     </div>
                 </div>
                 <div>

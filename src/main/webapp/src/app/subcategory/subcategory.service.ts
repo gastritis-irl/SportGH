@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppService } from '../app.service';
 import { Subcategory } from './subcategory.model';
+import { CustomFieldConfig } from './customFieldConfig.model';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,11 @@ export class SubcategoryService extends AppService {
     getById(subcategoryId: number): Observable<Subcategory> {
         const url: string = `${this.baseUrl}/subcategories/${subcategoryId}`;
         return this.httpGet<Subcategory>(url);
+    }
+
+    getCustomFieldsById(subcategoryId: number): Observable<CustomFieldConfig[]> {
+        const url: string = `${this.baseUrl}/subcategories/${subcategoryId}/customFields`;
+        return this.httpGet<CustomFieldConfig[]>(url);
     }
 
     getByCategoryId(categoryId: number): Observable<Subcategory[]> {

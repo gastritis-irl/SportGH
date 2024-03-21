@@ -25,7 +25,6 @@ public class WebSecurityConfig {
 
     private final FirebaseAuthenticationTokenFilter fbAuthTokenFilter;
 
-    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

@@ -124,4 +124,43 @@
             </div>
         </div>
     </div>
+
+    <div *ngIf="selectedExactlyOneSubCat && customFieldValues.length > 0">
+        <div *ngFor="let i of [5]">
+            <div class="buttons">
+                <div
+                        class="button-default button-secondary button-content"
+                        (click)="isExpanded[i] = ! isExpanded[i]"
+                        [attr.aria-expanded]="isExpanded[i]"
+                >
+                    <div>
+                        Specifications
+                    </div>
+                    <div>{{ isExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595) }}</div>
+                </div>
+            </div>
+            <div [(ngbCollapse)]="!isExpanded[i]">
+                <div class="filter-item" [attr.aria-expanded]="isExpanded[i]">
+                    <div *ngFor="let field of customFieldValues; let i = index"
+                         class="nav-searchbar filter-search custom-fields">
+                        <div
+                                (click)="toggleSpecification(i)"
+                                [attr.aria-expanded]="isSpecificationExpanded[i]"
+                                class="custom-fields-label"
+                        >
+                            {{ field.config.name }}
+                            <div>{{ isSpecificationExpanded[i] ? String.fromCharCode(8593) : String.fromCharCode(8595) }}</div>
+
+                        </div>
+                        <input
+                                [ngClass]="{'hidden': !isSpecificationExpanded[i]}"
+                                class="nav-searchbar-input custom-fields-input"
+                                type="{{field.config.type === CustomFieldType.NUMBER ? 'number' : 'text'}}"
+                                [(ngModel)]="customFieldValues[i].value" (keydown.enter)="filterBy()"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
