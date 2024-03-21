@@ -4,9 +4,7 @@ import edu.codespring.sportgh.dto.ProductInDTO;
 import edu.codespring.sportgh.dto.ProductOutDTO;
 import edu.codespring.sportgh.dto.ProductPageOutDTO;
 import edu.codespring.sportgh.mapper.ProductMapper;
-import edu.codespring.sportgh.model.FilterOptions;
-import edu.codespring.sportgh.model.Product;
-import edu.codespring.sportgh.model.User;
+import edu.codespring.sportgh.model.*;
 import edu.codespring.sportgh.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -113,6 +111,7 @@ public class ProductServiceImpl implements ProductService {
 
         specification = filterByUserId(filterOptions.getUserId(), specification);
         specification = filterBySubcategories(filterOptions.getSubcategoryNames(), specification);
+        specification = filterByCustomFields(filterOptions.getCustomFieldValues(), specification);
         specification = filterByPrice(filterOptions.getMinPrice(), filterOptions.getMaxPrice(), specification);
         specification = filterByTextInNameOrDescription(filterOptions.getTextSearch(), specification);
         specification = filterByLocation(filterOptions.getLocationLat(), filterOptions.getLocationLng(),
@@ -153,6 +152,37 @@ public class ProductServiceImpl implements ProductService {
             spec = spec.and((root, query, criteriaBuilder) ->
                     root.get("subCategory").get("name").in((Object[]) subcategoryNames));
         }
+        return spec;
+    }
+
+    private Specification<Product> filterByCustomFields(String[] customFieldValues, Specification<Product> specification) {
+        Specification<Product> spec = specification;
+
+        if (customFieldValues != null) {
+            for (String value : customFieldValues) {
+                String[] args = value.split("#");
+                if (args.length != 3) {
+                    if (!value.endsWith("#")) {
+                        log.warn("Invalid customFieldValues received {}, length must be 3!", value);
+                    }
+                    continue;
+                }
+
+                String fieldValue = args[2];
+                spec = spec.and((root, query, criteriaBuilder) ->
+                        criteriaBuilder.like(
+                                criteriaBuilder.function(
+                                        "JSON_EXTRACT",
+                                        String.class,
+                                        root.get("customFieldValues"),
+                                        criteriaBuilder.literal("$[*].value")
+                                ),
+                                criteriaBuilder.literal('%' + fieldValue + '%')
+                        )
+                );
+            }
+        }
+
         return spec;
     }
 

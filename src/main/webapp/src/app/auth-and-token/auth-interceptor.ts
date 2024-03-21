@@ -96,11 +96,8 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     private handleHttpError(error: HttpErrorResponse): Observable<unknown> {
-        console.error('HTTP Error:', error);
         if (error.status === 401 || error.status === 403) {
             this.router.navigate(['/access-denied']);
-        } else if (error.status === 404) {
-            this.router.navigate(['/not-found']);
         }
         return of(error);
     }

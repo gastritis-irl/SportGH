@@ -12,6 +12,7 @@ import { IdToken } from '../../auth-and-token/firebase-id-token.model';
 import { Image } from '../../shared/image/image.model';
 import { ImageService } from '../../shared/image/image.service';
 import { ImageComponent } from '../../shared/image/image.component';
+import { CustomFieldConfig, CustomFieldType } from '../../subcategory/customFieldConfig.model';
 
 type ClickHandlerFunction = () => void;
 
@@ -24,10 +25,11 @@ export class ProductEditComponent implements OnInit {
 
     @ViewChild(ImageComponent, { static: false }) imageComponent?: ImageComponent;
 
-    product: Product = {};
+    product: Product = { customFieldValues: [] };
     categories: Category[] = [];
     subcategories: Subcategory[] = [];
     subcategoryDropdownDisabled: boolean = true;
+    customFieldsDisabled: boolean = true;
     clickHandlerFunction: ClickHandlerFunction = (): void => {
     };
     editMode: boolean = false;
@@ -36,6 +38,7 @@ export class ProductEditComponent implements OnInit {
     _imageIds?: number[];
     newImageFiles: File[] = [];
     imageDatas: Image[] = [];
+    protected readonly CustomFieldType = CustomFieldType;
 
     constructor(
         private productService: ProductService,
@@ -118,6 +121,9 @@ export class ProductEditComponent implements OnInit {
                             } else {
                                 this.toastNotify.error(`Error loading images: ${data.id} is undefined`);
                             }
+                            if (this.product.customFieldValues) {
+                                this.customFieldsDisabled = false;
+                            }
                         },
                         error: (error): void => {
                             console.error(error);
@@ -145,6 +151,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     getSubcategoriesByCategoryId(): void {
+        this.customFieldsDisabled = true;
         this.subcategoryService.getByCategoryId(this.product.categoryId ? this.product.categoryId : 0).subscribe(
             {
                 next: (data: Subcategory[]): void => {
@@ -157,6 +164,28 @@ export class ProductEditComponent implements OnInit {
                 }
             }
         );
+    }
+
+    getCustomFieldsBySubcategoryId(): void {
+        if (this.product.subCategoryId) {
+            this.product.customFieldValues = [];
+            this.subcategoryService.getCustomFieldsById(this.product.subCategoryId).subscribe(
+                {
+                    next: (data: CustomFieldConfig[]): void => {
+                        if (data) {
+                            for (let i: number = 0; i < data.length; i++) {
+                                this.product.customFieldValues!.push({ value: null, config: data[i] });
+                            }
+                            this.customFieldsDisabled = false;
+                        }
+                    },
+                    error: (error): void => {
+                        console.error(error);
+                        this.toastNotify.error(`Error loading custom fields`);
+                    }
+                }
+            );
+        }
     }
 
     createProduct(): void {

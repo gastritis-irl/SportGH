@@ -67,7 +67,8 @@
         <exclude name="LoosePackageCoupling"/>
         <exclude name="UseUtilityClass"/>
         <exclude name="AbstractClassWithoutAnyMethod"/>
-        <!-- <exclude name="TooManyFields"/> -->
+        <exclude name="TooManyFields"/>
+        <exclude name="SignatureDeclareThrowsException"/>
         <!-- <exclude name="CyclomaticComplexity"/> -->
         <exclude name="ExcessiveImports"/>
     </rule>
@@ -76,11 +77,11 @@
             <property name="maxmethods" value="15"/>
         </properties>
     </rule>
-    <rule ref="category/java/design.xml/SignatureDeclareThrowsException">
-        <properties>
-            <property name="IgnoreJUnitCompletely" value="true"/>
-        </properties>
-    </rule>
+<!--    <rule ref="category/java/design.xml/SignatureDeclareThrowsException">-->
+<!--        <properties>-->
+<!--            <property name="IgnoreJUnitCompletely" value="true"/>-->
+<!--        </properties>-->
+<!--    </rule>-->
 
     <!-- documentation -->
     <rule ref="category/java/documentation.xml">

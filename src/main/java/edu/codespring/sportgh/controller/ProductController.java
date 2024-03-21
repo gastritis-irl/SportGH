@@ -34,13 +34,16 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<ProductPageOutDTO> findPageByParams(
             @RequestParam(value = "subcategoryNames", required = false) String[] subcategoryNames,
+            @RequestParam(value = "customFieldValues", required = false) String[] customFieldValues,
             @RequestParam Map<String, String> params
     ) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             params.remove("subcategoryNames");
+            params.remove("customFieldValues");
             FilterOptions filterOptions = objectMapper.convertValue(params, FilterOptions.class);
             filterOptions.setSubcategoryNames(subcategoryNames);
+            filterOptions.setCustomFieldValues(customFieldValues);
             return new ResponseEntity<>(productService.findPageByParams(filterOptions), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             log.warn("{}", e.getMessage());

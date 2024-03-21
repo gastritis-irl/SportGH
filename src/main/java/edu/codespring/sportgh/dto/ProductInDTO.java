@@ -1,10 +1,13 @@
 package edu.codespring.sportgh.dto;
 
+import edu.codespring.sportgh.model.CustomFieldValue;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.util.List;
 
 @Valid
 @Data
@@ -35,6 +38,8 @@ public class ProductInDTO {
     private Long subCategoryId;
 
     private String subCategoryName;
+
+    private List<CustomFieldValue> customFieldValues;
 
     private Long userId;
 

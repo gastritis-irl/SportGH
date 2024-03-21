@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductComponent } from './product.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
@@ -27,6 +27,7 @@ import { MapComponent } from '../shared/map/map.component';
         ProductComponent,
     ],
     imports: [
+        CommonModule,
         ProductRoute,
         NgFor,
         FormsModule,

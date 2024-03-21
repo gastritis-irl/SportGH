@@ -3,8 +3,11 @@ package edu.codespring.sportgh.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @ToString(callSuper = true)
@@ -33,6 +36,9 @@ public class Product extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "subcategory_id")
     private SubCategory subCategory;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    private List<CustomFieldValue> customFieldValues;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id")

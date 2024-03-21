@@ -56,6 +56,7 @@ public class DummyDataGenerator extends BaseDataGenerator {
                             null,
                             null,
                             null,
+                            null,
                             null
                     ),
                     "DummySubcategory",
