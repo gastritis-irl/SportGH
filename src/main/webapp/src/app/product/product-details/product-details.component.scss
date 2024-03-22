@@ -166,10 +166,6 @@ $map-height: 500px;
                     margin-right: 5%;
 
                     @media(max-width: $breakpoint-large) {
-                        flex-direction: column;
-                    }
-
-                    @media(max-width: $breakpoint-small) {
                         flex-direction: row;
                         max-width: 100%;
                         overflow-x: auto;
@@ -192,7 +188,6 @@ $map-height: 500px;
                             }
                         }
                     }
-
 
                     .thumbnail {
                         width: 100px;
