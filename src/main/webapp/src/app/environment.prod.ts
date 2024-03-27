@@ -1,4 +1,5 @@
 export const environment = {
+    isProduction: true,
     baseURL: 'api.sportgh.k8s.edu.codespring.ro',
     firebaseConfig: {
         apiKey: 'AIzaSyCxsKJn2Y2-ZlVKIvFGi4-vr7l76W8DkeU',
