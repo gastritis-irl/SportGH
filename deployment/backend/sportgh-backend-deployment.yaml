@@ -16,13 +16,13 @@ spec:                                                         #specifications fo
     spec:
       containers:
         - name: sportgh-backend                                    #the name of the container within the pod
-          image: r.edu.codespring.ro/sportgh/sportgh-backend:ca-k8s   #which container image should be pulled
+          image: r.edu.codespring.ro/sportgh/application:backend   #which container image should be pulled
           imagePullPolicy: Always
           ports:
             - containerPort: 8080                                 #the port of the container within the pod
               protocol: TCP
       imagePullSecrets:
-        - name: sportgh-group-registry
+        - name: sportgh-cred
 
 ---
 apiVersion: v1                                                #version of the API to use

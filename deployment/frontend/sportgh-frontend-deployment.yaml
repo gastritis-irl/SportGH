@@ -16,7 +16,7 @@ spec:                                                         #specifications fo
     spec:
       containers:
         - name: sportgh-frontend                                    #the name of the container within the pod
-          image: r.edu.codespring.ro/sportgh/application:sgh-59-deploy-to-k8s   #which container image should be pulled
+          image: r.edu.codespring.ro/sportgh/application:frontend   #which container image should be pulled
           imagePullPolicy: Always
           ports:
             - containerPort: 80                                 #the port of the container within the pod
