@@ -21,6 +21,15 @@ spec:                                                         #specifications fo
           ports:
             - containerPort: 8080                                 #the port of the container within the pod
               protocol: TCP
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: "data-gen"
+          - name: DATA_INIT_LOCATION
+            value: "classpath:DataInit.json"
+          - name: FILE_STORAGE_LOCATION
+            value: "/sportgh/WEB-INF/classes/image-storage/uploaded-images"
+          - name: TEST_FILE_STORAGE_LOCATION
+            value: "/sportgh/WEB-INF/classes/image-storage/test-images/"
       imagePullSecrets:
         - name: sportgh-cred
 
