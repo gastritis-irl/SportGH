@@ -16,10 +16,10 @@ spec:
                 name: ca-sportgh-frontend-service
                 port:
                   number: 80
-    - host: api.sportgh.k8s.edu.codespring.ro
+    - host: sportgh.k8s.edu.codespring.ro
       http:
         paths:
-          - path: /
+          - path: /api/
             pathType: Prefix
             backend:
               service:
