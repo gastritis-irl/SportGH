@@ -69,7 +69,7 @@ testem.log
 ### System files ###
 .DS_Store
 Thumbs.db
-/serviceAccountKey.json
+#/serviceAccountKey.json
 
 ### Image Storage ###
 /src/main/resources/image-storage/uploaded-images/
