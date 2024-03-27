@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
-RUN npm run build --configuration=production
+RUN npm run prod
 
 # Stage 2: Serve the application from Nginx Web Server
 FROM nginx:stable-alpine3.17-slim
