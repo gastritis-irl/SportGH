@@ -15,7 +15,7 @@ interface Options {
 })
 export class AppService {
 
-    protected readonly baseUrl: string = `${environment.baseURL}/api`;
+    protected readonly baseUrl: string = `api.${environment.baseURL}/api`;
 
     constructor(protected http: HttpClient) {
     }
