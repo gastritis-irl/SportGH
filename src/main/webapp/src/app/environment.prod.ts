@@ -1,5 +1,5 @@
 export const environment = {
-    baseURL: '',
+    baseURL: 'api.sportgh.k8s.edu.codespring.ro',
     firebaseConfig: {
         apiKey: 'AIzaSyCxsKJn2Y2-ZlVKIvFGi4-vr7l76W8DkeU',
         authDomain: 'sportgh-a9112.firebaseapp.com',
