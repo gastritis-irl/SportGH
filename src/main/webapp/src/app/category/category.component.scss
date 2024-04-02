@@ -109,6 +109,11 @@ $animation-translation: -20px;
             word-wrap: break-word;
             padding: $category-name-padding;
             flex-grow: 1; // This ensures that category-name takes up the remaining space, pushing the image to the top
+
+            &.show-all-btn {
+                flex-grow: unset;
+                font-size: $size-h1;
+            }
         }
 
         .text-box {
