@@ -169,6 +169,10 @@ public class ProductServiceImpl implements ProductService {
                 }
 
                 String fieldValue = args[2];
+                if ("undefined".equals(fieldValue) || fieldValue == null) {
+                    continue;
+                }
+
                 spec = spec.and((root, query, criteriaBuilder) ->
                         criteriaBuilder.like(
                                 criteriaBuilder.function(

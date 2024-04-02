@@ -188,6 +188,28 @@ export class ProductEditComponent implements OnInit {
         }
     }
 
+    private async uploadProductImages(productId: number): Promise<void> {
+        const imageUploadPromises = this.newImageFiles.map((imageFile) =>
+            this.imageService.uploadImage(imageFile, productId).toPromise()
+        );
+
+        try {
+            await Promise.all(imageUploadPromises);
+            this.navigateToProduct(productId);
+        } catch (error) {
+            console.error('Error uploading images:', error);
+            this.toastNotify.error('Error uploading images');
+        }
+    }
+
+    private navigateToProduct(productId: number): void {
+        this.router.navigate(['/products', productId])
+            .catch((error) => {
+                console.error('Error redirecting to product page:', error);
+                this.toastNotify.error('Error redirecting to product page');
+            });
+    }
+
     createProduct(): void {
         const idToken: IdToken | null = FirebaseIdTokenService.getDecodedIdToken();
         if (!idToken) {
@@ -199,67 +221,26 @@ export class ProductEditComponent implements OnInit {
         this.buttonPushed = true;
         this.product.publicContact = true;
 
-        this.productService.create(this.product).subscribe(
-            {
-                next: (resp: Product): void => {
-
-                    if (this.newImageFiles.length > 0) {
-                        if (resp.id) {
-                            this.uploadImages(resp.id, this.newImageFiles);
-                        }
-                    }
-
-                    this.router.navigate([`/products/${resp.id}`])
-                        .catch((error: string): void => {
-                            console.error(error);
-                            this.toastNotify.info('Error redirecting to page');
-                        });
-                },
-                error: (): void => {
-                    this.toastNotify.warning('Error creating product');
-                }
-            }
-        );
-    }
-
-    uploadImages(productId: number, files: File[]): void {
-        files.forEach((file, index) => {
-            if (file) {
-                this.imageService.uploadImage(file, productId).subscribe({
-                    next: (image: Image) => {
-                        this.imageDatas[index] = image;
-                    },
-                    error: (error) => {
-                        console.error(error);
-                        this.toastNotify.error(`Error uploading image ${index + 1}`);
-                    }
-                });
+        this.productService.create(this.product).subscribe({
+            next: async (resp: Product): Promise<void> => {
+                await this.uploadProductImages(resp.id!);
+            },
+            error: (): void => {
+                this.toastNotify.warning('Error saving product');
             }
         });
     }
 
-    editProduct(): void {
+    async editProduct(): Promise<void> {
         this.buttonPushed = true;
-        this.productService.edit(this.product).subscribe(
-            {
-                next: (resp: Product): void => {
-                    this.router.navigate([`/products/${resp.id}`])
-                        .catch((error: string): void => {
-                            console.error(error);
-                            this.toastNotify.info('Error redirecting to page');
-                        });
-                },
-                error: (): void => {
-                    this.toastNotify.warning('Error editing product');
-                }
+        this.productService.edit(this.product).subscribe({
+            next: async (resp: Product): Promise<void> => {
+                await this.uploadProductImages(resp.id!);
+            },
+            error: (): void => {
+                this.toastNotify.warning('Error saving product');
             }
-        );
-
-        if (this.newImageFiles.length > 0) {
-            if (this.product.id) {
-                this.uploadImages(this.product.id, this.newImageFiles);
-            }
-        }
+        });
     }
 
     cancelEdit(route: string): void {

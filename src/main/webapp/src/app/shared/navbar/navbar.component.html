@@ -34,6 +34,9 @@
                             [routerLink]="['/products']" [queryParams]="{ Category: category.name }">
                         <a>{{category.name}}</a>
                     </button>
+                    <button class="nav-link-item" ngbDropdownItem [routerLink]="['/products']">
+                        <a>Show all products</a>
+                    </button>
                 </div>
             </div>
             <div *ngIf="checkIfLoggedIn()" class="nav-content-link">
