@@ -5,7 +5,6 @@ metadata:
   name: ca-sportgh-mysql-service
   labels:
     app: ca-sportgh-mysql
-    owner: ka
 spec:
   ports:
   - name: mysql
