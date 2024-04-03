@@ -65,19 +65,22 @@ public class FirebaseServiceImpl implements FirebaseService {
         try {
             firebaseToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
         } catch (FirebaseAuthException e) {
-            throw new BadRequestException("Failed to verify the Firebase ID token", e);
+            log.warn("Failed to verify the Firebase ID token", e);
+            return null;
         }
 
         // Extract the UID from the FirebaseToken
         String uid = firebaseToken.getUid();
         if (uid == null) {
-            throw new BadRequestException("Missing UID from firebase token.");
+            log.warn("Missing UID from firebase token.");
+            return null;
         }
 
         // Look up the user in your own database using the UID
         User user = userRepository.findByFirebaseUid(uid);
         if (user == null) {
-            throw new BadRequestException("User not found with Firebase UID: " + uid);
+            log.warn("User not found with Firebase UID: " + uid);
+            return null;
         }
 
         return new UsernamePasswordAuthenticationToken(
