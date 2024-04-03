@@ -30,6 +30,12 @@ spec:                                                         #specifications fo
             value: "/sportgh/WEB-INF/classes/image-storage/uploaded-images"
           - name: TEST_FILE_STORAGE_LOCATION
             value: "/sportgh/WEB-INF/classes/image-storage/test-images/"
+          - name: SPRING_DATASOURCE_HOST
+            value: "10.42.0.192"
+          - name: SPRING_DATASOURCE_USERNAME
+            value: "root"
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: "sportghPass"
       imagePullSecrets:
         - name: sportgh-cred
 
