@@ -7,55 +7,55 @@ before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
   - export GRADLE_USER_HOME
 
-#backend_linting:
-#  image: gradle:7.4.2-jdk17-alpine
-#  stage: lint
-#  script:
-#    - gradle check
-#  cache:
-#    key: "$CI_COMMIT_REF_NAME"
-#    policy: pull
-#    paths:
-#      - build
-#      - .gradle
-#
-#frontend_linting:
-#  image: node:18.14.2-alpine3.17
-#  stage: lint
-#  script:
-#    - npm install
-#    - npx eslint .
-#  cache:
-#    key: "$CI_COMMIT_REF_NAME"
-#    policy: pull
-#    paths:
-#      - dist
-#      - node_modules
-#
-#backend_build:
-#  image: gradle:7.4.2-jdk17-alpine
-#  stage: build
-#  script:
-#    - gradle --build-cache assemble
-#  cache:
-#    key: "$CI_COMMIT_REF_NAME"
-#    policy: push
-#    paths:
-#      - build
-#      - .gradle
-#
-#frontend_build:
-#  image: node:18.14.2-alpine3.17
-#  stage: build
-#  script:
-#    - npm install
-#    - npm run build
-#  cache:
-#    key: "$CI_COMMIT_REF_NAME"
-#    policy: push
-#    paths:
-#      - dist
-#      - node_modules
+backend_linting:
+  image: gradle:7.4.2-jdk17-alpine
+  stage: lint
+  script:
+    - gradle check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+frontend_linting:
+  image: node:18.14.2-alpine3.17
+  stage: lint
+  script:
+    - npm install
+    - npx eslint .
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - dist
+      - node_modules
+
+backend_build:
+  image: gradle:7.4.2-jdk17-alpine
+  stage: build
+  script:
+    - gradle --build-cache assemble
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
+
+frontend_build:
+  image: node:18.14.2-alpine3.17
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - dist
+      - node_modules
 
 backend_image_build:
   stage: build
@@ -70,8 +70,8 @@ backend_image_build:
     - docker push $IMAGE_TAG
   tags:
     - docker-image
-#  only:
-#    - develop
+  only:
+    - develop
 
 frontend_image_build:
   stage: build
@@ -86,5 +86,5 @@ frontend_image_build:
     - docker push $IMAGE_TAG
   tags:
     - docker-image
-#  only:
-#    - develop
+  only:
+    - develop
