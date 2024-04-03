@@ -136,11 +136,7 @@
 
 <ng-container *ngIf="loggedInUserEmail && !changePassword;">
     <div class="auth-buttons">
-        <div class="buttons">
-            <div class="button-default button-primary">
-                <sgh-requests class="requests-button"></sgh-requests>
-            </div>
-        </div>
+        <sgh-requests class="requests-button"></sgh-requests>
         <div class="buttons">
             <div class="profile-dropdown">
                 <button class="profile-icon" (click)="toggleDropdown()">

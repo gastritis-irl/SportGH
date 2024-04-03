@@ -66,9 +66,13 @@
     </div>
 </ng-template>
 
-
-<div class="notification" (click)="openRequestsModal(requestsModalContent)">
-    <div>&#x2709;</div>
-    <div *ngIf="nrOfPendingRequests>0"
-         class="badge">{{nrOfPendingRequests}}</div>
+<div class="buttons">
+    <div class="button-default button-primary" (click)="openRequestsModal(requestsModalContent)">
+        <div class="notification">
+            <div>&#x2709;</div>
+            <div *ngIf="nrOfPendingRequests>0"
+                 class="badge">{{ nrOfPendingRequests }}
+            </div>
+        </div>
+    </div>
 </div>
