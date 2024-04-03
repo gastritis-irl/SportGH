@@ -31,7 +31,7 @@ spec:                                                         #specifications fo
           - name: TEST_FILE_STORAGE_LOCATION
             value: "/sportgh/WEB-INF/classes/image-storage/test-images/"
           - name: SPRING_DATASOURCE_HOST
-            value: "10.42.0.192"
+            value: "sportgh-mysql"
           - name: SPRING_DATASOURCE_USERNAME
             value: "root"
           - name: SPRING_DATASOURCE_PASSWORD

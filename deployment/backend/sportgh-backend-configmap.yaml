@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-data:
-  FIREBASE_KEY: "-----BEGIN PRIVATE KEY-----\n_this_is_my_firebase_private_key_\n-----END PRIVATE KEY-----\n"
-metadata:
-  name: sportgh-backend-config
