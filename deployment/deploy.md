@@ -12,3 +12,13 @@ kubectl apply -f sportgh-ingress.yaml
 
 (sportgh-backend-configmap.yaml)
 - you can use this instead of secrets (it is similar, but not the same)
+
+# MySQL deployment
+
+./helm.exe install sportgh-mysql -f db-config.yaml oci://registry-1.docker.io/bitnamicharts/mysql
+
+db-config.yaml:
+
+auth:
+rootPassword: "sportghPass"
+database: "sportgh"
