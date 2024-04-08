@@ -1,6 +1,6 @@
 <ng-template #requestsModalContent>
     <div class="modal-holder">
-        <ul ngbNav #nav="ngbNav" class="nav-tabs" (navChange)="getMyRequests()">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs" (navChange)="getRequests()">
             <li ngbNavItem>
                 <a ngbNavLink>Requests sent to you</a>
                 <ng-template ngbNavContent>
@@ -66,9 +66,13 @@
     </div>
 </ng-template>
 
-
-<div class="notification">
-    <div (click)="openRequestsModal(requestsModalContent)">&#x2709;</div>
-    <div *ngIf="nrOfPendingRequests>0"
-         class="badge">{{nrOfPendingRequests}}</div>
+<div class="buttons">
+    <div class="button-default button-primary" (click)="openRequestsModal(requestsModalContent)">
+        <div class="notification">
+            <div>&#x2709;</div>
+            <div *ngIf="nrOfPendingRequests>0"
+                 class="badge">{{ nrOfPendingRequests }}
+            </div>
+        </div>
+    </div>
 </div>

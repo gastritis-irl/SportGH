@@ -42,7 +42,7 @@ dependencies {
     implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.19.0'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-groovy-templates'
 
-    runtimeOnly group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'
+    runtimeOnly group: 'com.mysql', name: 'mysql-connector-j', version: '8.2.0'
 
     compileOnly group: 'org.mapstruct', name: 'mapstruct', version: '1.5.5.Final'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.28'

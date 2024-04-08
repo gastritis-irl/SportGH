@@ -25,14 +25,10 @@ public class FirebaseConfig {
     @PostConstruct
     public void initialize() {
         try {
-            String serviceAccountPath = "serviceAccountKey.json";
-            GoogleCredentials credentials = GoogleCredentials.fromStream(Files.newInputStream(
-                Paths.get(serviceAccountPath)
-            ));
-
+            GoogleCredentials credentials = getCredentials();
             FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(credentials)
-                .build();
+                    .setCredentials(credentials)
+                    .build();
 
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
@@ -41,5 +37,11 @@ public class FirebaseConfig {
             log.error("Could not open serviceAccountKey file");
             throw new IllegalStateException("Could not open serviceAccountKey file", e);
         }
+    }
+
+    private GoogleCredentials getCredentials() throws IOException {
+        String serviceAccountPath = "serviceAccountKey.json";
+        return GoogleCredentials.fromStream(Files.newInputStream(
+                Paths.get(serviceAccountPath)));
     }
 }

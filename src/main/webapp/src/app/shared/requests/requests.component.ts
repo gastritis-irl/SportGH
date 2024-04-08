@@ -48,6 +48,10 @@ export class RequestsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getRequests();
+    }
+
+    getRequests(): void {
         this.getMyRequests();
         this.getOthersRequests();
         this.getNumberOfPendingRequests();
@@ -101,6 +105,7 @@ export class RequestsComponent implements OnInit {
     }
 
     openRequestsModal(modalContent: TemplateRef<string>): void {
+        this.getRequests();
         this.modalService.dismissAll();
         this.navService.destroyOnHide = false;
         this.navService.roles = false;
