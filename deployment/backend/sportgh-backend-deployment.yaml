@@ -27,7 +27,7 @@ spec:                                                         #specifications fo
           - name: DATA_INIT_LOCATION
             value: "classpath:DataInit.json"
           - name: FILE_STORAGE_LOCATION
-            value: "/sportgh/WEB-INF/classes/image-storage/uploaded-images"
+            value: "/shared-images-storage"
           - name: TEST_FILE_STORAGE_LOCATION
             value: "/sportgh/WEB-INF/classes/image-storage/test-images/"
           - name: SPRING_DATASOURCE_HOST
@@ -36,8 +36,15 @@ spec:                                                         #specifications fo
             value: "root"
           - name: SPRING_DATASOURCE_PASSWORD
             value: "sportghPass"
+          volumeMounts:
+            - mountPath: "/shared-images-storage"
+              name: images-storage
       imagePullSecrets:
         - name: sportgh-cred
+      volumes:
+        - name: images-storage
+          persistentVolumeClaim:
+            claimName: shared-images-storage-claim
 
 ---
 apiVersion: v1                                                #version of the API to use
