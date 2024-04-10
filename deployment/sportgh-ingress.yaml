@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ca-sportgh-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: sportgh.k8s.edu.codespring.ro
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ca-sportgh-frontend-service
+                port:
+                  number: 80
+    - host: sportgh.k8s.edu.codespring.ro
+      http:
+        paths:
+          - path: /api/
+            pathType: Prefix
+            backend:
+              service:
+                name: ca-sportgh-backend-service
+                port:
+                  number: 80

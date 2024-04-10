@@ -1,0 +1,32 @@
+@use '../../../style-variables.scss' as *;
+
+$column-gap: 15px;
+
+.breadcrumb {
+    padding-left: $main-padding-inline;
+    padding-block: $main-padding-block;
+    display: flex;
+    flex-direction: row;
+    column-gap: $column-gap;
+
+    .routes {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: $column-gap;
+    }
+
+    div {
+        color: $color-main-1;
+        font-weight: $font-weight-bold;
+        text-decoration: none;
+        display: flex;
+        flex-direction: row;
+        column-gap: $column-gap;
+
+        &:hover {
+            cursor: pointer;
+            color: $color-main-2;
+        }
+    }
+}

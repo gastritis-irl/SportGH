@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  sportgh-mysql:
+    image: mysql:8.1.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: sportgh
+      MYSQL_USER: sportgh
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+
+  sportgh-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=data-gen
+      - DATA_INIT_LOCATION=classpath:DataInit.json
+      - FILE_STORAGE_LOCATION=/sportgh/WEB-INF/classes/image-storage/uploaded-images
+      - TEST_FILE_STORAGE_LOCATION=/sportgh/WEB-INF/classes/image-storage/test-images/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://sportgh-mysql:3306/sportgh?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=1234
+    depends_on:
+      - sportgh-mysql
+    ports:
+      - "8080:8080"
+
+  sportgh-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    depends_on:
+      - sportgh-backend

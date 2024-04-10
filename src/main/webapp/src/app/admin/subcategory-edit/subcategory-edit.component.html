@@ -1,0 +1,111 @@
+<div class="list-edit-holder">
+    <div class="form-heading form-main-title">
+        {{editMode ? 'Edit' : 'Create'}} subcategory
+    </div>
+    <div class="general-data">
+        <form class="general-data-form" (ngSubmit)="clickHandlerFunction()">
+            <div class="form-part">
+                <div class="form-heading">Details</div>
+                <div>
+                    <label class="form-part-label">Category name</label>
+                    <input class="form-part-input"
+                           type="text" name="category-name"
+                           [(ngModel)]="category.name"
+                           #name="ngModel"
+                           [disabled]="true"
+                    >
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                                *ngIf="name.dirty || name.touched || buttonPushed"
+                                [fieldName]="'Subcategory name'"
+                                [required]="true"
+                                [length]="category.name?.length"
+                                [minlength]="4"
+                                [maxlength]="25"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-part-label">Subcategory name</label>
+                    <input class="form-part-input"
+                           type="text" name="name"
+                           [(ngModel)]="subcategory.name"
+                           #name="ngModel"
+                    >
+                    <div class="form-check-label">
+                        <sgh-form-ch-lbl
+                                *ngIf="name.dirty || name.touched || buttonPushed"
+                                [fieldName]="'Subcategory name'"
+                                [required]="true"
+                                [length]="subcategory.name?.length"
+                                [minlength]="4"
+                                [maxlength]="25"
+                        ></sgh-form-ch-lbl>
+                    </div>
+                </div>
+            </div>
+            <div class="form-part">
+                <div class="list-manage-holder no-inline-padding">
+                    <div class="list-manage">
+                        <div class="title">Custom fields</div>
+                        <div class="buttons">
+                            <div class="button-default button-primary" (click)="newField()">Create new custom field +</div>
+                        </div>
+                        <table class="table" *ngIf="subcategory.customFields && subcategory.customFields.length > 0">
+                            <thead>
+                            <tr>
+                                <th class="name row-item">Name</th>
+                                <th class="name row-item type">Type</th>
+                                <th class="name row-item"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let customField of subcategory.customFields; let i = index">
+                                <td>
+                                    <div class="name row-item">
+                                    <input #inputField
+                                           class="form-part-input"
+                                           type="text" name="name{{i}}"
+                                           [minlength]="4"
+                                           [maxlength]="25"
+                                           [ngModel]="customField.name"
+                                           #name="ngModel"
+                                    >
+                                </div>
+                                </td>
+                                <td>
+                                    <div class="name row-item">
+                                    <select class="nav-link" (change)="onSelectChange($event, i)">
+                                        <option value="">{{subcategory.customFields[i].type[0] + subcategory.customFields[i].type.slice(1).toLowerCase()}}</option>
+                                        <ng-container *ngFor="let value of Object.values(CustomFieldType)">
+                                            <option *ngIf="value !== subcategory.customFields[i].type" [value]="value">{{ value[0] + value.slice(1).toLowerCase() }}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                                </td>
+                                <td class="button-container">
+                                    <sgh-popover-delete
+                                            [deleteData]="[i]"
+                                            (deleteEvent)="deleteCustomField($event)"
+                                    ></sgh-popover-delete>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-btn-holder buttons">
+                <button
+                        class="button-primary button-default save-btn"
+                        type="submit">
+                    {{editMode ? "Save" : "Publish"}}
+                </button>
+                <button class="button-secondary button-default cancel-btn"
+                        routerLink="/admin/categories/{{subcategory.categoryId}}">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

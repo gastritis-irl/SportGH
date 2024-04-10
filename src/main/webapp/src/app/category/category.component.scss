@@ -1,0 +1,188 @@
+@use '../../style-variables.scss' as *;
+
+// Colors
+$category-background: $color-neutral-1;
+
+// Sizes
+$heading-font-size: 2.25em;
+$heading-line-height: 2.875em;
+$name-font-size: 1.25em;
+$name-line-height: 1.25em;
+$category-gap: 5%;
+$category-border-width: 0.03125em;
+$text-box-height: 40%;
+$category-item-width: 20%;
+$category-icon-height: 10em;
+$category-name-padding: 5%;
+$text-box-padding: 5%;
+$hover-transform: scale(1.04) rotate(-1deg);
+$hover-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+$hover-bg-color: $border-color;
+$hover-icon-height: $category-icon-height;
+$hover-icon-filter: blur(1px);
+$hover-icon-opacity: 0.4;
+$padding-title: 30px;
+
+// Min and Max width for cards
+$card-max-width-medium: 300px; // 300px for tablet screens
+$card-max-width-large: 400px; // 400px for desktop screens
+
+// Animation
+$animation-duration: 3s;
+$animation-translation: -20px;
+
+.category-list-holder {
+    padding-inline: $main-padding-inline;
+
+    .category-heading {
+        color: $color-main-1;
+        font-size: xx-large;
+        font-family: $font-default;
+        font-weight: $font-weight-bold;
+        text-align: center;
+        padding-block: $padding-title;
+    }
+
+    .categories {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: $category-gap;
+        justify-content: center;
+
+        @media (max-width: $breakpoint-small) {
+            flex-direction: column;
+            gap: 1.5%;
+        }
+    }
+
+    .category-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: $category-gap;
+        width: $category-item-width;
+        background: $category-background;
+        border-radius: 10px; // Adjusting the bottom border-radius to 0
+        border: $category-border-width solid $border-color;
+        overflow: hidden;
+        transition: 0.2s ease-in-out;
+        margin-bottom: $category-gap;
+        // Default card widths (can be for mobile or common styles)
+        min-width: $card-min-width-large;
+        max-width: $card-max-width-large;
+
+        // Tablet screens
+        @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
+            min-width: $card-min-width-medium;
+            max-width: $card-max-width-medium;
+        }
+
+        // Desktop screens
+        @media (min-width: $breakpoint-large) {
+            min-width: $card-min-width-large;
+            max-width: $card-max-width-large;
+        }
+
+        &:hover {
+            transform: $hover-transform;
+            box-shadow: $hover-box-shadow;
+            background-color: $hover-bg-color;
+        }
+
+        .category-icon {
+            width: 100%;
+            height: $category-icon-height;
+            border-radius: 10px 10px 0 0; // Matches the border-radius of the card at the top
+            object-fit: cover;
+        }
+
+        .category-name {
+            color: $color-main-1;
+            font-size: $name-font-size;
+            font-family: $font-default;
+            font-weight: $font-weight-bold;
+            line-height: $name-line-height;
+            text-align: center;
+            word-wrap: break-word;
+            padding: $category-name-padding;
+            flex-grow: 1; // This ensures that category-name takes up the remaining space, pushing the image to the top
+
+            &.show-all-btn {
+                flex-grow: unset;
+                font-size: $size-h1;
+            }
+        }
+
+        .text-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s ease-in-out;
+            z-index: 2;
+            padding: $text-box-padding;
+            width: 100%;
+            height: $text-box-height;
+            overflow-y: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .category-description {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                text-size-adjust: 100%;
+            }
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &:hover>.category-icon {
+            height: $hover-icon-height;
+            filter: $hover-icon-filter;
+            opacity: $hover-icon-opacity;
+            animation: anim $animation-duration infinite;
+        }
+
+        @media (max-width: $breakpoint-small) {
+            width: 100%;
+            margin-bottom: 1.5em;
+
+            .category-name,
+            .category-heading {
+                font-size: 0.75em;
+            }
+        }
+
+        @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
+            width: 45%;
+        }
+    }
+
+    @keyframes anim {
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY($animation-translation);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+}

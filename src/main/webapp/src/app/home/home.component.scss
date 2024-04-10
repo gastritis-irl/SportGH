@@ -1,0 +1,178 @@
+@use '../../style-variables.scss' as *;
+
+$gap-small: 15px;
+$gap-medium: 30px;
+$gap-large: 50px;
+$navigation-column-gap: 10%;
+
+$font-large: xxx-large;
+$font-medium: xx-large;
+$font-small: x-large;
+
+$icon-border: 100px;
+$icon-holder-width: 200px;
+$searchbar-min-width: 200px;
+
+$logo-large: 75px;
+$logo-small: 50px;
+
+.home-page {
+    display: flex;
+    flex-direction: column;
+    padding-inline: $main-padding-inline;
+    gap: $gap-medium;
+
+    .home-page-info {
+        display: flex;
+        flex-direction: column;
+        gap: $gap-medium;
+
+        .main-info {
+            color: $color-main-1;
+            display: flex;
+            flex-direction: column;
+            gap: $gap-large;
+            justify-content: center;
+            align-items: center;
+            padding-block: $gap-large;
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
+
+            .title {
+                display: flex;
+                flex-direction: row;
+                gap: $gap-small;
+                align-items: center;
+
+                .logo {
+                    content: $nav-header-logo-icon;
+                    width: $logo-large;
+
+                    @media (max-width: $breakpoint-medium) {
+                        width: $logo-small;
+                    }
+                }
+
+                .name {
+                    font-size: $font-large;
+                    font-weight: $font-weight-bold;
+
+                    @media (max-width: $breakpoint-medium) {
+                        font-size: $font-medium;
+                    }
+                }
+            }
+
+            .slogan {
+                font-size: $font-medium;
+                font-weight: $font-weight-bold;
+
+                @media (max-width: $breakpoint-medium) {
+                    font-size: $font-small;
+                }
+            }
+
+            .searchbar {
+                width: 30%;
+                min-width: $searchbar-min-width;
+            }
+        }
+
+        .get-started {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
+            padding: $gap-medium;
+            gap: $gap-medium;
+
+            .how-it-works {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                color: $color-main-1;
+                font-size: xx-large;
+                font-weight: $font-weight-bold;
+            }
+
+            .navigation {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                column-gap: $navigation-column-gap;
+                row-gap: $gap-large;
+                flex-wrap: wrap;
+
+                @media (max-width: $breakpoint-medium) {
+                    flex-direction: column;
+                }
+
+                .signup,
+                .rent,
+                .discover > div {
+                    font-size: $font-small;
+                    font-weight: $font-weight-bold;
+                    color: $color-main-2;
+                }
+
+                .icon-holder {
+                    width: $icon-holder-width;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: $icon-border;
+                    background-color: $color-main-3;
+                    padding: $gap-medium;
+
+                    .icon {
+                        width: 100%;
+                    }
+                }
+
+                .signup {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: $gap-medium;
+
+                    .icon {
+                        content: $signup;
+                    }
+                }
+
+                .rent {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: $gap-medium;
+
+                    .icon {
+                        content: $rent;
+                    }
+                }
+
+                .discover {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: $gap-medium;
+
+                    .icon {
+                        content: $discover;
+                    }
+                }
+            }
+        }
+    }
+
+    .category-holder {
+        border-radius: $border-radius;
+        background-color: $color-neutral-1;
+    }
+}

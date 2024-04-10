@@ -1,0 +1,101 @@
+@use '../../../style-variables.scss' as *;
+
+$item-gap: 12px;
+$item-gap-small: 7px;
+
+.user-page-holder {
+    display: flex;
+    flex-direction: column;
+    padding-inline: $main-padding-inline;
+    gap: $item-gap;
+
+    .user-info-holder {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: $item-gap;
+
+        @media (max-width: $breakpoint-medium) {
+            flex-direction: column;
+        }
+
+        .user-avatar {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: $item-gap;
+            gap: $item-gap;
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
+            width: 30%;
+            min-width: 200px + $item-gap;
+
+            @media (max-width: $breakpoint-medium) {
+                width: 100%;
+            }
+
+            .user-avatar-image {
+                max-height: 200px;
+                width: 200px;
+            }
+
+            .user-avatar-name {
+                width: 100%;
+                font-weight: $font-weight-bold;
+                font-size: $size-h2;
+                color: $color-main-1;
+                overflow: clip;
+            }
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            padding: $item-gap;
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
+            width: 67%;
+            gap: $item-gap-small;
+
+            @media (max-width: $breakpoint-medium) {
+                width: 100%;
+            }
+
+            .user-info-header {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .button-default {
+                    font-weight: $font-weight-bold;
+                }
+            }
+
+            .user-info-part {
+                color: $color-main-1;
+
+                .user-info-part-heading {
+                    font-weight: $font-weight-bold;
+                    font-size: $size-h3;
+                }
+            }
+        }
+    }
+
+    .user-info-holder-bio {
+        background-color: $color-neutral-1;
+        border-radius: $border-radius;
+        padding: $item-gap;
+
+        .user-bio {
+            padding-inline: $item-gap;
+        }
+    }
+
+    .product-list-holder {
+        background-color: $color-neutral-1;
+        border-radius: $border-radius;
+        padding: $item-gap;
+    }
+}

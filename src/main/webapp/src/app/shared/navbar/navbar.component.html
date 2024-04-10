@@ -1,0 +1,50 @@
+<div class="nav-holder">
+    <div class="nav-header-frame">
+        <div class="nav-header-content">
+            <div class="nav-header-logo" routerLink="/">
+                <div class="nav-header-logo-icon"></div>
+                <div class="nav-header-logo-title">SportGH</div>
+            </div>
+            <div class="nav-searchbar">
+                <svg class="nav-searchbar-icon" aria-hidden="true" viewBox="0 0 23 23">
+                    <g>
+                        <path
+                            d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+                    </g>
+                </svg>
+                <input [(ngModel)]="textSearch" (keydown.enter)="searchForText()" placeholder="Search" type="search"
+                       class="nav-searchbar-input">
+            </div>
+            <div>
+                <div>
+                    <sgh-authentication></sgh-authentication>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav-frame">
+        <div class="nav-content">
+            <div class="nav-content-link">
+                <a routerLink="/">Home</a>
+            </div>
+            <div ngbDropdown class="">
+                <button type="button" class="nav-link" ngbDropdownToggle>Sports</button>
+                <div ngbDropdownMenu>
+                    <button class="nav-link-item" *ngFor="let category of categories" ngbDropdownItem
+                            [routerLink]="['/products']" [queryParams]="{ Category: category.name }">
+                        <a>{{category.name}}</a>
+                    </button>
+                    <button class="nav-link-item" ngbDropdownItem [routerLink]="['/products']">
+                        <a>Show all products</a>
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="checkIfLoggedIn()" class="nav-content-link">
+                <a routerLink="/products/new">Add new listing</a>
+            </div>
+            <div *ngIf="checkIfAdmin()" class="nav-content-link">
+                <a routerLink="/admin/categories">Manage categories</a>
+            </div>
+        </div>
+    </div>
+</div>

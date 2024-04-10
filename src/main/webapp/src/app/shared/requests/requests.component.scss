@@ -1,0 +1,73 @@
+@use '../../../style-variables.scss' as *;
+
+// Requests/Notifications button
+.notification {
+    width: 100%;
+    padding-inline: 10px;
+    color: white;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    border-radius: 3px;
+    font-size: $size-h2;
+    font-weight: $font-weight-bold;
+}
+
+.notification .badge {
+    position: absolute;
+    top: -5px;
+    right: 80px;
+    padding: 5px;
+    border-radius: 50%;
+    background: red;
+    color: white;;
+    font-size: $size-h2;
+    font-weight: $font-weight-bold;
+}
+
+// Requests/Notifications modal
+
+$item-padding: 20px;
+$item-gap: 10px;
+
+.modal-holder {
+    padding: $item-padding;
+
+    .requests-holder {
+        display: flex;
+        flex-direction: column;
+        padding: $item-gap;
+        gap: $item-gap;
+
+        .no-requests-found {
+            font-weight: $font-weight-bold;
+            color: $color-main-1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .request {
+            color: $color-main-1;
+            font-weight: $font-weight-bold;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: $item-padding;
+            background-color: $color-main-3;
+            border-radius: $border-radius;
+
+            .product-name {
+
+                &:hover {
+                    cursor: pointer;
+                    text-decoration-line: underline;
+                }
+            }
+
+            .request-status {
+            }
+        }
+    }
+}

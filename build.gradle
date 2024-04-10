@@ -1,0 +1,58 @@
+plugins {
+    id 'war'
+    id 'java'
+    id 'org.springframework.boot' version '3.1.1'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'edu.codespring'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+apply from: "$rootDir/lint.gradle"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '8.0.1.Final'
+    implementation group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: '1.19.0'
+    implementation group: 'org.springframework', name: 'spring-web'
+    implementation group: 'org.springframework.security', name: 'spring-security-oauth2-resource-server'
+    implementation group: 'org.springframework.security', name: 'spring-security-web'
+    implementation group: 'com.google.firebase', name: 'firebase-admin', version: '9.2.0'
+    implementation 'org.jetbrains:annotations:24.0.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.19.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-groovy-templates'
+
+    runtimeOnly group: 'com.mysql', name: 'mysql-connector-j', version: '8.2.0'
+
+    compileOnly group: 'org.mapstruct', name: 'mapstruct', version: '1.5.5.Final'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.28'
+
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.28'
+    annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.5.5.Final'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}

@@ -1,0 +1,36 @@
+@use '../../../style-variables.scss' as *;
+
+.holder {
+    padding-inline: $main-padding-inline;
+
+    .form-main-title {
+        padding: 0;
+    }
+
+    .location-header {
+        font-size: $name-font-size;
+        color: $color-main-1;
+        font-weight: $font-weight-bold;
+        margin-left: inherit;
+        padding-left: 20px;
+    }
+
+    .email-and-password-reset {
+        display: flex;
+        flex-direction: column;
+
+        @media (min-width: $breakpoint-large) {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            input {
+                width: 70%;
+            }
+
+            .button-default {
+                width: 30%;
+            }
+        }
+    }
+}

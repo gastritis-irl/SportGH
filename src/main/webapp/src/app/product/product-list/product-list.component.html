@@ -1,0 +1,125 @@
+<div class="product-list-holder">
+    <div class="product-list-info-holder">
+        <div>
+            Number of results: {{ nrOfItems }}
+        </div>
+        <div class="order-by-holder">
+            <div>
+                Order by
+            </div>
+            <select class="order-by-select"
+                    [(ngModel)]="orderByElement"
+                    name="orderByElement"
+                    (ngModelChange)="orderBy()">
+                <option [ngValue]="'name#ASC'">Name A-Z</option>
+                <option [ngValue]="'name#DESC'">Name Z-A</option>
+                <option [ngValue]="'rentPrice#ASC'">Lowest price first</option>
+                <option [ngValue]="'rentPrice#DESC'">Highest price first</option>
+                <option [ngValue]="'newest'" disabled>Newest (by upload date)</option>
+            </select>
+        </div>
+    </div>
+    <div class="filter-param-holder">
+        <div class="filter-param" *ngIf="anyActiveFilter()">
+            Reset filters
+            <div class="clear-filter" (click)="resetFilters()">&#10005;</div>
+        </div>
+
+        <div class="filter-param" *ngIf="textSearch!=''">
+            Search: {{ textSearch }}
+            <div class="clear-filter" (click)="clearFilter('textSearch',-1)">&#10005;</div>
+        </div>
+
+        <div *ngFor="let selected of subcategorySelected; let i = index">
+            <div class="filter-param" *ngIf="selected">
+                {{ subcategories[i].name }}
+                <div class="clear-filter" (click)="clearFilter('subcategoryNames',i)">&#10005;</div>
+            </div>
+        </div>
+
+        <div *ngFor="let field of customFieldValues; let i = index">
+            <div class="filter-param" *ngIf="field.value !== null && field.value !== '' && field.value !== 0 && field.value">
+                {{ field.config.name }}: {{ field.value }}
+                <div class="clear-filter" (click)="clearFilter('customFieldValues',i)">&#10005;</div>
+            </div>
+        </div>
+
+        <div class="filter-param" *ngIf="minPrice">
+            Min price: {{ minPrice }}
+            <div class="clear-filter" (click)="clearFilter('minPrice',-1)">&#10005;</div>
+        </div>
+
+        <div class="filter-param" *ngIf="maxPrice">
+            Max price: {{ maxPrice }}
+            <div class="clear-filter" (click)="clearFilter('maxPrice',-1)">&#10005;</div>
+        </div>
+
+        <div class="filter-param" *ngIf="locationLat && locationLng && locationRadius">
+            Location search
+            <div class="clear-filter"
+                 (click)="clearMultipleFilters(['locationLat','locationLng','locationRadius'])">
+                &#10005;
+            </div>
+        </div>
+    </div>
+    <div class="products">
+        <div class="product-item" routerLink="/products/{{product.id}}" *ngFor="let product of products">
+            <!-- Carousel for product images -->
+            <ngb-carousel
+                    *ngIf="product.imagesLoaded && product.imageDataUrls && product.imageDataUrls.length > 0"
+                    [showNavigationArrows]="false"
+                    [showNavigationIndicators]="false">
+                <ng-template ngbSlide *ngFor="let imageUrl of product.imageDataUrls; let isLast = last"
+                             class="carousel-item">
+                    <div style="height: 200px; background-size: cover; background-image: url('{{imageUrl}}'); border-radius: 5%;">
+                        <div class="carousel-item">
+                            <div *ngIf="isLast">Last slide</div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+
+            <!-- Default image when there are no product images -->
+            <img *ngIf="!product.imageDataUrls || product.imageDataUrls.length === 0"
+                 src="https://biogeo.ubbcluj.ro/wp-content/uploads/woocommerce-placeholder.png" class="product-icon"
+                 alt="IMG"/>
+
+            <div class="product-name">{{ product.name }}</div>
+            <div class="description-area">
+                {{ product.description }}
+            </div>
+            <div class="product-price">
+                <div class="product-price-d">
+                    Price from {{ product.rentPrice }} RON / DAY
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination-item-holder">
+        <div *ngIf="currentPage>1" class="buttons">
+            <div class="button-default button-primary" (click)="previousPage()">
+                <
+            </div>
+        </div>
+        <div class="pagination-item buttons" *ngFor="let currentPageNumber of range(1,nrOfPages)">
+            <div *ngIf="currentPageNumber === currentPage"
+                 class="button-default button-primary pagination-item-current-page" disabled>
+                {{ currentPageNumber }}
+            </div>
+            <div *ngIf="currentPageNumber !== currentPage" class="button-default button-secondary"
+                 (click)="selectPage(currentPageNumber)">
+                {{ currentPageNumber }}
+            </div>
+        </div>
+        <div *ngIf="currentPage<nrOfPages" class="buttons">
+            <div class="button-default button-primary" (click)="nextPage()">
+                >
+            </div>
+        </div>
+    </div>
+    <div *ngIf="products.length === 0" class="no-item-found-img-holder">
+        <img class="no-item-found-img"
+             alt="No item found">
+    </div>
+</div>

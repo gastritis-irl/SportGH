@@ -1,0 +1,235 @@
+@use '../../../style-variables.scss' as *;
+
+// Sizes
+$order-by-gap: 10px;
+$order-by-select-padding: 5px;
+$order-by-select-width: 150px;
+$order-by-width: 235px;
+$price-font-size: 1em;
+$product-gap: 15px;
+$product-border-width: 0.03125em;
+$text-box-height: 3em;
+$product-item-width: 20%;
+$product-item-border-radius: 5%;
+$product-icon-height: $hover-icon-height;
+$product-item-padding: 5px;
+$card-padding: 10px;
+
+// Min-max card sizes
+$card-max-width-medium: 250px;
+$card-max-width-large: 280px;
+
+// Classes
+.product-list-holder {
+    display: flex;
+    flex-direction: column;
+    gap: $product-gap;
+
+    .product-list-info-holder {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: $color-main-1;
+
+        @media (max-width: $breakpoint-medium) {
+            flex-direction: column;
+        }
+
+        .order-by-holder {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: $order-by-gap;
+            background-color: $color-neutral-1;
+            border-radius: $border-radius;
+            padding: $order-by-select-padding;
+            width: $order-by-width;
+
+            .order-by-select {
+                width: $order-by-select-width;
+                border-radius: $border-radius;
+                border-style: solid;
+                border-color: $color-main-3;
+                background-color: $color-neutral-1;
+                padding: $order-by-select-padding;
+                color: $color-main-1;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .filter-param-holder {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .filter-param {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background-color: $color-neutral-1;
+            border-style: solid;
+            border-color: $color-main-3;
+            border-radius: $border-radius;
+            padding: $order-by-select-padding;
+            width: fit-content;
+            color: $color-main-1;
+            gap: 5px;
+            font-weight: $font-weight-bold;
+
+            .clear-filter {
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .products {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: $product-gap;
+        justify-content: flex-start;
+
+        @media (max-width: $breakpoint-small) {
+            flex-direction: column;
+        }
+
+        .product-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: $product-gap;
+            width: $product-item-width;
+            background: $color-neutral-1;
+            border-radius: $product-item-border-radius;
+            border: $product-border-width solid $border-color;
+            overflow: hidden;
+            transition: 0.2s ease-in-out;
+            margin-bottom: $product-gap;
+            min-width: $card-min-width-large;
+            max-width: $card-max-width-large;
+            padding: $card-padding;
+
+            ngb-carousel {
+                width: 100%;
+                height: $product-icon-height;
+                object-fit: contain;
+                border-radius: $product-item-border-radius;
+
+                .carousel-item {
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        border-radius: $product-item-border-radius;
+                    }
+                }
+            }
+
+            // Tablet screens
+            @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
+                min-width: $card-min-width-medium;
+                max-width: $card-max-width-medium;
+            }
+
+            // Desktop screens
+            @media (min-width: $breakpoint-large) {
+                min-width: $card-min-width-large;
+                max-width: $card-max-width-large;
+            }
+
+            &:hover {
+                box-shadow: $hover-box-shadow;
+                background-color: $color-main-3;
+                cursor: pointer;
+            }
+
+            @media (max-width: $breakpoint-small) {
+                width: 100%;
+                margin-bottom: 1.5em;
+            }
+
+            @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium) {
+                width: 45%;
+            }
+
+            .product-name {
+                color: $color-main-1;
+                font-size: $size-h2;
+                font-family: $font-default;
+                font-weight: $font-weight-bold;
+                text-align: center;
+                word-wrap: break-word;
+            }
+
+            .product-icon {
+                width: 100%;
+                height: $product-icon-height;
+                object-fit: contain;
+            }
+
+            .description-area {
+                display: -webkit-box;
+                flex-direction: column;
+                align-items: center;
+                transition: 0.2s ease-in-out;
+                z-index: 2;
+                width: 100%;
+                height: $text-box-height;
+                overflow-y: scroll;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                text-size-adjust: 100%;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+
+            .product-price {
+                color: $color-main-4;
+                font-size: $price-font-size;
+            }
+        }
+    }
+
+    .pagination-item-holder {
+        padding-right: $main-padding-inline;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .pagination-item {
+
+            .pagination-item-current-page {
+                background-color: $color-main-1;
+                color: $color-neutral-1;
+
+                &:hover {
+                    cursor: default;
+                }
+            }
+        }
+    }
+
+    .no-item-found-img-holder {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .no-item-found-img {
+            width: 50%;
+            content: $item-no;
+        }
+    }
+}

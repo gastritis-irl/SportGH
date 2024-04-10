@@ -1,0 +1,47 @@
+<ng-template #deletePopoverContent>
+    <sgh-popover-delete
+            [deleteData]="[]"
+            (deleteEvent)="deleteCategory($event)"
+    >
+    </sgh-popover-delete>
+</ng-template>
+
+<div class="list-manage-holder">
+    <div class="list-manage">
+        <div class="title">
+            Categories
+        </div>
+        <div class="buttons">
+            <div class="button-default button-primary" routerLink="/admin/categories/new">Create new category +</div>
+        </div>
+        <div class="list-elements">
+            <div class="list-element" *ngFor="let category of categories; let i = index">
+                <div class="name row-item">
+                    {{category.name}}
+                </div>
+                <div ngbDropdown class="name row-item">
+                    <button type="button" class="nav-link" ngbDropdownToggle>Subcategories</button>
+                    <div ngbDropdownMenu>
+                        <div *ngFor="let subcategory of subcategories">
+                            <div class="nav-link-item" routerLink="/admin/categories/{{category.id}}/subcategories/{{subcategory.id}}" *ngIf="category.id === subcategory.categoryId" ngbDropdownItem>{{subcategory.name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-holder row-item">
+                    <img class="image" src="{{category.imageDataUrl}}" alt="Category image">
+                </div>
+                <div class="row-item">
+                    <div class="buttons">
+                        <div class="button-default button-primary" routerLink="/admin/categories/{{category.id}}">
+                            Edit
+                        </div>
+                    </div>
+                    <sgh-popover-delete
+                        [deleteData]="[category.id?category.id:0, i]"
+                        (deleteEvent)="deleteCategory($event)"
+                    ></sgh-popover-delete>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
