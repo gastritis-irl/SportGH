@@ -113,11 +113,11 @@
                 <div class="product-availability">
                     <div>
                         <label class="form-part-label">From</label>
-                        <input class="form-part-input" type="date">
+                        <input class="form-part-input" type="date" disabled>
                     </div>
                     <div>
                         <label class="form-part-label">To</label>
-                        <input class="form-part-input" type="date">
+                        <input class="form-part-input" type="date" disabled>
                     </div>
                 </div>
             </div>
@@ -160,7 +160,8 @@
                 <div class="form-heading">Contact</div>
                 <div class="public-contact">
                     <label class="form-part-label">Let others directly see my contact info:</label>
-                    <sgh-switch-button (checkEvent)="checkEvent($event)"></sgh-switch-button>
+                    <sgh-switch-button [isChecked]="product.publicContact??true"
+                                       (checkEvent)="checkEvent($event)"></sgh-switch-button>
                 </div>
             </div>
 

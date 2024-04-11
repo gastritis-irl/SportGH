@@ -138,8 +138,8 @@
     <div class="auth-buttons">
         <sgh-requests class="requests-button"></sgh-requests>
         <div class="buttons">
-            <div class="profile-dropdown">
-                <button class="profile-icon" (click)="toggleDropdown()">
+            <div class="profile-dropdown" (mouseenter)="toggleDropdown()" (mouseleave)="toggleDropdown()">
+                <button class="profile-icon">
                     <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"
                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

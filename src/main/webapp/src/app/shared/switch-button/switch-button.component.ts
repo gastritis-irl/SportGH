@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'sgh-switch-button',
@@ -8,8 +8,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SwitchButtonComponent implements OnInit {
 
-    isChecked: boolean = false;
-
+    @Input() isChecked: boolean = true;
     @Output() checkEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() {
