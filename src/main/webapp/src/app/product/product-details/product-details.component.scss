@@ -127,6 +127,12 @@ $map-height: 500px;
             padding-bottom: $item-padding;
         }
 
+        .product-timestamp {
+            color: $color-main-2;
+            padding-bottom: $item-gap-1;
+            font-size: small;
+        }
+
         .images-and-pricing {
             display: flex;
             flex-direction: row;

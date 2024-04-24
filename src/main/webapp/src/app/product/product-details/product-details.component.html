@@ -66,6 +66,15 @@
             </div>
         </div>
 
+        <div *ngIf="product.createdAt && product.createdAt==product.updatedAt" class="product-timestamp">
+            Listed at:
+            <p>{{ product.createdAt | date:'medium' }}</p>
+        </div>
+        <div *ngIf="product.updatedAt&&product.updatedAt!=product.createdAt" class="product-timestamp">
+            Last updated at:
+            <p>{{ product.updatedAt | date:'medium' }}</p>
+        </div>
+
         <div class="images-and-pricing">
             <div class="images">
                 <div class="image-thumbnails">
