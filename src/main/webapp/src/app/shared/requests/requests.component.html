@@ -17,6 +17,10 @@
                             <div class="product-name" routerLink="/products/{{request.productId}}">
                                 {{request.productName}}
                             </div>
+                            <div class="request-created-at">
+                                Requested at:
+                                <p>{{ request.createdAt | date:'medium' }}</p>
+                            </div>
                             <div class="request-status" *ngIf="request.requestStatus">
                                 <div *ngIf="request.requestStatus.toString() === Status[Status.PENDING]">
                                     <div class="buttons">
@@ -30,6 +34,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div *ngIf="request.requestStatus.toString() !== Status[Status.PENDING]"
                                      [ngClass]="request.requestStatus.toString().toLowerCase()">
                                     {{ request.requestStatus.toString() | titlecase }}

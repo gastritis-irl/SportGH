@@ -7,6 +7,8 @@ export enum Status {
 export interface Request {
 
     requestId?: number,
+    createdAt?: Date,
+    updatedAt?: Date,
     renterName?: string,
     productName?: string,
     productId?: number,
