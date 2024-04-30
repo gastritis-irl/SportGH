@@ -65,7 +65,7 @@ public class FirebaseServiceImpl implements FirebaseService {
         try {
             firebaseToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
         } catch (FirebaseAuthException e) {
-            log.warn("Failed to verify the Firebase ID token", e);
+            log.warn("Failed to verify the Firebase ID token: {}", e.getMessage());
             return null;
         }
 
