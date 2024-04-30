@@ -5,6 +5,8 @@ export interface Product {
     id?: number,
     publicContact?: boolean,
     name?: string,
+    createdAt?: Date,
+    updatedAt?: Date,
     description?: string,
     locationLng?: number,
     locationLat?: number,
