@@ -112,10 +112,28 @@ $map-height: 500px;
                     color: darkred;
                 }
 
-                .product-category-and-subcategory {
-                    color: $color-main-2;
-                    padding-bottom: $item-gap-1;
+                .symmetric-heading {
+
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    overflow: clip;
+
+
+                    .product-category-and-subcategory {
+                        color: $color-main-2;
+                        padding-bottom: $item-gap-1;
+                    }
+
+                    .product-timestamp {
+                        color: $color-main-2;
+                        padding-bottom: $item-gap-1;
+                        font-size: small;
+                        align-content: flex-end;
+                    }
                 }
+
             }
         }
 
@@ -127,11 +145,6 @@ $map-height: 500px;
             padding-bottom: $item-padding;
         }
 
-        .product-timestamp {
-            color: $color-main-2;
-            padding-bottom: $item-gap-1;
-            font-size: small;
-        }
 
         .images-and-pricing {
             display: flex;

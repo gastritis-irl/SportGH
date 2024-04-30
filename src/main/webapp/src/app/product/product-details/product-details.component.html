@@ -13,7 +13,7 @@
                     Username
                 </div>
                 <div class="data">
-                    {{owner.username}}
+                    {{ owner.username }}
                 </div>
             </div>
             <div *ngIf="owner.email" class="data-part">
@@ -21,7 +21,7 @@
                     Email
                 </div>
                 <div class="data">
-                    {{owner.email}}
+                    {{ owner.email }}
                 </div>
             </div>
             <div *ngIf="owner.phoneNumber" class="data-part">
@@ -29,7 +29,7 @@
                     Phone number
                 </div>
                 <div class="data">
-                    {{owner.phoneNumber}}
+                    {{ owner.phoneNumber }}
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
         <div class="heading-items">
             <div class="product-name-and-avail">
                 <div class="form-heading product-heading">
-                    {{product.name}}
+                    {{ product.name }}
                     <div *ngIf="product.userUid && product.userUid===getLoggedInUserUid()"
                          class="product-links buttons">
                         <div class="product-edit-link button-default button-primary"
@@ -54,25 +54,24 @@
                         ></sgh-popover-delete>
                     </div>
                 </div>
-                <div class="product-category-and-subcategory">
-                    {{product.categoryName}} - {{product.subCategoryName}}
+                <div class="symmetric-heading">
+                    <div class="product-category-and-subcategory">
+                        {{ product.categoryName }} - {{ product.subCategoryName }}
+                    </div>
+                    <div *ngIf="product.createdAt && product.createdAt==product.updatedAt" class="product-timestamp">
+                        Listed at: {{ product.createdAt | date:'medium' }}
+                    </div>
+                    <div *ngIf="product.updatedAt&&product.updatedAt!=product.createdAt" class="product-timestamp">
+                        Last updated at: {{ product.updatedAt | date:'medium' }}
+                    </div>
                 </div>
             </div>
         </div>
 
         <div *ngIf="address.length>0" class="ad-info-and-location">
             <div class="location">
-                {{address}}
+                {{ address }}
             </div>
-        </div>
-
-        <div *ngIf="product.createdAt && product.createdAt==product.updatedAt" class="product-timestamp">
-            Listed at:
-            <p>{{ product.createdAt | date:'medium' }}</p>
-        </div>
-        <div *ngIf="product.updatedAt&&product.updatedAt!=product.createdAt" class="product-timestamp">
-            Last updated at:
-            <p>{{ product.updatedAt | date:'medium' }}</p>
         </div>
 
         <div class="images-and-pricing">
@@ -100,7 +99,7 @@
             </div>
 
             <div class="pricing">
-                <div class="form-heading">{{product.rentPrice}} RON / day</div>
+                <div class="form-heading">{{ product.rentPrice }} RON / day</div>
 
                 <div class="rent-options">
                     <div class="rent-dates">
@@ -118,7 +117,7 @@
                     <div class="rent-price">
                         <label class="rent-price-label heading">Total</label>
                         <div class="rent-price-total heading">
-                            {{showTotalPrice(dateFrom, dateTo, 'd')}} RON
+                            {{ showTotalPrice(dateFrom, dateTo, 'd') }} RON
                         </div>
                     </div>
 
@@ -147,7 +146,7 @@
              id="prod-desc">
             <div class="form-heading">Description</div>
             <div class="product-description-content">
-                {{product.description}}
+                {{ product.description }}
             </div>
         </div>
 
