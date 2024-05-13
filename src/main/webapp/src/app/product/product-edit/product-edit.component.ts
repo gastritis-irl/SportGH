@@ -220,7 +220,6 @@ export class ProductEditComponent implements OnInit {
             this.product.userUid = idToken.user_id;
         }
         this.buttonPushed = true;
-        this.product.publicContact = true;
 
         this.productService.create(this.product).subscribe({
             next: async (resp: Product): Promise<void> => {
