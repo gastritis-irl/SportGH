@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class SwitchButtonComponent implements OnInit {
 
-    @Input() isChecked: boolean = true;
+    @Input() isChecked?: boolean = true;
     @Output() checkEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() {

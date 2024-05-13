@@ -100,6 +100,7 @@ export class ProductEditComponent implements OnInit {
     loadData(param: string | undefined): void {
         if (!param) {
             this.clickHandlerFunction = this.createProduct;
+            this.product.publicContact = true;
             this.editMode = false;
             this.modeParam = 'create';
         } else {
