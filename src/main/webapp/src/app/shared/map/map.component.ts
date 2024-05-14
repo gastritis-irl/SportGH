@@ -19,7 +19,7 @@ export class MapComponent implements OnInit, OnChanges {
     @Output() locationEventEmitter: EventEmitter<[number, number]> = new EventEmitter<[number, number]>();
     @Input() lat?: number;
     @Input() lng?: number;
-    marker: L.Marker = new L.Marker([45.9442858, 25.0094303]);
+    marker: L.Marker = new L.Marker([46.77, 23.59]);
     address: string = '';
     map: L.Map | undefined;
     options: L.MapOptions = {
@@ -64,7 +64,7 @@ export class MapComponent implements OnInit, OnChanges {
         }).addTo(map);
     }
 
-    // this resize event fixes the map it isn't correctly loaded
+    // this resize event fixes the map; it isn't correctly loaded
     resetMap(): void {
         window.dispatchEvent(new Event('resize'));
     }
