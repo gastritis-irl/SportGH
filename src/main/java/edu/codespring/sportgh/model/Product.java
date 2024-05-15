@@ -47,7 +47,7 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product")
     private Set<RentRequest> requests;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REFRESH)
     @JsonManagedReference
     private Set<Image> images = new HashSet<>();
 
