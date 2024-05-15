@@ -27,4 +27,3 @@ public class RentRequest extends BaseEntity {
 
     private Status requestStatus;
 }
-
