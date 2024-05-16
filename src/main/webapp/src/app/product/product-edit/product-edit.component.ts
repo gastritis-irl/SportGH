@@ -157,7 +157,9 @@ export class ProductEditComponent implements OnInit {
             {
                 next: (data: Subcategory[]): void => {
                     this.subcategories = data;
-                    this.product.subCategoryId = this.subcategories[0].id;
+                    if (!this.editMode) {
+                        this.product.subCategoryId = this.subcategories[0].id;
+                    }
                     this.subcategoryDropdownDisabled = false;
                 },
                 error: (error): void => {
