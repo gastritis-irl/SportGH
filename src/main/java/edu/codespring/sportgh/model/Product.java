@@ -44,7 +44,7 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REFRESH)
     private Set<RentRequest> requests;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REFRESH)
