@@ -44,10 +44,10 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private Set<RentRequest> requests;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private Set<Image> images = new HashSet<>();
 
