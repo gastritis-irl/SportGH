@@ -12,11 +12,11 @@ import lombok.*;
 @Table(name = "rent_requests")
 public class RentRequest extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "renter_id")
     private User renter;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Product product;
 
     public enum Status {

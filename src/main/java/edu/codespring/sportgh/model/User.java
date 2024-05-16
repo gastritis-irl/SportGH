@@ -60,7 +60,6 @@ public class User extends BaseEntity {
     private Set<Product> products;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "renter")
+    @OneToMany(mappedBy = "renter", cascade = CascadeType.REFRESH)
     private Set<RentRequest> myRequests;
 }
-
