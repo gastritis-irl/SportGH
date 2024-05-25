@@ -176,11 +176,11 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void delete(Long imageID) {
-        // Delete from the file system
-        deleteFile(imageID);
-
         // Delete from the database
         imageRepository.deleteById(imageID);
+
+        // Delete from the file system
+        deleteFile(imageID);
         log.info("Image with ID {} deleted successfully.", imageID);
     }
 
@@ -216,4 +216,3 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.findByProductId(productId);
     }
 }
-

@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.sql.DataTruncation;
@@ -52,6 +53,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         String jsonString = jsonArray.toString();
 
         return handleExceptionInternal(ex, jsonString, headers, HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<String> handleMaxSizeException(MaxUploadSizeExceededException exc) {
+        log.warn(exc.getMessage());
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("File size exceeds the maximum limit!");
     }
 
     @ExceptionHandler({
